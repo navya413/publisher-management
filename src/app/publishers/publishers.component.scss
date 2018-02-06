@@ -1,0 +1,58 @@
+.publisher-container{
+  display: block;
+  padding: 1rem;
+  background: #fafafa
+}
+
+:host ::ng-deep th{
+  white-space: nowrap;
+}
+
+.card-header{
+  display: flex;
+  flex: 1;
+  height: 4rem;
+  align-items: center;
+}
+
+.sec-btn{
+  background: #e5e5e5;
+  color: #555555;
+  margin-right: 10px;
+  mat-icon{
+    padding-left: 5px;
+  }
+}
+
+.box-search{
+  margin-right: 10px;
+  display: inline-block;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+  transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  input{
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 9px 12px;
+  }
+  .box-search-icon{
+    float: right;
+    display: flex;
+    button{
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      color: gray;
+    }
+  }
+  .box-search-input-wrapper{
+    display: flex;
+  }
+}
+
+.dropdown-option{
+  height: 34px;
+  line-height: 34px;
+  font-size: 0.9rem;
+}

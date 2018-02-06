@@ -1,0 +1,36 @@
+<form action="/"
+      class="login-form"
+      [formGroup]="signupForm"
+      (ngSubmit)="login()">
+  <mat-card class="login-card">
+    <div class="login-header">
+      <img class="logo" src="./../../../assets/images/login.png">
+    </div>
+    <div class="login-container">
+      <mat-form-field class="login-field">
+        <input autofocus
+               type="email"
+               matInput
+               formControlName="email"
+               placeholder="Email">
+      </mat-form-field>
+      <mat-form-field class="login-field">
+        <input type="password"
+               matInput
+               formControlName="password"
+               placeholder="Password">
+      </mat-form-field>
+      <mat-checkbox
+        [(ngModel)]="rememberMe"
+        [ngModelOptions]="{standalone: true}">
+        Remember Me
+      </mat-checkbox>
+    </div>
+    <div class="login-actions">
+      <button type="submit"
+              mat-raised-button
+              color="primary">Login
+      </button>
+    </div>
+  </mat-card>
+</form>

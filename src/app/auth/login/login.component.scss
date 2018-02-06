@@ -1,0 +1,31 @@
+:host {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: #EEEEEE;
+}
+
+.login-card {
+  max-width: 380px;
+  padding: 0;
+}
+.login-header{
+  .logo {
+    width: 100%;
+  }
+}
+.login-container{
+  padding: 1rem;
+}
+
+.login-field {
+  display: block;
+}
+
+.login-actions {
+  padding: 1rem;
+  button{
+    width: 100%;
+  }
+}
