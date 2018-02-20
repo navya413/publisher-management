@@ -1,0 +1,8 @@
+// Because normalize.css doesn't do this.
+* {
+  box-sizing: border-box;
+}
+
+.notification-style{
+  font-family: inherit;
+}

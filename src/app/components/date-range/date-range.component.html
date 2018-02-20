@@ -1,0 +1,49 @@
+<button #dateRangeSelector
+        mat-raised-button
+        class="sec-btn"
+        [matMenuTriggerFor]="dateRangeMenu"
+        (click)="$event.stopPropagation()">{{selectedRange.title}}
+  <mat-icon>arrow_drop_down</mat-icon>
+</button>
+<mat-menu #dateRangeMenu="matMenu"
+          [overlapTrigger]="false">
+  <button mat-menu-item
+          *ngFor="let range of ranges"
+          class="dropdown-option"
+          (click)="onRangeChange(range)">{{ range.title }}</button>
+</mat-menu>
+
+<div *ngIf="selectedRange.title.toLowerCase() == 'custom'" class="daterange-container">
+  <div class="box-search">
+    <div class="box-search-input-wrapper">
+      <input readonly
+             #searchInput
+             type="text"
+             placeholder="Start Date"
+             (dateChange)="customDateChange($event, 'startDate')"
+             [matDatepicker]="startDatePicker"
+             [max]="customEndDate"
+             [value]="customStartDate">
+      <mat-datepicker-toggle class="datepicker-toggle"
+                             matSuffix
+                             [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+    </div>
+  </div>
+  <div class="box-search">
+    <div class="box-search-input-wrapper">
+      <input readonly
+             #searchInput
+             type="text"
+             placeholder="End Date"
+             (dateChange)="customDateChange($event, 'endDate')"
+             [matDatepicker]="endDatePicker"
+             [min]="customStartDate"
+             [value]="customEndDate">
+      <mat-datepicker-toggle class="datepicker-toggle"
+                             matSuffix
+                             [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+    </div>
+  </div>
+</div>

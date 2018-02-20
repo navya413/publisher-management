@@ -1,0 +1,86 @@
+<mat-form-field class="entity-search__input">
+  <mat-select placeholder="Agency" [(ngModel)]="selectedAgency" (selectionChange)="onSelectionChange($event)">
+    <mat-option *ngFor="let agency of agencies" [value]="agency">
+      {{ agency }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<div *ngIf="loading" style="margin: 5rem auto;">
+  <mat-spinner diameter="52"></mat-spinner>
+</div>
+<mat-form-field *ngIf="!loading && entityNavTree" class="entity-search__input">
+  <input matInput
+         placeholder="Search"
+         [formControl]="autocompleteControl"
+         [matAutocomplete]="auto">
+  <mat-icon matSuffix>search</mat-icon>
+  <mat-autocomplete #auto
+                    [displayWith]="getAutocompleteDisplay"
+                    class="autocomplete">
+    <mat-option *ngFor="let option of filteredAutocompleteOptions | async"
+                (onSelectionChange)="onAutocompleteOptionSelect($event, option)"
+                class="entity-nav__autocomplete-option"
+                [value]="option.name">
+      <div class="autocomplete-entity__name">
+        {{option.name}}
+      </div>
+      <div *ngIf="option.breadcrumb"
+           class="autocomplete-entity__breadcrumb">
+        {{option.breadcrumb}}
+      </div>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<section *ngIf="entityNavTree" class="entity-tree">
+  <button [attr.data-count]='entityNavTree?.length'
+          class="entity-tree__title"
+          mat-button
+          [routerLink]="['./', 'agency', selectedAgency]">
+    All Clients
+  </button>
+  <ul class="entity-tree__list"
+      data-type="client">
+    <li class="entity-tree__item"
+        *ngFor="let client of entityNavTree">
+      <a class="entity-tree__item-link"
+         [attr.data-id]="client.id"
+         [class.entity-tree__item-link--active]="client.isActive"
+         [routerLink]="['./', 'agency', selectedAgency, 'client', client.id]">{{client.name}}
+        <span class="entity-tree__item-expand"
+              [class.entity-tree__item-expand--expanded]="client.isOpen"
+              *ngIf="client.children.length">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </span>
+      </a>
+      <ul class="entity-tree__list"
+          data-type="campaign"
+          [class.open]="client.isOpen">
+        <li class="entity-tree__item"
+            *ngFor="let campaign of client.children">
+          <a class="entity-tree__item-link"
+             [attr.data-id]="campaign.id"
+             [class.entity-tree__item-link--active]="campaign.isActive"
+             [routerLink]="['./', 'agency', selectedAgency, 'client', client.id, 'campaign', campaign.id]">{{campaign.name}}
+            <span class="entity-tree__item-expand"
+                  [class.entity-tree__item-expand--expanded]="campaign.isOpen"
+                  *ngIf="campaign.children.length">
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </span>
+          </a>
+          <ul class="entity-tree__list"
+              data-type="jobgroup"
+              [class.open]="campaign.isOpen">
+            <li class="entity-tree__item"
+                *ngFor="let jobgroup of campaign.children">
+              <a class="entity-tree__item-link"
+                 [attr.data-id]="jobgroup.id"
+                 [class.entity-tree__item-link--active]="jobgroup.isActive"
+                 [routerLink]="['./', 'agency', selectedAgency, 'client', client.id, 'campaign', campaign.id, 'jobgroup', jobgroup.id]">{{jobgroup.name}}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</section>

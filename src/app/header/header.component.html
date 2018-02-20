@@ -1,16 +1,6 @@
 <nav mat-tab-nav-bar>
-  <div style="display: inline-block;
-    padding: 0 2rem;
-    margin-top: 0.3rem;">
-    <span style="font-size: 1.2rem;
-    font-family: sans-serif;
-    color: #3e50b2;">Publisher</span>
-    <br>
-    <span style="font-size: 0.8rem;
-    font-family: sans-serif;
-    color: #a5a5a5;">
-      Management tool
-    </span>
+  <div style="display: inline-block;width: 15rem">
+    <img style="width: inherit" src="../../assets/images/pubmato.png">
   </div>
   <a mat-tab-link
      *ngFor="let link of navLinks"
@@ -19,5 +9,5 @@
      [active]="rla.isActive">
     {{link.label}}
   </a>
-  <button mat-button (click)="authService.logout()">Logout</button>
+  <button mat-raised-button style="position: absolute;right: 5px;top: 5px;" (click)="authService.logout()">Logout</button>
 </nav>

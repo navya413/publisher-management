@@ -1,0 +1,10 @@
+// Since the whole menu is really rendered out of the component
+// it's used inside, we have to set the css rules for those
+// menus at global level.
+.notification-menu__wrapper.mat-menu-panel {
+  max-width: unset;
+  width: 300px;
+  .mat-menu-content {
+    padding: 0;
+  }
+}

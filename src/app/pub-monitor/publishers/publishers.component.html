@@ -1,0 +1,150 @@
+<div #table class="publisher-container">
+  <m-table [value]=publishers [selectable]="true" [selectionMode]="'single'"
+           [sortLocal]="false" (onSort)="onSortChange($event)"
+           (onPage)="onPageChange($event)"
+           [expandable]="true" (onRowExpand)="rowExpanded($event)" (onRowCollapse)="rowCollapsed($event)">
+
+    <m-header>
+      <ng-template let-header >
+        <div class="card-header">
+
+          <div class="box-search">
+            <div class="box-search-icon">
+              <button mat-icon-button (click)="onQuerySearch(searchInput.value)">
+                <mat-icon class="mat-24" aria-label="Search icon">search</mat-icon>
+              </button>
+            </div>
+            <div class="box-search-input-wrapper">
+              <input #searchInput type="text" [matAutocomplete]="auto" [formControl]="typeAheadCtrl" placeholder="Search...">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option class="dropdown-option" *ngFor="let item of filteredOptions | async"
+                            [value]="item">
+                  <span>{{ item }}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+          </div>
+
+
+          <app-date-range (onDateRangeChange)="onDateRangeChange($event)"></app-date-range>
+
+          <div class="table-options">
+            <button mat-icon-button class="col-setting-btn">
+              <mat-icon class="mat-24" aria-label="column">view_column</mat-icon>
+            </button>
+
+            <button mat-icon-button class="col-setting-btn" (click)="openDialog()">
+              <mat-icon class="mat-24" aria-label="download">file_download</mat-icon>
+            </button>
+
+            <button mat-icon-button class="col-setting-btn">
+              <mat-icon class="mat-24" aria-label="refresh">refresh</mat-icon>
+            </button>
+          </div>
+
+        </div>
+      </ng-template>
+    </m-header>
+    <m-footer [paginator]="true" [pageSize]="params.limit" [pageIndex]="params.page - 1" [pageSizeOptions]="[10,20,50]" [length]="publisherRes?.summary?.totalPlacements"></m-footer>
+
+    <m-column field="status" header="Status" [sortable]="true">
+      <ng-template let-col let-row="row" mTemplate="body">
+        <i class="material-icons status-icon active" *ngIf="row.status=='A'">check_circle</i>
+        <i class="material-icons status-icon paused" *ngIf="row.status=='P'">pause_circle_filled</i>
+        <i class="material-icons status-icon inactive" *ngIf="row.status=='I'">add_circle</i>
+      </ng-template>
+    </m-column>
+    <m-column field="name" header="Publisher" [sortable]="true"></m-column>
+
+    <m-column colBodyClass="align-right" colHeadClass="align-right" field="CmClicks" [sortable]="true">
+      <ng-template let-col let-row="row" mTemplate="header">
+        <div class="normal-linehight">Joveo</div>
+        <span>Clicks</span>
+      </ng-template>
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['stats']['cmStats']['clicks'].toLocaleString()}}
+      </ng-template>
+    </m-column>
+
+    <m-column colBodyClass="align-right" colHeadClass="align-right" field="CmBotClicks"[sortable]="true">
+      <ng-template let-col let-row="row" mTemplate="header">
+        <div class="normal-linehight">Joveo</div>
+        <span>BotClicks</span>
+      </ng-template>
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['stats']['cmStats']['botClicks'].toLocaleString()}}
+      </ng-template>
+    </m-column>
+
+    <m-column colBodyClass="align-right" colHeadClass="align-right" field="PubClicks" [sortable]="true">
+      <ng-template let-col let-row="row" mTemplate="header">
+        <div class="normal-linehight">Publisher</div>
+        <span>Clicks</span>
+      </ng-template>
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['stats']['pubDataStats']['clicks'].toLocaleString()}}
+      </ng-template>
+    </m-column>
+
+    <m-column colBodyClass="align-right" colHeadClass="align-right" field="PubBotClicks" [sortable]="true">
+      <ng-template let-col let-row="row" mTemplate="header">
+        <div class="normal-linehight">Publisher</div>
+        <span>BotClicks</span>
+      </ng-template>
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['stats']['pubDataStats']['botClicks'].toLocaleString()}}
+      </ng-template>
+    </m-column>
+
+    <m-column colBodyClass="align-right" colHeadClass="align-right" field="stats.pubPortalStats.clicks">
+      <ng-template let-col let-row="row" mTemplate="header">
+        <div class="normal-linehight">PubPortal</div>
+        <span>Clicks</span>
+      </ng-template>
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['stats']['pubPortalStats']['clicks'].toLocaleString()}}
+      </ng-template>
+    </m-column>
+
+    <m-column colBodyClass="align-right" colHeadClass="align-right" field="stats.pubPortalStats.botClicks">
+      <ng-template let-col let-row="row" mTemplate="header">
+        <div class="normal-linehight">PubPortal</div>
+        <span>BotClicks</span>
+      </ng-template>
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['stats']['pubPortalStats']['botClicks'].toLocaleString()}}
+      </ng-template>
+    </m-column>
+
+    <m-column colBodyClass="align-right" colHeadClass="align-right" field="clicks" [sortable]="true">
+      <ng-template let-col let-row="row" mTemplate="header">
+        <div class="normal-linehight">Mojo</div>
+        <span>Clicks</span>
+      </ng-template>
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['stats']['mojoStats']['clicks'].toLocaleString()}}
+      </ng-template>
+    </m-column>
+
+    <m-column colBodyClass="align-right" colHeadClass="align-right" field="botClicks" [sortable]="true">
+      <ng-template let-col let-row="row" mTemplate="header">
+        <div class="normal-linehight">Mojo</div>
+        <span>BotClicks</span>
+      </ng-template>
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['stats']['mojoStats']['botClicks'].toLocaleString()}}
+      </ng-template>
+    </m-column>
+
+    <ng-template let-row let-index="rowIndex" mTemplate="expansion">
+
+    </ng-template>
+
+    <ng-template mTemplate="emptyTable">
+      <div *ngIf="loading" class="table-loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <div>Loading...</div>
+      </div>
+    </ng-template>
+  </m-table>
+</div>

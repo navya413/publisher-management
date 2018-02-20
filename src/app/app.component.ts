@@ -8,7 +8,15 @@ import {Component, OnInit} from '@angular/core';
 export class AppComponent implements OnInit {
   publishers: Object[] = [];
 
-  constructor(){}
+  notificationOptions;
+  constructor() {
+    this.notificationOptions = {
+      position: ['top', 'right'],
+      timeOut: 3000,
+      showProgressBar: true,
+      theClass: 'notification-style'
+    };
+  }
 
   ngOnInit() {
 

@@ -1,0 +1,106 @@
+@import "../../scss/colors";
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+.entity-search__input {
+  padding: 1rem 1rem 0;
+}
+::ng-deep .entity-nav__autocomplete-option .mat-option-text {
+  display: flex;
+  flex-direction: column;
+  line-height: initial;
+  height: 100%;
+  justify-content: space-around;
+  padding: 0.5rem;
+}
+::ng-deep
+.entity-nav__autocomplete-option
+.mat-option-text
+.autocomplete-entity__name {
+  font-size: 0.8rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+::ng-deep
+.entity-nav__autocomplete-option
+.mat-option-text
+.autocomplete-entity__breadcrumb {
+  font-size: 0.6rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.entity-tree__title {
+  border-bottom: 1px solid $grey-3;
+  display: block;
+  text-align: left;
+  width: 100%;
+  padding: 0 1rem;
+  &::after {
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    background: $primary;
+    color: $white;
+    display: inline-flex;
+    margin-left: 0.5rem;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    content: attr(data-count);
+  }
+}
+
+// Entity List
+.entity-tree__list {
+  margin-top: 0;
+  padding-left: 0;
+  display: none;
+  &[data-type="client"],
+  &.open {
+    display: block;
+  }
+  list-style-type: none;
+  .entity-tree__item-link {
+    padding: 0.25rem 0 0.25rem 1rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    font-size: 12px;
+    &.entity-tree__item-link--active {
+      background: $white;
+    }
+  }
+  .entity-tree__item-expand {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-left: auto;
+    margin-bottom: auto;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    .mat-icon {
+      font-size: 1rem;
+      height: auto;
+      width: auto;
+    }
+    &.entity-tree__item-expand--expanded {
+      transform: rotate(90deg);
+    }
+  }
+  &[data-type="client"] > li > .entity-tree__item-link {
+    // font-weight: bold;
+  }
+  &[data-type="campaign"] li .entity-tree__item-link {
+    padding-left: 2rem;
+  }
+  &[data-type="jobgroup"] li .entity-tree__item-link {
+    padding-left: 3rem;
+  }
+}

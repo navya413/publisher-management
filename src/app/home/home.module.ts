@@ -1,18 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
-import {HeaderComponent} from '../header/header.component';
-import {EditPublisherDialog, PublishersComponent} from '../publishers/publishers.component';
-import {HomeRoutingModule} from './home-routing.module';
-import {RouterModule} from '@angular/router';
-import {
-  MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule,
-  MatTabsModule
-} from "@angular/material";
-import {MomentumTableModule} from "momentum-table";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
-import {TokenInterceptor} from "../auth/token.interceptor";
+import { HeaderComponent } from '../header/header.component';
+import { HomeRoutingModule } from './home-routing.module';
+import { RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TokenInterceptor } from '../auth/token.interceptor';
+import { MaterialModule } from '../material/material.module';
+import { UtilService } from '../services/util.service';
 
 @NgModule({
   imports: [
@@ -20,29 +16,19 @@ import {TokenInterceptor} from "../auth/token.interceptor";
     RouterModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
-    MomentumTableModule,
-    MatCardModule,
-    MatTabsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    HomeRoutingModule
+    MaterialModule,
+    HomeRoutingModule,
   ],
-  declarations: [
-    HomeComponent,
-    HeaderComponent,
-    PublishersComponent,
-    EditPublisherDialog
+  declarations: [HomeComponent, HeaderComponent],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+    UtilService,
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptor,
-    multi: true
-  }],
-  entryComponents: [EditPublisherDialog]
 })
-export class HomeModule { }
+export class HomeModule {}

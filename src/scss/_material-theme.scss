@@ -1,0 +1,12 @@
+@import "~@angular/material/theming";
+
+$jv-primary: mat-palette($mat-blue);
+//$jv-accent: mat-palette($mat-grey, A100);
+
+// Because of the way we want the colors to be used,
+// we aren't exactly following material guidelines
+// for primary and accent colors.
+
+// For components we need different colors, se use
+// the _colors.scss variables and set them explicitly.
+$jv-theme: mat-light-theme($jv-primary, $jv-primary);

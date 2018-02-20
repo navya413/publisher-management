@@ -1,0 +1,12 @@
+<mat-sidenav-container class="sidenav-container mat-typography">
+  <mat-sidenav #sidenav
+               opened="true"
+               mode="side"
+               class="sidenav">
+    <app-entity-nav [routeData]="routeData" (onAgencyChange)="onAgencyChange($event, true)" [selectedAgency]="routeData?.params?.agencyId" [clientTree]="clientTree"></app-entity-nav>
+  </mat-sidenav>
+  <mat-sidenav-content class="sidenav-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

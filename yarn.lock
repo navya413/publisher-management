@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@amcharts/amcharts3-angular@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@amcharts/amcharts3-angular/-/amcharts3-angular-2.0.3.tgz#e015dc53061186bf0e2db299beb38ccaa79b0f95"
+
 "@angular-devkit/build-optimizer@~0.0.41":
   version "0.0.42"
   resolved "https://registry.yarnpkg.com/@angular-devkit/build-optimizer/-/build-optimizer-0.0.42.tgz#402b0dda4883db91e2381c3ddc55888408a7894e"
@@ -330,6 +334,10 @@ amqplib@^0.5.2:
     buffer-more-ints "0.0.2"
     readable-stream "1.x >=1.1.9"
     safe-buffer "^5.0.1"
+
+angular2-notifications@^0.9.7:
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/angular2-notifications/-/angular2-notifications-0.9.7.tgz#210a007d6b15c92d3fd9b1b1a3e0e221517c09e0"
 
 ansi-html@0.0.7:
   version "0.0.7"
@@ -4193,6 +4201,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+material-design-icons@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/material-design-icons/-/material-design-icons-3.0.1.tgz#9a71c48747218ebca51e51a66da682038cdcb7bf"
+
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.17.tgz#de819fdbcd84dccd8fae59c6aeb79615b9d266ac"
@@ -4394,9 +4406,13 @@ module-deps@^4.0.8:
     through2 "^2.0.0"
     xtend "^4.0.0"
 
-momentum-table@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/momentum-table/-/momentum-table-1.0.0.tgz#13478edca1a05b7a20e1d6ee61cdbd0ab4abcd9a"
+moment@^2.20.1:
+  version "2.20.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
+
+momentum-table@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/momentum-table/-/momentum-table-1.1.1.tgz#d437311ed0bc153838549fabdaede2a225e63306"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -4655,6 +4671,10 @@ normalize-url@^1.4.0:
     prepend-http "^1.0.0"
     query-string "^4.1.0"
     sort-keys "^1.0.0"
+
+normalize.css@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.0.tgz#14ac5e461612538a4ce9be90a7da23f86e718493"
 
 npm-run-path@^2.0.0:
   version "2.0.2"

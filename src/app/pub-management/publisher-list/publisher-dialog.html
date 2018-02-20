@@ -1,0 +1,75 @@
+<div mat-dialog-title class="dialog-header">
+  <span style="padding-top: 0.7rem;">New Publisher</span>
+  <mat-form-field [floatLabel]="'never'" class="header-select">
+    <mat-select [(ngModel)]="dataObj.agencyList" placeholder="Agency" multiple>
+      <mat-option *ngFor="let agency of agencies" [value]="agency">
+        {{ agency }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-content>
+  <div class="grid-container">
+    <mat-form-field>
+      <input [(ngModel)]="dataObj.placement.name" matInput placeholder="Name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [(ngModel)]="dataObj.placement.bidType.name" placeholder="Bid Type">
+        <mat-option *ngFor="let type of bidTypes" [value]="type.value">
+          {{ type.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input [(ngModel)]="dataObj.placement.currency" matInput placeholder="Currency">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" [(ngModel)]="dataObj.placement.minBid" matInput placeholder="Min Bid">
+    </mat-form-field>
+    <mat-form-field>
+      <input [(ngModel)]="dataObj.placement.placementType" matInput placeholder="Placement Type">
+    </mat-form-field>
+    <mat-form-field>
+      <input [(ngModel)]="dataObj.placement.placementAlias" matInput placeholder="Placement Alias">
+    </mat-form-field>
+    <mat-form-field class="full-width-col">
+      <input [(ngModel)]="dataObj.placement.url" matInput placeholder="URL">
+    </mat-form-field>
+
+    <mat-checkbox class="full-width-col" [(ngModel)]="ftpEnabled">FTP Credentials</mat-checkbox>
+    <div class="full-width-col inner-grid" *ngIf="ftpEnabled">
+      <mat-form-field class="full-width-col">
+        <input [(ngModel)]="dataObj.placement.outboundFtp.host" matInput placeholder="Host">
+      </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="dataObj.placement.outboundFtp.username" matInput placeholder="Username">
+      </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="dataObj.placement.outboundFtp.password" matInput placeholder="Password">
+      </mat-form-field>
+      <mat-form-field class="full-width-col">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let recipient of recipients"
+                    [selectable]="true"
+                    [removable]="true"
+                    (remove)="removeRecipient(recipient)">
+            {{recipient}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="true"
+                 (matChipInputTokenEnd)="addRecipient($event)"
+                 placeholder="Alert Recipients" />
+        </mat-chip-list>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<span style="color: red">{{error}}</span>
+<div mat-dialog-actions style="display: flex">
+  <button *ngIf="!loading" mat-raised-button (click)="onCancel()" style="margin-left: auto">Cancel</button>
+  <button *ngIf="!loading" mat-raised-button color="primary"  (click)="createPublisher()">Submit</button>
+
+  <mat-spinner *ngIf="loading" style="margin-left: auto" [diameter]="30"></mat-spinner>
+</div>

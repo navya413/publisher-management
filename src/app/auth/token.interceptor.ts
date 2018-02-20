@@ -13,7 +13,7 @@ export class TokenInterceptor implements HttpInterceptor {
     const auth = this.inj.get(AuthService);
     request = request.clone({
       setHeaders: {
-        MojoAccessToken: auth.getToken()
+        MojoAccessToken: auth.getToken() || null
       }
     });
     return next.handle(request);

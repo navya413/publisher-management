@@ -9,11 +9,14 @@ import {AuthService} from '../auth/auth.service';
 export class HeaderComponent implements OnInit {
 
   navLinks = [{
-    path: 'publisher',
-    label: 'Publisher'
+    path: 'publisher-monitor',
+    label: 'Publisher Monitor'
   }, {
-    path: 'publisher2',
-    label: 'Publisher2'
+    path: 'publisher-management',
+    label: 'Publisher Management'
+  }, {
+    path: 'publisher-feeds',
+    label: 'Publisher Feeds'
   }];
   constructor(public authService: AuthService) { }
 

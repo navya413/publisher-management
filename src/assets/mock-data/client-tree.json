@@ -1,0 +1,962 @@
+{
+  "clientTree": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "0db1e4fd-7d4d-4a00-a989-7c4e2bac462d$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "0db1e4fd-7d4d-4a00-a989-7c4e2bac462d$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "0db1e4fd-7d4d-4a00-a989-7c4e2bac462d",
+      "name": "c"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "f853fbc3-8510-4103-be8e-60d21eea108c$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "f853fbc3-8510-4103-be8e-60d21eea108c$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "f853fbc3-8510-4103-be8e-60d21eea108c",
+      "name": "Bay and Bay"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "b4b7df4f-5f15-4ad1-828a-3e5cb89636af$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "b4b7df4f-5f15-4ad1-828a-3e5cb89636af$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "b4b7df4f-5f15-4ad1-828a-3e5cb89636af",
+      "name": "Recruits Test"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "34e4386f-9a97-487a-bcd6-ef676c9fd4fc$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "34e4386f-9a97-487a-bcd6-ef676c9fd4fc$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "34e4386f-9a97-487a-bcd6-ef676c9fd4fc",
+      "name": "CRST Expedited"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "ab656300-a138-40ff-9ef1-ff0632769aef$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "ab656300-a138-40ff-9ef1-ff0632769aef$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "ab656300-a138-40ff-9ef1-ff0632769aef",
+      "name": "CRST Expedited"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "5183e8f9-2779-4e0c-b901-313bafc43c87$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "5183e8f9-2779-4e0c-b901-313bafc43c87$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "a98d3c63-f2b0-438d-b1c9-94b9adb82baf",
+              "name": "Regional"
+            }
+          ],
+          "id": "3b7844df-96be-456d-846d-a33d9e1fb1c3",
+          "name": "Regional"
+        },
+        {
+          "children": [
+            {
+              "id": "0133dd81-379d-4422-b428-d68caebda291",
+              "name": "High Need"
+            }
+          ],
+          "id": "e0484756-3ac1-49a5-a759-e30372f85086",
+          "name": "High Need"
+        },
+        {
+          "children": [
+            {
+              "id": "279a81c1-07ea-4d9c-88ee-679c0f070fee",
+              "name": "OTR Solo"
+            }
+          ],
+          "id": "16a06df4-e0af-4521-8561-05fc10340451",
+          "name": "OTR Solo"
+        }
+      ],
+      "id": "5183e8f9-2779-4e0c-b901-313bafc43c87",
+      "name": "Mesilla Valley Transportation"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "89e9c8fd-9fa1-4f12-b830-f3b8f4193f11$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "89e9c8fd-9fa1-4f12-b830-f3b8f4193f11$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "4439ce2d-862e-47a9-8e21-f02741c82b80",
+              "name": "Utica"
+            },
+            {
+              "id": "6c6848c8-afca-4639-961e-74165c839620",
+              "name": "Omaha"
+            }
+          ],
+          "id": "a751b4ae-a73c-44ea-902e-8fe02e57ad88",
+          "name": "TC - Brian Newkirk"
+        },
+        {
+          "children": [
+            {
+              "id": "84b1037c-3c9e-4549-abff-030578bf5b0f",
+              "name": "TC-SE - Minneapolis"
+            },
+            {
+              "id": "2fbc0de2-5d92-478d-b832-375aa8ac0c40",
+              "name": "TC-LW - Las Vegas"
+            },
+            {
+              "id": "7b35e7ee-acec-4490-9ed3-a36f09c48965",
+              "name": "TC-MS - Jacksonville"
+            }
+          ],
+          "id": "97d85cc0-f4a2-4b81-ac47-868f7d475b83",
+          "name": "A Cities"
+        }
+      ],
+      "id": "89e9c8fd-9fa1-4f12-b830-f3b8f4193f11",
+      "name": "Alorica - Demo"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "17b92b1a-46b0-40ed-b2ed-ca04d5ebe037$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "17b92b1a-46b0-40ed-b2ed-ca04d5ebe037$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "cadae808-40bd-4e5e-9b91-b223bbf260ed",
+              "name": "Test"
+            }
+          ],
+          "id": "04688764-53f6-4f3c-b788-d31610538d79",
+          "name": "CPC"
+        }
+      ],
+      "id": "17b92b1a-46b0-40ed-b2ed-ca04d5ebe037",
+      "name": "Saia"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "a0639ccb-a6b5-48e0-8667-56b4fcd3d2b2$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "a0639ccb-a6b5-48e0-8667-56b4fcd3d2b2$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "d3df846f-a085-44de-87ad-94ab06f6982f",
+              "name": "Company Driver - Solo"
+            },
+            {
+              "id": "ae8fc0e8-ed02-446f-a741-4803aff217e5",
+              "name": "Company Driver - Teams"
+            },
+            {
+              "id": "b839e2e5-bd1c-4b3d-aff7-44905df2b8dd",
+              "name": "Lease Purchase"
+            },
+            {
+              "id": "8335fe9c-9fb7-4452-adae-1a9770cdd25e",
+              "name": "Student"
+            },
+            {
+              "id": "4eba6733-d04b-4a4e-a8c5-7dc4a1b5ae58",
+              "name": "Recent Grad"
+            },
+            {
+              "id": "8dd52587-a064-4215-9a57-86b7078cb17a",
+              "name": "Flatbed"
+            }
+          ],
+          "id": "dd632asg-a2a5-g310-8adsg-56b4fcd3d2b2",
+          "name": "Campaign"
+        }
+      ],
+      "id": "a0639ccb-a6b5-48e0-8667-56b4fcd3d2b2",
+      "name": "Celadon"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "9c1fe84c-f5ac-44b4-946f-22493a213e42$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "9c1fe84c-f5ac-44b4-946f-22493a213e42$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "9c1fe84c-f5ac-44b4-946f-22493a213e42",
+      "name": "BAYADA - iCIMS"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "e38ca38a-3925-4d40-9c11-0a0195bd46b3$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "e38ca38a-3925-4d40-9c11-0a0195bd46b3$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "5166eefe-b2d5-465e-b59c-342799562790",
+              "name": "Company Drivers"
+            }
+          ],
+          "id": "70997e34-fe82-4c92-8686-cb70311e9bdb",
+          "name": "General"
+        },
+        {
+          "children": [
+            {
+              "id": "9a490a83-5a51-49ca-b386-9841fdf40fa1",
+              "name": "CDL-A Truck Driver - Great Pay and Routes"
+            },
+            {
+              "id": "7ac2655a-0077-409d-bbe7-d0c272691fd2",
+              "name": "Class A CDL Truck Driver"
+            }
+          ],
+          "id": "9e571bd5-bbd1-49a2-9922-a165d2ae47ac",
+          "name": "High Performing"
+        },
+        {
+          "children": [],
+          "id": "cc00ebb8-af3d-43e5-bdd0-13e0310e39d1",
+          "name": "Low Performing"
+        }
+      ],
+      "id": "e38ca38a-3925-4d40-9c11-0a0195bd46b3",
+      "name": "Heartland Express"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "f734cff9-007c-44a0-9e05-e25f0325351d$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "f734cff9-007c-44a0-9e05-e25f0325351d$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "39bee8e0-87dc-4b0b-bd40-d9b89cde2252",
+              "name": "Experienced North"
+            },
+            {
+              "id": "8f2bacb2-0a28-4d5a-afb0-b2317470b7d9",
+              "name": "Experienced South"
+            }
+          ],
+          "id": "c5013d82-1be3-4aeb-b681-a186fc1334cb",
+          "name": "Experienced"
+        }
+      ],
+      "id": "f734cff9-007c-44a0-9e05-e25f0325351d",
+      "name": "USA Truck"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "47035f69-a6d0-4b7d-9c05-371658aca772$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "47035f69-a6d0-4b7d-9c05-371658aca772$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "48273192-3541-40b0-b8d0-859721e3ce10",
+              "name": "Flatbed"
+            },
+            {
+              "id": "c14c6e94-a050-4664-b6c1-200ae205c6ed",
+              "name": "Tanker"
+            },
+            {
+              "id": "b69da3d5-bbf6-4aa5-8e3c-1c3da86fb133",
+              "name": "Tanker"
+            }
+          ],
+          "id": "ae802beb-d26c-44e0-8ec7-2aa510ac62bd",
+          "name": "Campaign"
+        }
+      ],
+      "id": "47035f69-a6d0-4b7d-9c05-371658aca772",
+      "name": "Sherman Brothers Trucking"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "a442b4a1-bd72-40e7-a302-a1fffd2952e5$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "a442b4a1-bd72-40e7-a302-a1fffd2952e5$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "a442b4a1-bd72-40e7-a302-a1fffd2952e5",
+      "name": "Franchise Career Advisors"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "fcb406ba-7142-45ad-a4be-c62f24f882b9$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "fcb406ba-7142-45ad-a4be-c62f24f882b9$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "fcb406ba-7142-45ad-a4be-c62f24f882b9",
+      "name": "Yuma Regional Medical Center"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "ecd3f8e8-957e-4657-bf12-d9baf4c15a33$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "ecd3f8e8-957e-4657-bf12-d9baf4c15a33$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "8f54a55c-6989-4b9a-a1db-43f5a4697b7a",
+              "name": "Regional"
+            },
+            {
+              "id": "5cc1c54e-d756-4bf7-bfaf-ee0727eef64f",
+              "name": "Dedicated Team"
+            },
+            {
+              "id": "5374f9c6-34c3-4cb9-b1af-ceb64438dc5d",
+              "name": "Dedicated Costco"
+            },
+            {
+              "id": "ad5c76ba-dd53-43f2-bf7a-67ee5edd0dba",
+              "name": "Dedicated Team Two"
+            },
+            {
+              "id": "be0d43df-d401-412b-bf4f-ead3cad280fe",
+              "name": "Dallas REAL"
+            },
+            {
+              "id": "5bc13819-9b67-41d7-aae7-b08a736017fa",
+              "name": "Student"
+            },
+            {
+              "id": "0841c8cb-2ef8-4528-b992-fabc6a7e55ff",
+              "name": "OTR"
+            }
+          ],
+          "id": "044341b2-06e2-45ff-b3ca-a4bacb666f25",
+          "name": "Campaign"
+        }
+      ],
+      "id": "ecd3f8e8-957e-4657-bf12-d9baf4c15a33",
+      "name": "Navajo Express"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "c426aa01-14d8-4555-8d2f-b5c2c210637d$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "c426aa01-14d8-4555-8d2f-b5c2c210637d$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "d7ade568-2e61-4f18-a45b-eee11dd33636",
+              "name": "Analyst"
+            },
+            {
+              "id": "ef06b5e2-4e10-44ec-86aa-f8b9480b268d",
+              "name": "IT Jobs"
+            },
+            {
+              "id": "4dac8d00-b429-4d8f-a61b-c11209788487",
+              "name": "Senior Positions"
+            }
+          ],
+          "id": "a93ff888-9335-4e46-afa8-8677aaea9f81",
+          "name": "Main Campaign"
+        }
+      ],
+      "id": "c426aa01-14d8-4555-8d2f-b5c2c210637d",
+      "name": "CareFirst BlueCross Blueshield"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "cae7a3f8-2bf5-49b5-b03d-dd1c032c1233$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "cae7a3f8-2bf5-49b5-b03d-dd1c032c1233$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "cae7a3f8-2bf5-49b5-b03d-dd1c032c1233",
+      "name": "TMC Transportation"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "eea1edb6-fc99-4d45-962c-a8d63168cb4e$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "eea1edb6-fc99-4d45-962c-a8d63168cb4e$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "3fbe98fa-f5d0-4217-b8ff-02bc8795340f",
+              "name": "All Jobs"
+            }
+          ],
+          "id": "dea789de-3970-491f-9920-99e2ae4e5a41",
+          "name": "General Manager"
+        }
+      ],
+      "id": "eea1edb6-fc99-4d45-962c-a8d63168cb4e",
+      "name": "G6 Hospitality"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "70cd5257-8609-4370-a787-ad1fc320cac4$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "70cd5257-8609-4370-a787-ad1fc320cac4$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "70cd5257-8609-4370-a787-ad1fc320cac4",
+      "name": "HireKey - West Marine"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "f6674b8e-190b-4256-968d-6f6397f32511$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "f6674b8e-190b-4256-968d-6f6397f32511$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "a73f13ed-9345-41aa-bfbc-596c10e2c452",
+              "name": "February Jobs"
+            },
+            {
+              "id": "e98708c5-2cb0-48fc-be17-b7de49078ed0",
+              "name": "February Jobs - 2"
+            },
+            {
+              "id": "f807cf5d-e8e7-4b02-81b2-399c872c2d99",
+              "name": "February Jobs 3"
+            },
+            {
+              "id": "f782f9ae-3920-4c12-95ec-35d71b22f462",
+              "name": "Early March Requisitions"
+            },
+            {
+              "id": "f6449666-104b-42a4-87cb-ad09e89ab673",
+              "name": "Part Time"
+            },
+            {
+              "id": "5f1d9486-7d39-4c9a-987f-1479ada7852f",
+              "name": "Full Time"
+            }
+          ],
+          "id": "18d24158-5ac4-4cbc-87bd-7fa096f82ce8",
+          "name": "Sponsored Requisitions"
+        }
+      ],
+      "id": "f6674b8e-190b-4256-968d-6f6397f32511",
+      "name": "University of Phoenix"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "8291e7f5-b832-4830-a1c8-121cef2de75e$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "8291e7f5-b832-4830-a1c8-121cef2de75e$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "8291e7f5-b832-4830-a1c8-121cef2de75e",
+      "name": "Vistaprint"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "d7c0f87f-d8fa-4774-958e-6baca1e8d54f$adgroup$default",
+              "name": "Default AdGroup"
+            },
+            {
+              "id": "45327f67-513f-490e-be67-7e60862ed0bf",
+              "name": "BEST Specialized"
+            },
+            {
+              "id": "833d9ac6-76fd-41e3-9c47-d371e6365828",
+              "name": "BEST Cartage"
+            }
+          ],
+          "id": "d7c0f87f-d8fa-4774-958e-6baca1e8d54f$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "7940dc8a-5234-4cd9-9869-4ef68468b712",
+              "name": "BEST Specialized"
+            },
+            {
+              "id": "d02950e3-66ff-42d4-b8df-43356aa50043",
+              "name": "BEST Specialized"
+            },
+            {
+              "id": "e71ccb7e-b59b-42a2-bcff-eb47f8b3d5c9",
+              "name": "BEST Cartage"
+            },
+            {
+              "id": "0d011c95-4549-4be4-8b6e-2edee3c41374",
+              "name": "BEST Cartage"
+            },
+            {
+              "id": "a29e1e0f-aaec-4fd7-8868-008a4d676d33",
+              "name": "BEST Specialized"
+            },
+            {
+              "id": "c10e4fcd-2771-4feb-a735-dd9f5239dc30",
+              "name": "BEST Cartage"
+            }
+          ],
+          "id": "486e6791-e822-4cea-af7e-28f7d4953b8b",
+          "name": "BEST Logistics"
+        },
+        {
+          "children": [
+            {
+              "id": "5dc8b309-5263-4757-bffc-e3c3f0fda824",
+              "name": "Local"
+            },
+            {
+              "id": "86ba92dc-0064-4a17-8f2e-e55d0bad5008",
+              "name": "Regional"
+            }
+          ],
+          "id": "e78fdd1a-dc0c-4645-8281-3a00cbe02498",
+          "name": "BEST Cartage"
+        },
+        {
+          "children": [
+            {
+              "id": "c8a2e8f7-0ff5-4638-9ec8-2ae807e2c198",
+              "name": "C&S Carpet"
+            }
+          ],
+          "id": "a947a188-b2c0-4dd4-a26c-fcc8382ad1d5",
+          "name": "C&S Carpet Distribution"
+        }
+      ],
+      "id": "d7c0f87f-d8fa-4774-958e-6baca1e8d54f",
+      "name": "BEST Logistics"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "a0b143e8-d3e4-4bae-be51-79b81e92decd$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "a0b143e8-d3e4-4bae-be51-79b81e92decd$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "d071daf7-d061-4403-8653-f13614acaf8f",
+              "name": "Nurse"
+            },
+            {
+              "id": "14d66ab3-7418-47c3-8eee-f4a3e3f8cd32",
+              "name": "Nurse"
+            },
+            {
+              "id": "844d3c22-7990-4cdf-aa71-1d3236240874",
+              "name": "Target"
+            }
+          ],
+          "id": "0be842ff-517a-4b36-ac93-f083e552e0b7",
+          "name": "Sponsored Jobs"
+        }
+      ],
+      "id": "a0b143e8-d3e4-4bae-be51-79b81e92decd",
+      "name": "ADEX Medical Staffing"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "c21dd97d-5555-4325-898b-7849d82ed9ec$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "c21dd97d-5555-4325-898b-7849d82ed9ec$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "05bdcc8b-5a3f-4308-bbb2-2eac84d4e0b0",
+              "name": "High Needs"
+            },
+            {
+              "id": "257ed6a0-587a-4989-a482-4f12802c597d",
+              "name": "Pipeline"
+            },
+            {
+              "id": "f38adbb9-de46-4007-97cc-590edccafdf8",
+              "name": "High Needs 2"
+            }
+          ],
+          "id": "5915acd9-77fc-42a9-afc3-83cdeb700f2e",
+          "name": "Campaign"
+        }
+      ],
+      "id": "c21dd97d-5555-4325-898b-7849d82ed9ec",
+      "name": "CRST Malone"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "a6a0bc57-860e-4bf0-a02c-34b4ded6aeb7$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "a6a0bc57-860e-4bf0-a02c-34b4ded6aeb7$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "ec7cca19-af1f-4c8b-a491-79d63392f38e",
+              "name": "Selected Locations"
+            }
+          ],
+          "id": "def201a4-119a-422c-b235-3837f99263ae",
+          "name": "All Jobs"
+        }
+      ],
+      "id": "a6a0bc57-860e-4bf0-a02c-34b4ded6aeb7",
+      "name": "FCA"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "08708f73-f289-4d6f-9cd6-1a4c2c3c93e3$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "08708f73-f289-4d6f-9cd6-1a4c2c3c93e3$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "b7d24eea-7e53-43c8-9b94-0a8fd2e7f765",
+              "name": "High Needs"
+            },
+            {
+              "id": "c794ff83-e225-48ec-bc3c-53e849ebba88",
+              "name": "Owner Operator"
+            },
+            {
+              "id": "af3d2675-1da2-4c34-becf-4221e78c4741",
+              "name": "Pipeline"
+            }
+          ],
+          "id": "1268925b-daa8-4fa3-b7e5-7c478778d6cf",
+          "name": "Campaign"
+        }
+      ],
+      "id": "08708f73-f289-4d6f-9cd6-1a4c2c3c93e3",
+      "name": "McLeod Express"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "4b20a439-f36b-4aa0-b68d-0a13642b84a3$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "4b20a439-f36b-4aa0-b68d-0a13642b84a3$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "cd889a34-742b-440f-b7d3-fa9e5d006780",
+              "name": "Pipeline"
+            },
+            {
+              "id": "9935e77c-9135-4ff2-91d1-3c6ade423fcd",
+              "name": "High Needs"
+            },
+            {
+              "id": "1cb55e8e-5b92-4248-a55c-1d53c179cfac",
+              "name": "Low Needs"
+            },
+            {
+              "id": "59e702c0-b9e1-41d5-97b5-cb06a7e596d3",
+              "name": "High Needs"
+            },
+            {
+              "id": "913155f6-4986-49e4-b004-8162347d072d",
+              "name": "AdWords Jobs"
+            },
+            {
+              "id": "3d005d54-9e09-48a0-a482-cadf536e28fe",
+              "name": "Facebook Jobs"
+            }
+          ],
+          "id": "86354b4c-08ec-4ee6-9308-1429f1b9a464",
+          "name": "Campaign"
+        }
+      ],
+      "id": "4b20a439-f36b-4aa0-b68d-0a13642b84a3",
+      "name": "CRST Specialized Transportation, Inc."
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "4c19c005-72bd-4886-89f7-cd7d36f012f9$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "4c19c005-72bd-4886-89f7-cd7d36f012f9$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "4c19c005-72bd-4886-89f7-cd7d36f012f9",
+      "name": "Ripple Test"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "c37205b3-e29d-4f67-b5b4-cf00aa343268$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "c37205b3-e29d-4f67-b5b4-cf00aa343268$campaign$default",
+          "name": "Default Campaign"
+        },
+        {
+          "children": [
+            {
+              "id": "019eadd0-6ff3-495a-868f-7bf0b12c0ad8",
+              "name": "IT - High Neeeds"
+            },
+            {
+              "id": "362cdbaa-542f-4514-9676-159195bbdb41",
+              "name": "IT - Standard Jobs"
+            }
+          ],
+          "id": "1e8a04d1-09e5-45fa-bd24-335f83292670",
+          "name": "IT"
+        },
+        {
+          "children": [],
+          "id": "e1b65a6e-f414-41d9-bdc7-4c435890e4c6",
+          "name": "Management"
+        }
+      ],
+      "id": "c37205b3-e29d-4f67-b5b4-cf00aa343268",
+      "name": "Pizza Hut - Corporate"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "7f58cb70-9bb3-4c8f-bf11-6c2dc86dbd88$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "7f58cb70-9bb3-4c8f-bf11-6c2dc86dbd88$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "7f58cb70-9bb3-4c8f-bf11-6c2dc86dbd88",
+      "name": "Pizza Hut - Field"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "9da25666-8a29-45ea-b95a-06bf87b4578b$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "9da25666-8a29-45ea-b95a-06bf87b4578b$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "9da25666-8a29-45ea-b95a-06bf87b4578b",
+      "name": "KFC"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "id": "390538cd-fc6d-43c8-a292-7cc716e8cbd6$adgroup$default",
+              "name": "Default AdGroup"
+            }
+          ],
+          "id": "390538cd-fc6d-43c8-a292-7cc716e8cbd6$campaign$default",
+          "name": "Default Campaign"
+        }
+      ],
+      "id": "390538cd-fc6d-43c8-a292-7cc716e8cbd6",
+      "name": "Valvoline"
+    }
+  ]
+}

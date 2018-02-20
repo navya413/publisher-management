@@ -1,0 +1,38 @@
+// These variable aren't needed for the overall material theme
+// but they are required for custom components we build.
+// Import this file in your custom component's scss and
+// use as required.
+
+@import "material-theme";
+
+// We want to get primary and accent colors using the theme variable
+// rather than direct color, so when we change the theme, those
+// colors adjust automatically.
+$primary: mat-color(map-get($jv-theme, primary));
+$accent: mat-color(map-get($jv-theme, accent));
+
+$primary-bg: mat-color(map-get($jv-theme, primary), 50);
+
+// Danger & Success colors for alerts & related things.
+$danger: mat-color($mat-red, 500);
+$danger-bg: mat-color($mat-red, 100);
+
+$success: mat-color($mat-green, 500);
+$success-bg: mat-color($mat-green, 100);
+
+// Bootstrap styles greyscale!
+$grey-1: mat-color($mat-grey, 100);
+$grey-2: mat-color($mat-grey, 200);
+$grey-3: mat-color($mat-grey, 300);
+$grey-4: mat-color($mat-grey, 400);
+$grey-5: mat-color($mat-grey, 500);
+$grey-6: mat-color($mat-grey, 700);
+$grey-7: mat-color($mat-grey, 800);
+
+// Extremes
+$white: #ffffff;
+$black: #000000;
+
+// main chart colors
+$graphThemeOneLight: #b1d6ff;
+$graphThemeOneDark: #0096ff;
