@@ -136,6 +136,16 @@
       </ng-template>
     </m-column>
 
+    <m-column colBodyClass="align-right" colHeadClass="align-right" field="discrepancyCmAndPubData">
+      <ng-template let-col let-row="row" mTemplate="header">
+        <div class="normal-linehight">Discrepancy</div>
+        <span>CmAndPublisher</span>
+      </ng-template>
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['discrepancyCmAndPubData']['clicks']}}
+      </ng-template>
+    </m-column>
+
     <ng-template let-row let-index="rowIndex" mTemplate="expansion">
 
     </ng-template>

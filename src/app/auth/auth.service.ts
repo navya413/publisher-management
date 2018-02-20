@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class AuthService {
@@ -24,7 +25,7 @@ export class AuthService {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.set('Authorization', 'Basic ' + base64Credentials);
 
-    return this.http.post('http://localhost:11001/api/login', null, {
+    return this.http.post(environment.adminApi + 'login', null, {
       headers
     });
   }

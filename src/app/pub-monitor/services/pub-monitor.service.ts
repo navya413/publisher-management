@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class PubMonitorService {
   constructor(private http: HttpClient) {}
 
   getClientHierarchy(agencyId) {
-    return this.http.get<any>('http://localhost:11001/admin/api/clients', {
+    return this.http.get<any>(environment.adminApi + 'clients', {
       params: {
         agencyId: agencyId,
       },
@@ -15,7 +16,7 @@ export class PubMonitorService {
 
   getPublishersStats(params) {
     const tempParam = JSON.parse(JSON.stringify(params));
-    let url = (tempParam.clientId) ? 'http://localhost:11001/admin/api/stats' : 'http://localhost:11001/admin/api/agencyLevelStats';
+    let url = (tempParam.clientId) ? environment.adminApi + 'stats' : environment.adminApi + 'agencyLevelStats';
     return this.http
       .get<any>(url, {
         params: tempParam,
