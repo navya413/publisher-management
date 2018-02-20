@@ -1,0 +1,24 @@
+<m-table [value]="placements">
+
+  <m-header [title]="'FTP Publishers'" [globalSearch]="true" [searchField]="'box'" [colSetting]="false" [reload]="true" [export]="true">
+  </m-header>
+
+  <m-footer [paginator]="true"></m-footer>
+
+  <m-column field="title" header="Name"></m-column>
+  <m-column field="placementType" header="Placement Type"></m-column>
+  <m-column field="ftp_folder_path" header="FTP Folder Path">
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row[col.field][0]}}
+      <br>
+      {{row[col.field][1]}}
+    </ng-template>
+  </m-column>
+
+  <ng-template mTemplate="emptyTable">
+    <div *ngIf="loading" class="table-loading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <div>Loading...</div>
+    </div>
+  </ng-template>
+</m-table>

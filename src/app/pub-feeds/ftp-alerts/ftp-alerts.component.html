@@ -1,0 +1,26 @@
+<mat-form-field class="header-select">
+  <mat-select #publisherSelect (selectionChange)="onPublisherChange($event)" placeholder="Publisher">
+    <mat-option *ngFor="let publisher of ftpPublishers" [value]="publisher">
+      {{ publisher }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<m-table *ngIf="publisherSelect.value" [value]="alerts">
+
+  <m-header [title]="publisherSelect.value" [globalSearch]="true" [searchField]="'box'" [colSetting]="false" [reload]="true" [export]="true">
+  </m-header>
+
+  <m-footer [paginator]="true"></m-footer>
+
+  <m-column field="clientName" header="Client"></m-column>
+  <m-column field="timestamp" header="Timestamp"></m-column>
+  <m-column field="message" header="Message"></m-column>
+
+  <ng-template mTemplate="emptyTable">
+    <div *ngIf="loading" class="table-loading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <div>Loading...</div>
+    </div>
+  </ng-template>
+</m-table>
