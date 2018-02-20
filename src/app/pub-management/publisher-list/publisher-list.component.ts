@@ -158,6 +158,14 @@ export class PublisherListComponent implements OnInit {
       this.updating = false;
     });
   }
+
+  rowExpanded(val) {
+    console.log(val);
+  }
+
+  rowCollapse(val) {
+    console.log(val);
+  }
 }
 
 @Component({

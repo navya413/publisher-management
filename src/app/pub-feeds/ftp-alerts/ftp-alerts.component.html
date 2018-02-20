@@ -13,8 +13,16 @@
 
   <m-footer [paginator]="true"></m-footer>
 
-  <m-column field="clientName" header="Client"></m-column>
-  <m-column field="timestamp" header="Timestamp"></m-column>
+  <m-column field="clientName" header="Client">
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row[col.field] ? row[col.field] : 'NA'}}
+    </ng-template>
+  </m-column>
+  <m-column field="timestamp" header="Timestamp">
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{getDate(row, col)}}
+    </ng-template>
+  </m-column>
   <m-column field="message" header="Message"></m-column>
 
   <ng-template mTemplate="emptyTable">

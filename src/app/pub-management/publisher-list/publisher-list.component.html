@@ -1,7 +1,8 @@
 <div class="publisher-container">
   <m-table [value]=publishers [selectable]="true" [selectionMode]="'single'"
            [sortLocal]="false" (onSort)="onSortChange($event)"
-           (onPage)="onPageChange($event)">
+           (onPage)="onPageChange($event)"
+           [expandable]="true" (onRowExpand)="rowExpanded($event)" (onRowCollapse)="rowCollapse($event)">
 
 
     <m-header>
@@ -9,7 +10,10 @@
         <div class="card-header">
           <button mat-raised-button color="primary" (click)="openPublisherDialog($event)" style="margin-right: 1rem">Add Publisher</button>
 
-          <button #agencyBtn mat-raised-button class="sec-btn" [matMenuTriggerFor]="agencyMenu">All Agencies<mat-icon>arrow_drop_down</mat-icon></button>
+          <button #agencyBtn mat-raised-button class="sec-btn" [matMenuTriggerFor]="agencyMenu">
+            {{params.agencyId ? params.agencyId : 'All Agencies'}}
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
           <mat-menu #agencyMenu="matMenu" [overlapTrigger]="false">
             <button mat-menu-item *ngFor="let agency of agencies" class="dropdown-option" (click)="onAgencyChange(agency)">{{agency}}</button>
           </mat-menu>
@@ -124,6 +128,32 @@
         </mat-card>
       </ng-template>
     </m-column>
+
+    <ng-template let-row let-index="rowIndex" mTemplate="expansion">
+      <div *ngIf="row['outboundFtp']">
+        <table>
+          <tr>
+            <td>Ftp Host</td>
+            <td>{{row['outboundFtp']['host']}}</td>
+          </tr>
+          <tr>
+            <td>Ftp Username</td>
+            <td>{{row['outboundFtp']['username']}}</td>
+          </tr>
+          <tr>
+            <td>Ftp Password</td>
+            <td>{{row['outboundFtp']['password']}}</td>
+          </tr>
+          <tr>
+            <td>Ftp Alert Recipients</td>
+            <td>{{row['outboundFtp']['alertRecipients']}}</td>
+          </tr>
+        </table>
+      </div>
+      <div *ngIf="!row['outboundFtp']" style="padding: 0 2rem">
+        No FTP found
+      </div>
+    </ng-template>
 
     <ng-template mTemplate="emptyTable">
       <div *ngIf="loading" class="table-loading">

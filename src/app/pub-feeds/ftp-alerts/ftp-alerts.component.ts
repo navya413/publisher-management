@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PubFeedsService } from '../services/pub-feeds.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-ftp-alerts',
@@ -37,5 +38,9 @@ export class FtpAlertsComponent implements OnInit {
       this.loading = false;
     });
     console.log(this.alerts);
+  }
+
+  getDate(row, col) {
+    return (row[col.field]) ? moment(row[col.field]).format('MM-DD-YYYY h:mm:ss') : '--';
   }
 }
