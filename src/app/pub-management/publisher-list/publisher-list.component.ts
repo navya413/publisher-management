@@ -40,6 +40,12 @@ export class PublisherListComponent implements OnInit {
     { name: 'PPP', value: 'PPP' },
   ];
 
+  placementTypes = [
+    { name: 'Job Board', value: 'JobBoard' },
+    { name: 'Direct Employer', value: 'DirectEmployer' },
+    { name: 'All', value: 'All' }
+  ]
+
   constructor(
     private pubManagementService: PubManagementService,
     public dialog: MatDialog,
@@ -95,6 +101,7 @@ export class PublisherListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.success) {
+        this.getPublisherList();
         this.notifService.success(
           'Success',
           'New Publisher created successfully',
@@ -131,6 +138,9 @@ export class PublisherListComponent implements OnInit {
     this.table.switchCellToViewMode(editedCell);
   }
   updateValue(type, row, value) {
+    if(type === 'minBid'){
+      value = parseFloat(value);
+    }
     this.updating = true;
     const updateObj = {
       id: row.id,
@@ -140,6 +150,8 @@ export class PublisherListComponent implements OnInit {
     this.pubManagementService.updatePublisher(updateObj).subscribe(res => {
       console.log(res);
       this.updating = false;
+      this.closeEditor();
+      row[type] = value;
       this.notifService.success('Success', 'Successfully updated');
     }, err => {
       console.log(err);
@@ -161,7 +173,12 @@ export class PublisherDialog {
     { name: 'CPC', value: 'CPC' },
     { name: 'CPA', value: 'CPA' },
     { name: 'Organic', value: 'Organic' },
-    { name: 'PPP', value: 'PPP' },
+    { name: 'PPP', value: 'PPP' }
+  ];
+  placementTypes = [
+    { name: 'Job Board', value: 'JobBoard' },
+    { name: 'Direct Employer', value: 'DirectEmployer' },
+    { name: 'All', value: 'All' }
   ];
   ftpEnabled: boolean;
   recipients = [];
@@ -170,7 +187,6 @@ export class PublisherDialog {
   dataObj = {
     agencyList: [],
     placement: {
-      bidType: {},
       outboundFtp: {},
     },
   };

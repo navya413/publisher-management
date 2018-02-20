@@ -70,34 +70,36 @@
       </ng-template>
     </m-column>
 
-    <m-column field="bidType" header="Bid Type" [sortable]="true" [editable]="true" [editTrigger]="'button'">
+    <m-column field="placementType" header="Placement Type" [sortable]="true">
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{(row['placementType'] && row['placementType']['name']) ? row['placementType']['name'] : '-'}}
+      </ng-template>
+    </m-column>
+
+    <m-column field="bidType" header="Bid Type" [sortable]="true">
       <ng-template let-col let-row="row" mTemplate="body">
         {{row['bidType']['name']}}
+      </ng-template>
+    </m-column>
+
+    <m-column field="minBid" header="Min Bid" [sortable]="true"  [editable]="true" [editTrigger]="'button'">
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row[col.field] ? row[col.field] : '-'}}
       </ng-template>
       <ng-template let-col let-row="row" mTemplate="editor">
         <mat-card class="editor-container">
           <div class="editor-body">
             <mat-form-field>
-              <mat-select #selectEditor [ngModel]="row.bidType.name" placeholder="Bid Type">
-                <mat-option *ngFor="let type of bidTypes" [value]="type.value" (click)="$event.stopPropagation()">
-                  {{ type.name }}
-                </mat-option>
-              </mat-select>
+              <input type="number" matInput #inputEditor [ngModel]="row[col.field]">
               <mat-hint class="error-hint">{{updateError}}</mat-hint>
             </mat-form-field>
           </div>
           <div class="editor-action">
             <button mat-button (click)="closeEditor()" *ngIf="!updating">Cancel</button>
-            <button mat-raised-button style="margin-left: 8px;" color="primary" (click)="updateValue('bidType', row, {name : selectEditor.value})" *ngIf="!updating">Update</button>
+            <button mat-raised-button style="margin-left: 8px;" color="primary" (click)="updateValue('minBid', row, inputEditor.value)" *ngIf="!updating">Update</button>
             <mat-spinner *ngIf="updating" [diameter]="20"></mat-spinner>
           </div>
         </mat-card>
-      </ng-template>
-    </m-column>
-
-    <m-column field="minBid" header="Min Bid" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{row[col.field] ? row[col.field] : '-'}}
       </ng-template>
     </m-column>
     <m-column field="currency" header="Currency" [sortable]="true">
@@ -105,7 +107,23 @@
         {{row[col.field] ? row[col.field] : '-'}}
       </ng-template>
     </m-column>
-    <m-column field="url" header="URL" [sortable]="true"></m-column>
+    <m-column field="url" header="URL" [sortable]="true" [editable]="true" [editTrigger]="'button'">
+      <ng-template let-col let-row="row" mTemplate="editor">
+        <mat-card class="editor-container">
+          <div class="editor-body">
+            <mat-form-field>
+              <input matInput #inputEditor [ngModel]="row[col.field]">
+              <mat-hint class="error-hint">{{updateError}}</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="editor-action">
+            <button mat-button (click)="closeEditor()" *ngIf="!updating">Cancel</button>
+            <button mat-raised-button style="margin-left: 8px;" color="primary" (click)="updateValue('url', row, inputEditor.value)" *ngIf="!updating">Update</button>
+            <mat-spinner *ngIf="updating" [diameter]="20"></mat-spinner>
+          </div>
+        </mat-card>
+      </ng-template>
+    </m-column>
 
     <ng-template mTemplate="emptyTable">
       <div *ngIf="loading" class="table-loading">

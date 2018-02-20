@@ -14,7 +14,7 @@
       <input [(ngModel)]="dataObj.placement.name" matInput placeholder="Name">
     </mat-form-field>
     <mat-form-field>
-      <mat-select [(ngModel)]="dataObj.placement.bidType.name" placeholder="Bid Type">
+      <mat-select [(ngModel)]="dataObj.placement.bidType" placeholder="Bid Type">
         <mat-option *ngFor="let type of bidTypes" [value]="type.value">
           {{ type.name }}
         </mat-option>
@@ -27,12 +27,13 @@
       <input type="number" [(ngModel)]="dataObj.placement.minBid" matInput placeholder="Min Bid">
     </mat-form-field>
     <mat-form-field>
-      <input [(ngModel)]="dataObj.placement.placementType" matInput placeholder="Placement Type">
+      <mat-select [(ngModel)]="dataObj.placement.placementType" placeholder="Placement Type">
+        <mat-option *ngFor="let type of placementTypes" [value]="type.value">
+          {{ type.name }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <input [(ngModel)]="dataObj.placement.placementAlias" matInput placeholder="Placement Alias">
-    </mat-form-field>
-    <mat-form-field class="full-width-col">
       <input [(ngModel)]="dataObj.placement.url" matInput placeholder="URL">
     </mat-form-field>
 
