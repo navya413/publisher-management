@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {environment} from "../../environments/environment";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -19,14 +19,13 @@ export class AuthService {
     }
   }
 
-
   login(email, password) {
     const base64Credentials = window.btoa(email + ':' + password);
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.set('Authorization', 'Basic ' + base64Credentials);
 
-    return this.http.post(environment.adminApi + 'login', null, {
-      headers
+    return this.http.post(environment.authApi + 'login', null, {
+      headers,
     });
   }
 
@@ -60,5 +59,4 @@ export class AuthService {
   public getToken(): string {
     return window[this.storage].getItem('accessToken') || null;
   }
-
 }

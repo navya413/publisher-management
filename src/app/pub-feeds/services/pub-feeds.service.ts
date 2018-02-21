@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class PubFeedsService {
   constructor(private http: HttpClient) {}
 
   getFtpPublishers() {
-    return this.http.get<any>('http://172.31.22.241:8001/placement');
+    return this.http.get<any>(environment.feedsApi + 'placement');
   }
 
   getFtpPublishersTypeahead() {
-    return this.http.get<any>('http://172.31.22.241:8001/placement/values');
+    return this.http.get<any>(environment.feedsApi + 'placement/values');
   }
 
   getPublisherAlerts(publisher) {
-    return this.http.get<any>('http://172.31.22.241:8001/alert/' + publisher);
+    return this.http.get<any>(environment.feedsApi + 'alert/' + publisher);
   }
 }
