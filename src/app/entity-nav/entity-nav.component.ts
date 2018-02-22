@@ -62,7 +62,7 @@ export class EntityNavComponent implements OnInit, OnChanges {
   }
 
   onSelectionChange(val) {
-    this.entityNavTree = null;
+    this.entityNavTree = undefined;
     this.onAgencyChange.emit(val.value);
   }
 

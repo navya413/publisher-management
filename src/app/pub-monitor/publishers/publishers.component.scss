@@ -104,3 +104,7 @@
   color: $grey-5;
   transform: rotate(45deg);
 }
+
+:host ::ng-deep .mat-paginator-container{
+  min-height: 55px;
+}

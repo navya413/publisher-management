@@ -355,11 +355,7 @@ export class PublishersComponent implements OnInit, OnDestroy {
     this.getPublishers();
   }
 
-  rowExpanded(val) {
-
-  }
-
-  rowCollapsed(val) {
+  onRowClick(val) {
     console.log(val);
   }
 

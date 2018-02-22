@@ -48,7 +48,6 @@
     color: $white;
     display: inline-flex;
     margin-left: 0.5rem;
-    font-size: 12px;
     align-items: center;
     justify-content: center;
     content: attr(data-count);
@@ -66,14 +65,14 @@
   }
   list-style-type: none;
   .entity-tree__item-link {
-    padding: 0.25rem 0 0.25rem 1rem;
+    padding: 0.25rem 0.25rem 0.25rem 1rem;
     display: flex;
     align-items: center;
     text-decoration: none;
     color: inherit;
-    font-size: 12px;
     &.entity-tree__item-link--active {
-      background: $white;
+      background: $grey-2;
+      color: $primary;
     }
   }
   .entity-tree__item-expand {

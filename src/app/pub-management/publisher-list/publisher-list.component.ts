@@ -5,14 +5,16 @@ import {
   MatDialog,
   MatDialogRef,
 } from '@angular/material';
+import { FormControl } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { UtilService } from '../../services/util.service';
 import { PubManagementService } from '../services/pub-management.service';
 import { EntityState, INITIAL_ENTITY_STATE } from '../../model/entity-state';
 import { Observable } from 'rxjs/Observable';
-import { FormControl } from '@angular/forms';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/map';
 import { NotificationsService } from 'angular2-notifications';
-import {DataTable} from "momentum-table";
+import {DataTable} from 'momentum-table';
 
 @Component({
   selector: 'app-publisher-list',

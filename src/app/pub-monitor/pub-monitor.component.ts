@@ -52,17 +52,18 @@ export class PubMonitorComponent implements OnInit, OnChanges, OnDestroy {
 
   onAgencyChange(agencyId, navigate?) {
     this.first = false; // hack to call agency changes just 1 time
-    this.entityNavComp.loading = true;
+    this.entityNavComp.loading = true
+    this.clientTree = [];
+    if (navigate) {
+      this.router.navigate(['./', 'agency', agencyId], {
+        relativeTo: this.route,
+      });
+    }
     this.pubMonitorService
       .getClientHierarchy(agencyId)
       .subscribe((res: any) => {
         this.entityNavComp.loading = false;
         this.clientTree = res.clientTree;
-        if (navigate) {
-          this.router.navigate(['./', 'agency', agencyId], {
-            relativeTo: this.route,
-          });
-        }
       }, err => {
         this.entityNavComp.loading = false;
       });

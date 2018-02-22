@@ -2,7 +2,7 @@
   <m-table [value]=publishers [selectable]="true" [selectionMode]="'single'"
            [sortLocal]="false" (onSort)="onSortChange($event)"
            (onPage)="onPageChange($event)"
-           [expandable]="true" (onRowExpand)="rowExpanded($event)" (onRowCollapse)="rowCollapsed($event)">
+           (onRowClick)="onRowClick($event)">
 
     <m-header>
       <ng-template let-header >
@@ -145,10 +145,6 @@
         {{row['discrepancyCmAndPubData']['clicks']}}
       </ng-template>
     </m-column>
-
-    <ng-template let-row let-index="rowIndex" mTemplate="expansion">
-
-    </ng-template>
 
     <ng-template mTemplate="emptyTable">
       <div *ngIf="loading" class="table-loading">

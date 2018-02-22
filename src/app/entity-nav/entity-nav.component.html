@@ -31,7 +31,7 @@
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>
-<section *ngIf="entityNavTree" class="entity-tree">
+<section *ngIf="!loading && entityNavTree" class="entity-tree">
   <button [attr.data-count]='entityNavTree?.length'
           class="entity-tree__title"
           mat-button
