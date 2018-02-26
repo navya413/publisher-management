@@ -35,7 +35,5 @@ export class PubMonitorService {
       .get<any>(url, {
         params: tempParam,
       });
-    // return this.http.get('../../../assets/mock-data/chart-data.json');
   }
-
 }
