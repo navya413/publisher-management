@@ -15,21 +15,13 @@ export class ManagerService {
   }
 
   getValueAxes(metrics: string[]) {
-    const valueAxes = [];
-    metrics.forEach((metric, index) => {
-      const vx = {
-        id: index === 0 ? 'v1' : 'v2',
-        gridAlpha: index === 0 ? 0.1 : 0,
-        position: index === 0 ? 'left' : 'right',
-        axisColor: index === 0 ? colors.valueAxis1 : colors.valueAxis2,
-        tickLength: 0,
-        autoGridCount: true,
-        labelFunction: value => {
-          return this.getMetricPrefix(metric) + value;
-        },
-      };
-      valueAxes.push(vx);
-    });
+    const valueAxes = [{
+      id: 'v1',
+      gridAlpha: 0.1,
+      position: 'left',
+      tickLength: 0,
+      autoGridCount: true
+    }];
     return valueAxes;
   }
 
@@ -38,38 +30,24 @@ export class ManagerService {
     metrics.forEach((metric, index) => {
       const graph = {
         id: 'g' + index,
-        valueAxis: index === 0 ? 'v1' : 'v2',
-        type: index === 0 ? 'column' : 'line',
+        valueAxis: 'v1',
+        type: 'line',
         title: this.getMetricDisplay(metric),
         valueField: metric,
-      };
-      const columnSettings = {
-        lineColor: colors.graphThemeOneDark,
-        fillColors: colors.graphThemeOneLight,
-        fillAlphas: 1,
-        clustered: false,
-        columnWidth: 0.5,
-      };
-      const lineSettings = {
+        balloonFunction: (item) => {
+          return metric + ': <b>' + item.values.value + '</b>';
+        },
         bullet: 'round',
         bulletBorderAlpha: 1,
-        bulletBorderColor: colors.graphThemeOneDark,
-        bulletColor: colors.graphThemeOneLight,
+        bulletBorderColor: colors['themeDark' + (index + 1)],
+        bulletColor: colors['themeLight' + (index + 1)],
         bulletSize: 8,
         hideBulletsCount: 50,
         lineThickness: 2,
-        lineColor: colors.valueAxis2,
+        lineColor: colors['themeLight' + (index + 1)],
         animationPlayed: true,
         useLineColorForBulletBorder: false,
       };
-      switch (graph.type) {
-        case 'column':
-          Object.assign(graph, columnSettings);
-          break;
-        case 'line':
-          Object.assign(graph, lineSettings);
-          break;
-      }
       graphs.push(graph);
     });
     return graphs;
@@ -78,24 +56,28 @@ export class ManagerService {
   public updateDataPoint(data: any, metrics: string[]) {
     const tempData = [];
     if (data) {
-      for (let i = 0; i < data.labels.length; i++) {
+      Object.keys(data).map(label => {
         const obj = {};
-        obj['date'] = data.labels[i];
-        if (metrics && metrics[0]) {
-          obj[metrics[0]] = data[metrics[0]][i];
-        }
-        if (metrics && metrics[1]) {
-          obj[metrics[1]] = data[metrics[1]][i];
-        }
+        obj['date'] = label;
+        metrics.forEach(metricId => {
+          const metric = this.getMetric(metricId)
+          obj[metricId] = data[label][metric.group][metric.type];
+        });
         tempData.push(obj);
-      }
+      });
     }
     return tempData;
   }
 
+  public getMetric(metricId): Metric {
+    const filteredMetrics: Metric[] = METRICS.filter(
+      metric => metricId === metric.id
+    );
+    return filteredMetrics.length ? filteredMetrics[0] : null;
+  }
   public getMetricDisplay(metricId): string {
     const filteredMetrics: Metric[] = METRICS.filter(
-      metric => metricId === metric.id,
+      metric => metricId === metric.id
     );
     return filteredMetrics.length ? filteredMetrics[0].display : null;
   }

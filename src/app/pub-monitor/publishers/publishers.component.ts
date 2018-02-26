@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RouteDataService } from '../../services/route-data.service';
@@ -6,6 +6,7 @@ import { PubMonitorService } from '../services/pub-monitor.service';
 import { EntityState, INITIAL_ENTITY_STATE } from '../../model/entity-state';
 import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-publishers',
@@ -27,6 +28,7 @@ export class PublishersComponent implements OnInit, OnDestroy {
     private routeDataService: RouteDataService,
     private route: ActivatedRoute,
     private router: Router,
+    public dialog: MatDialog
   ) {
     this.route.url.subscribe(data => {
       const tempObj = {};
@@ -355,11 +357,55 @@ export class PublishersComponent implements OnInit, OnDestroy {
     this.getPublishers();
   }
 
-  onRowClick(val) {
-    console.log(val);
+  onRowClick(row) {
+    const dialogRef = this.dialog.open(PublisherDetailDialogComponent, {
+      width: '60vw',
+      data: row
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   ngOnDestroy() {
     this.routeDataSubscription$.unsubscribe();
   }
+}
+
+
+
+@Component({
+  selector: 'publisher-detail-dialog',
+  templateUrl: 'publisher-detail-dialog.html',
+})
+export class PublisherDetailDialogComponent implements OnInit{
+  loading: boolean;
+  chartData: any;
+  constructor(
+    public dialogRef: MatDialogRef<PublisherDetailDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private pubMonitorService: PubMonitorService) { }
+
+  ngOnInit() {
+    this.getChartData();
+  }
+
+  getChartData() {
+    this.loading = true;
+    this.pubMonitorService.getPublisherChartData().subscribe((res: any) => {
+      console.log(JSON.stringify(res));
+      this.loading = false;
+      if (res.success) {
+        this.chartData = res.data;
+      }
+    }, err => {
+      this.loading = false;
+    });
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
+
 }

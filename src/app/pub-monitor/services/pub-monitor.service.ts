@@ -16,11 +16,26 @@ export class PubMonitorService {
 
   getPublishersStats(params) {
     const tempParam = JSON.parse(JSON.stringify(params));
-    let url = (tempParam.clientId) ? environment.adminApi + 'stats' : environment.adminApi + 'agencyLevelStats';
+    const url = (tempParam.clientId) ? environment.adminApi + 'stats' : environment.adminApi + 'agencyLevelStats1';
     return this.http
       .get<any>(url, {
         params: tempParam,
       });
+  }
+
+  getPublisherChartData() {
+    const tempParam = {
+      agencyId: 'bayard',
+      placementId: 'Indeed',
+      freq: 'DAILY',
+      period: 'Last month'
+    }
+    const url = environment.adminApi + 'statsPerPeriod';
+    return this.http
+      .get<any>(url, {
+        params: tempParam,
+      });
+    // return this.http.get('../../../assets/mock-data/chart-data.json');
   }
 
 }

@@ -1,0 +1,1183 @@
+{
+  "success": true,
+  "data": {
+    "1 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "2 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "3 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "4 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "5 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "6 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "7 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "8 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "9 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "10 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "11 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "12 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "13 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "14 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "15 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "16 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "17 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "18 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "19 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "20 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "21 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "22 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "23 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "24 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "25 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "26 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "27 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "28 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "29 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "30 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    },
+    "31 Jan": {
+      "mojoStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "cmStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubDataStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      },
+      "pubPortalStats": {
+        "clicks": 0,
+        "applies": 0,
+        "impressions": 0,
+        "spent": 0,
+        "botClicks": 0,
+        "hires": 0,
+        "currency": "USD"
+      }
+    }
+  }
+}

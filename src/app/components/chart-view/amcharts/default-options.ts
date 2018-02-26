@@ -2,18 +2,20 @@ export enum colors {
   scrollbar = '#AAAAAA',
   scrollbarSelectedBackground = '#888888',
 
-  valueAxis1 = '#666',
-  valueAxis2 = '#d86766',
-
-  graphThemeOneLight = '#B1D6FF',
-  graphThemeOneDark = '#0096FF'
+  themeLight1 = '#a0d468',
+  themeDark1 = '#8cc152',
+  themeLight2 = '#ffce54',
+  themeDark2 = '#f6bb42',
+  themeLight3 = '#ed5565',
+  themeDark3 = '#da4453',
+  themeLight4 = '#6576ed',
+  themeDark4 = '#4b61ed',
 }
 
 export const defaultOptions = {
   type: 'serial',
   dataDateFormat: 'YYYY-MM-DD',
   precision: 2,
-  autoResize: false,
   startEffect: 'easeInSine',
   fontFamily:
     '-apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Oxygen, Ubuntu, Cantarell, \'Open Sans\', \'Helvetica Neue\', sans-serif',

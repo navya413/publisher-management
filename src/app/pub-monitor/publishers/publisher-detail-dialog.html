@@ -1,0 +1,7 @@
+<h1 mat-dialog-title>{{data.data.name}}</h1>
+<div>
+  <app-chart-view [loading]="loading" [data]="chartData"></app-chart-view>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Close</button>
+</div>
