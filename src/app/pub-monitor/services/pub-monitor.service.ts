@@ -16,7 +16,7 @@ export class PubMonitorService {
 
   getPublishersStats(params) {
     const tempParam = JSON.parse(JSON.stringify(params));
-    const url = (tempParam.clientId) ? environment.adminApi + 'stats' : environment.adminApi + 'agencyLevelStats1';
+    const url = (tempParam.clientId) ? environment.adminApi + 'stats' : environment.adminApi + 'agencyLevelStats';
     return this.http
       .get<any>(url, {
         params: tempParam,
