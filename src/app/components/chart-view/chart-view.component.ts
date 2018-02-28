@@ -59,7 +59,7 @@ export class ChartViewComponent implements OnInit, OnChanges, OnDestroy {
       this.selectedMetrics,
     );
     setTimeout(() => {
-      if (options.dataProvider.length) {
+      if (options.dataProvider.length && this.chartDiv) {
         this.chart = this.AmCharts.makeChart(
           this.chartDiv.nativeElement,
           options,

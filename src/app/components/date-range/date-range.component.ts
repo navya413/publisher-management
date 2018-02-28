@@ -3,7 +3,11 @@ import * as moment from 'moment';
 
 interface Range {
   title: string;
-  value: Object;
+  value: {
+    days: string,
+    startDate: string,
+    endDate: string
+  };
 }
 
 @Component({
@@ -15,6 +19,7 @@ export class DateRangeComponent implements OnInit {
   @Output() onDateRangeChange: EventEmitter<any> = new EventEmitter();
 
   @Input() rangeFormat = 'MM/DD/YYYY';
+  @Input() selectedDay = 'This month';
 
   startDate;
   endDate;
@@ -101,7 +106,9 @@ export class DateRangeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedRange = this.ranges[4];
+    this.selectedRange = this.ranges.filter((range) => {
+      return range.value.days === this.selectedDay;
+    })[0];
     // this.onDateRangeChange.emit(this.selectedRange);
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { colors, defaultOptions } from '../amcharts/default-options';
 import { Metric, METRICS } from '../../../model/chart-metrics';
+import * as moment from 'moment';
 
 @Injectable()
 export class ManagerService {
@@ -58,7 +59,7 @@ export class ManagerService {
     if (data) {
       Object.keys(data).map(label => {
         const obj = {};
-        obj['date'] = label;
+        obj['date'] = moment(label).format('ll');
         metrics.forEach(metricId => {
           const metric = this.getMetric(metricId)
           obj[metricId] = data[label][metric.group][metric.type];

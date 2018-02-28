@@ -73,255 +73,6 @@ export class PublishersComponent implements OnInit, OnDestroy {
       },
       err => {
         this.loading = false;
-        this.publisherRes = {
-          success: true,
-          data: {
-            records: [
-              {
-                id: 'Careerbuilder',
-                status: 'A',
-                name: 'CareerBuilder',
-                stats: {
-                  mojoStats: {
-                    clicks: 2350,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 200.00,
-                    botClicks: 2350,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                  cmStats: {
-                    clicks: 1240,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 0,
-                    botClicks: 0,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                  pubDataStats: {
-                    clicks: 0,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 0,
-                    botClicks: 0,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                  pubPortalStats: {
-                    clicks: 0,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 0,
-                    botClicks: 0,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                },
-                discrepancyCmAndPubData: {
-                  clicks: 0,
-                  applies: 0,
-                  impressions: 0,
-                  spent: 0,
-                  botClicks: 0,
-                  hires: 0,
-                  currency: 'USD',
-                },
-                discrepancyMojoAndPubData: {
-                  clicks: 0,
-                  applies: 0,
-                  impressions: 0,
-                  spent: 0,
-                  botClicks: 0,
-                  hires: 0,
-                  currency: 'USD',
-                },
-                discrepancyMojoAndPubPortal: {
-                  clicks: 0,
-                  applies: 0,
-                  impressions: 0,
-                  spent: 0,
-                  botClicks: 0,
-                  hires: 0,
-                  currency: 'USD',
-                },
-              },
-              {
-                id: 'LinkedIn(LimitedListings)',
-                status: 'A',
-                name: 'LinkedIn(LimitedListings)',
-                stats: {
-                  mojoStats: {
-                    clicks: 0,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 0,
-                    botClicks: 0,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                  cmStats: {
-                    clicks: 0,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 0,
-                    botClicks: 0,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                  pubDataStats: {
-                    clicks: 0,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 0,
-                    botClicks: 0,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                  pubPortalStats: {
-                    clicks: 0,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 0,
-                    botClicks: 0,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                },
-                discrepancyCmAndPubData: {
-                  clicks: 0,
-                  applies: 0,
-                  impressions: 0,
-                  spent: 0,
-                  botClicks: 0,
-                  hires: 0,
-                  currency: 'USD',
-                },
-                discrepancyMojoAndPubData: {
-                  clicks: 0,
-                  applies: 0,
-                  impressions: 0,
-                  spent: 0,
-                  botClicks: 0,
-                  hires: 0,
-                  currency: 'USD',
-                },
-                discrepancyMojoAndPubPortal: {
-                  clicks: 0,
-                  applies: 0,
-                  impressions: 0,
-                  spent: 0,
-                  botClicks: 0,
-                  hires: 0,
-                  currency: 'USD',
-                },
-              },
-              {
-                id: 'Indeed Campaign',
-                status: 'A',
-                name: 'Indeed Campaign',
-                stats: {
-                  mojoStats: {
-                    clicks: 0,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 0,
-                    botClicks: 0,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                  cmStats: {
-                    clicks: 0,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 0,
-                    botClicks: 0,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                  pubDataStats: {
-                    clicks: 0,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 0,
-                    botClicks: 0,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                  pubPortalStats: {
-                    clicks: 0,
-                    applies: 0,
-                    impressions: 0,
-                    spent: 0,
-                    botClicks: 0,
-                    hires: 0,
-                    currency: 'USD',
-                  },
-                },
-                discrepancyCmAndPubData: {
-                  clicks: 0,
-                  applies: 0,
-                  impressions: 0,
-                  spent: 0,
-                  botClicks: 0,
-                  hires: 0,
-                  currency: 'USD',
-                },
-                discrepancyMojoAndPubData: {
-                  clicks: 0,
-                  applies: 0,
-                  impressions: 0,
-                  spent: 0,
-                  botClicks: 0,
-                  hires: 0,
-                  currency: 'USD',
-                },
-                discrepancyMojoAndPubPortal: {
-                  clicks: 0,
-                  applies: 0,
-                  impressions: 0,
-                  spent: 0,
-                  botClicks: 0,
-                  hires: 0,
-                  currency: 'USD',
-                },
-              },
-            ],
-            summary: {
-              name: 'Totals',
-              totalPlacements: 16,
-              clicks: 0,
-              botClicks: 0,
-              applies: 0,
-              spent: '0.00',
-              cta: '0.00',
-              cpc: '0.00',
-              cpa: '0.00',
-              sponsoredJobs: 0,
-            },
-            typeAheadData: [
-              'LinkedIn(LimitedListings)',
-              'Indeed Campaign',
-              'Snagajob Postings',
-              'CareerBuilder',
-              'Glassdoor-DirectEmployers',
-              'JobCase Postings',
-              'Glassdoor – Organic',
-              'ZipRecruiter-DirectEmployer',
-              'Joveo Exchange',
-              'DirectEmployers.org Postings',
-              'Nexxt Posting',
-              'Indeed-bid',
-              'Glassdoor Postings',
-              'LinkedIn Postings',
-              'Indeed-organic',
-              'Appcast',
-            ],
-          },
-        };
-        this.publishers = this.publisherRes.data.records;
-        this.typeAhead = this.publisherRes.typeAheadData;
       },
     );
   }
@@ -360,7 +111,10 @@ export class PublishersComponent implements OnInit, OnDestroy {
   onRowClick(row) {
     const dialogRef = this.dialog.open(PublisherDetailDialogComponent, {
       width: '60vw',
-      data: row
+      data: {
+        publisher: row.data,
+        params: this.params
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -382,19 +136,20 @@ export class PublishersComponent implements OnInit, OnDestroy {
 export class PublisherDetailDialogComponent implements OnInit{
   loading: boolean;
   chartData: any;
+  params;
   constructor(
     public dialogRef: MatDialogRef<PublisherDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private pubMonitorService: PubMonitorService) { }
 
   ngOnInit() {
+    this.params = this.composeParams();
     this.getChartData();
   }
 
   getChartData() {
     this.loading = true;
-    this.pubMonitorService.getPublisherChartData().subscribe((res: any) => {
-      console.log(JSON.stringify(res));
+    this.pubMonitorService.getPublisherChartData(this.params).subscribe((res: any) => {
       this.loading = false;
       if (res.success) {
         this.chartData = res.data;
@@ -404,8 +159,26 @@ export class PublisherDetailDialogComponent implements OnInit{
     });
   }
 
+  onDateRangeChange(dateRange) {
+    this.params.period = dateRange.value.days;
+    this.params.startDate = dateRange.value.startDate;
+    this.params.endDate = dateRange.value.endDate;
+
+    this.getChartData();
+  }
+
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  composeParams() {
+    const tempParams = JSON.parse(JSON.stringify(this.data.params));
+    tempParams['placementId'] = this.data.publisher.id;
+    tempParams['period'] = tempParams.days;
+    delete tempParams.days;
+    tempParams['freq'] = 'DAILY';
+
+    return tempParams;
   }
 
 }

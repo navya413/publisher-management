@@ -1,4 +1,7 @@
-<h1 mat-dialog-title>{{data.data.name}}</h1>
+<div mat-dialog-title style="display: flex">
+  {{data.publisher.name}}
+  <app-date-range [selectedDay]="params.period" (onDateRangeChange)="onDateRangeChange($event)" style="margin-left: auto"></app-date-range>
+</div>
 <div>
   <app-chart-view [loading]="loading" [data]="chartData"></app-chart-view>
 </div>
