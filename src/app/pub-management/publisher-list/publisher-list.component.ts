@@ -194,7 +194,7 @@ export class PublisherDialog {
   recipients = [];
   separatorKeysCodes = [ENTER, COMMA];
 
-  dataObj = {
+  dataObj: any = {
     agencyList: [],
     placement: {
       outboundFtp: {},

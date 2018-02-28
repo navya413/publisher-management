@@ -14,7 +14,7 @@ import {EntityNavComponent} from '../entity-nav/entity-nav.component';
 export class PubMonitorComponent implements OnInit, OnChanges, OnDestroy {
   clientTree;
   hierarchy;
-  routeData = {};
+  routeData: any = {};
   publishers: Object[] = [];
 
   @ViewChild(EntityNavComponent) private entityNavComp: EntityNavComponent;
