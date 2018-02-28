@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  authApi: 'http://localhost:11001/api/',
-  adminApi: 'http://localhost:11001/admin/api/',
-  feedsApi: 'http://172.31.22.241:8001/'
+  authApi: 'http://54.144.227.5/api/',
+  adminApi: 'http://54.144.227.5/admin/api/',
+  feedsApi: 'http://54.144.227.5/'
 };

@@ -23,17 +23,11 @@ export class PubMonitorService {
       });
   }
 
-  getPublisherChartData() {
-    const tempParam = {
-      agencyId: 'bayard',
-      placementId: 'Indeed',
-      freq: 'DAILY',
-      period: 'Last month'
-    }
+  getPublisherChartData(params) {
     const url = environment.adminApi + 'statsPerPeriod';
     return this.http
       .get<any>(url, {
-        params: tempParam,
+        params: params,
       });
   }
 }
