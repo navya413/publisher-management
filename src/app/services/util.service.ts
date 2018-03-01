@@ -7,17 +7,27 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class UtilService {
   private agencies$: BehaviorSubject<string[]> = new BehaviorSubject(null);
+  private ftpPublishers$: BehaviorSubject<string[]> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) {
     http
       .get<string[]>(environment.adminApi + 'agencies')
       .subscribe((res: string[]) => {
-        console.log(res);
         this.agencies$.next(res);
+      });
+
+    http
+      .get<string[]>(environment.feedsApi + 'placement/values')
+      .subscribe((res: string[]) => {
+        this.ftpPublishers$.next(res);
       });
   }
 
   getAgencies(): Observable<string[]> {
     return this.agencies$;
+  }
+
+  getFtpPublishersList() {
+    return this.ftpPublishers$;
   }
 }

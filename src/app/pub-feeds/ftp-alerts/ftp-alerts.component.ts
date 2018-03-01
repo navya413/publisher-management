@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PubFeedsService } from '../services/pub-feeds.service';
 import * as moment from 'moment';
+import {UtilService} from "../../services/util.service";
 
 @Component({
   selector: 'app-ftp-alerts',
@@ -12,23 +13,23 @@ export class FtpAlertsComponent implements OnInit {
   alertResp: any;
   alerts;
   loading: boolean;
-  constructor(private pubFeedsService: PubFeedsService) {}
+  selectedPublisher: string;
+  constructor(private pubFeedsService: PubFeedsService, private utilService: UtilService) {}
 
   ngOnInit() {
-    this.pubFeedsService.getFtpPublishersTypeahead().subscribe(
-      (res: any) => {
-        this.ftpPublishers = res;
-      },
-      err => {
-        this.ftpPublishers = ['LinkedIn', 'Bayard'];
-      },
-    );
+    this.utilService.getFtpPublishersList().subscribe(res => {
+      this.ftpPublishers = res;
+      if (this.ftpPublishers && this.ftpPublishers.length) {
+        this.selectedPublisher = this.ftpPublishers[0];
+        this.onPublisherChange(this.selectedPublisher);
+      }
+    });
   }
 
-  onPublisherChange(selectObj) {
+  onPublisherChange(selectPub) {
     this.loading = true;
     this.alerts = [];
-    this.pubFeedsService.getPublisherAlerts(selectObj.value).subscribe(res => {
+    this.pubFeedsService.getPublisherAlerts(selectPub).subscribe(res => {
       this.loading = false;
       this.alertResp = res;
       if (this.alertResp.length) {
@@ -41,6 +42,6 @@ export class FtpAlertsComponent implements OnInit {
   }
 
   getDate(row, col) {
-    return (row[col.field]) ? moment(row[col.field]).format('MM-DD-YYYY h:mm:ss') : '--';
+    return (row[col.field]) ? moment(row[col.field] * 1000).format('MM-DD-YYYY h:mm:ss') : '--';
   }
 }

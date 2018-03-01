@@ -6,6 +6,7 @@
     <app-entity-nav [routeData]="routeData" (onAgencyChange)="onAgencyChange($event, true)" [selectedAgency]="routeData?.params?.agencyId" [clientTree]="clientTree"></app-entity-nav>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
+    <i *ngIf="" class="material-icons">camera_roll</i>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -10,7 +10,7 @@ export class PubFeedsService {
     return this.http.get<any>(environment.feedsApi + 'placement');
   }
 
-  getFtpPublishersTypeahead() {
+  getFtpPublishersList() {
     return this.http.get<any>(environment.feedsApi + 'placement/values');
   }
 
