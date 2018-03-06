@@ -229,12 +229,12 @@ export class PublisherDialog implements OnInit{
         minBid: new FormControl(''),
         placementType: new FormControl(''),
         url: new FormControl('', Validators.required),
-        outboundFtp: new FormGroup({
-          host: new FormControl(''),
-          username: new FormControl(''),
-          password: new FormControl(''),
-          alertRecipients: new FormArray([])
-        }),
+        // outboundFtp: new FormGroup({
+        //   host: new FormControl(''),
+        //   username: new FormControl(''),
+        //   password: new FormControl(''),
+        //   alertRecipients: new FormArray([])
+        // }),
         ftpConfig: new FormGroup({
           credentials: new FormGroup({
             host: new FormControl(''),
@@ -247,7 +247,7 @@ export class PublisherDialog implements OnInit{
     });
   }
 
-  ftpToggle(val) {
+  /*ftpToggle(val) {
     this.ftpEnabled = val.checked;
     const validator = (this.ftpEnabled) ? [Validators.required] : null;
     const ftpBound = this.creationForm.get('placement').get('outboundFtp');
@@ -257,7 +257,7 @@ export class PublisherDialog implements OnInit{
         ftpBound.get(obj).updateValueAndValidity();
       }
     }
-  }
+  }*/
 
   onCancel(): void {
     this.dialogRef.close();
@@ -265,6 +265,7 @@ export class PublisherDialog implements OnInit{
 
   onSubmit() {
     console.log(this.creationForm.value);
+    this.createPublisher()
   }
 
   removeRecipient(index): void {
@@ -289,29 +290,24 @@ export class PublisherDialog implements OnInit{
   }
 
   createPublisher() {
-    // if (this.recipients.length) {
-    //   this.dataObj.placement.outboundFtp['alertRecipients'] = this.recipients;
-    // }
-    // if (this.dataObj.placement['name']) {
-    //   this.dataObj.placement['value'] = this.dataObj.placement['name']
-    //     .trim()
-    //     .replace(/\./g, '_');
-    // }
-    //
-    // // console.log(this.dataObj);
-    // this.loading = true;
-    // this.error = null;
-    // this.pubManagementService.addPublisher(this.dataObj).subscribe(
-    //   res => {
-    //     console.log(res);
-    //     this.loading = false;
-    //     this.dialogRef.close({ success: true });
-    //   },
-    //   err => {
-    //     console.log(err);
-    //     this.error = 'something went wrong, please try again';
-    //     this.loading = false;
-    //   },
-    // );
+    this.creationForm.value.placement['value'] = this.creationForm.value.placement['name']
+      .trim()
+      .replace(/\./g, '_');
+
+    const dataObj = this.creationForm.value;
+    this.loading = true;
+    this.error = null;
+    this.pubManagementService.addPublisher(dataObj).subscribe(
+      res => {
+        console.log(res);
+        this.loading = false;
+        this.dialogRef.close({ success: true });
+      },
+      err => {
+        console.log(err);
+        this.error = 'something went wrong, please try again';
+        this.loading = false;
+      },
+    );
   }
 }
