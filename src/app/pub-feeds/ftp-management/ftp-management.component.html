@@ -9,7 +9,7 @@
   <m-column field="value" header="Name"></m-column>
   <m-column field="placementType" header="Placement Type"></m-column>
   <m-column field="bidType" header="Bid Type"></m-column>
-  <m-column field="ftpconfig" header="FTP Folder Path">
+  <m-column field="ftpConfig" header="FTP Folder Path">
     <ng-template let-col let-row="row" mTemplate="body">
       <div *ngFor="let path of getFolderPath(row, col)">
         {{path}}

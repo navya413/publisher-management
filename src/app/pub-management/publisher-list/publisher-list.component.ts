@@ -5,7 +5,7 @@ import {
   MatDialog,
   MatDialogRef,
 } from '@angular/material';
-import { FormControl } from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { UtilService } from '../../services/util.service';
 import { PubManagementService } from '../services/pub-management.service';
@@ -175,7 +175,7 @@ export class PublisherListComponent implements OnInit {
   templateUrl: 'publisher-dialog.html',
   styleUrls: ['publisher-dialog.scss'],
 })
-export class PublisherDialog {
+export class PublisherDialog implements OnInit{
   loading: boolean;
   error: string;
   agencies: string[];
@@ -191,7 +191,6 @@ export class PublisherDialog {
     { name: 'All', value: 'All' }
   ];
   ftpEnabled: boolean;
-  recipients = [];
   separatorKeysCodes = [ENTER, COMMA];
 
   dataObj: any = {
@@ -201,26 +200,77 @@ export class PublisherDialog {
     },
   };
 
+
+  public creationForm: FormGroup;
+
   constructor(
     public dialogRef: MatDialogRef<PublisherDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public utilService: UtilService,
     private pubManagementService: PubManagementService,
+    private fb: FormBuilder
   ) {
     utilService.getAgencies().subscribe(res => {
       this.agencies = res;
     });
   }
 
+  ngOnInit() {
+    this.initForm();
+  }
+
+  initForm() {
+    this.creationForm = new FormGroup({
+      agencyList: new FormControl([], Validators.required),
+      placement: new FormGroup({
+        name: new FormControl('', Validators.required),
+        bidType: new FormControl('', Validators.required),
+        currency: new FormControl(''),
+        minBid: new FormControl(''),
+        placementType: new FormControl(''),
+        url: new FormControl('', Validators.required),
+        outboundFtp: new FormGroup({
+          host: new FormControl(''),
+          username: new FormControl(''),
+          password: new FormControl(''),
+          alertRecipients: new FormArray([])
+        }),
+        ftpConfig: new FormGroup({
+          credentials: new FormGroup({
+            host: new FormControl(''),
+            username: new FormControl(''),
+            password: new FormControl('')
+          }),
+          alertRecipients: new FormArray([])
+        })
+      })
+    });
+  }
+
+  ftpToggle(val) {
+    this.ftpEnabled = val.checked;
+    const validator = (this.ftpEnabled) ? [Validators.required] : null;
+    const ftpBound = this.creationForm.get('placement').get('outboundFtp');
+    for (const obj in ftpBound['controls']) {
+      if (obj !== 'alertRecipients') {
+        ftpBound.get(obj).setValidators(validator);
+        ftpBound.get(obj).updateValueAndValidity();
+      }
+    }
+  }
+
   onCancel(): void {
     this.dialogRef.close();
   }
 
-  removeRecipient(recipient: any): void {
-    const index = this.recipients.indexOf(recipient);
+  onSubmit() {
+    console.log(this.creationForm.value);
+  }
 
+  removeRecipient(index): void {
     if (index >= 0) {
-      this.recipients.splice(index, 1);
+      const recipients = this.creationForm.controls.placement['controls'].ftpConfig.controls.alertRecipients as FormArray;
+      recipients.removeAt(index);
     }
   }
 
@@ -229,7 +279,8 @@ export class PublisherDialog {
     const value = event.value;
 
     if ((value || '').trim()) {
-      this.recipients.push(value.trim());
+      const recipients = this.creationForm.controls.placement['controls'].ftpConfig.controls.alertRecipients as FormArray;
+      recipients.push(this.fb.control(value.trim()));
     }
 
     if (input) {
@@ -238,29 +289,29 @@ export class PublisherDialog {
   }
 
   createPublisher() {
-    if (this.recipients.length) {
-      this.dataObj.placement.outboundFtp['alertRecipients'] = this.recipients;
-    }
-    if (this.dataObj.placement['name']) {
-      this.dataObj.placement['value'] = this.dataObj.placement['name']
-        .trim()
-        .replace(/\./g, '_');
-    }
-
-    // console.log(this.dataObj);
-    this.loading = true;
-    this.error = null;
-    this.pubManagementService.addPublisher(this.dataObj).subscribe(
-      res => {
-        console.log(res);
-        this.loading = false;
-        this.dialogRef.close({ success: true });
-      },
-      err => {
-        console.log(err);
-        this.error = 'something went wrong, please try again';
-        this.loading = false;
-      },
-    );
+    // if (this.recipients.length) {
+    //   this.dataObj.placement.outboundFtp['alertRecipients'] = this.recipients;
+    // }
+    // if (this.dataObj.placement['name']) {
+    //   this.dataObj.placement['value'] = this.dataObj.placement['name']
+    //     .trim()
+    //     .replace(/\./g, '_');
+    // }
+    //
+    // // console.log(this.dataObj);
+    // this.loading = true;
+    // this.error = null;
+    // this.pubManagementService.addPublisher(this.dataObj).subscribe(
+    //   res => {
+    //     console.log(res);
+    //     this.loading = false;
+    //     this.dialogRef.close({ success: true });
+    //   },
+    //   err => {
+    //     console.log(err);
+    //     this.error = 'something went wrong, please try again';
+    //     this.loading = false;
+    //   },
+    // );
   }
 }
