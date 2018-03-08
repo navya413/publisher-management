@@ -308,9 +308,8 @@ export class PublisherDialog implements OnInit, OnDestroy{
   }
 
   onSubmit() {
-    // this.createPublisher();
     this.utilService.objectCleaner(this.creationForm.value);
-    console.log(this.creationForm.value);
+    this.createPublisher();
   }
 
   removeRecipient(index): void {
