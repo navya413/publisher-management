@@ -59,7 +59,7 @@ export class ManagerService {
     if (data) {
       Object.keys(data).map(label => {
         const obj = {};
-        obj['date'] = moment(label).format('ll');
+        obj['date'] = label;//moment(label).format('ll');
         metrics.forEach(metricId => {
           const metric = this.getMetric(metricId)
           obj[metricId] = data[label][metric.group][metric.type];

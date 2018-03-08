@@ -14,6 +14,12 @@ export enum colors {
 
 export const defaultOptions = {
   type: 'serial',
+  hideCredits: true,
+  numberFormatter: {
+    precision: -1,
+    decimalSeparator: '.',
+    thousandsSeparator: ','
+  },
   dataDateFormat: 'YYYY-MM-DD',
   precision: 2,
   startEffect: 'easeInSine',
@@ -37,14 +43,14 @@ export const defaultOptions = {
     color: colors.scrollbarSelectedBackground
   },
   chartCursor: {
-    categoryBalloonEnabled: false,
+    categoryBalloonEnabled: true,
     pan: true,
     cursorAlpha: 0,
     valueLineAlpha: 0.2
   },
   categoryField: 'date',
   categoryAxis: {
-    parseDates: false,
+    parseDates: true,
     dashLength: 1,
     tickLength: 0,
     minorGridEnabled: true
@@ -53,11 +59,14 @@ export const defaultOptions = {
     useGraphSettings: true,
     position: 'top',
     align: 'left',
-    markerSize: 8
+    markerSize: 10
   },
   balloon: {
-    borderThickness: 1,
-    shadowAlpha: 0
+    shadowAlpha: 0,
+    cornerRadius: 2,
+    adjustBorderColor: false,
+    horizontalPadding: 10,
+    verticalPadding: 10
   },
   export: {
     enabled: false

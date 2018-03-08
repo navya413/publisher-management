@@ -10,13 +10,12 @@
         <div class="card-header">
           <button mat-raised-button color="primary" (click)="openPublisherDialog($event)" style="margin-right: 1rem">Add Publisher</button>
 
-          <button #agencyBtn mat-raised-button class="sec-btn" [matMenuTriggerFor]="agencyMenu">
-            {{params.agencyId ? params.agencyId : 'All Agencies'}}
-            <mat-icon>arrow_drop_down</mat-icon>
+          <button mat-raised-button (click)=agencyMenu.open() style="margin-right: 1rem">
+            <mat-select #agencyMenu [(ngModel)]="selectedAgency" class="agencyList">
+              <mat-option (click)="onAgencyChange()" value="All Agencies">All Agencies</mat-option>
+              <mat-option (click)="onAgencyChange(agency)" *ngFor="let agency of agencies" value="agency">{{agency}}</mat-option>
+            </mat-select>
           </button>
-          <mat-menu #agencyMenu="matMenu" [overlapTrigger]="false">
-            <button mat-menu-item *ngFor="let agency of agencies" class="dropdown-option" (click)="onAgencyChange(agency)">{{agency}}</button>
-          </mat-menu>
 
           <div class="box-search">
             <div class="box-search-icon">
@@ -37,15 +36,15 @@
 
 
           <div class="table-options">
-            <button mat-icon-button class="col-setting-btn">
-              <mat-icon class="mat-24" aria-label="column">view_column</mat-icon>
-            </button>
+            <!--<button mat-icon-button class="col-setting-btn">-->
+              <!--<mat-icon class="mat-24" aria-label="column">view_column</mat-icon>-->
+            <!--</button>-->
 
-            <button mat-icon-button class="col-setting-btn" (click)="openDialog()">
-              <mat-icon class="mat-24" aria-label="download">file_download</mat-icon>
-            </button>
+            <!--<button mat-icon-button class="col-setting-btn" (click)="openDialog()">-->
+              <!--<mat-icon class="mat-24" aria-label="download">file_download</mat-icon>-->
+            <!--</button>-->
 
-            <button mat-icon-button class="col-setting-btn">
+            <button mat-icon-button class="col-setting-btn" (click)="onRefresh()">
               <mat-icon class="mat-24" aria-label="refresh">refresh</mat-icon>
             </button>
           </div>

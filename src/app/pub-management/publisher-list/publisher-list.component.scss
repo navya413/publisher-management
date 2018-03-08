@@ -113,3 +113,14 @@ td {
   padding: 1rem;
 }
 
+
+::ng-deep .agencyList .mat-select-value {
+  display: block !important;
+  max-width: unset !important;
+  width: inherit !important;
+}
+
+:host ::ng-deep .mat-paginator-container{
+  min-height: 55px;
+}
+

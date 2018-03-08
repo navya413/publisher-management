@@ -21,4 +21,12 @@ export class PubManagementService {
   updatePublisher(data) {
     return this.http.put<any>(environment.adminApi + 'publishers', data);
   }
+
+  getEnums(type) {
+    return this.http.get<any>(environment.adminApi + 'publishers/enums', {
+      params: {
+        type: type
+      }
+    });
+  }
 }

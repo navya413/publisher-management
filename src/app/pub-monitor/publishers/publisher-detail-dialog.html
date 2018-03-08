@@ -1,10 +1,10 @@
 <div mat-dialog-title style="display: flex">
   {{data.publisher.name}}
-  <app-date-range [selectedDay]="params.period" (onDateRangeChange)="onDateRangeChange($event)" style="margin-left: auto"></app-date-range>
+  <app-date-range [selectedDay]="pubMonitorService.selectedDay" [startDate]="pubMonitorService.startDate" [endDate]="pubMonitorService.endDate" (onDateRangeChange)="onDateRangeChange($event)" style="margin-left: auto"></app-date-range>
 </div>
 <div>
   <app-chart-view [loading]="loading" [data]="chartData"></app-chart-view>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="closeDialog()">Close</button>
+  <button mat-button mat-raised-button (click)="closeDialog()" style="margin-left: auto">Close</button>
 </div>

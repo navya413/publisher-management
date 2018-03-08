@@ -19,12 +19,13 @@ export class PublishersComponent implements OnInit, OnDestroy {
   publisherRes: any;
   publishers: Object[] = [];
   params: EntityState;
+  level: string;
 
   public typeAhead = [];
   typeAheadCtrl: FormControl;
   filteredOptions: Observable<any[]>;
   constructor(
-    private pubMonitorService: PubMonitorService,
+    public pubMonitorService: PubMonitorService,
     private routeDataService: RouteDataService,
     private route: ActivatedRoute,
     private router: Router,
@@ -42,6 +43,7 @@ export class PublishersComponent implements OnInit, OnDestroy {
         this.params = JSON.parse(JSON.stringify(INITIAL_ENTITY_STATE));
         Object.assign(this.params, data.params);
         this.getPublishers();
+        this.level = data.data.level;
       },
     );
 
@@ -53,7 +55,8 @@ export class PublishersComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   filterOptions(name: string) {
     return this.typeAhead.filter(
@@ -82,6 +85,7 @@ export class PublishersComponent implements OnInit, OnDestroy {
     this.params.startDate = dateRange.value.startDate;
     this.params.endDate = dateRange.value.endDate;
 
+    this.pubMonitorService.setSelectedDay(this.params);
     this.getPublishers();
   }
 
@@ -105,6 +109,10 @@ export class PublishersComponent implements OnInit, OnDestroy {
     this.params.page = INITIAL_ENTITY_STATE.page;
     this.params.limit = INITIAL_ENTITY_STATE.limit;
 
+    this.getPublishers();
+  }
+
+  onRefresh() {
     this.getPublishers();
   }
 
@@ -140,7 +148,7 @@ export class PublisherDetailDialogComponent implements OnInit{
   constructor(
     public dialogRef: MatDialogRef<PublisherDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private pubMonitorService: PubMonitorService) { }
+    public pubMonitorService: PubMonitorService) { }
 
   ngOnInit() {
     this.params = this.composeParams();
@@ -174,7 +182,9 @@ export class PublisherDetailDialogComponent implements OnInit{
   composeParams() {
     const tempParams = JSON.parse(JSON.stringify(this.data.params));
     tempParams['placementId'] = this.data.publisher.id;
-    tempParams['period'] = tempParams.days;
+    tempParams['period'] = this.pubMonitorService.selectedDay;
+    tempParams['startDate'] = this.pubMonitorService.startDate;
+    tempParams['endDate'] = this.pubMonitorService.endDate;
     delete tempParams.days;
     tempParams['freq'] = 'DAILY';
 

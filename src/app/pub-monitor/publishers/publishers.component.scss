@@ -14,6 +14,9 @@
 :host ::ng-deep .align-right{
   text-align: right !important;
 }
+:host ::ng-deep .align-center{
+  text-align: center !important;
+}
 
 .publisher-container{
   display: block;

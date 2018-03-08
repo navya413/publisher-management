@@ -21,7 +21,7 @@
         <input matInput
                placeholder="Publisher Name*"
                formControlName="name">
-        <mat-error *ngIf="!creationForm.controls.placement.controls.name.valid && creationForm.controls.placement.controls.name.touched">Name is required
+        <mat-error *ngIf="!creationForm.get('placement').get('name').valid && creationForm.get('placement').get('name').touched">Name is required
         </mat-error>
       </mat-form-field>
       <mat-form-field>
@@ -32,12 +32,17 @@
             {{ type.name }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="!creationForm.controls.placement.controls.bidType.valid && creationForm.controls.placement.controls.bidType.touched">BidType is required</mat-error>
+        <mat-error *ngIf="!creationForm.get('placement').get('bidType').valid && creationForm.get('placement').get('bidType').touched">BidType is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput
-               placeholder="Currency"
-               formControlName="currency">
+        <mat-select
+          formControlName="currency"
+          placeholder="Currency*">
+          <mat-option *ngFor="let currency of currencies" [value]="currency">
+            {{ currency }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!creationForm.get('placement').get('currency').valid && creationForm.get('placement').get('currency').touched">Currency is required</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input type="number"
@@ -57,58 +62,49 @@
         <input matInput
                placeholder="URL*"
                formControlName="url">
-        <mat-error *ngIf="!creationForm.controls.placement.controls.url.valid && creationForm.controls.placement.controls.url.touched">URL is required</mat-error>
+        <mat-error *ngIf="!creationForm.get('placement').get('url').valid && creationForm.get('placement').get('url').touched">URL is required</mat-error>
       </mat-form-field>
 
-
-
-      <!--<mat-checkbox class="full-width-col" (change)="ftpToggle($event)">FTP Credentials</mat-checkbox>-->
-
-      <!--<div class="full-width-col inner-grid" formGroupName="outboundFtp" *ngIf="ftpEnabled">-->
-        <!--<mat-form-field class="full-width-col">-->
-          <!--<input-->
-            <!--matInput-->
-            <!--placeholder="Host*"-->
-            <!--formControlName="host">-->
-          <!--<mat-error *ngIf="!creationForm.controls.placement.controls.outboundFtp.controls.host.valid && creationForm.controls.placement.controls.outboundFtp.controls.host.touched">Host is required-->
-          <!--</mat-error>-->
-        <!--</mat-form-field>-->
-        <!--<mat-form-field>-->
-          <!--<input-->
-            <!--matInput-->
-            <!--placeholder="Username*"-->
-            <!--formControlName="username">-->
-          <!--<mat-error *ngIf="!creationForm.controls.placement.controls.outboundFtp.controls.username.valid && creationForm.controls.placement.controls.outboundFtp.controls.username.touched">Username is required-->
-          <!--</mat-error>-->
-        <!--</mat-form-field>-->
-        <!--<mat-form-field>-->
-          <!--<input matInput-->
-                 <!--placeholder="Password*"-->
-                 <!--formControlName="password">-->
-          <!--<mat-error *ngIf="!creationForm.controls.placement.controls.outboundFtp.controls.password.valid && creationForm.controls.placement.controls.outboundFtp.controls.password.touched">Password is required-->
-          <!--</mat-error>-->
-        <!--</mat-form-field>-->
-        <!--<mat-form-field class="full-width-col">-->
-          <!--<mat-chip-list #chipList>-->
-            <!--<mat-chip *ngFor="let recipient of creationForm.controls.placement.controls.outboundFtp.get('alertRecipients').controls; let i = index"-->
-                      <!--[selectable]="true"-->
-                      <!--[removable]="true"-->
-                      <!--(remove)="removeRecipient(i)">-->
-              <!--{{recipient.value}}-->
-              <!--<mat-icon matChipRemove>cancel</mat-icon>-->
-            <!--</mat-chip>-->
-            <!--<input [matChipInputFor]="chipList"-->
-                   <!--[matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
-                   <!--[matChipInputAddOnBlur]="true"-->
-                   <!--(matChipInputTokenEnd)="addRecipient($event)"-->
-                   <!--placeholder="Alert Recipients"/>-->
-          <!--</mat-chip-list>-->
-        <!--</mat-form-field>-->
-
-      <!--</div>-->
-
-
       <mat-accordion class="full-width-col">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Additional Details
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="inner-grid">
+            <mat-form-field>
+              <mat-select formControlName="country"
+                          placeholder="Country">
+                <mat-option *ngFor="let country of countries" [value]="country">
+                  {{ country }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select formControlName="industry"
+                          placeholder="Industry"
+                          multiple>
+                <mat-option *ngFor="let industry of industries" [value]="industry">
+                  {{ industry }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput
+                     placeholder="PerClientPlacements"
+                     formControlName="perClientPlacements">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select formControlName="category"
+                          placeholder="Category">
+                <mat-option *ngFor="let category of categories" [value]="category">
+                  {{ category }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -120,48 +116,134 @@
               <mat-form-field class="full-width-col">
                 <input
                   matInput
-                  placeholder="Host*"
+                  placeholder="Host"
                   formControlName="host">
               </mat-form-field>
               <mat-form-field>
                 <input
                   matInput
-                  placeholder="Username*"
+                  placeholder="Username"
                   formControlName="username">
               </mat-form-field>
               <mat-form-field>
                 <input matInput
-                       placeholder="Password*"
+                       placeholder="Password"
                        formControlName="password">
               </mat-form-field>
             </div>
+            <div class="inner-grid">
+              <mat-form-field class="full-width-col">
+                <mat-chip-list #chipList>
+                  <mat-chip *ngFor="let recipient of creationForm.get('placement').get('ftpConfig').get('alertRecipients')['controls']; let i = index"
+                            [selectable]="true"
+                            [removable]="true"
+                            (remove)="removeRecipient(i)">
+                    {{recipient.value}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                  <input [matChipInputFor]="chipList"
+                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                         [matChipInputAddOnBlur]="true"
+                         (matChipInputTokenEnd)="addRecipient($event)"
+                         placeholder="Alert Recipients"/>
+                </mat-chip-list>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Publisher Portal Details
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div formGroupName="publisherPortalDetails" class="inner-grid">
             <mat-form-field class="full-width-col">
-              <mat-chip-list #chipList>
-                <mat-chip *ngFor="let recipient of creationForm.controls.placement.controls.ftpConfig.get('alertRecipients').controls; let i = index"
-                [selectable]="true"
-                [removable]="true"
-                (remove)="removeRecipient(i)">
-                  {{recipient.value}}
-                  <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip>
-                <input [matChipInputFor]="chipList"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="true"
-                (matChipInputTokenEnd)="addRecipient($event)"
-                placeholder="Alert Recipients"/>
-              </mat-chip-list>
+              <input
+                matInput
+                placeholder="URL"
+                formControlName="url">
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Username"
+                formControlName="username">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput
+                     placeholder="Password"
+                     formControlName="password">
             </mat-form-field>
           </div>
         </mat-expansion-panel>
 
-        <!--<mat-expansion-panel>-->
-          <!--<mat-expansion-panel-header>-->
-            <!--<mat-panel-title>-->
-              <!--Publisher Portal Details-->
-            <!--</mat-panel-title>-->
-          <!--</mat-expansion-panel-header>-->
-          <!--<p>I'm visible because I am open</p>-->
-        <!--</mat-expansion-panel>-->
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Publisher Contact Details
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div formGroupName="publisherContactDetails" class="inner-grid">
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Name"
+                formControlName="name">
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Phone"
+                formControlName="phone">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput
+                     placeholder="Email"
+                     formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput
+                     placeholder="BillingEmail"
+                     formControlName="billingEmail">
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Publisher Reconciliation Details
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div formGroupName="publisherReconciliationDetails" class="inner-grid">
+            <mat-form-field>
+              <mat-select
+                formControlName="mode"
+                placeholder="Mode">
+                <mat-option *ngFor="let mode of modesOfFile" [value]="mode">
+                  {{ mode }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" formControlName="startDate" placeholder="Start Date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput
+                     placeholder="Frequency"
+                     formControlName="frequency">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput
+                     placeholder="Timezone"
+                     formControlName="timezone">
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
       </mat-accordion>
 
 

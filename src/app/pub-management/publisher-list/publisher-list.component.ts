@@ -28,6 +28,8 @@ export class PublisherListComponent implements OnInit {
   publishers: Object[] = [];
   params: EntityState;
 
+  selectedAgency = 'All Agencies'
+
   public typeAhead = [];
   typeAheadController: FormControl;
   filteredOptions: Observable<any[]>;
@@ -112,8 +114,8 @@ export class PublisherListComponent implements OnInit {
     });
   }
 
-  onAgencyChange(agency) {
-    this.params.agencyId = agency;
+  onAgencyChange(agency?) {
+    this.params.agencyId = agency ? agency : null;
 
     this.getPublisherList();
   }
@@ -135,10 +137,15 @@ export class PublisherListComponent implements OnInit {
     this.getPublisherList();
   }
 
+  onRefresh() {
+    this.getPublisherList();
+  }
+
   closeEditor() {
     const editedCell = this.table.editingCell;
     this.table.switchCellToViewMode(editedCell);
   }
+
   updateValue(type, row, value) {
     if(type === 'minBid'){
       value = parseFloat(value);
@@ -190,15 +197,13 @@ export class PublisherDialog implements OnInit{
     { name: 'Direct Employer', value: 'DirectEmployer' },
     { name: 'All', value: 'All' }
   ];
-  ftpEnabled: boolean;
   separatorKeysCodes = [ENTER, COMMA];
 
-  dataObj: any = {
-    agencyList: [],
-    placement: {
-      outboundFtp: {},
-    },
-  };
+  countries: string[];
+  industries: string[];
+  categories: string[];
+  currencies: string[];
+  modesOfFile: string[];
 
 
   public creationForm: FormGroup;
@@ -216,7 +221,26 @@ export class PublisherDialog implements OnInit{
   }
 
   ngOnInit() {
+    this.loadEnums();
     this.initForm();
+  }
+
+  loadEnums() {
+    this.pubManagementService.getEnums('country').subscribe(res => {
+      this.countries = res;
+    });
+    this.pubManagementService.getEnums('industry').subscribe(res => {
+      this.industries = res;
+    });
+    this.pubManagementService.getEnums('category').subscribe(res => {
+      this.categories = res;
+    });
+    this.pubManagementService.getEnums('currency').subscribe(res => {
+      this.currencies = res;
+    });
+    this.pubManagementService.getEnums('modeOfFile').subscribe(res => {
+      this.modesOfFile = res;
+    });
   }
 
   initForm() {
@@ -225,39 +249,42 @@ export class PublisherDialog implements OnInit{
       placement: new FormGroup({
         name: new FormControl('', Validators.required),
         bidType: new FormControl('', Validators.required),
-        currency: new FormControl(''),
-        minBid: new FormControl(''),
-        placementType: new FormControl(''),
+        currency: new FormControl('', Validators.required),
+        minBid: new FormControl(),
+        placementType: new FormControl(),
         url: new FormControl('', Validators.required),
-        // outboundFtp: new FormGroup({
-        //   host: new FormControl(''),
-        //   username: new FormControl(''),
-        //   password: new FormControl(''),
-        //   alertRecipients: new FormArray([])
-        // }),
+        country: new FormControl(),
+        industry: new FormControl(),
+        perClientPlacements: new FormControl(),
+        category: new FormControl(),
         ftpConfig: new FormGroup({
           credentials: new FormGroup({
-            host: new FormControl(''),
-            username: new FormControl(''),
-            password: new FormControl('')
+            host: new FormControl(),
+            username: new FormControl(),
+            password: new FormControl()
           }),
           alertRecipients: new FormArray([])
+        }),
+        publisherPortalDetails: new FormGroup({
+          url: new FormControl(),
+          username: new FormControl(),
+          password: new FormControl()
+        }),
+        publisherContactDetails: new FormGroup({
+          name: new FormControl(),
+          phone: new FormControl(),
+          email: new FormControl(),
+          billingEmail: new FormControl()
+        }),
+        publisherReconciliationDetails: new FormGroup({
+          mode: new FormControl(),
+          startDate: new FormControl(),
+          frequency: new FormControl(),
+          timezone: new FormControl()
         })
       })
     });
   }
-
-  /*ftpToggle(val) {
-    this.ftpEnabled = val.checked;
-    const validator = (this.ftpEnabled) ? [Validators.required] : null;
-    const ftpBound = this.creationForm.get('placement').get('outboundFtp');
-    for (const obj in ftpBound['controls']) {
-      if (obj !== 'alertRecipients') {
-        ftpBound.get(obj).setValidators(validator);
-        ftpBound.get(obj).updateValueAndValidity();
-      }
-    }
-  }*/
 
   onCancel(): void {
     this.dialogRef.close();
@@ -265,7 +292,7 @@ export class PublisherDialog implements OnInit{
 
   onSubmit() {
     console.log(this.creationForm.value);
-    this.createPublisher()
+    this.createPublisher();
   }
 
   removeRecipient(index): void {
