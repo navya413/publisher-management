@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatChipInputEvent,
@@ -182,7 +182,7 @@ export class PublisherListComponent implements OnInit {
   templateUrl: 'publisher-dialog.html',
   styleUrls: ['publisher-dialog.scss'],
 })
-export class PublisherDialog implements OnInit{
+export class PublisherDialog implements OnInit, OnDestroy{
   loading: boolean;
   error: string;
   agencies: string[];
@@ -207,6 +207,7 @@ export class PublisherDialog implements OnInit{
 
 
   public creationForm: FormGroup;
+  ftpConfigSubscription$;
 
   constructor(
     public dialogRef: MatDialogRef<PublisherDialog>,
@@ -223,6 +224,22 @@ export class PublisherDialog implements OnInit{
   ngOnInit() {
     this.loadEnums();
     this.initForm();
+
+    this.ftpConfigSubscription$ = this.creationForm.get('placement').get('ftpConfig').get('credentials').valueChanges.subscribe(res => {
+      this.utilService.objectCleaner(res);
+      const controls = this.creationForm.get('placement').get('ftpConfig').get('credentials')['controls'];
+      if (!this.utilService.isEmpty(res)) {
+        Object.keys(controls).forEach(key => {
+          controls[key].setValidators([Validators.required]);
+          controls[key].updateValueAndValidity({emitEvent: false});
+        });
+      } else {
+        Object.keys(controls).forEach(key => {
+          controls[key].setValidators([Validators.nullValidator]);
+          controls[key].updateValueAndValidity({emitEvent: false});
+        });
+      }
+    });
   }
 
   loadEnums() {
@@ -291,7 +308,7 @@ export class PublisherDialog implements OnInit{
   }
 
   onSubmit() {
-    console.log(this.creationForm.value);
+    this.utilService.objectCleaner(this.creationForm.value);
     this.createPublisher();
   }
 
@@ -336,5 +353,11 @@ export class PublisherDialog implements OnInit{
         this.loading = false;
       },
     );
+  }
+
+  ngOnDestroy() {
+    if (this.ftpConfigSubscription$) {
+      this.ftpConfigSubscription$.unsubscribe();
+    }
   }
 }

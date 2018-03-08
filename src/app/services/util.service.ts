@@ -30,4 +30,23 @@ export class UtilService {
   getFtpPublishersList() {
     return this.ftpPublishers$;
   }
+
+
+  isEmpty(obj) {
+    return !Object.keys(obj).length;
+  }
+
+  objectCleaner(obj) {
+    Object.keys(obj).forEach(key => {
+      if (obj[key] !== null && typeof(obj[key]) === 'object') {
+        this.objectCleaner(obj[key]);
+        if (this.isEmpty(obj[key])) {
+          delete obj[key];
+        }
+      }
+      if (obj[key] === null || obj[key] === '' || obj[key] === undefined) {
+        delete obj[key];
+      }
+    });
+  }
 }
