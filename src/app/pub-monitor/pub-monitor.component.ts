@@ -13,7 +13,6 @@ import {EntityNavComponent} from '../entity-nav/entity-nav.component';
 })
 export class PubMonitorComponent implements OnInit, OnChanges, OnDestroy {
   clientTree;
-  hierarchy;
   routeData: any = {};
   publishers: Object[] = [];
 
@@ -52,7 +51,7 @@ export class PubMonitorComponent implements OnInit, OnChanges, OnDestroy {
 
   onAgencyChange(agencyId, navigate?) {
     this.first = false; // hack to call agency changes just 1 time
-    this.entityNavComp.loading = true
+    this.entityNavComp.loading = true;
     this.clientTree = [];
     if (navigate) {
       this.router.navigate(['./', 'agency', agencyId], {

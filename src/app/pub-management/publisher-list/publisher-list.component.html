@@ -13,7 +13,7 @@
           <button mat-raised-button (click)=agencyMenu.open() style="margin-right: 1rem">
             <mat-select #agencyMenu [(ngModel)]="selectedAgency" class="agencyList">
               <mat-option (click)="onAgencyChange()" value="All Agencies">All Agencies</mat-option>
-              <mat-option (click)="onAgencyChange(agency)" *ngFor="let agency of agencies" value="agency">{{agency}}</mat-option>
+              <mat-option (click)="onAgencyChange(agency)" *ngFor="let agency of agencies" [value]="agency">{{agency}}</mat-option>
             </mat-select>
           </button>
 

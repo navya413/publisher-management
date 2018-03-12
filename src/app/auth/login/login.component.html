@@ -13,12 +13,16 @@
                matInput
                formControlName="email"
                placeholder="Email">
+        <mat-error *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched">Please enter a valid email.
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="login-field">
         <input type="password"
                matInput
                formControlName="password"
                placeholder="Password">
+        <mat-error *ngIf="!signupForm.get('password').valid && signupForm.get('password').touched"> Please enter a password.
+        </mat-error>
       </mat-form-field>
       <mat-checkbox
         [(ngModel)]="rememberMe"
@@ -29,6 +33,7 @@
     <div class="login-actions">
       <button type="submit"
               mat-raised-button
+              [disabled]="!signupForm.valid"
               color="primary">Login
       </button>
     </div>
