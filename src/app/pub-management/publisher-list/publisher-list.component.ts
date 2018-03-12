@@ -1,11 +1,17 @@
-import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatChipInputEvent,
   MatDialog,
   MatDialogRef,
 } from '@angular/material';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { UtilService } from '../../services/util.service';
 import { PubManagementService } from '../services/pub-management.service';
@@ -14,7 +20,9 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
 import { NotificationsService } from 'angular2-notifications';
-import {DataTable} from 'momentum-table';
+import { DataTable } from 'momentum-table';
+import { BID_TYPES, PLACEMENT_TYPES } from '../../model/entity';
+import {PublisherDetailDialogComponent} from "../../pub-monitor/publishers/publishers.component";
 
 @Component({
   selector: 'app-publisher-list',
@@ -28,7 +36,7 @@ export class PublisherListComponent implements OnInit {
   publishers: Object[] = [];
   params: EntityState;
 
-  selectedAgency = 'All Agencies'
+  selectedAgency = 'All Agencies';
 
   public typeAhead = [];
   typeAheadController: FormControl;
@@ -37,18 +45,9 @@ export class PublisherListComponent implements OnInit {
   updating: boolean;
   @ViewChild(DataTable) table: DataTable;
 
-  bidTypes = [
-    { name: 'CPC', value: 'CPC' },
-    { name: 'CPA', value: 'CPA' },
-    { name: 'Organic', value: 'Organic' },
-    { name: 'PPP', value: 'PPP' },
-  ];
+  bidTypes = BID_TYPES;
 
-  placementTypes = [
-    { name: 'Job Board', value: 'JobBoard' },
-    { name: 'Direct Employer', value: 'DirectEmployer' },
-    { name: 'All', value: 'All' }
-  ]
+  placementTypes = PLACEMENT_TYPES;
 
   constructor(
     private pubManagementService: PubManagementService,
@@ -61,7 +60,6 @@ export class PublisherListComponent implements OnInit {
     utilService.getAgencies().subscribe(data => {
       this.agencies = data;
     });
-
   }
 
   ngOnInit() {
@@ -88,6 +86,7 @@ export class PublisherListComponent implements OnInit {
       (res: any) => {
         this.loading = false;
         this.publisherResp = res.data;
+        console.log(this.publisherResp);
         this.publishers = this.publisherResp.records;
         this.typeAhead = this.publisherResp.typeahead;
       },
@@ -147,34 +146,61 @@ export class PublisherListComponent implements OnInit {
   }
 
   updateValue(type, row, value) {
-    if(type === 'minBid'){
+    if (type === 'minBid') {
       value = parseFloat(value);
     }
     this.updating = true;
     const updateObj = {
-      id: row.id,
+      id: row['placement'].id,
     };
     updateObj[type] = value;
-    console.log(updateObj);
-    this.pubManagementService.updatePublisher(updateObj).subscribe(res => {
-      console.log(res);
-      this.updating = false;
-      this.closeEditor();
-      row[type] = value;
-      this.notifService.success('Success', 'Successfully updated');
-    }, err => {
-      console.log(err);
-      this.updating = false;
+    this.pubManagementService.updatePublisher(updateObj).subscribe(
+      res => {
+        this.updating = false;
+        this.closeEditor();
+        row['placement'][type] = value;
+        this.notifService.success('Success', 'Successfully updated');
+      },
+      err => {
+        this.updating = false;
+      },
+    );
+  }
+
+  onRowClick(row) {
+    const dialogRef = this.dialog.open(PublisherInfoDiolog, {
+      width: '60%',
+      data: row,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.success) {
+        this.notifService.success(
+          'Success',
+          'New Publisher created successfully',
+        );
+      }
     });
   }
+}
 
-  rowExpanded(val) {
-    console.log(val);
+@Component({
+  selector: 'publisher-detail-dialog',
+  templateUrl: 'publisher-info-dialog.html',
+  styleUrls: ['publisher-info-dialog.scss'],
+})
+export class PublisherInfoDiolog implements OnInit {
+
+  constructor(
+    public dialogRef: MatDialogRef<PublisherInfoDiolog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {
   }
 
-  rowCollapse(val) {
-    console.log(val);
+  ngOnInit() {
+    console.log(this.data);
   }
+
 }
 
 @Component({
@@ -182,21 +208,12 @@ export class PublisherListComponent implements OnInit {
   templateUrl: 'publisher-dialog.html',
   styleUrls: ['publisher-dialog.scss'],
 })
-export class PublisherDialog implements OnInit, OnDestroy{
+export class PublisherDialog implements OnInit, OnDestroy {
   loading: boolean;
   error: string;
   agencies: string[];
-  bidTypes = [
-    { name: 'CPC', value: 'CPC' },
-    { name: 'CPA', value: 'CPA' },
-    { name: 'Organic', value: 'Organic' },
-    { name: 'PPP', value: 'PPP' }
-  ];
-  placementTypes = [
-    { name: 'Job Board', value: 'JobBoard' },
-    { name: 'Direct Employer', value: 'DirectEmployer' },
-    { name: 'All', value: 'All' }
-  ];
+  bidTypes = BID_TYPES;
+  placementTypes = PLACEMENT_TYPES;
   separatorKeysCodes = [ENTER, COMMA];
 
   countries: string[];
@@ -204,7 +221,6 @@ export class PublisherDialog implements OnInit, OnDestroy{
   categories: string[];
   currencies: string[];
   modesOfFile: string[];
-
 
   public creationForm: FormGroup;
   ftpConfigSubscription$;
@@ -214,7 +230,7 @@ export class PublisherDialog implements OnInit, OnDestroy{
     @Inject(MAT_DIALOG_DATA) public data: any,
     public utilService: UtilService,
     private pubManagementService: PubManagementService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     utilService.getAgencies().subscribe(res => {
       this.agencies = res;
@@ -225,21 +241,28 @@ export class PublisherDialog implements OnInit, OnDestroy{
     this.loadEnums();
     this.initForm();
 
-    this.ftpConfigSubscription$ = this.creationForm.get('placement').get('ftpConfig').get('credentials').valueChanges.subscribe(res => {
-      this.utilService.objectCleaner(res);
-      const controls = this.creationForm.get('placement').get('ftpConfig').get('credentials')['controls'];
-      if (!this.utilService.isEmpty(res)) {
-        Object.keys(controls).forEach(key => {
-          controls[key].setValidators([Validators.required]);
-          controls[key].updateValueAndValidity({emitEvent: false});
-        });
-      } else {
-        Object.keys(controls).forEach(key => {
-          controls[key].setValidators([Validators.nullValidator]);
-          controls[key].updateValueAndValidity({emitEvent: false});
-        });
-      }
-    });
+    this.ftpConfigSubscription$ = this.creationForm
+      .get('placement')
+      .get('ftpConfig')
+      .get('credentials')
+      .valueChanges.subscribe(res => {
+        this.utilService.objectCleaner(res);
+        const controls = this.creationForm
+          .get('placement')
+          .get('ftpConfig')
+          .get('credentials')['controls'];
+        if (!this.utilService.isEmpty(res)) {
+          Object.keys(controls).forEach(key => {
+            controls[key].setValidators([Validators.required]);
+            controls[key].updateValueAndValidity({ emitEvent: false });
+          });
+        } else {
+          Object.keys(controls).forEach(key => {
+            controls[key].setValidators([Validators.nullValidator]);
+            controls[key].updateValueAndValidity({ emitEvent: false });
+          });
+        }
+      });
   }
 
   loadEnums() {
@@ -278,28 +301,28 @@ export class PublisherDialog implements OnInit, OnDestroy{
           credentials: new FormGroup({
             host: new FormControl(),
             username: new FormControl(),
-            password: new FormControl()
+            password: new FormControl(),
           }),
-          alertRecipients: new FormArray([])
+          alertRecipients: new FormArray([]),
         }),
         publisherPortalDetails: new FormGroup({
           url: new FormControl(),
           username: new FormControl(),
-          password: new FormControl()
+          password: new FormControl(),
         }),
         publisherContactDetails: new FormGroup({
           name: new FormControl(),
           phone: new FormControl(),
           email: new FormControl(),
-          billingEmail: new FormControl()
+          billingEmail: new FormControl(),
         }),
         publisherReconciliationDetails: new FormGroup({
           mode: new FormControl(),
           startDate: new FormControl(),
           frequency: new FormControl(),
-          timezone: new FormControl()
-        })
-      })
+          timezone: new FormControl(),
+        }),
+      }),
     });
   }
 
@@ -314,7 +337,8 @@ export class PublisherDialog implements OnInit, OnDestroy{
 
   removeRecipient(index): void {
     if (index >= 0) {
-      const recipients = this.creationForm.controls.placement['controls'].ftpConfig.controls.alertRecipients as FormArray;
+      const recipients = this.creationForm.controls.placement['controls']
+        .ftpConfig.controls.alertRecipients as FormArray;
       recipients.removeAt(index);
     }
   }
@@ -324,7 +348,8 @@ export class PublisherDialog implements OnInit, OnDestroy{
     const value = event.value;
 
     if ((value || '').trim()) {
-      const recipients = this.creationForm.controls.placement['controls'].ftpConfig.controls.alertRecipients as FormArray;
+      const recipients = this.creationForm.controls.placement['controls']
+        .ftpConfig.controls.alertRecipients as FormArray;
       recipients.push(this.fb.control(value.trim()));
     }
 
@@ -334,9 +359,9 @@ export class PublisherDialog implements OnInit, OnDestroy{
   }
 
   createPublisher() {
-    this.creationForm.value.placement['value'] = this.creationForm.value.placement['name']
-      .trim()
-      .replace(/\./g, '_');
+    this.creationForm.value.placement[
+      'value'
+    ] = this.creationForm.value.placement['name'].trim().replace(/\./g, '_');
 
     const dataObj = this.creationForm.value;
     this.loading = true;
@@ -361,3 +386,4 @@ export class PublisherDialog implements OnInit, OnDestroy{
     }
   }
 }
+

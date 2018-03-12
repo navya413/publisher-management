@@ -1,0 +1,25 @@
+@import "../../../scss/colors";
+
+.grid-container {
+  display: grid;
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+.grid-item {
+  margin: 0.1rem;
+  padding: 1rem;
+  .title{
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+  }
+  .summary{
+    background: #f1f1f1;
+    height: 7rem;
+    overflow: auto;
+    padding: 5px;
+  }
+  .summary .list{
+    margin: 0;
+  }
+}

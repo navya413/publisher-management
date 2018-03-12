@@ -2,7 +2,7 @@
   <m-table [value]=publishers [selectable]="true" [selectionMode]="'single'"
            [sortLocal]="false" (onSort)="onSortChange($event)"
            (onPage)="onPageChange($event)"
-           [expandable]="true" (onRowExpand)="rowExpanded($event)" (onRowCollapse)="rowCollapse($event)">
+           (onRowClick)="onRowClick($event)">
 
 
     <m-header>
@@ -56,11 +56,14 @@
     <m-footer [paginator]="true" [pageSize]="params.limit" [pageIndex]="params.page - 1" [pageSizeOptions]="[10,20,50]" [length]="publisherResp?.typeahead?.length"></m-footer>
 
     <m-column field="name" header="Publisher" [sortable]="true" [editable]="true" [editTrigger]="'button'">
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['placement'][col.field]}}
+      </ng-template>
       <ng-template let-col let-row="row" mTemplate="editor">
         <mat-card class="editor-container">
           <div class="editor-body">
             <mat-form-field>
-              <input matInput #inputEditor [ngModel]="row[col.field]">
+              <input matInput #inputEditor [ngModel]="row['placement'][col.field]">
               <mat-hint class="error-hint">{{updateError}}</mat-hint>
             </mat-form-field>
           </div>
@@ -75,25 +78,37 @@
 
     <m-column field="placementType" header="Placement Type" [sortable]="true">
       <ng-template let-col let-row="row" mTemplate="body">
-        {{(row['placementType'] && row['placementType']['name']) ? row['placementType']['name'] : '-'}}
+        {{(row['placement']['placementType'] && row['placement']['placementType']['name']) ? row['placement']['placementType']['name'] : '-'}}
+      </ng-template>
+    </m-column>
+
+    <m-column field="activeClients" header="Active Clients" [sortable]="true">
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{(row['additionalFields']['activeClients']).length }}
+      </ng-template>
+    </m-column>
+
+    <m-column field="country" header="Country" [sortable]="true">
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{(row['placement']['country']) ? row['placement']['country'] : '-' }}
       </ng-template>
     </m-column>
 
     <m-column field="bidType" header="Bid Type" [sortable]="true">
       <ng-template let-col let-row="row" mTemplate="body">
-        {{row['bidType']['name']}}
+        {{row['placement']['bidType']['name']}}
       </ng-template>
     </m-column>
 
     <m-column field="minBid" header="Min Bid" [sortable]="true"  [editable]="true" [editTrigger]="'button'">
       <ng-template let-col let-row="row" mTemplate="body">
-        {{row[col.field] ? row[col.field] : '-'}}
+        {{row['placement'][col.field] ? row['placement'][col.field] : '-'}}
       </ng-template>
       <ng-template let-col let-row="row" mTemplate="editor">
         <mat-card class="editor-container">
           <div class="editor-body">
             <mat-form-field>
-              <input type="number" matInput #inputEditor [ngModel]="row[col.field]">
+              <input type="number" matInput #inputEditor [ngModel]="row['placement'][col.field]">
               <mat-hint class="error-hint">{{updateError}}</mat-hint>
             </mat-form-field>
           </div>
@@ -107,15 +122,18 @@
     </m-column>
     <m-column field="currency" header="Currency" [sortable]="true">
       <ng-template let-col let-row="row" mTemplate="body">
-        {{row[col.field] ? row[col.field] : '-'}}
+        {{row['placement'][col.field] ? row['placement'][col.field] : '-'}}
       </ng-template>
     </m-column>
     <m-column field="url" header="URL" [sortable]="true" [editable]="true" [editTrigger]="'button'">
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['placement'][col.field]}}
+      </ng-template>
       <ng-template let-col let-row="row" mTemplate="editor">
         <mat-card class="editor-container">
           <div class="editor-body">
             <mat-form-field>
-              <input matInput #inputEditor [ngModel]="row[col.field]">
+              <input matInput #inputEditor [ngModel]="row['placement'][col.field]">
               <mat-hint class="error-hint">{{updateError}}</mat-hint>
             </mat-form-field>
           </div>
@@ -127,32 +145,6 @@
         </mat-card>
       </ng-template>
     </m-column>
-
-    <ng-template let-row let-index="rowIndex" mTemplate="expansion">
-      <div *ngIf="row['outboundFtp']">
-        <table>
-          <tr>
-            <td>Ftp Host</td>
-            <td>{{row['outboundFtp']['host']}}</td>
-          </tr>
-          <tr>
-            <td>Ftp Username</td>
-            <td>{{row['outboundFtp']['username']}}</td>
-          </tr>
-          <tr>
-            <td>Ftp Password</td>
-            <td>{{row['outboundFtp']['password']}}</td>
-          </tr>
-          <tr>
-            <td>Ftp Alert Recipients</td>
-            <td>{{row['outboundFtp']['alertRecipients']}}</td>
-          </tr>
-        </table>
-      </div>
-      <div *ngIf="!row['outboundFtp']" style="padding: 0 2rem">
-        No FTP found
-      </div>
-    </ng-template>
 
     <ng-template mTemplate="emptyTable">
       <div *ngIf="loading" class="table-loading">
