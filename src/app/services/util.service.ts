@@ -6,6 +6,12 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class UtilService {
+  countries: string[];
+  industries: string[];
+  categories: string[];
+  currencies: string[];
+  modesOfFile: string[];
+
   private agencies$: BehaviorSubject<string[]> = new BehaviorSubject(null);
   private ftpPublishers$: BehaviorSubject<string[]> = new BehaviorSubject(null);
 
@@ -21,10 +27,38 @@ export class UtilService {
       .subscribe((res: string[]) => {
         this.ftpPublishers$.next(res);
       });
+
+    this.loadEnums();
   }
 
   getAgencies(): Observable<string[]> {
     return this.agencies$;
+  }
+
+  loadEnums() {
+    this.getEnums('country').subscribe(res => {
+      this.countries = res;
+    });
+    this.getEnums('industry').subscribe(res => {
+      this.industries = res;
+    });
+    this.getEnums('category').subscribe(res => {
+      this.categories = res;
+    });
+    this.getEnums('currency').subscribe(res => {
+      this.currencies = res;
+    });
+    this.getEnums('modeOfFile').subscribe(res => {
+      this.modesOfFile = res;
+    });
+  }
+
+  getEnums(type) {
+    return this.http.get<any>(environment.adminApi + 'publishers/enums', {
+      params: {
+        type: type
+      }
+    });
   }
 
   getFtpPublishersList() {

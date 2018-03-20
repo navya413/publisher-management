@@ -21,8 +21,14 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
 import { NotificationsService } from 'angular2-notifications';
 import { DataTable } from 'momentum-table';
-import { BID_TYPES, PLACEMENT_TYPES } from '../../model/entity';
-import {PublisherDetailDialogComponent} from "../../pub-monitor/publishers/publishers.component";
+import {
+  BID_TYPES, EDIT_OPTIONS, FTP_CONFIG, Item, PLACEMENT_TYPES, PUB_CONTACT_DETAILS,
+  PUB_PORTAL_DETAILS, PUB_RECONCILIATION_DETAILS
+} from '../../model/entity';
+import {
+  FTPConfig, Publisher, PublisherContactDetails, PublisherPortalDetails,
+  PublisherReconciliationDetails
+} from "../../model/publisher";
 
 @Component({
   selector: 'app-publisher-list',
@@ -38,16 +44,21 @@ export class PublisherListComponent implements OnInit {
 
   selectedAgency = 'All Agencies';
 
+  selectedPublishers = [];
+
   public typeAhead = [];
   typeAheadController: FormControl;
   filteredOptions: Observable<any[]>;
 
   updating: boolean;
+  updateError: string;
   @ViewChild(DataTable) table: DataTable;
 
   bidTypes = BID_TYPES;
 
-  placementTypes = PLACEMENT_TYPES;
+  placementTypes: Item[] = PLACEMENT_TYPES;
+
+  editOptions: Item[] = EDIT_OPTIONS;
 
   constructor(
     private pubManagementService: PubManagementService,
@@ -86,7 +97,6 @@ export class PublisherListComponent implements OnInit {
       (res: any) => {
         this.loading = false;
         this.publisherResp = res.data;
-        console.log(this.publisherResp);
         this.publishers = this.publisherResp.records;
         this.typeAhead = this.publisherResp.typeahead;
       },
@@ -145,15 +155,21 @@ export class PublisherListComponent implements OnInit {
     this.table.switchCellToViewMode(editedCell);
   }
 
+  initEdit(val) {
+    this.updateError = null;
+  }
+
   updateValue(type, row, value) {
     if (type === 'minBid') {
       value = parseFloat(value);
     }
     this.updating = true;
+    this.updateError = null;
     const updateObj = {
       id: row['placement'].id,
+      update: {}
     };
-    updateObj[type] = value;
+    updateObj['update'][type] = value;
     this.pubManagementService.updatePublisher(updateObj).subscribe(
       res => {
         this.updating = false;
@@ -163,6 +179,25 @@ export class PublisherListComponent implements OnInit {
       },
       err => {
         this.updating = false;
+        this.updateError = 'Something went wrong, try again';
+      },
+    );
+  }
+
+  pauseClients(row) {
+    this.updating = true;
+    const updateObj = {
+      id: row['placement'].id,
+    };
+    this.pubManagementService.pausePublisher({agency: this.selectedAgency}, updateObj).subscribe(
+      res => {
+        this.updating = false;
+        this.closeEditor();
+        this.notifService.success('Success', 'Successfully updated');
+      },
+      err => {
+        this.updating = false;
+        this.updateError = 'Something went wrong, try again';
       },
     );
   }
@@ -174,35 +209,213 @@ export class PublisherListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  editPublisher(editType) {
+    const dialogRef = this.dialog.open(PublisherEditDiolog, {
+      width: '60%',
+      data: {
+        publisher: this.selectedPublishers[0],
+        type: editType
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
       if (result && result.success) {
+        this.getPublisherList();
         this.notifService.success(
           'Success',
-          'New Publisher created successfully',
+          'Successfully updated',
         );
       }
     });
   }
 }
 
+// Publisher info Dialog
 @Component({
-  selector: 'publisher-detail-dialog',
+  selector: 'publisher-info-dialog',
   templateUrl: 'publisher-info-dialog.html',
   styleUrls: ['publisher-info-dialog.scss'],
 })
-export class PublisherInfoDiolog implements OnInit {
-
+export class PublisherInfoDiolog {
   constructor(
     public dialogRef: MatDialogRef<PublisherInfoDiolog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
   }
 
-  ngOnInit() {
-    console.log(this.data);
+  onCancel() {
+    this.dialogRef.close();
   }
-
 }
 
+
+// Publisher Edit Dialog
+@Component({
+  selector: 'publisher-edit-dialog',
+  templateUrl: 'publisher-edit-dialog.html',
+  styleUrls: ['publisher-edit-dialog.scss'],
+})
+export class PublisherEditDiolog implements OnInit {
+  type: string;
+  loading: boolean;
+  updateError: string;
+  separatorKeysCodes = [ENTER, COMMA];
+  ftpConfig: FormGroup;
+  publisherPortalDetails: FormGroup;
+  publisherContactDetails: FormGroup;
+  publisherReconciliationDetails: FormGroup;
+
+  ftpConfigData: FTPConfig;
+  pubPortalDetailsData: PublisherPortalDetails;
+  pubContactDetailsData: PublisherContactDetails;
+  pubReconciliationDetailsData: PublisherReconciliationDetails;
+  constructor(
+    public dialogRef: MatDialogRef<PublisherEditDiolog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private fb: FormBuilder,
+    private pubManagementService: PubManagementService,
+    public utilService: UtilService
+  ) {
+    this.populateData();
+  }
+
+  ngOnInit() {
+    this.initFtpForm();
+    this.initPubPortalForm();
+    this.initPubContactForm();
+    this.initPubReconciliationForm();
+  }
+
+  initFtpForm() {
+    const host = this.ftpConfigData && this.ftpConfigData.credentials && this.ftpConfigData.credentials.host || '';
+    const username = this.ftpConfigData && this.ftpConfigData.credentials && this.ftpConfigData.credentials.username || '';
+    const password = this.ftpConfigData && this.ftpConfigData.credentials && this.ftpConfigData.credentials.password || '';
+    const alertRecipients = this.ftpConfigData && this.ftpConfigData.alertRecipients || [];
+    this.ftpConfig = new FormGroup({
+      credentials: new FormGroup({
+        host: new FormControl(host, Validators.required),
+        username: new FormControl(username, Validators.required),
+        password: new FormControl(password, Validators.required),
+      }),
+      alertRecipients: this.fb.array(alertRecipients),
+    });
+  }
+
+  initPubPortalForm() {
+    const url = this.pubPortalDetailsData && this.pubPortalDetailsData.url || '';
+    const username = this.pubPortalDetailsData && this.pubPortalDetailsData.username || '';
+    const password = this.pubPortalDetailsData && this.pubPortalDetailsData.password || '';
+    this.publisherPortalDetails = new FormGroup({
+      url: new FormControl(url),
+      username: new FormControl(username),
+      password: new FormControl(password),
+    });
+  }
+
+  initPubContactForm() {
+    const name = this.pubContactDetailsData && this.pubContactDetailsData.name || '';
+    const phone = this.pubContactDetailsData && this.pubContactDetailsData.phone || '';
+    const email = this.pubContactDetailsData && this.pubContactDetailsData.email || '';
+    const billingEmail = this.pubContactDetailsData && this.pubContactDetailsData.billingEmail || '';
+    this.publisherContactDetails = new FormGroup({
+      name: new FormControl(name),
+      phone: new FormControl(phone),
+      email: new FormControl(email),
+      billingEmail: new FormControl(billingEmail),
+    });
+  }
+
+  initPubReconciliationForm() {
+    const mode = this.pubReconciliationDetailsData && this.pubReconciliationDetailsData.mode || '';
+    const startDate = this.pubReconciliationDetailsData && this.pubReconciliationDetailsData.startDate || '';
+    const frequency = this.pubReconciliationDetailsData && this.pubReconciliationDetailsData.frequency || '';
+    const timezone = this.pubReconciliationDetailsData && this.pubReconciliationDetailsData.timezone || '';
+    this.publisherReconciliationDetails = new FormGroup({
+      mode: new FormControl(mode),
+      startDate: new FormControl(startDate),
+      frequency: new FormControl(frequency),
+      timezone: new FormControl(timezone),
+    });
+  }
+
+  populateData() {
+    switch (this.data.type) {
+      case FTP_CONFIG :
+        this.ftpConfigData = this.data.publisher.placement.ftpConfig;
+        this.type = FTP_CONFIG.value;
+        break;
+      case PUB_PORTAL_DETAILS :
+        this.pubPortalDetailsData = this.data.publisher.placement.publisherPortalDetails;
+        this.type = PUB_PORTAL_DETAILS.value;
+        break;
+      case PUB_CONTACT_DETAILS :
+        this.pubContactDetailsData = this.data.publisher.placement.publisherContactDetails;
+        this.type = PUB_CONTACT_DETAILS.value;
+        break;
+      case PUB_RECONCILIATION_DETAILS :
+        this.pubReconciliationDetailsData = this.data.publisher.placement.publisherReconciliationDetails;
+        this.type = PUB_RECONCILIATION_DETAILS.value;
+        break;
+    }
+  }
+
+  removeRecipient(index): void {
+    if (index >= 0) {
+      const recipients = this.ftpConfig.controls.alertRecipients as FormArray;
+      recipients.removeAt(index);
+    }
+  }
+
+  addRecipient(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      const recipients = this.ftpConfig.controls.alertRecipients as FormArray;
+      recipients.push(this.fb.control(value.trim()));
+    }
+
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  isFormValid() {
+    return this[this.type].valid;
+  }
+
+  onCancel() {
+    this.dialogRef.close();
+  }
+
+  onSubmit() {
+    let tempData = {
+      id: this.data.publisher.placement.id,
+      update: {}
+    };
+    tempData['update'][this.type] = this[this.type].value;
+    console.log(tempData);
+    this.loading = true;
+    this.updateError = null;
+    this.pubManagementService.updatePublisher(tempData).subscribe(
+      res => {
+        this.loading = false;
+        this.dialogRef.close({ success: true });
+      },
+      err => {
+        this.loading = false;
+        this.updateError = 'Something went wrong, please try again.';
+      },
+    );
+  }
+}
+
+
+// Publisher Add dialog
 @Component({
   selector: 'publisher-dialog',
   templateUrl: 'publisher-dialog.html',
@@ -215,12 +428,6 @@ export class PublisherDialog implements OnInit, OnDestroy {
   bidTypes = BID_TYPES;
   placementTypes = PLACEMENT_TYPES;
   separatorKeysCodes = [ENTER, COMMA];
-
-  countries: string[];
-  industries: string[];
-  categories: string[];
-  currencies: string[];
-  modesOfFile: string[];
 
   public creationForm: FormGroup;
   ftpConfigSubscription$;
@@ -238,7 +445,6 @@ export class PublisherDialog implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadEnums();
     this.initForm();
 
     this.ftpConfigSubscription$ = this.creationForm
@@ -263,24 +469,6 @@ export class PublisherDialog implements OnInit, OnDestroy {
           });
         }
       });
-  }
-
-  loadEnums() {
-    this.pubManagementService.getEnums('country').subscribe(res => {
-      this.countries = res;
-    });
-    this.pubManagementService.getEnums('industry').subscribe(res => {
-      this.industries = res;
-    });
-    this.pubManagementService.getEnums('category').subscribe(res => {
-      this.categories = res;
-    });
-    this.pubManagementService.getEnums('currency').subscribe(res => {
-      this.currencies = res;
-    });
-    this.pubManagementService.getEnums('modeOfFile').subscribe(res => {
-      this.modesOfFile = res;
-    });
   }
 
   initForm() {
@@ -368,12 +556,10 @@ export class PublisherDialog implements OnInit, OnDestroy {
     this.error = null;
     this.pubManagementService.addPublisher(dataObj).subscribe(
       res => {
-        console.log(res);
         this.loading = false;
         this.dialogRef.close({ success: true });
       },
       err => {
-        console.log(err);
         this.error = 'something went wrong, please try again';
         this.loading = false;
       },

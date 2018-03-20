@@ -1,19 +1,26 @@
 <div class="publisher-container">
-  <m-table [value]=publishers [selectable]="true" [selectionMode]="'single'"
+  <m-table [value]=publishers
+           (onEditInit)="initEdit($event)"
+           [(selection)]="selectedPublishers" [selectable]="true" [selectionMode]="'single'"
            [sortLocal]="false" (onSort)="onSortChange($event)"
            (onPage)="onPageChange($event)"
            (onRowClick)="onRowClick($event)">
 
-
     <m-header>
       <ng-template let-header >
         <div class="card-header">
-          <button mat-raised-button color="primary" (click)="openPublisherDialog($event)" style="margin-right: 1rem">Add Publisher</button>
+          <button mat-raised-button color="primary" (click)="openPublisherDialog($event)" class="btn-margin">Add Publisher</button>
 
-          <button mat-raised-button (click)=agencyMenu.open() style="margin-right: 1rem">
+          <button [disabled]="!selectedPublishers.length" mat-raised-button (click)=editMenu.open()>
+            <mat-select [disabled]="!selectedPublishers.length" #editMenu placeholder="Edit Publisher" class="agencyList">
+              <mat-option (click)="editPublisher(option)" *ngFor="let option of editOptions">{{option.name}}</mat-option>
+            </mat-select>
+          </button>
+
+          <button mat-raised-button (click)=agencyMenu.open() class="agencyFilter">
             <mat-select #agencyMenu [(ngModel)]="selectedAgency" class="agencyList">
               <mat-option (click)="onAgencyChange()" value="All Agencies">All Agencies</mat-option>
-              <mat-option (click)="onAgencyChange(agency)" *ngFor="let agency of agencies" [value]="agency">{{agency}}</mat-option>
+              <mat-option (click)="onAgencyChange(agency)" *ngFor="let agency of agencies" [value]="agency">{{agency.charAt(0).toUpperCase() + agency.slice(1)}}</mat-option>
             </mat-select>
           </button>
 
@@ -54,6 +61,30 @@
     </m-header>
 
     <m-footer [paginator]="true" [pageSize]="params.limit" [pageIndex]="params.page - 1" [pageSizeOptions]="[10,20,50]" [length]="publisherResp?.typeahead?.length"></m-footer>
+
+    <m-column field="status" header="Status" [editable]="selectedAgency && selectedAgency !== 'All Agencies'" [editTrigger]="'button'">
+      <ng-template let-col let-row="row" mTemplate="body">
+        <i class="material-icons status-icon active" *ngIf="(row['additionalFields']['activeClients']).length">check_circle</i>
+        <i class="material-icons status-icon paused" *ngIf="!(row['additionalFields']['activeClients']).length">pause_circle_filled</i>
+      </ng-template>
+      <ng-template let-col let-row="row" mTemplate="editor">
+        <mat-card class="editor-container">
+          <div style="margin-bottom: 1rem">
+            Pause all clients for this Agency
+          </div>
+          <mat-hint class="error-hint">{{ updateError }}</mat-hint>
+          <div class="editor-action">
+            <button *ngIf="!updating" mat-button (click)="closeEditor()">Cancel</button>
+            <button *ngIf="!updating" mat-raised-button (click)="pauseClients(row)" color="primary">
+              <i class="material-icons status-icon">pause_circle_filled</i>
+              <span>Pause</span>
+            </button>
+            <mat-spinner *ngIf="updating" [diameter]="20"></mat-spinner>
+          </div>
+
+        </mat-card>
+      </ng-template>
+    </m-column>
 
     <m-column field="name" header="Publisher" [sortable]="true" [editable]="true" [editTrigger]="'button'">
       <ng-template let-col let-row="row" mTemplate="body">

@@ -38,7 +38,7 @@
         <mat-select
           formControlName="currency"
           placeholder="Currency*">
-          <mat-option *ngFor="let currency of currencies" [value]="currency">
+          <mat-option *ngFor="let currency of utilService.currencies" [value]="currency">
             {{ currency }}
           </mat-option>
         </mat-select>
@@ -76,7 +76,7 @@
             <mat-form-field>
               <mat-select formControlName="country"
                           placeholder="Country">
-                <mat-option *ngFor="let country of countries" [value]="country">
+                <mat-option *ngFor="let country of utilService.countries" [value]="country">
                   {{ country }}
                 </mat-option>
               </mat-select>
@@ -85,20 +85,23 @@
               <mat-select formControlName="industry"
                           placeholder="Industry"
                           multiple>
-                <mat-option *ngFor="let industry of industries" [value]="industry">
+                <mat-option *ngFor="let industry of utilService.industries" [value]="industry">
                   {{ industry }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field>
-              <input matInput
-                     placeholder="PerClientPlacements"
-                     formControlName="perClientPlacements">
+              <mat-select formControlName="perClientPlacements"
+                          placeholder="PerClientPlacements">
+                <mat-option *ngFor="let item of [true, false]" [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field>
               <mat-select formControlName="category"
                           placeholder="Category">
-                <mat-option *ngFor="let category of categories" [value]="category">
+                <mat-option *ngFor="let category of utilService.categories" [value]="category">
                   {{ category }}
                 </mat-option>
               </mat-select>
@@ -222,7 +225,7 @@
               <mat-select
                 formControlName="mode"
                 placeholder="Mode">
-                <mat-option *ngFor="let mode of modesOfFile" [value]="mode">
+                <mat-option *ngFor="let mode of utilService.modesOfFile" [value]="mode">
                   {{ mode }}
                 </mat-option>
               </mat-select>
@@ -246,12 +249,12 @@
         </mat-expansion-panel>
       </mat-accordion>
 
-
     </div>
   </div>
-  <span style="color: red">{{error}}</span>
+
+  <mat-error class="error-hint">{{error}}</mat-error>
   <div mat-dialog-actions style="display: flex">
-    <button *ngIf="!loading" mat-raised-button (click)="onCancel()" style="margin-left: auto">Cancel</button>
+    <button type="button" *ngIf="!loading" mat-raised-button (click)="onCancel()" style="margin-left: auto">Cancel</button>
     <button *ngIf="!loading" mat-raised-button color="primary"  type="submit" [disabled]="!creationForm.valid">Submit</button>
 
     <mat-spinner *ngIf="loading" style="margin-left: auto" [diameter]="30"></mat-spinner>
