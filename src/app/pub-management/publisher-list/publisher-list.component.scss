@@ -6,6 +6,14 @@
   background: #fafafa
 }
 
+.btn-margin{
+  margin-right: 1rem;
+}
+.error-text{
+  font-size: 0.7rem;
+  padding: 0.5rem 0;
+  color: #f44336;
+}
 :host {
   --column-padding: 0 1rem;
 }
@@ -37,8 +45,12 @@
   }
 }
 
+.agencyFilter{
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
 .box-search{
-  margin-right: 10px;
   display: inline-block;
   border-radius: 2px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
@@ -65,7 +77,6 @@
 }
 
 .table-options{
-  margin-left: auto;
   color: grey;
 }
 
@@ -102,6 +113,19 @@
   display: block;
 }
 
+.status-icon {
+  font-size: 1rem;
+}
+.active {
+  color: $primary;
+}
+.paused {
+  color: $grey-5;
+}
+.inactive {
+  color: $grey-5;
+  transform: rotate(45deg);
+}
 
 
 
@@ -118,6 +142,10 @@ td {
   display: block !important;
   max-width: unset !important;
   width: inherit !important;
+}
+
+::ng-deep .agencyList .mat-select-placeholder {
+  color: #000;
 }
 
 :host ::ng-deep .mat-paginator-container{

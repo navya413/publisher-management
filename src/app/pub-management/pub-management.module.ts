@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PubManagementRoutingModule } from './pub-management-routing.module';
 import { PubManagementComponent } from './pub-management.component';
 import {
-  PublisherDialog, PublisherInfoDiolog,
+  PublisherDialog, PublisherEditDiolog, PublisherInfoDiolog,
   PublisherListComponent,
 } from './publisher-list/publisher-list.component';
 import { MomentumTableModule } from 'momentum-table';
@@ -24,9 +24,10 @@ import { PubManagementService } from './services/pub-management.service';
     PubManagementComponent,
     PublisherListComponent,
     PublisherDialog,
-    PublisherInfoDiolog
+    PublisherInfoDiolog,
+    PublisherEditDiolog
   ],
-  entryComponents: [PublisherDialog, PublisherInfoDiolog],
+  entryComponents: [PublisherDialog, PublisherInfoDiolog, PublisherEditDiolog],
   providers: [PubManagementService],
 })
 export class PubManagementModule {}
