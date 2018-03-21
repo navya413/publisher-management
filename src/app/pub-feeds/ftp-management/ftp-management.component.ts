@@ -60,11 +60,5 @@ export class DetailDialog {
     public dialogRef: MatDialogRef<DetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(data);
   }
-
-  closeDialog(): void {
-    this.dialogRef.close();
-  }
-
 }

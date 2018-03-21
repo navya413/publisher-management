@@ -6,33 +6,32 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class UtilService {
+  agencies: string[] = [];
   countries: string[];
   industries: string[];
   categories: string[];
   currencies: string[];
   modesOfFile: string[];
 
-  private agencies$: BehaviorSubject<string[]> = new BehaviorSubject(null);
   private ftpPublishers$: BehaviorSubject<string[]> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) {
-    http
-      .get<string[]>(environment.adminApi + 'agencies')
-      .subscribe((res: string[]) => {
-        this.agencies$.next(res);
-      });
-
     http
       .get<string[]>(environment.feedsApi + 'placement/values')
       .subscribe((res: string[]) => {
         this.ftpPublishers$.next(res);
       });
 
+    this.loadAgencies();
     this.loadEnums();
   }
 
-  getAgencies(): Observable<string[]> {
-    return this.agencies$;
+  loadAgencies() {
+    this.http
+      .get<string[]>(environment.adminApi + 'agencies')
+      .subscribe((res: string[]) => {
+        this.agencies = res;
+      });
   }
 
   loadEnums() {

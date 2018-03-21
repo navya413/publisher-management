@@ -9,7 +9,7 @@
         formControlName="agencyList"
         placeholder="Agencies*"
         multiple>
-        <mat-option *ngFor="let agency of agencies" [value]="agency">
+        <mat-option *ngFor="let agency of utilService.agencies" [value]="agency">
           {{ agency }}
         </mat-option>
       </mat-select>
@@ -253,10 +253,10 @@
   </div>
 
   <mat-error class="error-hint">{{error}}</mat-error>
-  <div mat-dialog-actions style="display: flex">
-    <button type="button" *ngIf="!loading" mat-raised-button (click)="onCancel()" style="margin-left: auto">Cancel</button>
+  <div mat-dialog-actions>
+    <button type="button" *ngIf="!loading" mat-raised-button (click)="dialogRef.close()">Cancel</button>
     <button *ngIf="!loading" mat-raised-button color="primary"  type="submit" [disabled]="!creationForm.valid">Submit</button>
 
-    <mat-spinner *ngIf="loading" style="margin-left: auto" [diameter]="30"></mat-spinner>
+    <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
   </div>
 </form>

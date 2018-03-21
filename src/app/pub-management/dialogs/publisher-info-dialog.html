@@ -25,6 +25,7 @@
       </table>
     </div>
   </mat-card>
+
   <mat-card class="grid-item" *ngIf="data.data.additionalFields.activeClients.length">
     <div class="title">Active Clients - {{data.data.additionalFields.activeClients.length}}</div>
     <div class="summary">
@@ -35,6 +36,7 @@
       </ol>
     </div>
   </mat-card>
+
   <mat-card class="grid-item" *ngIf="data.data.placement.ftpConfig">
     <div class="title">FTP Details</div>
     <div class="summary">
@@ -54,6 +56,7 @@
       </table>
     </div>
   </mat-card>
+
   <mat-card class="grid-item" *ngIf="data.data.placement.publisherPortalDetails">
     <div class="title">Publisher Portal Details</div>
     <div class="summary">
@@ -73,6 +76,7 @@
       </table>
     </div>
   </mat-card>
+
   <mat-card class="grid-item" *ngIf="data.data.placement.publisherContactDetails">
     <div class="title">Publisher Contact Details</div>
     <div class="summary">
@@ -98,5 +102,5 @@
   </mat-card>
 </div>
 <div mat-dialog-actions>
-  <button type="button" style="margin-left:auto;" (click)="onCancel()" mat-raised-button>Cancel</button>
+  <button type="button" style="margin-left:auto;" (click)="dialogRef.close()" mat-raised-button>Cancel</button>
 </div>
