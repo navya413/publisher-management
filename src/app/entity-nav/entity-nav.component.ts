@@ -20,7 +20,6 @@ import { UtilService } from '../services/util.service';
   styleUrls: ['./entity-nav.component.scss'],
 })
 export class EntityNavComponent implements OnInit, OnChanges {
-  agencies;
   loading;
 
   @Input() clientTree;
@@ -45,10 +44,6 @@ export class EntityNavComponent implements OnInit, OnChanges {
       return query
         ? this.filterAutocompleteOptions(query)
         : this.autocompleteOptions.slice();
-    });
-
-    utilService.getAgencies().subscribe(data => {
-      this.agencies = data;
     });
   }
 
