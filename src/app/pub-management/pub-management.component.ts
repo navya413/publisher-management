@@ -84,6 +84,7 @@ export class PublisherListComponent implements OnInit {
   getPublisherList() {
     this.loading = true;
     this.publishers = [];
+    this.selectedPublishers = [];
     this.pubManagementService.getPublishers(this.params).subscribe(
       (res: any) => {
         this.loading = false;
@@ -194,6 +195,7 @@ export class PublisherListComponent implements OnInit {
 
   openPublisherInfoDialog(row) {
     this.dialog.open(PublisherInfoDialog, {
+      width: '70%',
       data: row,
     });
   }

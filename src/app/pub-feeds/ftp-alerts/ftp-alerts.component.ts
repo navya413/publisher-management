@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PubFeedsService } from '../services/pub-feeds.service';
 import * as moment from 'moment';
-import {UtilService} from "../../services/util.service";
+import {UtilService} from '../../services/util.service';
 
 @Component({
   selector: 'app-ftp-alerts',
@@ -21,15 +21,15 @@ export class FtpAlertsComponent implements OnInit {
       this.ftpPublishers = res;
       if (this.ftpPublishers && this.ftpPublishers.length) {
         this.selectedPublisher = this.ftpPublishers[0];
-        this.onPublisherChange(this.selectedPublisher);
+        this.onPublisherChange();
       }
     });
   }
 
-  onPublisherChange(selectPub) {
+  onPublisherChange() {
     this.loading = true;
     this.alerts = [];
-    this.pubFeedsService.getPublisherAlerts(selectPub).subscribe(res => {
+    this.pubFeedsService.getPublisherAlerts(this.selectedPublisher).subscribe(res => {
       this.loading = false;
       this.alertResp = res;
       if (this.alertResp.length) {
@@ -38,10 +38,13 @@ export class FtpAlertsComponent implements OnInit {
     }, err => {
       this.loading = false;
     });
-    console.log(this.alerts);
   }
 
   getDate(row, col) {
     return (row[col.field]) ? moment(row[col.field] * 1000).format('MM-DD-YYYY h:mm:ss') : '--';
+  }
+
+  onReload() {
+    this.onPublisherChange();
   }
 }

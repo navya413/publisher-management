@@ -23,3 +23,8 @@
     margin: 0;
   }
 }
+
+:host ::ng-deep .mat-dialog-actions{
+  justify-content: flex-end;
+}
+

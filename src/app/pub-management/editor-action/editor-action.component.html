@@ -1,0 +1,11 @@
+<div class="editor-action">
+  <button *ngIf="!loading" class="sec-btn" mat-button (click)="onSecondaryBtnClick.emit()">
+    <i class="material-icons btn-icon" *ngIf="secondaryIcon">{{ secondaryIcon }}</i>
+    <span>{{ secondaryBtn }}</span>
+  </button>
+  <button *ngIf="!loading" [disabled]="primaryDisabled" mat-raised-button color="primary" (click)="onPrimaryBtnClick.emit()">
+    <i class="material-icons btn-icon" *ngIf="primaryIcon">{{ primaryIcon }}</i>
+    <span>{{ primaryBtn }}</span>
+  </button>
+  <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
+</div>
