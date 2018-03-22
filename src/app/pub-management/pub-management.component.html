@@ -43,14 +43,6 @@
 
 
           <div class="table-options">
-            <!--<button mat-icon-button class="col-setting-btn">-->
-              <!--<mat-icon class="mat-24" aria-label="column">view_column</mat-icon>-->
-            <!--</button>-->
-
-            <!--<button mat-icon-button class="col-setting-btn" (click)="openDialog()">-->
-              <!--<mat-icon class="mat-24" aria-label="download">file_download</mat-icon>-->
-            <!--</button>-->
-
             <button mat-icon-button class="col-setting-btn" (click)="onRefresh()">
               <mat-icon class="mat-24" aria-label="refresh">refresh</mat-icon>
             </button>
@@ -73,14 +65,7 @@
             Pause all clients for this Agency
           </div>
           <mat-hint class="error-hint">{{ updateError }}</mat-hint>
-          <div class="editor-action">
-            <button *ngIf="!updating" mat-button (click)="closeEditor()">Cancel</button>
-            <button *ngIf="!updating" mat-raised-button (click)="pauseClients(row)" color="primary" [disabled]="!(row['additionalFields']['activeClients']).length">
-              <i class="material-icons status-icon">pause_circle_filled</i>
-              <span>Pause</span>
-            </button>
-            <mat-spinner *ngIf="updating" [diameter]="20"></mat-spinner>
-          </div>
+          <app-editor-action primaryBtn="Pause" primaryIcon="pause_circle_filled" [primaryDisabled]="!(row['additionalFields']['activeClients']).length" [loading]="updating" (onSecondaryBtnClick)="closeEditor()" (onPrimaryBtnClick)="pauseClients(row)"></app-editor-action>
 
         </mat-card>
       </ng-template>
@@ -90,6 +75,7 @@
       <ng-template let-col let-row="row" mTemplate="body">
         {{row['placement'][col.field]}}
       </ng-template>
+
       <ng-template let-col let-row="row" mTemplate="editor">
         <mat-card class="editor-container">
           <div class="editor-body">
@@ -98,11 +84,7 @@
               <mat-hint class="error-hint">{{updateError}}</mat-hint>
             </mat-form-field>
           </div>
-          <div class="editor-action">
-            <button mat-button (click)="closeEditor()" *ngIf="!updating">Cancel</button>
-            <button mat-raised-button style="margin-left: 8px;" color="primary" (click)="updateValue('name', row, inputEditor.value)" *ngIf="!updating">Update</button>
-            <mat-spinner *ngIf="updating" [diameter]="20"></mat-spinner>
-          </div>
+          <app-editor-action primaryBtn="Update" [loading]="updating" (onSecondaryBtnClick)="closeEditor()" (onPrimaryBtnClick)="updateValue('name', row, inputEditor.value)"></app-editor-action>
         </mat-card>
       </ng-template>
     </m-column>
@@ -135,6 +117,7 @@
       <ng-template let-col let-row="row" mTemplate="body">
         {{row['placement'][col.field] ? row['placement'][col.field] : '-'}}
       </ng-template>
+
       <ng-template let-col let-row="row" mTemplate="editor">
         <mat-card class="editor-container">
           <div class="editor-body">
@@ -143,19 +126,17 @@
               <mat-hint class="error-hint">{{updateError}}</mat-hint>
             </mat-form-field>
           </div>
-          <div class="editor-action">
-            <button mat-button (click)="closeEditor()" *ngIf="!updating">Cancel</button>
-            <button mat-raised-button style="margin-left: 8px;" color="primary" (click)="updateValue('minBid', row, inputEditor.value)" *ngIf="!updating">Update</button>
-            <mat-spinner *ngIf="updating" [diameter]="20"></mat-spinner>
-          </div>
+          <app-editor-action primaryBtn="Update" [loading]="updating" (onSecondaryBtnClick)="closeEditor()" (onPrimaryBtnClick)="updateValue('minBid', row, inputEditor.value)"></app-editor-action>
         </mat-card>
       </ng-template>
     </m-column>
+
     <m-column field="currency" header="Currency" [sortable]="true">
       <ng-template let-col let-row="row" mTemplate="body">
         {{row['placement'][col.field] ? row['placement'][col.field] : '-'}}
       </ng-template>
     </m-column>
+
     <m-column field="url" header="URL" [sortable]="true" [editable]="true" [editTrigger]="'button'">
       <ng-template let-col let-row="row" mTemplate="body">
         {{row['placement'][col.field]}}
@@ -168,11 +149,7 @@
               <mat-hint class="error-hint">{{updateError}}</mat-hint>
             </mat-form-field>
           </div>
-          <div class="editor-action">
-            <button mat-button (click)="closeEditor()" *ngIf="!updating">Cancel</button>
-            <button mat-raised-button style="margin-left: 8px;" color="primary" (click)="updateValue('url', row, inputEditor.value)" *ngIf="!updating">Update</button>
-            <mat-spinner *ngIf="updating" [diameter]="20"></mat-spinner>
-          </div>
+          <app-editor-action primaryBtn="Update" [loading]="updating" (onSecondaryBtnClick)="closeEditor()" (onPrimaryBtnClick)="updateValue('url', row, inputEditor.value)"></app-editor-action>
         </mat-card>
       </ng-template>
     </m-column>

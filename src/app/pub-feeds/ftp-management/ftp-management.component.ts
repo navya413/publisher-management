@@ -13,11 +13,17 @@ export class FtpManagementComponent implements OnInit {
   constructor(private pubFeedsService: PubFeedsService, public dialog: MatDialog,) {}
 
   ngOnInit() {
+    this.getFtpPublishers();
+  }
+
+  getFtpPublishers() {
+    this.placements = [];
     this.loading = true;
     this.pubFeedsService.getFtpPublishers().subscribe((res: any) => {
-      console.log(res);
       this.loading = false;
       this.placements = res;
+    }, (err) => {
+      this.loading = false;
     });
   }
 
@@ -31,20 +37,18 @@ export class FtpManagementComponent implements OnInit {
   }
 
   openDetailDialog(row) {
-    const dialogRef = this.dialog.open(DetailDialog, {
+    this.dialog.open(DetailDialog, {
       width: '600px',
       data: row,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.success) {
-        console.log(result);
-      }
     });
   }
 
   onRowClick(row) {
     this.openDetailDialog(row.data);
+  }
+
+  onReload() {
+    this.getFtpPublishers();
   }
 
 }
