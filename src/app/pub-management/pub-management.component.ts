@@ -317,7 +317,7 @@ export class PublisherEditDialog implements OnInit {
     const timezone = this.publisherData.publisherReconciliationDetails && this.publisherData.publisherReconciliationDetails.timezone || '';
     this.publisherReconciliationDetails = new FormGroup({
       mode: new FormControl(mode),
-      startDate: new FormControl(startDate),
+      startDate: new FormControl(new Date(startDate)),
       frequency: new FormControl(frequency),
       timezone: new FormControl(timezone),
     });
