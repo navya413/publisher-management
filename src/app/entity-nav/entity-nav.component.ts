@@ -37,7 +37,7 @@ export class EntityNavComponent implements OnInit, OnChanges {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private utilService: UtilService,
+    public utilService: UtilService,
   ) {
     this.autocompleteControl = new FormControl();
     this.filteredAutocompleteOptions = <Observable<any[]>>this.autocompleteControl.valueChanges.startWith(null).map(query => {

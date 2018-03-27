@@ -1,5 +1,5 @@
 <mat-form-field class="header-select">
-  <mat-select #publisherSelect [(value)]="selectedPublisher" (selectionChange)="onPublisherChange($event.value)" placeholder="Publisher">
+  <mat-select #publisherSelect [(value)]="selectedPublisher" (selectionChange)="onPublisherChange()" placeholder="Publisher">
     <mat-option *ngFor="let publisher of ftpPublishers" [value]="publisher">
       {{ publisher }}
     </mat-option>
