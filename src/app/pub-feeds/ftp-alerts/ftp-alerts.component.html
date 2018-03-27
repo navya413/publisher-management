@@ -6,7 +6,9 @@
   </mat-select>
 </mat-form-field>
 
-<m-table *ngIf="publisherSelect.value" [value]="alerts" (onReload)="onReload()">
+<m-table *ngIf="publisherSelect.value" [value]="alerts"
+         (onReload)="onReload()"
+         [selectable]="false" [selectionHandler]="false">
 
   <m-header [title]="publisherSelect.value" [globalSearch]="true" [searchField]="'box'" [colSetting]="false" [reload]="true" [export]="true">
   </m-header>

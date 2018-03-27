@@ -1,6 +1,7 @@
 <m-table [value]="placements"
          (onRowClick)="onRowClick($event)"
-         (onReload)="onReload()">
+         (onReload)="onReload()"
+         [selectable]="false" [selectionHandler]="false">
 
   <m-header [title]="'FTP Publishers'" [globalSearch]="true" [searchField]="'box'" [colSetting]="false" [reload]="true" [export]="true">
   </m-header>
