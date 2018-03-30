@@ -54,7 +54,7 @@
         <i class="material-icons status-icon inactive" *ngIf="row.status=='I'">add_circle</i>
       </ng-template>
     </m-column>
-    <m-column field="name" header="Publisher" [sortable]="true"></m-column>
+    <m-column field="name" header="Publisher" [sortable]="true" [colBodyClass]="'left-sticky'" [colHeadClass]="'left-sticky'"></m-column>
 
     <m-column colBodyClass="align-right" colHeadClass="align-right" field="CmClicks" [sortable]="true">
       <ng-template let-col let-row="row" mTemplate="header">
