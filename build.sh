@@ -2,7 +2,7 @@
 
 echo $JOVEO_ENV
 ## cleanup
-trap docker run --privileged --rm -v `pwd`:/src alpine sh -c "rm -rf /src/node_modules /src/dist" EXIT
+docker run --privileged --rm -v `pwd`:/src alpine sh -c "rm -rf /src/node_modules /src/dist"
 
 # Create builder image
 docker build -t pubmato-builder -f .docker/Dockerfile-builder .
@@ -28,4 +28,5 @@ if [ $? -ne 0 ];then
     exit 4
 fi
 
-
+## cleanup
+docker run --privileged --rm -v `pwd`:/src alpine sh -c "rm -rf /src/node_modules /src/dist"
