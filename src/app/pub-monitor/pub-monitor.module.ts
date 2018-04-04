@@ -6,11 +6,15 @@ import { EntityNavComponent } from '../entity-nav/entity-nav.component';
 import { MaterialModule } from '../material/material.module';
 import { MomentumTableModule } from 'momentum-table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {PublisherDetailDialogComponent, PublishersComponent} from './publishers/publishers.component';
+import {
+  PublisherDetailDialogComponent,
+  PublishersComponent,
+} from './publishers/publishers.component';
 import { PubMonitorService } from './services/pub-monitor.service';
 import { DateRangeComponent } from '../components/date-range/date-range.component';
 import { ChartViewComponent } from '../components/chart-view/chart-view.component';
 import { AmChartsModule } from '@amcharts/amcharts3-angular';
+import { EmptyViewComponent } from '../components/empty-view/empty-view.component';
 
 @NgModule({
   imports: [
@@ -28,7 +32,8 @@ import { AmChartsModule } from '@amcharts/amcharts3-angular';
     PublishersComponent,
     DateRangeComponent,
     ChartViewComponent,
-    PublisherDetailDialogComponent
+    PublisherDetailDialogComponent,
+    EmptyViewComponent,
   ],
   providers: [PubMonitorService],
   entryComponents: [PublisherDetailDialogComponent],

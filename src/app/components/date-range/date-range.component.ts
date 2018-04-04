@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import * as moment from 'moment';
 
 interface Range {
@@ -15,14 +15,14 @@ interface Range {
   templateUrl: './date-range.component.html',
   styleUrls: ['./date-range.component.scss']
 })
-export class DateRangeComponent implements OnInit {
+export class DateRangeComponent implements OnInit, OnChanges {
   @Output() onDateRangeChange: EventEmitter<any> = new EventEmitter();
 
   @Input() rangeFormat = 'MM/DD/YYYY';
-  @Input() selectedDay = 'This month';
+  @Input() selectedDay;
+  @Input() startDate;
+  @Input() endDate;
 
-  startDate;
-  endDate;
   selectedRange;
 
   ranges: Range[];
@@ -106,10 +106,16 @@ export class DateRangeComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // this.onDateRangeChange.emit(this.selectedRange);
+  }
+
+  ngOnChanges() {
+    this.ranges[this.ranges.length - 1].value['startDate'] = this.startDate ? this.startDate : moment().format(this.rangeFormat);
+    this.ranges[this.ranges.length - 1].value['endDate'] = this.endDate ? this.endDate : moment().format(this.rangeFormat);
     this.selectedRange = this.ranges.filter((range) => {
       return range.value.days === this.selectedDay;
     })[0];
-    // this.onDateRangeChange.emit(this.selectedRange);
   }
 
   onRangeChange(range) {

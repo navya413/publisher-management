@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PubManagementComponent } from './pub-management.component';
+import { PublisherListComponent } from './pub-management.component';
 
-describe('PubManagementComponent', () => {
-  let component: PubManagementComponent;
-  let fixture: ComponentFixture<PubManagementComponent>;
+describe('PublisherListComponent', () => {
+  let component: PublisherListComponent;
+  let fixture: ComponentFixture<PublisherListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PubManagementComponent ]
+      declarations: [ PublisherListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PubManagementComponent);
+    fixture = TestBed.createComponent(PublisherListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

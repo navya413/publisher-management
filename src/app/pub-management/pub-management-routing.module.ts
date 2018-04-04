@@ -1,18 +1,18 @@
-import {RouterModule, Routes} from "@angular/router";
-import {NgModule} from "@angular/core";
-import {PubManagementComponent} from "./pub-management.component";
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { PublisherListComponent } from './pub-management.component';
 const routes: Routes = [
   {
     path: '',
-    component: PubManagementComponent,
+    component: PublisherListComponent,
     data: {
-      level: 'root'
-    }
-  }
+      level: 'root',
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class PubManagementRoutingModule {}

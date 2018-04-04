@@ -8,7 +8,9 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class AuthService {
   isLoggedIn = false;
-  storage = 'sessionStorage';
+  storage = window.localStorage.getItem('accessToken')
+    ? 'localStorage'
+    : 'sessionStorage';
   rememberMe = false;
   user = null;
 

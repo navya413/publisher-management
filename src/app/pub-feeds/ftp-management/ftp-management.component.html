@@ -1,17 +1,22 @@
-<m-table [value]="placements">
+<m-table [value]="placements"
+         (onRowClick)="onRowClick($event)"
+         (onReload)="onReload()"
+         [selectable]="false" [selectionHandler]="false">
 
   <m-header [title]="'FTP Publishers'" [globalSearch]="true" [searchField]="'box'" [colSetting]="false" [reload]="true" [export]="true">
   </m-header>
 
   <m-footer [paginator]="true"></m-footer>
 
-  <m-column field="title" header="Name"></m-column>
+  <m-column field="value" header="Name"></m-column>
   <m-column field="placementType" header="Placement Type"></m-column>
-  <m-column field="ftp_folder_path" header="FTP Folder Path">
+  <m-column field="bidType" header="Bid Type"></m-column>
+  <m-column field="ftpConfig" header="FTP Folder Path">
     <ng-template let-col let-row="row" mTemplate="body">
-      {{row[col.field][0]}}
-      <br>
-      {{row[col.field][1]}}
+      <div *ngFor="let path of getFolderPath(row, col)">
+        {{path}}
+      </div>
+
     </ng-template>
   </m-column>
 

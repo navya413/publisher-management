@@ -7,12 +7,23 @@
 :host ::ng-deep td {
   white-space: nowrap !important;
 }
+
+:host ::ng-deep .left-sticky {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: #fff;
+}
+
 :host ::ng-deep .edit-icon {
   color: $primary !important;
 }
 
 :host ::ng-deep .align-right{
   text-align: right !important;
+}
+:host ::ng-deep .align-center{
+  text-align: center !important;
 }
 
 .publisher-container{
@@ -107,4 +118,11 @@
 
 :host ::ng-deep .mat-paginator-container{
   min-height: 55px;
+}
+
+:host ::ng-deep tr:hover td{
+  background: #EEEEEE;
+}
+:host ::ng-deep tr{
+  transition: all 0s !important;
 }

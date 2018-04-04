@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required])
     });
+
+    // where to redirect after login?
     this.returnURL = this.route.snapshot.queryParams['returnURL'] || '';
 
     if (this.authService.isLoggedIn) {

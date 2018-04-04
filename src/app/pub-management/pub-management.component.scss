@@ -1,0 +1,149 @@
+@import "../../scss/colors";
+
+.publisher-container{
+  display: block;
+  padding: 1rem;
+  background: #fafafa
+}
+
+.btn-margin{
+  margin-right: 1rem;
+}
+.error-text{
+  font-size: 0.7rem;
+  padding: 0.5rem 0;
+  color: #f44336;
+}
+:host {
+  --column-padding: 0 1rem;
+}
+:host ::ng-deep th,
+:host ::ng-deep td {
+  white-space: nowrap !important;
+}
+:host ::ng-deep .edit-icon {
+  color: $primary !important;
+}
+
+:host ::ng-deep .align-right{
+  text-align: right !important;
+}
+
+.card-header{
+  display: flex;
+  flex: 1;
+  height: 4rem;
+  align-items: center;
+}
+
+.sec-btn{
+  background: #e5e5e5;
+  color: #555555;
+  margin-right: 10px;
+  mat-icon{
+    padding-left: 5px;
+  }
+}
+
+.agencyFilter{
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.box-search{
+  display: inline-block;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+  transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  input{
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 9px 12px;
+  }
+  .box-search-icon{
+    float: right;
+    display: flex;
+    button{
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      color: gray;
+    }
+  }
+  .box-search-input-wrapper{
+    display: flex;
+  }
+}
+
+.table-options{
+  color: grey;
+}
+
+.dropdown-option{
+  height: 34px;
+  line-height: 34px;
+  font-size: 0.9rem;
+}
+
+.table-loading mat-progress-bar {
+  height: 2px;
+  position: absolute;
+  top: 0;
+}
+.table-loading div {
+  padding: 0 1.5rem;
+}
+
+// cell editor css
+.editor-container {
+  padding: 1rem;
+  min-width: 250px;
+}
+.editor-action {
+  display: flex;
+  justify-content: flex-end;
+  .mat-raised-button {
+    margin-left: 0.5rem;
+  }
+}
+.error-hint {
+  color: red;
+  font-size: 0.7rem;
+  display: block;
+}
+
+.status-icon {
+  font-size: 1rem;
+}
+.active {
+  color: $primary;
+}
+.paused {
+  color: $grey-5;
+}
+
+
+// inlinetable
+table {
+  padding: 2rem;
+}
+td {
+  padding: 1rem;
+}
+
+
+::ng-deep .agencyList .mat-select-value {
+  display: block !important;
+  max-width: unset !important;
+  width: inherit !important;
+}
+
+::ng-deep .agencyList .mat-select-placeholder {
+  color: #000;
+}
+
+:host ::ng-deep .mat-paginator-container{
+  min-height: 55px;
+}
+

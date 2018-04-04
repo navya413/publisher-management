@@ -1,0 +1,21 @@
+::ng-deep .header-nav-bar .mat-tab-links {
+  height: 3.5rem;
+}
+.mat-tab-link {
+  height: inherit;
+}
+.logo-wrapper {
+  display: inline-block;
+  width: 15rem;
+  height: inherit;
+  img {
+    width: inherit;
+    height: inherit;
+    padding: 8px;
+  }
+}
+.logout-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

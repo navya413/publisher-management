@@ -1,10 +1,9 @@
-<mat-form-field class="entity-search__input">
-  <mat-select placeholder="Agency" [(ngModel)]="selectedAgency" (selectionChange)="onSelectionChange($event)">
-    <mat-option *ngFor="let agency of agencies" [value]="agency">
-      {{ agency }}
-    </mat-option>
+<button mat-raised-button color="primary" class="select-btn" (click)=agencyMenu.open()>
+  <mat-select #agencyMenu placeholder="Select Agency" [(ngModel)]="selectedAgency">
+    <mat-option (click)="onSelectionChange({value:agency})" *ngFor="let agency of utilService.agencies" [value]="agency">{{agency.charAt(0).toUpperCase() + agency.slice(1)}}</mat-option>
   </mat-select>
-</mat-form-field>
+</button>
+
 <div *ngIf="loading" style="margin: 5rem auto;">
   <mat-spinner diameter="52"></mat-spinner>
 </div>

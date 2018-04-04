@@ -1,0 +1,32 @@
+<div mat-dialog-title>
+  {{data.value}}
+</div>
+<div mat-dialog-content>
+  <mat-card class="mat-elevation-z0" style="padding: 0">
+    <div style="margin-bottom: 0.5rem">FTP Credentials</div>
+    <table>
+      <tbody>
+      <tr>
+        <td class="table-key">Host</td>
+        <td>{{data.ftpConfig.credentials.host}}</td>
+      </tr>
+      <tr>
+        <td class="table-key">Username</td>
+        <td>{{data.ftpConfig.credentials.username}}</td>
+      </tr>
+      <tr>
+        <td class="table-key">Password</td>
+        <td>{{data.ftpConfig.credentials.password}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div style="margin: 0.5rem 0">Alert Recipients</div>
+    <mat-chip-list>
+      <mat-chip *ngFor="let recipient of data.ftpConfig.alertRecipients">{{recipient}}</mat-chip>
+    </mat-chip-list>
+  </mat-card>
+</div>
+<div mat-dialog-actions style="justify-content: flex-end">
+  <button mat-button mat-raised-button (click)="dialogRef.close()">Close</button>
+</div>

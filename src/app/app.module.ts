@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { RouteDataService } from './services/route-data.service';
 import {SimpleNotificationsModule} from "angular2-notifications";
+import { EmptyViewComponent } from './components/empty-view/empty-view.component';
 
 @NgModule({
   declarations: [AppComponent],

@@ -1,49 +1,58 @@
-import {RouterModule, Routes} from "@angular/router";
-import {NgModule} from "@angular/core";
-import {PubMonitorComponent} from "./pub-monitor.component";
-import {PublishersComponent} from "./publishers/publishers.component";
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { PubMonitorComponent } from './pub-monitor.component';
+import { PublishersComponent } from './publishers/publishers.component';
+import { EmptyViewComponent } from '../components/empty-view/empty-view.component';
 const routes: Routes = [
   {
     path: '',
     component: PubMonitorComponent,
     data: {
-      level: 'root'
+      level: 'root',
     },
     children: [
+      {
+        path: '',
+        component: EmptyViewComponent,
+        data: {
+          level: 'agency',
+        },
+      },
       {
         path: 'agency/:agencyId',
         component: PublishersComponent,
         data: {
-          level: 'agency'
-        }
+          level: 'agency',
+        },
       },
       {
         path: 'agency/:agencyId/client/:clientId',
         component: PublishersComponent,
         data: {
-          level: 'client'
-        }
+          level: 'client',
+        },
       },
       {
         path: 'agency/:agencyId/client/:clientId/campaign/:campaignId',
         component: PublishersComponent,
         data: {
-          level: 'campaign'
-        }
+          level: 'campaign',
+        },
       },
       {
-        path: 'agency/:agencyId/client/:clientId/campaign/:campaignId/jobgroup/:jobgroupId',
+        path:
+          'agency/:agencyId/client/:clientId/campaign/:campaignId/jobgroup/:jobgroupId',
         component: PublishersComponent,
         data: {
-          level: 'jobgroup'
-        }
-      }
-    ]
-  }
+          level: 'jobgroup',
+        },
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class PubMonitorRoutingModule {}

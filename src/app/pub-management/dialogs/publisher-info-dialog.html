@@ -1,0 +1,106 @@
+<div mat-dialog-title>
+  {{data.data.placement.name}}
+</div>
+<div mat-dialog-content class="grid-container">
+  <mat-card class="grid-item">
+    <div class="title">Publisher Details</div>
+    <div class="summary">
+      <table>
+        <tr>
+          <td>Bid Type</td>
+          <td> : {{data.data.placement.bidType.name}}</td>
+        </tr>
+        <tr>
+          <td>Min Bid</td>
+          <td> : {{data.data.placement.minBid}}</td>
+        </tr>
+        <tr>
+          <td>Country</td>
+          <td> : {{data.data.placement.country}}</td>
+        </tr>
+        <tr>
+          <td>Currency</td>
+          <td> : {{data.data.placement.currency}}</td>
+        </tr>
+      </table>
+    </div>
+  </mat-card>
+
+  <mat-card class="grid-item" *ngIf="data.data.additionalFields.activeClients.length">
+    <div class="title">Active Clients - {{data.data.additionalFields.activeClients.length}}</div>
+    <div class="summary">
+      <ol class="list">
+        <li *ngFor="let client of data.data.additionalFields.activeClients">
+          {{client}}
+        </li>
+      </ol>
+    </div>
+  </mat-card>
+
+  <mat-card class="grid-item" *ngIf="data.data.placement.ftpConfig">
+    <div class="title">FTP Details</div>
+    <div class="summary">
+      <table>
+        <tr>
+          <td>Host</td>
+          <td> : {{data.data.placement.ftpConfig.credentials.host}}</td>
+        </tr>
+        <tr>
+          <td>Username</td>
+          <td> : {{data.data.placement.ftpConfig.credentials.username}}</td>
+        </tr>
+        <tr>
+          <td>Password</td>
+          <td> : {{data.data.placement.ftpConfig.credentials.password}}</td>
+        </tr>
+      </table>
+    </div>
+  </mat-card>
+
+  <mat-card class="grid-item" *ngIf="data.data.placement.publisherPortalDetails">
+    <div class="title">Publisher Portal Details</div>
+    <div class="summary">
+      <table>
+        <tr>
+          <td>URL</td>
+          <td> : {{data.data.placement.publisherPortalDetails.url}}</td>
+        </tr>
+        <tr>
+          <td>Username</td>
+          <td> : {{data.data.placement.publisherPortalDetails.username}}</td>
+        </tr>
+        <tr>
+          <td>Password</td>
+          <td> : {{data.data.placement.publisherPortalDetails.password}}</td>
+        </tr>
+      </table>
+    </div>
+  </mat-card>
+
+  <mat-card class="grid-item" *ngIf="data.data.placement.publisherContactDetails">
+    <div class="title">Publisher Contact Details</div>
+    <div class="summary">
+      <table>
+        <tr>
+          <td>Name</td>
+          <td> : {{data.data.placement.publisherContactDetails.name}}</td>
+        </tr>
+        <tr>
+          <td>Phone</td>
+          <td> : {{data.data.placement.publisherContactDetails.phone}}</td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td> : {{data.data.placement.publisherContactDetails.email}}</td>
+        </tr>
+        <tr>
+          <td>Billing Email</td>
+          <td> : {{data.data.placement.publisherContactDetails.billingEmail}}</td>
+        </tr>
+      </table>
+    </div>
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button type="button" (click)="dialogRef.close()" mat-raised-button>Cancel</button>
+</div>
