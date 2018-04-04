@@ -7,4 +7,4 @@ ARG env
 VOLUME /src
 
 # Do the magic
-CMD echo "Hello"$env && cd ../src && npm install && npm run build:$env
+CMD echo "Hello"${env} && cd ../src && npm install && npm run build:$env
