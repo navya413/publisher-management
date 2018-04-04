@@ -20,7 +20,7 @@ if [ $? -ne 0 ];then
 fi
 
 # Build the deployable image
-docker build --build-arg env=$environment -t joveo/pubmato -f .docker/Dockerfile .
+docker build --build-arg env=${environment} -t joveo/pubmato -f .docker/Dockerfile .
 if [ $? -ne 0 ];then
     exit 3
 fi
