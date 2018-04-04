@@ -1,4 +1,5 @@
 #!/bin/sh
+{
 echo $JOVEO_ENV
 ## cleanup
 docker run --privileged --rm -v `pwd`:/src alpine sh -c "rm -rf /src/node_modules /src/dist"
@@ -16,7 +17,7 @@ if [ $? -ne 0 ];then
 fi
 
 # Build the deployable image
-docker build -t joveo/pubmato -f .docker/Dockerfile .
+docker build --build-arg JOVEO_ENV=$JOVEO_ENV -t joveo/pubmato -f .docker/Dockerfile .
 if [ $? -ne 0 ];then
     exit 3
 fi
@@ -29,3 +30,7 @@ fi
 
 ## cleanup
 docker run --privileged --rm -v `pwd`:/src alpine sh -c "rm -rf /src/node_modules /src/dist"
+} || {
+## cleanup
+docker run --privileged --rm -v `pwd`:/src alpine sh -c "rm -rf /src/node_modules /src/dist"
+}
