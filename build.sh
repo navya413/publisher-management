@@ -2,7 +2,7 @@
 
 echo $1
 environment=$1
-echo environment
+echo ${environment}
 echo $JOVEO_ENV
 ## cleanup
 docker run --privileged --rm -v `pwd`:/src alpine sh -c "rm -rf /src/node_modules /src/dist"
