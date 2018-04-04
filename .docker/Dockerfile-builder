@@ -2,8 +2,10 @@
 
 FROM node:9.6.1
 
+ARG JOVEO_ENV
+
 # Mounting /src to this container
 VOLUME /src
 
 # Do the magic
-CMD cd ../src && npm install && npm run build:staging
+CMD cd ../src && npm install && npm run build:$JOVEO_ENV
