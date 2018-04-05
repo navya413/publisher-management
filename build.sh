@@ -6,7 +6,7 @@ echo $JOVEO_ENV
 docker run --privileged --rm -v `pwd`:/src alpine sh -c "rm -rf /src/node_modules /src/dist"
 
 # Create builder image
-docker build -t pubmato-builder -f .docker/Dockerfile-builder .
+docker build --build-arg JOVEO_ENV=$JOVEO_ENV -t pubmato-builder -f .docker/Dockerfile-builder .
 if [ $? -ne 0 ];then
     exit 1
 fi
@@ -22,10 +22,10 @@ fi
 echo "exit status 0 for previous run"
 # Build the deployable image
 echo "deploying image with env $JOVEO_ENV"
-docker build --build-arg JOVEO_ENV=$JOVEO_ENV -t joveo/pubmato -f .docker/Dockerfile .
+docker build -t joveo/pubmato -f .docker/Dockerfile .
 
 if [ $? -ne 0 ];then
-    echo "exit status 3"
+    echo "exit status is 3"
     exit 3
 fi
 
