@@ -12,14 +12,13 @@ pipeline {
           if (env.BRANCH_NAME == 'staging') {
             env.JOVEO_ENV = "staging"
             env.AWS_INSTANCE_TAG = "pubmato-staging"
-            sh 'sh build.sh staging'
           }
           if (env.BRANCH_NAME == 'release') {
             env.JOVEO_ENV = "prod"
             env.AWS_INSTANCE_TAG = "pubmato-release"
-            sh 'sh build.sh prod'
           }
         }
+        sh 'sh build.sh $JOVEO_ENV'
       }
     }
     stage('push to ecr') {
