@@ -15,14 +15,17 @@ fi
 echo "running docker image with env $JOVEO_ENV"
 docker run -e JOVEO_ENV=$JOVEO_ENV --rm -v `pwd`:/src pubmato-builder:latest
 if [ $? -ne 0 ];then
+    echo "exit status 2"
     exit 2
 fi
 
+echo "exit status 0 for previous run"
 # Build the deployable image
 echo "deploying image with env $JOVEO_ENV"
 docker build --build-arg JOVEO_ENV=$JOVEO_ENV -t joveo/pubmato -f .docker/Dockerfile .
 
 if [ $? -ne 0 ];then
+    echo "exit status 3"
     exit 3
 fi
 
