@@ -1,10 +1,12 @@
 # We are taking a base docker image that already has nodejs, npm, yarn etc.
 FROM node:9.6.1
 
-ARG env
+ARG JOVEO_ENV
+
+ENV stage=$JOVEO_ENV
 
 # Mounting /src to this container
 VOLUME /src
 
 # Do the magic
-CMD echo "Hello"${env} && cd ../src && npm install && npm run build:$env
+CMD cd ../src && npm install && npm run build:$stage
