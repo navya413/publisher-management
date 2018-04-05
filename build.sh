@@ -21,6 +21,7 @@ fi
 # Build the deployable image
 echo "deploying image with env $JOVEO_ENV"
 docker build --build-arg JOVEO_ENV=$JOVEO_ENV -t joveo/pubmato -f .docker/Dockerfile .
+
 if [ $? -ne 0 ];then
     exit 3
 fi

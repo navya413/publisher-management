@@ -1,5 +1,4 @@
 # We are taking a base docker image that already has nodejs, npm, yarn etc.
-
 FROM node:9.6.1
 
 ARG JOVEO_ENV
