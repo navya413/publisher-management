@@ -11,7 +11,7 @@ pipeline {
         script {
           if (env.BRANCH_NAME == 'staging') {
             env.JOVEO_ENV = "staging"
-            env.AWS_INSTANCE_TAG = "pubmato-staging"
+            env.AWS_INSTANCE_TAG = "pubmato-ui"
           }
           if (env.BRANCH_NAME == 'release') {
             env.JOVEO_ENV = "prod"
