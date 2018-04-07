@@ -1,0 +1,26 @@
+@import "../../../../scss/colors";
+:host {
+  display: block;
+  background: $white;
+}
+.segments {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  font-size: 11px;
+  height: 36px;
+  border-bottom: 1px solid $grey-3;
+}
+.segment {
+  &::after {
+    content: ">";
+    margin: 0 0.25rem;
+  }
+  &:last-child::after {
+    content: none;
+  }
+  a {
+    color: $primary;
+    text-decoration: none;
+  }
+}

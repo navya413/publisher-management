@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  padding: 1rem;
+}
+
+.head{
+  display: flex;
+  margin-bottom: 1rem;
+  .date-selector{
+    margin-left: auto;
+  }
+}

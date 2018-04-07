@@ -1,0 +1,10 @@
+<div class="head">
+  <app-breadcrumb [segments]="breadcrumbSegments"></app-breadcrumb>
+  <app-date-range
+    class="date-selector"
+    [rangeFormat]="'YYYY-MM-DD'"
+    [selectedDay]="statsService.dateRange.days"
+    (onDateRangeChange)="onDateRangeChange($event)">
+  </app-date-range>
+</div>
+<app-stats-table [title]="routeData.data.subLevel ? routeData.data.subLevel : routeData.data.level" [value]="statsData" [loading]="loading"></app-stats-table>

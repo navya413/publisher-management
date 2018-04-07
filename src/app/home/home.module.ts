@@ -19,7 +19,7 @@ import { UtilService } from '../services/util.service';
     ReactiveFormsModule,
     HttpClientModule,
     MaterialModule,
-    HomeRoutingModule,
+    HomeRoutingModule
   ],
   declarations: [HomeComponent, HeaderComponent],
   providers: [

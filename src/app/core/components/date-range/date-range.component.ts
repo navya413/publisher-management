@@ -27,6 +27,13 @@ export class DateRangeComponent implements OnInit, OnChanges {
 
   ranges: Range[];
   constructor() {
+  }
+
+  ngOnInit() {
+    // this.onDateRangeChange.emit(this.selectedRange);
+  }
+
+  ngOnChanges() {
     this.ranges = [
       {
         title: 'Today',
@@ -103,14 +110,7 @@ export class DateRangeComponent implements OnInit, OnChanges {
         }
       }
     ];
-  }
 
-  ngOnInit() {
-
-    // this.onDateRangeChange.emit(this.selectedRange);
-  }
-
-  ngOnChanges() {
     this.ranges[this.ranges.length - 1].value['startDate'] = this.startDate ? this.startDate : moment().format(this.rangeFormat);
     this.ranges[this.ranges.length - 1].value['endDate'] = this.endDate ? this.endDate : moment().format(this.rangeFormat);
     this.selectedRange = this.ranges.filter((range) => {
