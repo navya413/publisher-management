@@ -14,7 +14,7 @@
     </ng-template>
   </m-column>
 
-  <m-column [field]="'cmStats.clicks'" [sortable]="true">
+  <m-column [field]="'cmStats.clicks'" [sortable]="true" [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
     <ng-template let-col let-row="row" mTemplate="header">
       <div class="normal-linehight">CM Stats</div>
       <span>Clicks</span>
@@ -44,7 +44,7 @@
     </ng-template>
   </m-column>
 
-  <m-column [field]="'cmStats.applies'" [sortable]="true">
+  <m-column [field]="'cmStats.applies'" [sortable]="true" [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
     <ng-template let-col let-row="row" mTemplate="header">
       <div class="normal-linehight">CM Stats</div>
       <span>Applies</span>
@@ -74,7 +74,7 @@
     </ng-template>
   </m-column>
 
-  <m-column [field]="'cmStats.spend'" [sortable]="true">
+  <m-column [field]="'cmStats.spend'" [sortable]="true" [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
     <ng-template let-col let-row="row" mTemplate="header">
       <div class="normal-linehight">CM Stats</div>
       <span>Spend</span>
@@ -101,6 +101,46 @@
     </ng-template>
     <ng-template let-col let-row="row" mTemplate="body">
       {{row['joveoStats']['spend'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'spendPubPortal'" [sortable]="true" [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">PubPortal</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['spendPubPortal'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'spendPubPortalMojo'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">PubPortalMojo</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['spendPubPortalMojo'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'spendPubPortalCD'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">PubPortalCD</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['spendPubPortalCD'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'spendPubPortalSelfServe'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">PubPortalSelfServe</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['spendPubPortalSelfServe'].toLocaleString()}}
     </ng-template>
   </m-column>
 

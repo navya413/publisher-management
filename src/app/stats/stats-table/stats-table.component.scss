@@ -1,3 +1,6 @@
+:host{
+  --first-column-padding: 0 12px 0 24px;
+}
 :host ::ng-deep th,
 :host ::ng-deep td {
   white-space: nowrap !important;
@@ -48,5 +51,9 @@
 .link-column{
   text-decoration: none;
   color: #3f51b5;
+}
+
+:host ::ng-deep .border-left{
+  border-left: 1px solid #e5e5e5;
 }
 
