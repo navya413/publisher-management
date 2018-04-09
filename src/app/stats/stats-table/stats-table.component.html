@@ -1,16 +1,18 @@
 <m-table [value]="value"
          (onRowClick)="onRowClick($event)"
-         selection="false" [selectionHandler]="false">
+         selection="false" [selectionHandler]="false"
+         (onReload)="onReload()">
 
-  <m-header [title]="title" *ngIf="showHeader" [colSetting]="false" [globalSearch]="true" [searchField]="'box'" [export]="true" [reload]="true">
+  <m-header [title]="title" [colSetting]="false" [globalSearch]="true" [searchField]="'box'" [export]="true" [reload]="true">
   </m-header>
   <m-footer [paginator]="true"></m-footer>
 
   <m-column [field]="'name'" [header]="'Entity'" [colBodyClass]="'left-sticky'" [colHeadClass]="'left-sticky'">
     <ng-template let-col let-row="row" mTemplate="body">
-      <a [routerLink]="['./', row['entity']]" class="link-column">
+      <a *ngIf="!disableLink" [routerLink]="['./', row['entity']]" class="link-column">
         {{row['name']}}
       </a>
+      <span *ngIf="disableLink">{{row['name']}}</span>
     </ng-template>
   </m-column>
 

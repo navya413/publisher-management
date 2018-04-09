@@ -4,6 +4,8 @@ import { UtilService } from '../../services/util.service';
 import 'rxjs/add/observable/forkJoin';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteDataService } from '../../services/route-data.service';
+import { StatsPopupComponent } from '../stats-popup/stats-popup.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-clients-stats',
@@ -12,6 +14,7 @@ import { RouteDataService } from '../../services/route-data.service';
 })
 export class ClientsStatsComponent implements OnDestroy {
   agencyId: string;
+  timezoneId: string;
   statsData: any[];
   loading: boolean;
   routeData;
@@ -26,6 +29,7 @@ export class ClientsStatsComponent implements OnDestroy {
     public utilService: UtilService,
     private routeDataService: RouteDataService,
     private route: ActivatedRoute,
+    public dialog: MatDialog,
   ) {
     this.urlSubscription$ = this.route.url.subscribe(data => {
       const tempObj = {};
@@ -80,7 +84,9 @@ export class ClientsStatsComponent implements OnDestroy {
       res => {
         this.loading = false;
         res.map(entity => {
-          const item = this.statsService.clientTree.filter(client => client.id === entity.entity)[0];
+          const item = this.statsService.clientTree.filter(
+            client => client.id === entity.entity,
+          )[0];
           entity['name'] = item ? item['name'] : entity['entity'];
         });
         this.statsData = res;
@@ -91,10 +97,29 @@ export class ClientsStatsComponent implements OnDestroy {
     );
   };
 
-  onDateRangeChange = function(date) {
+  onDateRangeChange(date) {
     this.statsService.dateRange = date.value;
     this.getStats();
-  };
+  }
+
+  onTimezoneChange(timezoneId) {
+    this.statsService.timezoneId = timezoneId;
+    this.getStats();
+  }
+
+  onRowClick(row) {
+    const dialogRef = this.dialog.open(StatsPopupComponent, {
+      width: '80vw',
+      data: {
+        row: row.data,
+        routeData: this.routeData
+      },
+    });
+  }
+
+  onReload() {
+    this.getStats();
+  }
 
   ngOnDestroy() {
     if (this.routeDataSubscription$) {

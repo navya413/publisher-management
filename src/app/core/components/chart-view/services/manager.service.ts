@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { colors, defaultOptions } from '../amcharts/default-options';
-import { Metric, METRICS } from '../../../model/chart-metrics';
+import { Metric, CLICKS_METRICS } from '../../../../model/chart-metrics';
 import * as moment from 'moment';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class ManagerService {
     return this.chartOptions;
   }
 
-  getValueAxes(metrics: string[]) {
+  getValueAxes() {
     const valueAxes = [{
       id: 'v1',
       gridAlpha: 0.1,
@@ -36,7 +36,7 @@ export class ManagerService {
         title: this.getMetricDisplay(metric),
         valueField: metric,
         balloonFunction: (item) => {
-          return metric + ': <b>' + item.values.value + '</b>';
+          return this.getMetricDisplay(metric) + ': <b>' + this.numberFormatter(item.values.value) + '</b>';
         },
         bullet: 'round',
         bulletBorderAlpha: 1,
@@ -54,15 +54,14 @@ export class ManagerService {
     return graphs;
   }
 
-  public updateDataPoint(data: any, metrics: string[]) {
+  public updateDataPoint(data: any, metrics: string[], chartType: string) {
     const tempData = [];
     if (data) {
-      Object.keys(data).map(label => {
+      data.map(item => {
         const obj = {};
-        obj['date'] = label;//moment(label).format('ll');
+        obj['date'] = item['entity'];
         metrics.forEach(metricId => {
-          const metric = this.getMetric(metricId)
-          obj[metricId] = data[label][metric.group][metric.type];
+          obj[metricId] = Number.parseFloat(item[metricId][chartType]).toFixed(2);
         });
         tempData.push(obj);
       });
@@ -70,24 +69,14 @@ export class ManagerService {
     return tempData;
   }
 
-  public getMetric(metricId): Metric {
-    const filteredMetrics: Metric[] = METRICS.filter(
-      metric => metricId === metric.id
-    );
-    return filteredMetrics.length ? filteredMetrics[0] : null;
+  private numberFormatter(val) {
+    return Number.parseFloat(val).toLocaleString();
   }
   public getMetricDisplay(metricId): string {
-    const filteredMetrics: Metric[] = METRICS.filter(
+    const filteredMetrics: Metric[] = CLICKS_METRICS.filter(
       metric => metricId === metric.id
     );
     return filteredMetrics.length ? filteredMetrics[0].display : null;
   }
-  public getMetricPrefix(metricId): string {
-    const filteredMetrics: Metric[] = METRICS.filter(
-      metric => metricId === metric.id,
-    );
-    return filteredMetrics.length && filteredMetrics[0].prefix
-      ? filteredMetrics[0].prefix
-      : null;
-  }
+
 }

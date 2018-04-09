@@ -11,9 +11,9 @@ import {
   PublishersComponent,
 } from './publishers/publishers.component';
 import { PubMonitorService } from './services/pub-monitor.service';
-import { ChartViewComponent } from '../components/chart-view/chart-view.component';
+import { ChartViewComponent } from '../core/components/chart-view/chart-view.component';
 import { AmChartsModule } from '@amcharts/amcharts3-angular';
-import { EmptyViewComponent } from '../components/empty-view/empty-view.component';
+import { EmptyViewComponent } from '../core/components/empty-view/empty-view.component';
 import {CoreModule} from "../core/core.module";
 
 @NgModule({

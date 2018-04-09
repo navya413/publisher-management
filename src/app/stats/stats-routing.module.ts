@@ -2,6 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { ClientsStatsComponent } from './clients-stats/clients-stats.component';
 import { StatsComponent } from './stats.component';
+import {EmptyViewComponent} from "../core/components/empty-view/empty-view.component";
 const routes: Routes = [
   {
     path: '',

@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { UtilService } from '../../services/util.service';
-import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-stats-table',
@@ -11,22 +10,23 @@ export class StatsTableComponent implements OnInit {
   @Input() value;
   @Input() title;
   @Input() loading;
-  @Input() showHeader = true;
-  constructor(public utilService: UtilService, public dialog: MatDialog) {}
+
+  @Input() disableLink;
+  @Input() disableClick;
+
+  @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() reload: EventEmitter<any> = new EventEmitter<any>();
+  constructor(public utilService: UtilService) {}
 
   ngOnInit() {}
 
   onRowClick = function(row) {
-    // const dialogRef = this.dialog.open(StatsPopupComponent, {
-    //   width: '80vw',
-    //   height: '80vh',
-    //   data: {
-    //     value: this.value
-    //   }
-    // });
-    //
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(result);
-    // });
+    if (!this.disableClick) {
+      this.rowClick.emit(row);
+    }
+  };
+
+  onReload = function () {
+    this.reload.emit();
   };
 }

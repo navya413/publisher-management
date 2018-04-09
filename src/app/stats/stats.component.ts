@@ -11,7 +11,6 @@ import { StatsService } from './services/stats.service';
 })
 export class StatsComponent implements OnInit, OnDestroy {
   agencyId: string;
-  clientTree: any[];
   loading: boolean;
   routeData: any = {};
   routeDataSubscription$;
@@ -19,7 +18,7 @@ export class StatsComponent implements OnInit, OnDestroy {
   constructor(
     public utilService: UtilService,
     private routeDataService: RouteDataService,
-    private statsService: StatsService,
+    public statsService: StatsService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -43,9 +42,10 @@ export class StatsComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   onAgencyChange = function(agencyId, navigate?) {
+    console.log('hello')
     this.first = false; // hack to call agency changes just 1 time
     this.agencyId = agencyId;
-    this.clientTree = [];
+    this.statsService.clientTree = [];
     if (navigate) {
       this.router.navigate(['./', 'agency', agencyId], {
         relativeTo: this.route,
@@ -54,7 +54,6 @@ export class StatsComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.statsService.getClientHierarchy(agencyId).subscribe(res => {
       this.loading = false;
-      this.clientTree = res.clientTree;
       this.statsService.clientTree = res.clientTree;
     }, err => {
       this.loading = false;

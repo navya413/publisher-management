@@ -1,3 +1,10 @@
+<div mat-dialog-title style="display: flex">
+  {{data.row.name}}
+  <button mat-raised-button style="margin-left: auto" (click)="dialogRef.close()">
+    Close
+  </button>
+</div>
+
 <div>
-  Hello
+  <app-chart-view [loading]="loading" [data]="chartData"></app-chart-view>
 </div>
