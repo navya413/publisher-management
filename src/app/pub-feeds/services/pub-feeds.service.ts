@@ -7,7 +7,13 @@ export class PubFeedsService {
   constructor(private http: HttpClient) {}
 
   getFtpPublishers() {
-    return this.http.get<any>(environment.feedsApi + 'placement');
+    return this.http.get<any>(environment.adminApi + 'publishers', {
+      params: {
+        page: '1',
+        limit: '1000',
+        ftp: 'true',
+      },
+    });
   }
 
   getFtpPublishersList() {

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
+import { NewEntity } from '../../model/new-entity-state';
 
 @Injectable()
 export class StatsService {
-
-  clientTree: any[];
+  clientMap: object = {};
   timezones: any[];
   timezoneId: string;
   dateRange = {
@@ -42,7 +42,7 @@ export class StatsService {
     if (this.timezoneId) {
       params['tz'] = this.timezoneId;
     }
-    return this.http.get<any>(
+    return this.http.get<NewEntity[]>(
       url,
       {
         params: params
@@ -50,10 +50,15 @@ export class StatsService {
     );
   }
 
-  getDailyStats(entityId, routeData) {
+  getDailyStats(routeData, entityId) {
     const agencyId = routeData.params.agencyId;
     const level = routeData.data.level;
-    const url = environment.newStatsApi + 'agency/' + agencyId + '/' + level + '/' + entityId + '/days';
+    let url = environment.newStatsApi + 'agency/' + agencyId + '/';
+    if (!routeData.params.entityId) {
+      url += level + '/' + entityId + '/days';
+    } else {
+      url += level + '/' + routeData.params.entityId + '/' + routeData.data.subLevel + '/' + entityId + '/days';
+    }
     const params = {
       since: this.dateRange.startDate,
       till: this.dateRange.endDate
@@ -61,7 +66,7 @@ export class StatsService {
     if (this.timezoneId) {
       params['tz'] = this.timezoneId;
     }
-    return this.http.get<any>(
+    return this.http.get<NewEntity[]>(
       url,
       {
         params: params

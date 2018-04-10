@@ -1,5 +1,5 @@
 <div mat-dialog-title>
-  {{data.value}}
+  {{data.placement.value}}
 </div>
 <div mat-dialog-content>
   <mat-card class="mat-elevation-z0" style="padding: 0">
@@ -8,22 +8,22 @@
       <tbody>
       <tr>
         <td class="table-key">Host</td>
-        <td>{{data.ftpConfig.credentials.host}}</td>
+        <td>{{data.placement.ftpConfig.credentials.host}}</td>
       </tr>
       <tr>
         <td class="table-key">Username</td>
-        <td>{{data.ftpConfig.credentials.username}}</td>
+        <td>{{data.placement.ftpConfig.credentials.username}}</td>
       </tr>
       <tr>
         <td class="table-key">Password</td>
-        <td>{{data.ftpConfig.credentials.password}}</td>
+        <td>{{data.placement.ftpConfig.credentials.password}}</td>
       </tr>
       </tbody>
     </table>
 
     <div style="margin: 0.5rem 0">Alert Recipients</div>
     <mat-chip-list>
-      <mat-chip *ngFor="let recipient of data.ftpConfig.alertRecipients">{{recipient}}</mat-chip>
+      <mat-chip *ngFor="let recipient of data.placement.ftpConfig.alertRecipients">{{recipient}}</mat-chip>
     </mat-chip-list>
   </mat-card>
 </div>
