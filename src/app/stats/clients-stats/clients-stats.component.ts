@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RouteDataService } from '../../services/route-data.service';
 import { StatsPopupComponent } from '../stats-popup/stats-popup.component';
 import { MatDialog } from '@angular/material';
+import {NewEntity} from "../../model/new-entity-state";
 
 @Component({
   selector: 'app-clients-stats',
@@ -52,7 +53,6 @@ export class ClientsStatsComponent implements OnDestroy {
     const subLevel = this.routeData.data.subLevel;
 
     const agencyId = this.routeData.params.agencyId;
-    const entityId = this.routeData.params.entityId;
     this.breadcrumbSegments = [];
 
     const segment = { label: null, url: null };
@@ -72,6 +72,7 @@ export class ClientsStatsComponent implements OnDestroy {
     }
 
     if (subLevel) {
+      const entityId = this.statsService.clientMap[this.routeData.params.entityId] || this.routeData.params.entityId;
       this.breadcrumbSegments.push({ label: entityId });
       this.breadcrumbSegments.push({ label: subLevel });
     }
@@ -81,14 +82,9 @@ export class ClientsStatsComponent implements OnDestroy {
     this.loading = true;
     this.statsData = [];
     this.statsService.getStats(this.routeData).subscribe(
-      res => {
+      (res: NewEntity[]) => {
         this.loading = false;
-        res.map(entity => {
-          const item = this.statsService.clientTree.filter(
-            client => client.id === entity.entity,
-          )[0];
-          entity['name'] = item ? item['name'] : entity['entity'];
-        });
+        res.map(entity => entity['name'] = this.statsService.clientMap[entity['entity']] || entity['entity']);
         this.statsData = res;
       },
       err => {

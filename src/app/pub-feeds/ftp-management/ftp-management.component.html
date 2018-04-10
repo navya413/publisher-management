@@ -8,15 +8,29 @@
 
   <m-footer [paginator]="true"></m-footer>
 
-  <m-column field="value" header="Name"></m-column>
-  <m-column field="placementType" header="Placement Type"></m-column>
-  <m-column field="bidType" header="Bid Type"></m-column>
+  <m-column field="name" header="Name">
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['placement']['name']}}
+    </ng-template>
+  </m-column>
+
+  <m-column field="placementType" header="Placement Type">
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['placement']['placementType']['name']}}
+    </ng-template>
+  </m-column>
+
+  <m-column field="bidType" header="Bid Type">
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['placement']['bidType']['name']}}
+    </ng-template>
+  </m-column>
+
   <m-column field="ftpConfig" header="FTP Folder Path">
     <ng-template let-col let-row="row" mTemplate="body">
       <div *ngFor="let path of getFolderPath(row, col)">
         {{path}}
       </div>
-
     </ng-template>
   </m-column>
 

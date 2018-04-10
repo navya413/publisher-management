@@ -13,7 +13,7 @@
       <mat-spinner diameter="50" style="margin: auto"></mat-spinner>
     </div>
 
-    <mat-list role="list" *ngIf="!loading && agencyId && statsService.clientTree.length">
+    <mat-list role="list" *ngIf="!loading && agencyId && statsService.clientMap">
       <mat-list-item class="listitem" [ngClass]="{'active': routeData.data.level === view.id}" *ngFor="let view of [{id: 'clients', name: 'All Clients'},{id: 'publishers', name: 'All Publishers'}]" (click)="onViewChange(view.id)">
         {{view.name}}
       </mat-list-item>
