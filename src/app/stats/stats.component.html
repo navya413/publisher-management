@@ -1,0 +1,26 @@
+<mat-sidenav-container class="sidenav-container mat-typography">
+  <mat-sidenav #sidenav
+               opened="true"
+               mode="side"
+               class="sidenav">
+    <button mat-raised-button color="primary" class="select-btn" (click)=agencyMenu.open()>
+      <mat-select #agencyMenu placeholder="Select Agency" [(ngModel)]="agencyId">
+        <mat-option (click)="onAgencyChange(agency, true)" *ngFor="let agency of utilService.agencies" [value]="agency">{{agency.charAt(0).toUpperCase() + agency.slice(1)}}</mat-option>
+      </mat-select>
+    </button>
+
+    <div *ngIf="loading">
+      <mat-spinner diameter="50" style="margin: auto"></mat-spinner>
+    </div>
+
+    <mat-list role="list" *ngIf="!loading && agencyId && statsService.clientTree.length">
+      <mat-list-item class="listitem" [ngClass]="{'active': routeData.data.level === view.id}" *ngFor="let view of [{id: 'clients', name: 'All Clients'},{id: 'publishers', name: 'All Publishers'}]" (click)="onViewChange(view.id)">
+        {{view.name}}
+      </mat-list-item>
+    </mat-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content class="sidenav-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

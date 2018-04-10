@@ -23,7 +23,7 @@ export class PubMonitorService {
     tempParam.startDate = this.startDate;
     tempParam.endDate = this.endDate;
     const url = tempParam.clientId
-      ? environment.adminApi + 'stats'
+      ? environment.adminApi + 'clients-stats'
       : environment.adminApi + 'agencyLevelStats';
     return this.http.get<any>(url, {
       params: tempParam,

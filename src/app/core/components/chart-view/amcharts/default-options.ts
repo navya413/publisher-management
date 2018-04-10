@@ -6,10 +6,10 @@ export enum colors {
   themeDark1 = '#8cc152',
   themeLight2 = '#ffce54',
   themeDark2 = '#f6bb42',
-  themeLight3 = '#ed5565',
-  themeDark3 = '#da4453',
-  themeLight4 = '#6576ed',
-  themeDark4 = '#4b61ed',
+  themeLight3 = '#6576ed',
+  themeDark3 = '#4b61ed',
+  themeLight4 = '#ed5565',
+  themeDark4 = '#da4453',
 }
 
 export const defaultOptions = {
@@ -50,7 +50,7 @@ export const defaultOptions = {
   },
   categoryField: 'date',
   categoryAxis: {
-    parseDates: true,
+    parseDates: false,
     dashLength: 1,
     tickLength: 0,
     minorGridEnabled: true
@@ -69,7 +69,7 @@ export const defaultOptions = {
     verticalPadding: 10
   },
   export: {
-    enabled: false
+    enabled: true
   },
   dataProvider: []
 };

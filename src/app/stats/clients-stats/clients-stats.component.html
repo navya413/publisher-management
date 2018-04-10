@@ -1,0 +1,26 @@
+<div *ngIf="routeData.data.level !== 'agency'">
+  <div class="head">
+    <app-breadcrumb [segments]="breadcrumbSegments"></app-breadcrumb>
+  </div>
+  <div class="head">
+    <app-date-range
+      class="date-selector"
+      [rangeFormat]="'YYYY-MM-DD'"
+      [selectedDay]="statsService.dateRange.days"
+      (onDateRangeChange)="onDateRangeChange($event)">
+    </app-date-range>
+    <button mat-raised-button color="primary" class="select-btn" (click)=timezoneMenu.open()>
+      <mat-select #timezoneMenu placeholder="Select Timezone" [(ngModel)]="statsService.timezoneId">
+        <mat-option (click)="onTimezoneChange(timezone.id)" *ngFor="let timezone of statsService.timezones" [value]="timezone.id">{{timezone.value}} ({{timezone.id}})</mat-option>
+      </mat-select>
+    </button>
+  </div>
+  <app-stats-table [title]="routeData.data.subLevel ? routeData.data.subLevel : routeData.data.level"
+                   [value]="statsData"
+                   [loading]="loading"
+                   (rowClick)="onRowClick($event)"
+                   (reload)="onReload()"
+                   [disableClick]="(routeData.data.subLevel)"
+                   [disableLink]="(routeData.data.subLevel)">
+  </app-stats-table>
+</div>

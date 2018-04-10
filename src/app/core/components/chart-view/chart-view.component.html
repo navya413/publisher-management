@@ -1,0 +1,13 @@
+<mat-card class="main-chart">
+  <div class="chart-container">
+
+    <button mat-raised-button color="primary" class="select-btn" (click)=chartTypeMenu.open()>
+      <mat-select #chartTypeMenu placeholder="Select Type" [(ngModel)]="chartType">
+        <mat-option (click)="onChartTypeChange(type)"  *ngFor="let type of ['clicks', 'applies', 'spend']" [value]="type">{{type.charAt(0).toUpperCase() + type.slice(1)}}</mat-option>
+      </mat-select>
+    </button>
+
+    <mat-spinner *ngIf="loading" style="margin: auto auto;" diameter="50"></mat-spinner>
+    <div *ngIf="!loading" class="chart-wrapper" #chartDiv></div>
+  </div>
+</mat-card>
