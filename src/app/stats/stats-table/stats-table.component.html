@@ -1,0 +1,156 @@
+<m-table [value]="value"
+         (onRowClick)="onRowClick($event)"
+         selection="false" [selectionHandler]="false"
+         (onReload)="onReload()">
+
+  <m-header [title]="title" [colSetting]="false" [globalSearch]="true" [searchField]="'box'" [export]="true" [reload]="true">
+  </m-header>
+  <m-footer [paginator]="true"></m-footer>
+
+  <m-column [field]="'name'" [header]="'Entity'" [colBodyClass]="'left-sticky'" [colHeadClass]="'left-sticky'">
+    <ng-template let-col let-row="row" mTemplate="body">
+      <a *ngIf="!disableLink" [routerLink]="['./', row['entity']]" class="link-column">
+        {{row['name']}}
+      </a>
+      <span *ngIf="disableLink">{{row['name']}}</span>
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'cmStats.clicks'" [sortable]="true" [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">CM Stats</div>
+      <span>Clicks</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['cmStats']['clicks'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'pubStats.clicks'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">Pub Stats</div>
+      <span>Clicks</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['pubStats']['clicks'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'joveoStats.clicks'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">Joveo Stats</div>
+      <span>Clicks</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['joveoStats']['clicks'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'cmStats.applies'" [sortable]="true" [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">CM Stats</div>
+      <span>Applies</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['cmStats']['applies'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'pubStats.applies'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">Pub Stats</div>
+      <span>Applies</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['pubStats']['applies'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'joveoStats.applies'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">Joveo Stats</div>
+      <span>Applies</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['joveoStats']['applies'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'cmStats.spend'" [sortable]="true" [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">CM Stats</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['cmStats']['spend'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'pubStats.spend'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">Pub Stats</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['pubStats']['spend'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'joveoStats.spend'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">Joveo Stats</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['joveoStats']['spend'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'spendPubPortal'" [sortable]="true" [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">PubPortal</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['spendPubPortal'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'spendPubPortalMojo'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">PubPortalMojo</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['spendPubPortalMojo'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'spendPubPortalCD'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">PubPortalCD</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['spendPubPortalCD'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'spendPubPortalSelfServe'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">PubPortalSelfServe</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{row['spendPubPortalSelfServe'].toLocaleString()}}
+    </ng-template>
+  </m-column>
+
+
+  <ng-template mTemplate="emptyTable">
+    <div *ngIf="loading" class="table-loading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <div>Loading...</div>
+    </div>
+  </ng-template>
+</m-table>

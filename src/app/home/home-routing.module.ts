@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      { path: '', redirectTo: 'publisher-monitor', pathMatch: 'full' },
+      { path: '', redirectTo: 'publisher-stats', pathMatch: 'full' },
       {
         path: 'publisher-monitor',
         loadChildren: '../pub-monitor/pub-monitor.module#PubMonitorModule'
@@ -19,6 +19,10 @@ const routes: Routes = [
       {
         path: 'publisher-feeds',
         loadChildren: '../pub-feeds/pub-feeds.module#PubFeedsModule'
+      },
+      {
+        path: 'publisher-stats',
+        loadChildren: '../stats/stats.module#StatsModule'
       }
 
     ]

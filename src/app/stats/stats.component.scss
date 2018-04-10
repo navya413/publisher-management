@@ -1,0 +1,39 @@
+@import "../../scss/colors";
+.sidenav-container {
+  height: calc(100vh - 3.5rem);
+}
+.sidenav-content {
+  height: 100%;
+  overflow: auto;
+}
+.sidenav {
+  width: 13rem;
+  border-right: 1px solid $grey-3;
+  background: $white;
+}
+
+.select-btn {
+  margin: 1rem;
+}
+::ng-deep .select-btn .mat-select-value, ::ng-deep .select-btn .mat-select-arrow {
+  color: #fff;
+}
+
+::ng-deep .select-btn .mat-select-placeholder {
+  color: rgba(255, 255, 255, 0.71);
+}
+
+.listitem{
+  background: #fff;
+  color: $primary;
+  cursor: pointer;
+}
+.listitem:hover{
+  background: $grey-2;
+  color: $primary;
+}
+
+.active{
+  background: $grey-3;
+  border-right: 2px solid $primary;
+}

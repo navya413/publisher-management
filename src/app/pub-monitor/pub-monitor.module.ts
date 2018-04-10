@@ -11,10 +11,8 @@ import {
   PublishersComponent,
 } from './publishers/publishers.component';
 import { PubMonitorService } from './services/pub-monitor.service';
-import { DateRangeComponent } from '../components/date-range/date-range.component';
-import { ChartViewComponent } from '../components/chart-view/chart-view.component';
 import { AmChartsModule } from '@amcharts/amcharts3-angular';
-import { EmptyViewComponent } from '../components/empty-view/empty-view.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
@@ -25,15 +23,13 @@ import { EmptyViewComponent } from '../components/empty-view/empty-view.componen
     MomentumTableModule,
     AmChartsModule,
     PubMonitorRoutingModule,
+    CoreModule,
   ],
   declarations: [
     PubMonitorComponent,
     EntityNavComponent,
     PublishersComponent,
-    DateRangeComponent,
-    ChartViewComponent,
     PublisherDetailDialogComponent,
-    EmptyViewComponent,
   ],
   providers: [PubMonitorService],
   entryComponents: [PublisherDetailDialogComponent],

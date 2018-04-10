@@ -2,7 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { PubMonitorComponent } from './pub-monitor.component';
 import { PublishersComponent } from './publishers/publishers.component';
-import { EmptyViewComponent } from '../components/empty-view/empty-view.component';
+import { EmptyViewComponent } from '../core/components/empty-view/empty-view.component';
 const routes: Routes = [
   {
     path: '',

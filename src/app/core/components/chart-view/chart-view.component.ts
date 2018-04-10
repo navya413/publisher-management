@@ -9,9 +9,7 @@ import {
 } from '@angular/core';
 import { AmChart, AmChartsService } from '@amcharts/amcharts3-angular';
 import { ManagerService } from './services/manager.service';
-import {Metric, METRICS} from "../../model/chart-metrics";
-
-
+import { CLICKS_METRICS, Metric } from '../../../model/chart-metrics';
 
 @Component({
   selector: 'app-chart-view',
@@ -26,10 +24,11 @@ export class ChartViewComponent implements OnInit, OnChanges, OnDestroy {
   @Input() selectedMetrics: string[] = [];
 
   private chart: AmChart;
+  chartType = 'clicks';
 
   @ViewChild('chartDiv') chartDiv: ElementRef;
 
-  public allMetrics: Metric[] = METRICS;
+  public allMetrics: Metric[] = CLICKS_METRICS;
   constructor(
     private AmCharts: AmChartsService,
     private manager: ManagerService,
@@ -41,6 +40,11 @@ export class ChartViewComponent implements OnInit, OnChanges, OnDestroy {
     this.createChart();
   }
 
+  onChartTypeChange(type) {
+    this.chartType = type;
+    this.updateChart();
+  }
+
   updateChart() {
     this.destroyChart();
     this.createChart();
@@ -50,13 +54,14 @@ export class ChartViewComponent implements OnInit, OnChanges, OnDestroy {
     this.selectedMetrics = [];
     this.allMetrics.forEach((metric: Metric) => {
       this.selectedMetrics.push(metric.id);
-    })
+    });
     const options = this.manager.getChartOptions();
-    options.valueAxes = this.manager.getValueAxes(this.selectedMetrics);
+    options.valueAxes = this.manager.getValueAxes();
     options.graphs = this.manager.getGraphs(this.selectedMetrics);
     options.dataProvider = this.manager.updateDataPoint(
       this.data,
       this.selectedMetrics,
+      this.chartType
     );
     setTimeout(() => {
       if (options.dataProvider.length && this.chartDiv) {
@@ -71,14 +76,6 @@ export class ChartViewComponent implements OnInit, OnChanges, OnDestroy {
   destroyChart() {
     if (this.chart) {
       this.AmCharts.destroyChart(this.chart);
-    }
-  }
-
-  getCount(metricId) {
-    if (this.data && this.data[metricId]) {
-      return this.data[metricId]
-        .reduce((total, num) => total + num)
-        .toLocaleString();
     }
   }
 
