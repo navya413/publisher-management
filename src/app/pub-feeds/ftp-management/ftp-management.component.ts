@@ -1,6 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { PubFeedsService } from '../services/pub-feeds.service';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-ftp-management',
@@ -10,7 +10,10 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 export class FtpManagementComponent implements OnInit {
   loading: boolean;
   placements = [];
-  constructor(private pubFeedsService: PubFeedsService, public dialog: MatDialog,) {}
+  constructor(
+    private pubFeedsService: PubFeedsService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit() {
     this.getFtpPublishers();
@@ -19,16 +22,20 @@ export class FtpManagementComponent implements OnInit {
   getFtpPublishers() {
     this.placements = [];
     this.loading = true;
-    this.pubFeedsService.getFtpPublishers().subscribe((res: any) => {
-      this.loading = false;
-      this.placements = res;
-    }, (err) => {
-      this.loading = false;
-    });
+    this.pubFeedsService.getFtpPublishers().subscribe(
+      (res: any) => {
+        this.loading = false;
+        this.placements = res.data.records;
+        console.log(res);
+      },
+      err => {
+        this.loading = false;
+      },
+    );
   }
 
   getFolderPath(row, col) {
-    const folderObj = row[col.field]['folderpath'];
+    const folderObj = row['placement']['ftpConfig']['folderpath'];
     const arr = [];
     Object.keys(folderObj).forEach(key => {
       arr.push(folderObj[key]);
@@ -50,19 +57,18 @@ export class FtpManagementComponent implements OnInit {
   onReload() {
     this.getFtpPublishers();
   }
-
 }
-
 
 @Component({
   selector: 'detail-dialog',
   templateUrl: 'detail-dialog.html',
-  styles: ['.table-key {padding-right: 2rem; font-weight: bold;}']
+  styles: ['.table-key {padding-right: 2rem; font-weight: bold;}'],
 })
 export class DetailDialog {
   constructor(
     public dialogRef: MatDialogRef<DetailDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
+    console.log(data);
   }
 }

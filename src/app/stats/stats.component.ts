@@ -42,10 +42,8 @@ export class StatsComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   onAgencyChange = function(agencyId, navigate?) {
-    console.log('hello')
     this.first = false; // hack to call agency changes just 1 time
     this.agencyId = agencyId;
-    this.statsService.clientTree = [];
     if (navigate) {
       this.router.navigate(['./', 'agency', agencyId], {
         relativeTo: this.route,
@@ -54,7 +52,10 @@ export class StatsComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.statsService.getClientHierarchy(agencyId).subscribe(res => {
       this.loading = false;
-      this.statsService.clientTree = res.clientTree;
+      this.statsService.clientMap = res.clientTree.reduce((map, client) => {
+        map[client.id] = client.name;
+        return map;
+      }, {});
     }, err => {
       this.loading = false;
     });

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { StatsService } from '../services/stats.service';
+import {NewEntity} from "../../model/new-entity-state";
 
 @Component({
   selector: 'app-stats-popup',
@@ -23,9 +24,9 @@ export class StatsPopupComponent implements OnInit {
   getDailyStats() {
     this.loading = true;
     this.statsService
-      .getDailyStats(this.data.row.entity, this.data.routeData)
+      .getDailyStats(this.data.routeData, this.data.row.entity)
       .subscribe(
-        res => {
+        (res: NewEntity[]) => {
           this.loading = false;
           this.chartData = res;
         },
