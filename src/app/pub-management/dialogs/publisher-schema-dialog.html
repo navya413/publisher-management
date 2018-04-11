@@ -9,28 +9,28 @@
         <mat-form-field>
           <input matInput
                  placeholder="Publisher"
-                 [(ngModel)]="headerSchema.publisher">
+                 [(ngModel)]="headerSchema.publisherName">
         </mat-form-field>
       </div>
       <div class="grid-item">
         <mat-form-field>
           <input matInput
                  placeholder="Publisher URL"
-                 [(ngModel)]="headerSchema.publisherurl">
+                 [(ngModel)]="headerSchema.publisherUrl">
         </mat-form-field>
       </div>
       <div class="grid-item">
         <mat-form-field>
           <input matInput
                  placeholder="Job Count"
-                 [(ngModel)]="headerSchema.jobcount">
+                 [(ngModel)]="headerSchema.jobCount">
         </mat-form-field>
       </div>
       <div class="grid-item">
         <mat-form-field>
           <input matInput
                  placeholder="Generation Time"
-                 [(ngModel)]="headerSchema.generationtime">
+                 [(ngModel)]="headerSchema.generationTime">
         </mat-form-field>
       </div>
     </div>
@@ -105,11 +105,11 @@
         </mat-form-field>
       </div>
       <div class="grid-item">
-        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['postalcode']"></mat-checkbox>
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['zip']"></mat-checkbox>
         <mat-form-field>
           <input matInput
                  placeholder="Zip"
-                 [(ngModel)]="schemaMapping.postalcode">
+                 [(ngModel)]="schemaMapping.zip">
         </mat-form-field>
       </div>
       <div class="grid-item">
@@ -121,35 +121,35 @@
         </mat-form-field>
       </div>
       <div class="grid-item">
-        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['posteddate']"></mat-checkbox>
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['datePosted']"></mat-checkbox>
         <mat-form-field>
           <input matInput
                  placeholder="Date Posted"
-                 [(ngModel)]="schemaMapping.posteddate">
+                 [(ngModel)]="schemaMapping.datePosted">
         </mat-form-field>
       </div>
       <div class="grid-item">
-        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['referencenumber']"></mat-checkbox>
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['refNumber']"></mat-checkbox>
         <mat-form-field>
           <input matInput
                  placeholder="Ref Number"
-                 [(ngModel)]="schemaMapping.referencenumber">
+                 [(ngModel)]="schemaMapping.refNumber">
         </mat-form-field>
       </div>
       <div class="grid-item">
-        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['modifieddate']"></mat-checkbox>
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['modifiedDate']"></mat-checkbox>
         <mat-form-field>
           <input matInput
                  placeholder="Modified Date"
-                 [(ngModel)]="schemaMapping.modifieddate">
+                 [(ngModel)]="schemaMapping.modifiedDate">
         </mat-form-field>
       </div>
       <div class="grid-item">
-        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['date']"></mat-checkbox>
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['publishedDate']"></mat-checkbox>
         <mat-form-field>
           <input matInput
                  placeholder="Published Date"
-                 [(ngModel)]="schemaMapping.date">
+                 [(ngModel)]="schemaMapping.publishedDate">
         </mat-form-field>
       </div>
       <div class="grid-item">

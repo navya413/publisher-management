@@ -251,7 +251,8 @@ export class PublisherSchemaDialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<PublisherSchemaDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private pubManagementService: PubManagementService
+    private pubManagementService: PubManagementService,
+    private utilService: UtilService
   ) {
     this.schemaMapping = {
       job: '',
@@ -262,27 +263,26 @@ export class PublisherSchemaDialog implements OnInit {
       country: '',
       description: '',
       url: '',
-      postalcode: '',
+      zip: '',
       category: '',
-      posteddate: '',
-      referencenumber: '',
-      modifieddate: '',
-      date: '',
+      datePosted: '',
+      refNumber: '',
+      modifiedDate: '',
+      publishedDate: '',
       advertiser: '',
       cpc: '',
       cpa: ''
     };
     this.headerSchema = {
-      publisher: '',
-      publisherurl: '',
-      jobcount: '',
-      generationtime: ''
+      publisherName: '',
+      publisherUrl: '',
+      jobCount: '',
+      generationTime: ''
     };
   }
 
   ngOnInit() {
     this.pubManagementService.getPublisherSchema(this.data.placement.id).subscribe(res => {
-      console.log(res);
       const fieldsWrappedInCdata = res.fieldsWrappedInCdata;
       fieldsWrappedInCdata.map(item => {
         this.fieldsWrappedInCdata[item] = true;
@@ -291,6 +291,8 @@ export class PublisherSchemaDialog implements OnInit {
 
       Object.assign(this.schemaMapping, res.jobSchema);
       Object.assign(this.headerSchema, res.headerSchema);
+
+      console.log(this.headerSchema);
     });
   }
 
@@ -310,6 +312,8 @@ export class PublisherSchemaDialog implements OnInit {
     const data = {
       schema: {}
     };
+    this.utilService.objectCleaner(this.schemaMapping);
+    this.utilService.objectCleaner(this.headerSchema);
     data.schema['fieldsWrappedInCdata'] = Object.keys(this.fieldsWrappedInCdata).filter(key => this.fieldsWrappedInCdata[key]);
     data.schema['jobSchema'] = this.schemaMapping;
     data.schema['additionalFields'] = this.additionalFields;
