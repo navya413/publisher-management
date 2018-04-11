@@ -6,6 +6,7 @@ import {
   PublisherEditDialog,
   PublisherInfoDialog,
   PublisherListComponent,
+  PublisherSchemaDialog,
 } from './pub-management.component';
 import { MomentumTableModule } from 'momentum-table';
 import { MaterialModule } from '../material/material.module';
@@ -27,9 +28,10 @@ import { EditorActionComponent } from './editor-action/editor-action.component';
     PublisherAddDialog,
     PublisherInfoDialog,
     PublisherEditDialog,
+    PublisherSchemaDialog,
     EditorActionComponent
   ],
-  entryComponents: [PublisherAddDialog, PublisherInfoDialog, PublisherEditDialog],
+  entryComponents: [PublisherAddDialog, PublisherInfoDialog, PublisherEditDialog, PublisherSchemaDialog],
   providers: [PubManagementService],
 })
 export class PubManagementModule {}
