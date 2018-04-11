@@ -27,4 +27,20 @@ export class PubManagementService {
       params: param
     });
   }
+
+  getPublisherSchema(placementId) {
+    return this.http.get<any>(environment.adminApi + 'publishers/placementSchema', {
+      params: {
+        placementId: placementId
+      },
+    });
+  }
+
+  postPublisherSchema(placementId, data) {
+    return this.http.post<any>(environment.adminApi + 'publishers/placementSchema', data, {
+      params: {
+        placementId: placementId
+      }
+    });
+  }
 }
