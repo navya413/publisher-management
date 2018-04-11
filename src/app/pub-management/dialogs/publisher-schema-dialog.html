@@ -1,0 +1,198 @@
+<div mat-dialog-title>
+  Schema Mapping
+</div>
+<div mat-dialog-content>
+  <div style="background: #efefef; padding: 1rem; margin-bottom: 1rem">
+    <mat-label>Header Schema</mat-label>
+    <div class="grid-container">
+      <div class="grid-item">
+        <mat-form-field>
+          <input matInput
+                 placeholder="Publisher"
+                 [(ngModel)]="headerSchema.publisherName">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-form-field>
+          <input matInput
+                 placeholder="Publisher URL"
+                 [(ngModel)]="headerSchema.publisherUrl">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-form-field>
+          <input matInput
+                 placeholder="Job Count"
+                 [(ngModel)]="headerSchema.jobCount">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-form-field>
+          <input matInput
+                 placeholder="Generation Time"
+                 [(ngModel)]="headerSchema.generationTime">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+
+  <div style="background: #efefef; padding: 1rem">
+    <mat-label>Job Schema</mat-label>
+    <div class="grid-container">
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['job']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Job"
+                 [(ngModel)]="schemaMapping.job">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['company']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Company"
+                 [(ngModel)]="schemaMapping.company">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['title']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Title"
+                 [(ngModel)]="schemaMapping.title">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['city']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="City"
+                 [(ngModel)]="schemaMapping.city">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['state']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="State"
+                 [(ngModel)]="schemaMapping.state">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['description']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Description"
+                 [(ngModel)]="schemaMapping.description">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['country']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Country"
+                 [(ngModel)]="schemaMapping.country">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['url']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="URL"
+                 [(ngModel)]="schemaMapping.url">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['zip']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Zip"
+                 [(ngModel)]="schemaMapping.zip">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['category']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Category"
+                 [(ngModel)]="schemaMapping.category">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['datePosted']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Date Posted"
+                 [(ngModel)]="schemaMapping.datePosted">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['refNumber']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Ref Number"
+                 [(ngModel)]="schemaMapping.refNumber">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['modifiedDate']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Modified Date"
+                 [(ngModel)]="schemaMapping.modifiedDate">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['publishedDate']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Published Date"
+                 [(ngModel)]="schemaMapping.publishedDate">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['advertiser']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Advertiser"
+                 [(ngModel)]="schemaMapping.advertiser">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['cpc']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="CPC"
+                 [(ngModel)]="schemaMapping.cpc">
+        </mat-form-field>
+      </div>
+      <div class="grid-item">
+        <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['cpa']"></mat-checkbox>
+        <mat-form-field>
+          <input matInput
+                 placeholder="CPA"
+                 [(ngModel)]="schemaMapping.cpa">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div style="background: #efefef; padding: 1rem">
+    <div class="grid-container2">
+      <div *ngFor="let node of additionalFields;trackBy: trackByFn;let i = index" class="grid-item">
+        <mat-form-field>
+          <input matInput
+                 [(ngModel)]="additionalFields[i]"
+                 placeholder="Enter Node Name">
+        </mat-form-field>
+        <button mat-icon-button (click)="removeNode(i)"><mat-icon>clear</mat-icon></button>
+      </div>
+    </div>
+    <button type="button" mat-raised-button color="primary" (click)="addCustomNode()">Add Custom Node</button>
+  </div>
+</div>
+<div mat-dialog-actions="">
+  <button type="button" mat-raised-button (click)="dialogRef.close()" style="margin-left: auto;">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" type="submit">Submit</button>
+</div>
