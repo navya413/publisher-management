@@ -15,7 +15,7 @@ pipeline {
           }
           if (env.BRANCH_NAME == 'release') {
             env.JOVEO_ENV = "prod"
-            env.AWS_INSTANCE_TAG = "pubmato-release"
+            env.AWS_INSTANCE_TAG = "pubmato-ui-release"
           }
         }
         sh 'sh build.sh $JOVEO_ENV'
