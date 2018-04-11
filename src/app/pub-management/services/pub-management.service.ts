@@ -31,7 +31,6 @@ export class PubManagementService {
   getPublisherSchema(placementId) {
     return this.http.get<any>(environment.adminApi + 'publishers/placementSchema', {
       params: {
-        agency: 'ripple',
         placementId: placementId
       },
     });
@@ -40,7 +39,6 @@ export class PubManagementService {
   postPublisherSchema(placementId, data) {
     return this.http.post<any>(environment.adminApi + 'publishers/placementSchema', data, {
       params: {
-        agency: 'ripple',
         placementId: placementId
       }
     });
