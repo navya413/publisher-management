@@ -19,7 +19,10 @@ if [ $? -ne 0 ];then
     exit 2
 fi
 
-echo "exit status 0 for previous run"
+
+# Copy to nginx.conf from nginx-$VERSION.conf
+cp .docker/nginx-$JOVEO_ENV.conf .docker/nginx.conf
+
 # Build the deployable image
 echo "deploying image with env $JOVEO_ENV"
 docker build -t joveo/pubmato -f .docker/Dockerfile .
