@@ -11,11 +11,13 @@
         <div class="card-header">
           <button mat-raised-button color="primary" (click)="openPublisherAddDialog($event)" class="btn-margin">Add Publisher</button>
 
-          <button [disabled]="!selectedPublishers.length" mat-raised-button (click)=editMenu.open()>
+          <button [disabled]="!selectedPublishers.length" mat-raised-button (click)=editMenu.open() class="btn-margin">
             <mat-select [disabled]="!selectedPublishers.length" #editMenu placeholder="Edit Publisher" class="agencyList">
               <mat-option (click)="editPublisher(option)" *ngFor="let option of editOptions">{{option.name}}</mat-option>
             </mat-select>
           </button>
+
+          <button mat-raised-button *ngIf="selectedPublishers.length" (click)="openPublisherSchemaDialog()" class="btn-margin">Schema Mapping</button>
 
           <button mat-raised-button (click)=agencyMenu.open() class="agencyFilter">
             <mat-select #agencyMenu [(ngModel)]="selectedAgency" class="agencyList">

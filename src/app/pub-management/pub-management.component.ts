@@ -115,6 +115,22 @@ export class PublisherListComponent implements OnInit {
     });
   }
 
+  openPublisherSchemaDialog() {
+    const dialogRef = this.dialog.open(PublisherSchemaDialog, {
+      width: '80vw',
+      data: this.selectedPublishers[0],
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.success) {
+        this.notifService.success(
+          'Success',
+          'Successfully updated',
+        );
+      }
+    });
+  }
+
   onAgencyChange(agency?) {
     this.params.agencyId = agency ? agency : null;
     this.getPublisherList();
@@ -217,6 +233,96 @@ export class PublisherListComponent implements OnInit {
           'Successfully updated',
         );
       }
+    });
+  }
+}
+
+// Publisher Schema Mapping Dialog
+@Component({
+  selector: 'publisher-schema-dialog',
+  templateUrl: 'dialogs/publisher-schema-dialog.html',
+  styleUrls: ['dialogs/publisher-schema-dialog.scss'],
+})
+export class PublisherSchemaDialog implements OnInit {
+  loading: boolean;
+  schemaMapping;
+  additionalFields: string[];
+  fieldsWrappedInCdata = {};
+  headerSchema;
+  constructor(
+    public dialogRef: MatDialogRef<PublisherSchemaDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private pubManagementService: PubManagementService,
+    private utilService: UtilService
+  ) {
+    this.schemaMapping = {
+      job: '',
+      company: '',
+      title: '',
+      city: '',
+      state: '',
+      country: '',
+      description: '',
+      url: '',
+      zip: '',
+      category: '',
+      refNumber: '',
+      modifiedDate: '',
+      publishedDate: '',
+      advertiser: '',
+      cpc: '',
+      cpa: ''
+    };
+    this.headerSchema = {
+      publisherName: '',
+      publisherUrl: '',
+      jobCount: '',
+      generationTime: ''
+    };
+  }
+
+  ngOnInit() {
+    this.loading = true;
+    this.pubManagementService.getPublisherSchema(this.data.placement.id).subscribe(res => {
+      this.loading = false;
+      const fieldsWrappedInCdata = res.fieldsWrappedInCdata;
+      fieldsWrappedInCdata.map(item => {
+        this.fieldsWrappedInCdata[item] = true;
+      });
+      this.additionalFields = res.additionalFields;
+
+      Object.assign(this.schemaMapping, res.jobSchema);
+      Object.assign(this.headerSchema, res.headerSchema);
+    }, err => {
+      this.loading = false;
+    });
+  }
+
+  addCustomNode() {
+    this.additionalFields.push('');
+  }
+
+  trackByFn(index, item) {
+    return index;
+  }
+
+  removeNode(index) {
+    this.additionalFields.splice(index, 1);
+  }
+
+  onSubmit() {
+    const data = {
+      schema: {}
+    };
+    this.utilService.objectCleaner(this.schemaMapping);
+    this.utilService.objectCleaner(this.headerSchema);
+    data.schema['fieldsWrappedInCdata'] = Object.keys(this.fieldsWrappedInCdata).filter(key => this.fieldsWrappedInCdata[key]);
+    data.schema['jobSchema'] = this.schemaMapping;
+    data.schema['additionalFields'] = this.additionalFields;
+    data.schema['headerSchema'] = this.headerSchema;
+
+    this.pubManagementService.postPublisherSchema(this.data.placement.id, data).subscribe(res => {
+      this.dialogRef.close({success: true});
     });
   }
 }
@@ -349,7 +455,7 @@ export class PublisherEditDialog implements OnInit {
   }
 
   onSubmit() {
-    let tempData = {
+    const tempData = {
       id: this.data.publisher.placement.id,
       update: {}
     };
@@ -466,7 +572,8 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.creationForm.value.placement.publisherReconciliationDetails && this.creationForm.value.placement.publisherReconciliationDetails.startDate) {
+    if (this.creationForm.value.placement.publisherReconciliationDetails
+        && this.creationForm.value.placement.publisherReconciliationDetails.startDate) {
       this.creationForm.value.placement.publisherReconciliationDetails.startDate += '';
     }
     this.utilService.objectCleaner(this.creationForm.value);
