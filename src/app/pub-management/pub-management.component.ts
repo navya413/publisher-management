@@ -244,6 +244,7 @@ export class PublisherListComponent implements OnInit {
   styleUrls: ['dialogs/publisher-schema-dialog.scss'],
 })
 export class PublisherSchemaDialog implements OnInit {
+  loading: boolean;
   schemaMapping;
   additionalFields: string[];
   fieldsWrappedInCdata = {};
@@ -265,7 +266,6 @@ export class PublisherSchemaDialog implements OnInit {
       url: '',
       zip: '',
       category: '',
-      datePosted: '',
       refNumber: '',
       modifiedDate: '',
       publishedDate: '',
@@ -282,7 +282,9 @@ export class PublisherSchemaDialog implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.pubManagementService.getPublisherSchema(this.data.placement.id).subscribe(res => {
+      this.loading = false;
       const fieldsWrappedInCdata = res.fieldsWrappedInCdata;
       fieldsWrappedInCdata.map(item => {
         this.fieldsWrappedInCdata[item] = true;
@@ -291,8 +293,8 @@ export class PublisherSchemaDialog implements OnInit {
 
       Object.assign(this.schemaMapping, res.jobSchema);
       Object.assign(this.headerSchema, res.headerSchema);
-
-      console.log(this.headerSchema);
+    }, err => {
+      this.loading = false;
     });
   }
 
