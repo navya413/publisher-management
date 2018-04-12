@@ -18,7 +18,7 @@ pipeline {
             env.AWS_INSTANCE_TAG = "pubmato-ui-release"
           }
         }
-        sh 'sh build.sh $JOVEO_ENV $VERSION'
+        sh 'sh build.sh $JOVEO_ENV'
       }
     }
     stage('push to ecr') {
