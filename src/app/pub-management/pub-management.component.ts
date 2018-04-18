@@ -248,6 +248,7 @@ export class PublisherSchemaDialog implements OnInit {
   schemaMapping;
   additionalFields: string[];
   fieldsWrappedInCdata = {};
+  includeCurrencyInBidTag: boolean;
   headerSchema;
   constructor(
     public dialogRef: MatDialogRef<PublisherSchemaDialog>,
@@ -285,6 +286,7 @@ export class PublisherSchemaDialog implements OnInit {
     this.loading = true;
     this.pubManagementService.getPublisherSchema(this.data.placement.id).subscribe(res => {
       this.loading = false;
+      this.includeCurrencyInBidTag = res.includeCurrencyInBidTag;
       const fieldsWrappedInCdata = res.fieldsWrappedInCdata;
       fieldsWrappedInCdata.map(item => {
         this.fieldsWrappedInCdata[item] = true;
@@ -320,6 +322,7 @@ export class PublisherSchemaDialog implements OnInit {
     data.schema['jobSchema'] = this.schemaMapping;
     data.schema['additionalFields'] = this.additionalFields;
     data.schema['headerSchema'] = this.headerSchema;
+    data.schema['includeCurrencyInBidTag'] = this.includeCurrencyInBidTag;
 
     this.pubManagementService.postPublisherSchema(this.data.placement.id, data).subscribe(res => {
       this.dialogRef.close({success: true});
