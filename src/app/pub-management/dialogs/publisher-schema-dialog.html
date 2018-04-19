@@ -43,7 +43,7 @@
     </div>
 
 
-    <div style="background: #efefef; padding: 1rem">
+    <div style="background: #efefef; padding: 1rem; padding-bottom: 0">
       <div class="mat-caption" style="font-size: 1rem">
         Job Schema
         <mat-icon matTooltip="Select the checkbox to wrap the respective node in CData" [matTooltipPosition]="'after'" style="font-size: 1rem">info_outline</mat-icon>
@@ -178,6 +178,9 @@
           </mat-form-field>
         </div>
       </div>
+    </div>
+    <div style="background: #efefef; padding: 0 1rem;">
+      <mat-checkbox [(ngModel)]="includeCurrencyInBidTag">Include Currency in Bid</mat-checkbox>
     </div>
     <div style="background: #efefef; padding: 1rem">
       <div class="grid-container2">
