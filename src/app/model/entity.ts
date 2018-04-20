@@ -17,14 +17,24 @@ export const PLACEMENT_TYPES: Item[] = [
 ];
 
 export const FTP_CONFIG: Item = { name: 'FTP Config', value: 'ftpConfig' };
-export const PUB_PORTAL_DETAILS: Item = { name: 'Pub Portal Details', value: 'publisherPortalDetails' };
-export const PUB_CONTACT_DETAILS: Item = { name: 'Pub Contact Details', value: 'publisherContactDetails' };
-export const PUB_RECONCILIATION_DETAILS: Item = { name: 'Pub Reconciliation Details', value: 'publisherReconciliationDetails' };
+export const PUB_PORTAL_DETAILS: Item = {
+  name: 'Pub Portal Details',
+  value: 'publisherPortalDetails'
+};
+export const PUB_CONTACT_DETAILS: Item = {
+  name: 'Pub Contact Details',
+  value: 'publisherContactDetails'
+};
+export const PUB_RECONCILIATION_DETAILS: Item = {
+  name: 'Pub Reconciliation Details',
+  value: 'publisherReconciliationDetails'
+};
+export const AGENCIES: Item = { name: 'Agencies', value: 'agencies' };
 
 export const EDIT_OPTIONS: Item[] = [
+  AGENCIES,
   FTP_CONFIG,
   PUB_PORTAL_DETAILS,
   PUB_CONTACT_DETAILS,
   PUB_RECONCILIATION_DETAILS
 ];
-
