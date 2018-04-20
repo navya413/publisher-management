@@ -1,8 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~normalize.css/normalize.css";
-@import "~material-design-icons/iconfont/material-icons.css";
-@import "./scss/base";
-@import "./scss/material-core";
+@import '~normalize.css/normalize.css';
+@import '~material-design-icons/iconfont/material-icons.css';
+@import './scss/base';
+@import './scss/material-core';
 
-@import "./scss/menu";
+@import './scss/menu';
 
+/*=============================================
+=            Momentum Table Overrides            =
+=============================================*/
+
+/*=====  End of Momentum Table Overrides  ======*/
+
+.left-sticky {
+  box-shadow: 4px 0 4px 0 rgba(0, 0, 0, 0.1);
+}
