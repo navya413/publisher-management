@@ -43,7 +43,7 @@
     </div>
 
 
-    <div style="background: #efefef; padding: 1rem">
+    <div style="background: #efefef; padding: 1rem; padding-bottom: 0">
       <div class="mat-caption" style="font-size: 1rem">
         Job Schema
         <mat-icon matTooltip="Select the checkbox to wrap the respective node in CData" [matTooltipPosition]="'after'" style="font-size: 1rem">info_outline</mat-icon>
@@ -177,10 +177,7 @@
                    [(ngModel)]="schemaMapping.cpa">
           </mat-form-field>
         </div>
-      </div>
-    </div>
-    <div style="background: #efefef; padding: 1rem">
-      <div class="grid-container2">
+
         <div *ngFor="let node of additionalFields;trackBy: trackByFn;let i = index" class="grid-item">
           <mat-form-field>
             <input matInput
@@ -190,8 +187,14 @@
           <button mat-icon-button (click)="removeNode(i)"><mat-icon>clear</mat-icon></button>
         </div>
       </div>
+
       <button type="button" mat-raised-button color="primary" (click)="addCustomNode()">Add Custom Node</button>
     </div>
+
+    <div style="background: #efefef; padding: 1rem;">
+      <mat-checkbox [(ngModel)]="includeCurrencyInBidTag">Include Currency in Bid</mat-checkbox>
+    </div>
+
   </div>
 </div>
 <div mat-dialog-actions="">

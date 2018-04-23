@@ -1,30 +1,27 @@
 <div mat-dialog-title>
   Edit {{data.type.name}}
 </div>
-<form
-  *ngIf="data.type.value === 'ftpConfig'"
-  (ngSubmit)="onSubmit()"
-  [formGroup]="ftpConfig"
-  novalidate>
+<form *ngIf="data.type.value === 'ftpConfig'"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="ftpConfig"
+      novalidate>
   <div mat-dialog-content>
-    <div formGroupName="credentials" class="grid-container">
+    <div formGroupName="credentials"
+         class="grid-container">
       <mat-form-field class="full-width-col">
-        <input
-          matInput
-          placeholder="Host*"
-          formControlName="host">
+        <input matInput
+               placeholder="Host*"
+               formControlName="host">
       </mat-form-field>
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Username*"
-          formControlName="username">
+        <input matInput
+               placeholder="Username*"
+               formControlName="username">
       </mat-form-field>
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Password*"
-          formControlName="password">
+        <input matInput
+               placeholder="Password*"
+               formControlName="password">
       </mat-form-field>
       <mat-form-field class="full-width-col">
         <mat-chip-list #chipList>
@@ -39,96 +36,90 @@
                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                  [matChipInputAddOnBlur]="true"
                  (matChipInputTokenEnd)="addRecipient($event)"
-                 placeholder="Alert Recipients"/>
+                 placeholder="Alert Recipients" />
         </mat-chip-list>
       </mat-form-field>
     </div>
   </div>
 </form>
 
-<form
-  *ngIf="data.type.value === 'publisherPortalDetails'"
-  (ngSubmit)="onSubmit()"
-  [formGroup]="publisherPortalDetails"
-  novalidate>
+<form *ngIf="data.type.value === 'publisherPortalDetails'"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="publisherPortalDetails"
+      novalidate>
   <div mat-dialog-content>
     <div class="grid-container">
       <mat-form-field class="full-width-col">
-        <input
-          matInput
-          placeholder="URL"
-          formControlName="url">
+        <input matInput
+               placeholder="URL"
+               formControlName="url">
       </mat-form-field>
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Username"
-          formControlName="username">
+        <input matInput
+               placeholder="Username"
+               formControlName="username">
       </mat-form-field>
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Password"
-          formControlName="password">
+        <input matInput
+               placeholder="Password"
+               formControlName="password">
       </mat-form-field>
     </div>
   </div>
 </form>
 
-<form
-  *ngIf="data.type.value === 'publisherContactDetails'"
-  (ngSubmit)="onSubmit()"
-  [formGroup]="publisherContactDetails"
-  novalidate>
+<form *ngIf="data.type.value === 'publisherContactDetails'"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="publisherContactDetails"
+      novalidate>
   <div mat-dialog-content>
     <div class="grid-container">
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Name"
-          formControlName="name">
+        <input matInput
+               placeholder="Name"
+               formControlName="name">
       </mat-form-field>
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Phone"
-          formControlName="phone">
+        <input matInput
+               placeholder="Phone"
+               formControlName="phone">
       </mat-form-field>
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Email"
-          formControlName="email">
+        <input matInput
+               placeholder="Email"
+               formControlName="email">
       </mat-form-field>
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Billing Email"
-          formControlName="billingEmail">
+        <input matInput
+               placeholder="Billing Email"
+               formControlName="billingEmail">
       </mat-form-field>
     </div>
   </div>
 </form>
 
-<form
-  *ngIf="data.type.value === 'publisherReconciliationDetails'"
-  (ngSubmit)="onSubmit()"
-  [formGroup]="publisherReconciliationDetails"
-  novalidate>
+<form *ngIf="data.type.value === 'publisherReconciliationDetails'"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="publisherReconciliationDetails"
+      novalidate>
   <div mat-dialog-content>
     <div class="grid-container">
       <mat-form-field>
-        <mat-select
-          formControlName="mode"
-          placeholder="Mode">
-          <mat-option *ngFor="let mode of utilService.modesOfFile" [value]="mode">
+        <mat-select formControlName="mode"
+                    placeholder="Mode">
+          <mat-option *ngFor="let mode of utilService.modesOfFile"
+                      [value]="mode">
             {{ mode }}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [matDatepicker]="picker" formControlName="startDate" placeholder="Start Date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <input matInput
+               [matDatepicker]="picker"
+               formControlName="startDate"
+               placeholder="Start Date">
+        <mat-datepicker-toggle matSuffix
+                               [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
@@ -145,10 +136,37 @@
   </div>
 </form>
 
+<form *ngIf="data.type.value === 'agencies'"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="agencies"
+      class="edit-publisher__agencies"
+      novalidate>
+  <mat-form-field>
+    <mat-select placeholder="Agencies"
+                multiple
+                formControlName="selected">
+      <mat-option [disabled]="agenciesData.includes(agency)"
+                  *ngFor="let agency of utilService.agencies"
+                  [value]="agency">
+        {{agency}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+
 <mat-error class="error-hint">{{updateError}}</mat-error>
 <div mat-dialog-actions>
-  <button type="button" *ngIf="!loading" mat-raised-button (click)="dialogRef.close()">Cancel</button>
-  <button type="button" *ngIf="!loading" mat-raised-button (click)="onSubmit()" color="primary" [disabled]="!isFormValid()">Submit</button>
+  <button type="button"
+          *ngIf="!loading"
+          mat-raised-button
+          (click)="dialogRef.close()">Cancel</button>
+  <button type="button"
+          *ngIf="!loading"
+          mat-raised-button
+          (click)="onSubmit()"
+          color="primary"
+          [disabled]="!isFormValid()">Submit</button>
 
-  <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
+  <mat-spinner *ngIf="loading"
+               [diameter]="30"></mat-spinner>
 </div>

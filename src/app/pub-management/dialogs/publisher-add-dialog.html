@@ -26,16 +26,6 @@
       </mat-form-field>
       <mat-form-field>
         <mat-select
-          formControlName="bidType"
-          placeholder="Bid Type*">
-          <mat-option *ngFor="let type of bidTypes" [value]="type.value">
-            {{ type.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="!creationForm.get('placement').get('bidType').valid && creationForm.get('placement').get('bidType').touched">BidType is required</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select
           formControlName="currency"
           placeholder="Currency*">
           <mat-option *ngFor="let currency of utilService.currencies" [value]="currency">
@@ -45,10 +35,27 @@
         <mat-error *ngIf="!creationForm.get('placement').get('currency').valid && creationForm.get('placement').get('currency').touched">Currency is required</mat-error>
       </mat-form-field>
       <mat-form-field>
+        <mat-select
+          (selectionChange)="onBidTypeChange($event)"
+          formControlName="bidType"
+          placeholder="Bid Type*">
+          <mat-option *ngFor="let type of bidTypes" [value]="type.value">
+            {{ type.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!creationForm.get('placement').get('bidType').valid && creationForm.get('placement').get('bidType').touched">BidType is required</mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="!flatBidPublisher">
         <input type="number"
                matInput
                placeholder="Min Bid"
                formControlName="minBid">
+      </mat-form-field>
+      <mat-form-field *ngIf="flatBidPublisher">
+        <input type="number"
+               matInput
+               placeholder="Flat Bid*"
+               formControlName="flatBidValue">
       </mat-form-field>
       <mat-form-field>
         <mat-select formControlName="placementType"
