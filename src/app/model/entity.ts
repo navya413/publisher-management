@@ -7,7 +7,8 @@ export const BID_TYPES: Item[] = [
   { name: 'CPC', value: 'CPC' },
   { name: 'CPA', value: 'CPA' },
   { name: 'Organic', value: 'Organic' },
-  { name: 'PPP', value: 'PPP' }
+  { name: 'PPP', value: 'PPP' },
+  { name: 'Flat CPC', value: 'FLAT_CPC' },
 ];
 
 export const PLACEMENT_TYPES: Item[] = [
