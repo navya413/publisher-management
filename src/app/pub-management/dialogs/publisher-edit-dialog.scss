@@ -1,21 +1,31 @@
-.grid-container{
+.grid-container {
   display: grid;
   grid-template-columns: auto auto;
   grid-gap: 0 2rem;
 }
-.full-width-col{
+.full-width-col {
   grid-column: 1 / 3;
 }
 
-mat-accordion{
+mat-accordion {
   margin-bottom: 0.5rem;
 }
-.inner-grid{
+.inner-grid {
   display: grid;
   grid-template-columns: auto;
   grid-gap: 0 2rem;
 }
 
-:host ::ng-deep .mat-dialog-actions{
+:host ::ng-deep .mat-dialog-actions {
   justify-content: flex-end;
 }
+
+/*=============================================
+=            Edit Publisher - Agencies            =
+=============================================*/
+
+.edit-publisher__agencies mat-form-field {
+  width: 50%;
+}
+
+/*=====  End of Edit Publisher - Agencies  ======*/

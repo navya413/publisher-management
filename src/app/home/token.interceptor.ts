@@ -25,7 +25,7 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(request).do(event => {
       if (event instanceof HttpResponse) {
         const utilService = this.inj.get(UtilService);
-        if (request.url.split('/').pop() === 'publishers') {
+        if (request.url.split('/').pop() === 'publishers' && location.hostname.indexOf('prod') !== -1) {
           utilService.logSlack(request);
         }
       }

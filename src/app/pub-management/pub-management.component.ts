@@ -3,14 +3,14 @@ import {
   MAT_DIALOG_DATA,
   MatChipInputEvent,
   MatDialog,
-  MatDialogRef,
+  MatDialogRef
 } from '@angular/material';
 import {
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { UtilService } from '../services/util.service';
@@ -22,14 +22,17 @@ import 'rxjs/add/operator/map';
 import { NotificationsService } from 'angular2-notifications';
 import { DataTable } from 'momentum-table';
 import {
-  BID_TYPES, EDIT_OPTIONS, Item, PLACEMENT_TYPES
+  BID_TYPES,
+  EDIT_OPTIONS,
+  Item,
+  PLACEMENT_TYPES
 } from '../model/entity';
 import { Publisher } from '../model/publisher';
 
 @Component({
   selector: 'app-publisher-list',
   templateUrl: './pub-management.component.html',
-  styleUrls: ['./pub-management.component.scss'],
+  styleUrls: ['./pub-management.component.scss']
 })
 export class PublisherListComponent implements OnInit {
   loading: boolean;
@@ -59,7 +62,7 @@ export class PublisherListComponent implements OnInit {
     private pubManagementService: PubManagementService,
     public dialog: MatDialog,
     private utilService: UtilService,
-    private notifService: NotificationsService,
+    private notifService: NotificationsService
   ) {
     this.params = JSON.parse(JSON.stringify(INITIAL_ENTITY_STATE));
   }
@@ -77,7 +80,7 @@ export class PublisherListComponent implements OnInit {
 
   filterOptions(name: string) {
     return this.typeAhead.filter(
-      item => item.toLowerCase().indexOf(name.toLowerCase()) >= 0,
+      item => item.toLowerCase().indexOf(name.toLowerCase()) >= 0
     );
   }
 
@@ -94,14 +97,14 @@ export class PublisherListComponent implements OnInit {
       },
       err => {
         this.loading = false;
-      },
+      }
     );
   }
 
   openPublisherAddDialog(row) {
     const dialogRef = this.dialog.open(PublisherAddDialog, {
       width: '600px',
-      data: row,
+      data: row
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -109,7 +112,7 @@ export class PublisherListComponent implements OnInit {
         this.getPublisherList();
         this.notifService.success(
           'Success',
-          'New Publisher created successfully',
+          'New Publisher created successfully'
         );
       }
     });
@@ -118,15 +121,12 @@ export class PublisherListComponent implements OnInit {
   openPublisherSchemaDialog() {
     const dialogRef = this.dialog.open(PublisherSchemaDialog, {
       width: '80vw',
-      data: this.selectedPublishers[0],
+      data: this.selectedPublishers[0]
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.success) {
-        this.notifService.success(
-          'Success',
-          'Successfully updated',
-        );
+        this.notifService.success('Success', 'Successfully updated');
       }
     });
   }
@@ -182,7 +182,7 @@ export class PublisherListComponent implements OnInit {
       err => {
         this.updating = false;
         this.updateError = 'Something went wrong, try again';
-      },
+      }
     );
   }
 
@@ -194,25 +194,27 @@ export class PublisherListComponent implements OnInit {
   pauseClients(row) {
     this.updating = true;
     const updateObj = {
-      id: row['placement'].id,
+      id: row['placement'].id
     };
-    this.pubManagementService.pausePublisher({agency: this.selectedAgency}, updateObj).subscribe(
-      res => {
-        this.updating = false;
-        this.closeEditor();
-        this.notifService.success('Success', 'Successfully updated');
-      },
-      err => {
-        this.updating = false;
-        this.updateError = 'Something went wrong, try again';
-      },
-    );
+    this.pubManagementService
+      .pausePublisher({ agency: this.selectedAgency }, updateObj)
+      .subscribe(
+        res => {
+          this.updating = false;
+          this.closeEditor();
+          this.notifService.success('Success', 'Successfully updated');
+        },
+        err => {
+          this.updating = false;
+          this.updateError = 'Something went wrong, try again';
+        }
+      );
   }
 
   openPublisherInfoDialog(row) {
     this.dialog.open(PublisherInfoDialog, {
       width: '70%',
-      data: row,
+      data: row
     });
   }
 
@@ -228,10 +230,7 @@ export class PublisherListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.success) {
         this.getPublisherList();
-        this.notifService.success(
-          'Success',
-          'Successfully updated',
-        );
+        this.notifService.success('Success', 'Successfully updated');
       }
     });
   }
@@ -241,7 +240,7 @@ export class PublisherListComponent implements OnInit {
 @Component({
   selector: 'publisher-schema-dialog',
   templateUrl: 'dialogs/publisher-schema-dialog.html',
-  styleUrls: ['dialogs/publisher-schema-dialog.scss'],
+  styleUrls: ['dialogs/publisher-schema-dialog.scss']
 })
 export class PublisherSchemaDialog implements OnInit {
   loading: boolean;
@@ -284,20 +283,25 @@ export class PublisherSchemaDialog implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.pubManagementService.getPublisherSchema(this.data.placement.id).subscribe(res => {
-      this.loading = false;
-      this.includeCurrencyInBidTag = res.includeCurrencyInBidTag;
-      const fieldsWrappedInCdata = res.fieldsWrappedInCdata;
-      fieldsWrappedInCdata.map(item => {
-        this.fieldsWrappedInCdata[item] = true;
-      });
-      this.additionalFields = res.additionalFields;
+    this.pubManagementService
+      .getPublisherSchema(this.data.placement.id)
+      .subscribe(
+        res => {
+          this.loading = false;
+          this.includeCurrencyInBidTag = res.includeCurrencyInBidTag;
+          const fieldsWrappedInCdata = res.fieldsWrappedInCdata;
+          fieldsWrappedInCdata.map(item => {
+            this.fieldsWrappedInCdata[item] = true;
+          });
+          this.additionalFields = res.additionalFields;
 
-      Object.assign(this.schemaMapping, res.jobSchema);
-      Object.assign(this.headerSchema, res.headerSchema);
-    }, err => {
-      this.loading = false;
-    });
+          Object.assign(this.schemaMapping, res.jobSchema);
+          Object.assign(this.headerSchema, res.headerSchema);
+        },
+        err => {
+          this.loading = false;
+        }
+      );
   }
 
   addCustomNode() {
@@ -318,15 +322,19 @@ export class PublisherSchemaDialog implements OnInit {
     };
     this.utilService.objectCleaner(this.schemaMapping);
     this.utilService.objectCleaner(this.headerSchema);
-    data.schema['fieldsWrappedInCdata'] = Object.keys(this.fieldsWrappedInCdata).filter(key => this.fieldsWrappedInCdata[key]);
+    data.schema['fieldsWrappedInCdata'] = Object.keys(
+      this.fieldsWrappedInCdata
+    ).filter(key => this.fieldsWrappedInCdata[key]);
     data.schema['jobSchema'] = this.schemaMapping;
     data.schema['additionalFields'] = this.additionalFields;
     data.schema['headerSchema'] = this.headerSchema;
     data.schema['includeCurrencyInBidTag'] = this.includeCurrencyInBidTag;
 
-    this.pubManagementService.postPublisherSchema(this.data.placement.id, data).subscribe(res => {
-      this.dialogRef.close({success: true});
-    });
+    this.pubManagementService
+      .postPublisherSchema(this.data.placement.id, data)
+      .subscribe(res => {
+        this.dialogRef.close({ success: true });
+      });
   }
 }
 
@@ -334,21 +342,20 @@ export class PublisherSchemaDialog implements OnInit {
 @Component({
   selector: 'publisher-info-dialog',
   templateUrl: 'dialogs/publisher-info-dialog.html',
-  styleUrls: ['dialogs/publisher-info-dialog.scss'],
+  styleUrls: ['dialogs/publisher-info-dialog.scss']
 })
 export class PublisherInfoDialog {
   constructor(
     public dialogRef: MatDialogRef<PublisherInfoDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-  ) {
-  }
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 }
 
 // Publisher Edit Dialog
 @Component({
   selector: 'publisher-edit-dialog',
   templateUrl: 'dialogs/publisher-edit-dialog.html',
-  styleUrls: ['dialogs/publisher-edit-dialog.scss'],
+  styleUrls: ['dialogs/publisher-edit-dialog.scss']
 })
 export class PublisherEditDialog implements OnInit {
   type: string;
@@ -360,7 +367,9 @@ export class PublisherEditDialog implements OnInit {
   publisherPortalDetails: FormGroup;
   publisherContactDetails: FormGroup;
   publisherReconciliationDetails: FormGroup;
+  agencies: FormGroup;
 
+  agenciesData: any;
   publisherData: Publisher;
   constructor(
     public dialogRef: MatDialogRef<PublisherEditDialog>,
@@ -369,6 +378,7 @@ export class PublisherEditDialog implements OnInit {
     private pubManagementService: PubManagementService,
     public utilService: UtilService
   ) {
+    this.agenciesData = this.data.publisher.additionalFields.agencyList;
     this.publisherData = this.data.publisher.placement;
     this.type = this.data.type.value;
   }
@@ -378,57 +388,122 @@ export class PublisherEditDialog implements OnInit {
     this.initPubPortalForm();
     this.initPubContactForm();
     this.initPubReconciliationForm();
+    this.initAgenciesForm();
   }
 
   initFtpForm() {
-    const host = this.publisherData.ftpConfig && this.publisherData.ftpConfig.credentials && this.publisherData.ftpConfig.credentials.host || '';
-    const username = this.publisherData.ftpConfig && this.publisherData.ftpConfig.credentials && this.publisherData.ftpConfig.credentials.username || '';
-    const password = this.publisherData.ftpConfig && this.publisherData.ftpConfig.credentials && this.publisherData.ftpConfig.credentials.password || '';
-    const alertRecipients = this.publisherData.ftpConfig && this.publisherData.ftpConfig.alertRecipients || [];
+    const host =
+      (this.publisherData.ftpConfig &&
+        this.publisherData.ftpConfig.credentials &&
+        this.publisherData.ftpConfig.credentials.host) ||
+      '';
+    const username =
+      (this.publisherData.ftpConfig &&
+        this.publisherData.ftpConfig.credentials &&
+        this.publisherData.ftpConfig.credentials.username) ||
+      '';
+    const password =
+      (this.publisherData.ftpConfig &&
+        this.publisherData.ftpConfig.credentials &&
+        this.publisherData.ftpConfig.credentials.password) ||
+      '';
+    const alertRecipients =
+      (this.publisherData.ftpConfig &&
+        this.publisherData.ftpConfig.alertRecipients) ||
+      [];
     this.ftpConfig = new FormGroup({
       credentials: new FormGroup({
         host: new FormControl(host, Validators.required),
         username: new FormControl(username, Validators.required),
-        password: new FormControl(password, Validators.required),
+        password: new FormControl(password, Validators.required)
       }),
-      alertRecipients: this.fb.array(alertRecipients),
+      alertRecipients: this.fb.array(alertRecipients)
     });
   }
 
   initPubPortalForm() {
-    const url = this.publisherData.publisherPortalDetails && this.publisherData.publisherPortalDetails.url || '';
-    const username = this.publisherData.publisherPortalDetails && this.publisherData.publisherPortalDetails.username || '';
-    const password = this.publisherData.publisherPortalDetails && this.publisherData.publisherPortalDetails.password || '';
+    const url =
+      (this.publisherData.publisherPortalDetails &&
+        this.publisherData.publisherPortalDetails.url) ||
+      '';
+    const username =
+      (this.publisherData.publisherPortalDetails &&
+        this.publisherData.publisherPortalDetails.username) ||
+      '';
+    const password =
+      (this.publisherData.publisherPortalDetails &&
+        this.publisherData.publisherPortalDetails.password) ||
+      '';
     this.publisherPortalDetails = new FormGroup({
       url: new FormControl(url),
       username: new FormControl(username),
-      password: new FormControl(password),
+      password: new FormControl(password)
     });
   }
 
   initPubContactForm() {
-    const name = this.publisherData.publisherContactDetails && this.publisherData.publisherContactDetails.name || '';
-    const phone = this.publisherData.publisherContactDetails && this.publisherData.publisherContactDetails.phone || '';
-    const email = this.publisherData.publisherContactDetails && this.publisherData.publisherContactDetails.email || '';
-    const billingEmail = this.publisherData.publisherContactDetails && this.publisherData.publisherContactDetails.billingEmail || '';
+    const name =
+      (this.publisherData.publisherContactDetails &&
+        this.publisherData.publisherContactDetails.name) ||
+      '';
+    const phone =
+      (this.publisherData.publisherContactDetails &&
+        this.publisherData.publisherContactDetails.phone) ||
+      '';
+    const email =
+      (this.publisherData.publisherContactDetails &&
+        this.publisherData.publisherContactDetails.email) ||
+      '';
+    const billingEmail =
+      (this.publisherData.publisherContactDetails &&
+        this.publisherData.publisherContactDetails.billingEmail) ||
+      '';
     this.publisherContactDetails = new FormGroup({
       name: new FormControl(name),
       phone: new FormControl(phone),
       email: new FormControl(email),
-      billingEmail: new FormControl(billingEmail),
+      billingEmail: new FormControl(billingEmail)
     });
   }
 
   initPubReconciliationForm() {
-    const mode = this.publisherData.publisherReconciliationDetails && this.publisherData.publisherReconciliationDetails.mode || '';
-    const startDate = this.publisherData.publisherReconciliationDetails && this.publisherData.publisherReconciliationDetails.startDate || '';
-    const frequency = this.publisherData.publisherReconciliationDetails && this.publisherData.publisherReconciliationDetails.frequency || '';
-    const timezone = this.publisherData.publisherReconciliationDetails && this.publisherData.publisherReconciliationDetails.timezone || '';
+    const mode =
+      (this.publisherData.publisherReconciliationDetails &&
+        this.publisherData.publisherReconciliationDetails.mode) ||
+      '';
+    const startDate =
+      (this.publisherData.publisherReconciliationDetails &&
+        this.publisherData.publisherReconciliationDetails.startDate) ||
+      '';
+    const frequency =
+      (this.publisherData.publisherReconciliationDetails &&
+        this.publisherData.publisherReconciliationDetails.frequency) ||
+      '';
+    const timezone =
+      (this.publisherData.publisherReconciliationDetails &&
+        this.publisherData.publisherReconciliationDetails.timezone) ||
+      '';
     this.publisherReconciliationDetails = new FormGroup({
       mode: new FormControl(mode),
       startDate: new FormControl(new Date(startDate)),
       frequency: new FormControl(frequency),
-      timezone: new FormControl(timezone),
+      timezone: new FormControl(timezone)
+    });
+  }
+
+  // getAgencyOptions() {
+  //   const selectedAgencies = this.agenciesData.map(agency => {
+  //     return { canRemove: false, id: agency };
+  //   });
+  //   const allAgencies = this.utilService.agencies.map(agency => {
+  //     return { canRemove: true, id: agency };
+  //   });
+  //   return
+  // }
+
+  initAgenciesForm() {
+    this.agencies = new FormGroup({
+      selected: new FormControl(this.agenciesData)
     });
   }
 
@@ -465,25 +540,42 @@ export class PublisherEditDialog implements OnInit {
     tempData['update'][this.type] = this[this.type].value;
     this.loading = true;
     this.updateError = null;
-    this.pubManagementService.updatePublisher(tempData).subscribe(
-      res => {
-        this.loading = false;
-        this.dialogRef.close({ success: true });
-      },
-      err => {
-        this.loading = false;
-        this.updateError = 'Something went wrong, please try again.';
-      },
-    );
+    if (this.type === 'agencies') {
+      this.pubManagementService
+        .updatePublisherAgencies(
+          this.publisherData.id,
+          this[this.type].value.selected
+        )
+        .subscribe(
+          res => {
+            this.loading = false;
+            this.dialogRef.close({ success: true });
+          },
+          err => {
+            this.loading = false;
+            this.updateError = 'Something went wrong, please try again.';
+          }
+        );
+    } else {
+      this.pubManagementService.updatePublisher(tempData).subscribe(
+        res => {
+          this.loading = false;
+          this.dialogRef.close({ success: true });
+        },
+        err => {
+          this.loading = false;
+          this.updateError = 'Something went wrong, please try again.';
+        }
+      );
+    }
   }
 }
-
 
 // Publisher Add dialog
 @Component({
   selector: 'publisher-add-dialog',
   templateUrl: 'dialogs/publisher-add-dialog.html',
-  styleUrls: ['dialogs/publisher-add-dialog.scss'],
+  styleUrls: ['dialogs/publisher-add-dialog.scss']
 })
 export class PublisherAddDialog implements OnInit, OnDestroy {
   loading: boolean;
@@ -495,14 +587,15 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
   public creationForm: FormGroup;
   ftpConfigSubscription$;
 
+  flatBidPublisher: boolean = false;
+
   constructor(
     public dialogRef: MatDialogRef<PublisherAddDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public utilService: UtilService,
     private pubManagementService: PubManagementService,
-    private fb: FormBuilder,
-  ) {
-  }
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -539,6 +632,7 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
         bidType: new FormControl('', Validators.required),
         currency: new FormControl('', Validators.required),
         minBid: new FormControl(),
+        flatBidValue: new FormControl(),
         placementType: new FormControl(),
         url: new FormControl('', Validators.required),
         country: new FormControl(),
@@ -549,35 +643,50 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
           credentials: new FormGroup({
             host: new FormControl(),
             username: new FormControl(),
-            password: new FormControl(),
+            password: new FormControl()
           }),
-          alertRecipients: new FormArray([]),
+          alertRecipients: new FormArray([])
         }),
         publisherPortalDetails: new FormGroup({
           url: new FormControl(),
           username: new FormControl(),
-          password: new FormControl(),
+          password: new FormControl()
         }),
         publisherContactDetails: new FormGroup({
           name: new FormControl(),
           phone: new FormControl(),
           email: new FormControl(),
-          billingEmail: new FormControl(),
+          billingEmail: new FormControl()
         }),
         publisherReconciliationDetails: new FormGroup({
           mode: new FormControl(),
           startDate: new FormControl(),
           frequency: new FormControl(),
-          timezone: new FormControl(),
-        }),
-      }),
+          timezone: new FormControl()
+        })
+      })
     });
   }
 
+  onBidTypeChange(selectVal) {
+    this.creationForm.get('placement').get('flatBidValue').setValue(null);
+    if (selectVal.value === 'FLAT_CPC') {
+      this.flatBidPublisher = true;
+      this.creationForm.get('placement').get('flatBidValue').setValidators([Validators.required]);
+    } else {
+      this.flatBidPublisher = false;
+      this.creationForm.get('placement').get('flatBidValue').setValidators(null);
+    }
+    this.creationForm.get('placement').get('flatBidValue').updateValueAndValidity({ emitEvent: false });
+  }
+
   onSubmit() {
-    if (this.creationForm.value.placement.publisherReconciliationDetails
-        && this.creationForm.value.placement.publisherReconciliationDetails.startDate) {
-      this.creationForm.value.placement.publisherReconciliationDetails.startDate += '';
+    if (
+      this.creationForm.value.placement.publisherReconciliationDetails &&
+      this.creationForm.value.placement.publisherReconciliationDetails.startDate
+    ) {
+      this.creationForm.value.placement.publisherReconciliationDetails.startDate +=
+        '';
     }
     this.utilService.objectCleaner(this.creationForm.value);
     this.createPublisher();
@@ -609,7 +718,15 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
   createPublisher() {
     this.creationForm.value.placement[
       'value'
-    ] = this.creationForm.value.placement['name'].replace(/\s/g, '_').replace(/\./g, '_');
+    ] = this.creationForm.value.placement['name']
+      .replace(/\s/g, '_')
+      .replace(/\./g, '_');
+
+    if (this.flatBidPublisher) {
+      delete this.creationForm.value.placement['minBid'];
+    } else {
+      delete this.creationForm.value.placement['flatBidValue'];
+    }
 
     const dataObj = this.creationForm.value;
     this.loading = true;
@@ -622,7 +739,7 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
       err => {
         this.error = 'something went wrong, please try again';
         this.loading = false;
-      },
+      }
     );
   }
 
@@ -632,4 +749,3 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
     }
   }
 }
-
