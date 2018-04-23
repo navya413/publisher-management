@@ -587,6 +587,8 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
   public creationForm: FormGroup;
   ftpConfigSubscription$;
 
+  flatBidPublisher: boolean = false;
+
   constructor(
     public dialogRef: MatDialogRef<PublisherAddDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -630,6 +632,7 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
         bidType: new FormControl('', Validators.required),
         currency: new FormControl('', Validators.required),
         minBid: new FormControl(),
+        flatBidValue: new FormControl(),
         placementType: new FormControl(),
         url: new FormControl('', Validators.required),
         country: new FormControl(),
@@ -663,6 +666,18 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
         })
       })
     });
+  }
+
+  onBidTypeChange(selectVal) {
+    this.creationForm.get('placement').get('flatBidValue').setValue(null);
+    if (selectVal.value === 'FLAT_CPC') {
+      this.flatBidPublisher = true;
+      this.creationForm.get('placement').get('flatBidValue').setValidators([Validators.required]);
+    } else {
+      this.flatBidPublisher = false;
+      this.creationForm.get('placement').get('flatBidValue').setValidators(null);
+    }
+    this.creationForm.get('placement').get('flatBidValue').updateValueAndValidity({ emitEvent: false });
   }
 
   onSubmit() {
@@ -706,6 +721,12 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
     ] = this.creationForm.value.placement['name']
       .replace(/\s/g, '_')
       .replace(/\./g, '_');
+
+    if (this.flatBidPublisher) {
+      delete this.creationForm.value.placement['minBid'];
+    } else {
+      delete this.creationForm.value.placement['flatBidValue'];
+    }
 
     const dataObj = this.creationForm.value;
     this.loading = true;
