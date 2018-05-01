@@ -7,6 +7,10 @@ import { EntityState, INITIAL_ENTITY_STATE } from '../../model/entity-state';
 import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
+import {UtilService} from "../../services/util.service";
+import {forkJoin} from "rxjs/observable/forkJoin";
+import {NewEntityTwo} from "../../model/new-entity-state";
+import {Subject} from "rxjs/Subject";
 
 @Component({
   selector: 'app-publishers',
@@ -14,22 +18,29 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
   styleUrls: ['./publishers.component.scss'],
 })
 export class PublishersComponent implements OnInit, OnDestroy {
+  agencyId: string;
+  timezoneId: string;
+  statsData: any[];
   loading: boolean;
+  routeData;
+
   routeDataSubscription$;
-  publisherRes: any;
-  publishers: Object[] = [];
+  urlSubscription$;
   params: EntityState;
   level: string;
 
-  public typeAhead = [];
-  typeAheadCtrl: FormControl;
-  filteredOptions: Observable<any[]>;
+  cmStatsSubscription$: Subject<NewEntityTwo[]>;
+  joveoStatsSubscription$: Subject<NewEntityTwo[]>;
+  pubStatsSubscription$: Subject<NewEntityTwo[]>;
+
+  childNavLinks = [];
+
   constructor(
     public pubMonitorService: PubMonitorService,
+    public utilService: UtilService,
     private routeDataService: RouteDataService,
     private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {
     this.route.url.subscribe(data => {
       const tempObj = {};
@@ -42,92 +53,113 @@ export class PublishersComponent implements OnInit, OnDestroy {
       data => {
         this.params = JSON.parse(JSON.stringify(INITIAL_ENTITY_STATE));
         Object.assign(this.params, data.params);
-        this.getPublishers();
+        this.routeData = data;
         this.level = data.data.level;
+        this.getChildLinks();
+        this.buildBreadcrumb();
+        this.getStats();
       },
     );
-
-    this.typeAheadCtrl = new FormControl();
-    this.filteredOptions = this.typeAheadCtrl.valueChanges
-      .startWith(null)
-      .map(query => {
-        return query ? this.filterOptions(query) : this.typeAhead.slice();
-      });
   }
-
   ngOnInit() {
   }
 
-  filterOptions(name: string) {
-    return this.typeAhead.filter(
-      item => item.toLowerCase().indexOf(name.toLowerCase()) >= 0,
-    );
+  getChildLinks() {
+    switch (this.routeData.data.level) {
+      case  'agency' :
+        this.childNavLinks = [
+          {path: '../clients', label: 'Clients'},
+          {path: '../campaigns', label: 'Campaigns'},
+          {path: '../jobgroups', label: 'Job Groups'},
+          {path: '../publishers', label: 'Publishers'}
+        ];
+        break;
+      case  'client' :
+        this.childNavLinks = [
+          {path: '../campaigns', label: 'Campaigns'},
+          {path: '../jobgroups', label: 'Job Groups'},
+          {path: '../publishers', label: 'Publishers'}
+        ];
+        break;
+      case  'campaign' :
+        this.childNavLinks = [
+          {path: '../jobgroups', label: 'Job Groups'},
+          {path: '../publishers', label: 'Publishers'}
+        ];
+        break;
+    }
   }
 
-  getPublishers() {
+  buildBreadcrumb() {
+
+  }
+
+  getStats = function() {
+
     this.loading = true;
-    this.publishers = [];
-    this.pubMonitorService.getPublishersStats(this.params).subscribe(
-      (res: any) => {
-        this.loading = false;
-        this.publisherRes = res.data;
-        this.publishers = this.publisherRes.records;
-        this.typeAhead = this.publisherRes.typeAheadData;
-      },
-      err => {
-        this.loading = false;
-      },
-    );
-  }
+    this.statsData = [];
+    const tempData = [];
 
-  onDateRangeChange(dateRange) {
-    this.params.days = dateRange.value.days;
-    this.params.startDate = dateRange.value.startDate;
-    this.params.endDate = dateRange.value.endDate;
+    this.cmStatsSubscription$ = this.pubMonitorService.getCMStats(this.routeData);
+    this.joveoStatsSubscription$ = this.pubMonitorService.getJoveoStats(this.routeData);
+    this.pubStatsSubscription$ = this.pubMonitorService.getPubStats(this.routeData);
 
-    this.pubMonitorService.setSelectedDay(this.params);
-    this.getPublishers();
-  }
+    forkJoin(this.cmStatsSubscription$, this.joveoStatsSubscription$, this.pubStatsSubscription$).subscribe((res: any[]) => {
+      res[0].map(entity => {
+        const obj = {};
+        obj['entity'] = entity.pivots.pivot1;
+        obj['name'] = this.pubMonitorService.entityMap[obj['entity']] || obj['entity'];
+        obj['cmStats'] = {
+          clicks: entity.stats.clicks,
+          applies: entity.stats.applies,
+          spend: entity.stats.spend,
+          botClicks: entity.stats.botClicks
+        };
+        obj['spendMojo'] = entity.stats.spendMojo;
+        obj['spendCD'] = entity.stats.spendCD;
+        obj['spendPubPortal'] = entity.stats.spendPubPortal;
+        obj['spendSelfServe'] = entity.stats.spendSelfServe;
+        tempData.push(obj);
+      });
 
-  onSortChange(sortData) {
-    this.params.sortOrder = sortData.order === -1 ? 'desc' : 'asc';
-    this.params.fields = sortData.field;
+      res[1].map(entity => {
+        tempData.map(stat => {
+          if (stat.entity === entity.pivots.pivot1) {
+            stat['joveoStats'] = {
+              clicks: entity.stats.clicks,
+              applies: entity.stats.applies,
+              spend: entity.stats.spend,
+              botClicks: entity.stats.botClicks
+            };
+          }
+        });
+      });
 
-    this.getPublishers();
-  }
-
-  onPageChange(pageData) {
-    this.params.page = pageData.pageIndex + 1;
-    this.params.limit = pageData.pageSize;
-
-    this.getPublishers();
-  }
-
-  onQuerySearch(query) {
-    this.params.query = query;
-
-    this.params.page = INITIAL_ENTITY_STATE.page;
-    this.params.limit = INITIAL_ENTITY_STATE.limit;
-
-    this.getPublishers();
-  }
-
-  onRefresh() {
-    this.getPublishers();
-  }
-
-  onRowClick(row) {
-    const dialogRef = this.dialog.open(PublisherDetailDialogComponent, {
-      width: '60vw',
-      data: {
-        publisher: row.data,
-        params: this.params
-      }
+      res[2].map(entity => {
+        tempData.map(stat => {
+          if (stat.entity === entity.pivots.pivot1) {
+            stat['pubStats'] = {
+              clicks: entity.stats.clicks,
+              applies: entity.stats.applies,
+              spend: entity.stats.spend,
+              botClicks: entity.stats.botClicks
+            };
+          }
+        });
+      });
+      this.loading = false;
+      this.statsData = tempData;
     });
+  };
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
+  onDateRangeChange(date) {
+    this.pubMonitorService.dateRange = date.value;
+    this.getStats();
+  }
+
+  onTimezoneChange(timezoneId) {
+    this.pubMonitorService.timezoneId = timezoneId;
+    this.getStats();
   }
 
   ngOnDestroy() {
@@ -152,19 +184,19 @@ export class PublisherDetailDialogComponent implements OnInit{
 
   ngOnInit() {
     this.params = this.composeParams();
-    this.getChartData();
+    // this.getChartData();
   }
 
   getChartData() {
-    this.loading = true;
-    this.pubMonitorService.getPublisherChartData(this.params).subscribe((res: any) => {
-      this.loading = false;
-      if (res.success) {
-        this.chartData = res.data;
-      }
-    }, err => {
-      this.loading = false;
-    });
+    // this.loading = true;
+    // this.pubMonitorService.getPublisherChartData(this.params).subscribe((res: any) => {
+    //   this.loading = false;
+    //   if (res.success) {
+    //     this.chartData = res.data;
+    //   }
+    // }, err => {
+    //   this.loading = false;
+    // });
   }
 
   onDateRangeChange(dateRange) {
@@ -180,15 +212,15 @@ export class PublisherDetailDialogComponent implements OnInit{
   }
 
   composeParams() {
-    const tempParams = JSON.parse(JSON.stringify(this.data.params));
-    tempParams['placementId'] = this.data.publisher.id;
-    tempParams['period'] = this.pubMonitorService.selectedDay;
-    tempParams['startDate'] = this.pubMonitorService.startDate;
-    tempParams['endDate'] = this.pubMonitorService.endDate;
-    delete tempParams.days;
-    tempParams['freq'] = 'DAILY';
-
-    return tempParams;
+    // const tempParams = JSON.parse(JSON.stringify(this.data.params));
+    // tempParams['placementId'] = this.data.publisher.id;
+    // tempParams['period'] = this.pubMonitorService.selectedDay;
+    // tempParams['startDate'] = this.pubMonitorService.startDate;
+    // tempParams['endDate'] = this.pubMonitorService.endDate;
+    // delete tempParams.days;
+    // tempParams['freq'] = 'DAILY';
+    //
+    // return tempParams;
   }
 
 }

@@ -1,13 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import {NewEntity, NewEntityTwo} from "../../model/new-entity-state";
+import * as moment from "moment";
 
 @Injectable()
 export class PubMonitorService {
-  selectedDay = 'This month';
-  startDate;
-  endDate;
-  constructor(private http: HttpClient) {}
+  entityMap: object = {};
+  timezones: any[];
+  timezoneId: string;
+  dateRange = {
+    days: 'Today',
+    startDate: moment().format('YYYY-MM-DD'),
+    endDate: moment().format('YYYY-MM-DD'),
+  };
+
+  constructor(private http: HttpClient) {
+    this.getTimeZones().subscribe(res => {
+      this.timezones = res;
+    });
+  }
 
   getClientHierarchy(agencyId) {
     return this.http.get<any>(environment.adminApi + 'clients', {
@@ -17,29 +29,95 @@ export class PubMonitorService {
     });
   }
 
-  getPublishersStats(params) {
-    const tempParam = JSON.parse(JSON.stringify(params));
-    tempParam.days = this.selectedDay;
-    tempParam.startDate = this.startDate;
-    tempParam.endDate = this.endDate;
-    const url = tempParam.clientId
-      ? environment.adminApi + 'clients-stats'
-      : environment.adminApi + 'agencyLevelStats';
-    return this.http.get<any>(url, {
-      params: tempParam,
-    });
+  getDailyStats(routeData, entityId) {
+    const agencyId = routeData.params.agencyId;
+    const level = routeData.data.level;
+    let url = environment.newStatsApi + 'agency/' + agencyId + '/';
+    if (!routeData.params.entityId) {
+      url += level + '/' + entityId + '/days';
+    } else {
+      url += level + '/' + routeData.params.entityId + '/' + routeData.data.subLevel + '/' + entityId + '/days';
+    }
+    const params = {
+      since: this.dateRange.startDate,
+      till: this.dateRange.endDate
+    };
+    if (this.timezoneId) {
+      params['tz'] = this.timezoneId;
+    }
+    return this.http.get<NewEntity[]>(
+      url,
+      {
+        params: params
+      },
+    );
   }
 
-  getPublisherChartData(params) {
-    const url = environment.adminApi + 'statsPerPeriod';
-    return this.http.get<any>(url, {
-      params: params,
-    });
+  getCMStats(routeData) {
+    const params = {
+      since: this.dateRange.startDate,
+      till: this.dateRange.endDate,
+      agencyIds: routeData.params.agencyId,
+      clientIds: routeData.params.clientId,
+      campaignIds: routeData.params.campaignId
+    };
+    return this.http.get<NewEntityTwo[]>(
+      'http://legolas.joveo.com:8080/gandalf/metrics/cm/by/' + routeData.data.entity,
+      {
+        params: JSON.parse(JSON.stringify(params))
+      },
+    );
+  }
+  getPubStats(routeData) {
+    const params = {
+      since: this.dateRange.startDate,
+      till: this.dateRange.endDate,
+      agencyIds: routeData.params.agencyId,
+      clientIds: routeData.params.clientId,
+      campaignIds: routeData.params.campaignId,
+    };
+    return this.http.get<NewEntityTwo[]>(
+      'http://legolas.joveo.com:8080/gandalf/metrics/pub/by/' + routeData.data.entity,
+      {
+        params: JSON.parse(JSON.stringify(params))
+      },
+    );
+  }
+  getJoveoStats(routeData) {
+    const params = {
+      since: this.dateRange.startDate,
+      till: this.dateRange.endDate,
+      agencyIds: routeData.params.agencyId,
+      clientIds: routeData.params.clientId,
+      campaignIds: routeData.params.campaignId,
+    };
+    return this.http.get<NewEntityTwo[]>(
+      'http://legolas.joveo.com:8080/gandalf/metrics/joveo/by/' + routeData.data.entity,
+      {
+        params: JSON.parse(JSON.stringify(params))
+      },
+    );
   }
 
-  setSelectedDay(value) {
-    this.selectedDay = value.days;
-    this.startDate = value.startDate;
-    this.endDate = value.endDate;
+  getTimeZones() {
+    return this.http.get<any>('./assets/mock-data/timezone-data.json');
+  }
+
+  flattenEntityTree(clientTree) {
+    this.entityMap = {};
+    const tree = JSON.parse(JSON.stringify(clientTree));
+    tree.forEach(client => {
+      this.entityMap[client.id] = client.name;
+      if (client.children && client.children.length) {
+        client.children.forEach(campaign => {
+          this.entityMap[campaign.id] = campaign.name;
+          if (campaign.children && campaign.children.length) {
+            campaign.children.forEach(jobgroup => {
+              this.entityMap[jobgroup.id] = jobgroup.name;
+            });
+          }
+        });
+      }
+    });
   }
 }

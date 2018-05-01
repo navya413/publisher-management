@@ -23,4 +23,8 @@ export class PubFeedsService {
   getPublisherAlerts(publisher) {
     return this.http.get<any>(environment.feedsApi + 'alert/' + publisher);
   }
+
+  getReconciliationDetails() {
+    return this.http.get<any>(environment.adminApi + 'publishers/reconstatus');
+  }
 }
