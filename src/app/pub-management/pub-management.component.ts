@@ -170,6 +170,9 @@ export class PublisherListComponent implements OnInit {
   }
 
   updateValue(type, row, value) {
+    if (type === 'feedIndexLatency') {
+      value = parseFloat(value);
+    }
     if (type === 'minBid') {
       value = parseFloat(value);
       type = (row['placement']['bidType']['name'] === 'FLAT_CPC') ? 'flatBidValue' : 'minBid';
