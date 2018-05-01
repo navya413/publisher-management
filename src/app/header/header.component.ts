@@ -17,7 +17,12 @@ export class HeaderComponent implements OnInit {
   }, {
     path: 'publisher-feeds',
     label: 'Publisher Feeds'
-  }];
+  },
+  // {
+  //   path: 'publisher-monitor',
+  //   label: 'Monitor'
+  // }
+  ];
   constructor(public authService: AuthService) { }
 
   ngOnInit() {

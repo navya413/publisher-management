@@ -26,27 +26,94 @@ const routes: Routes = [
         },
       },
       {
-        path: 'agency/:agencyId/client/:clientId',
+        path: 'agency/:agencyId/clients',
         component: PublishersComponent,
         data: {
-          level: 'client',
+          level: 'agency',
+          entity: 'clients'
         },
       },
       {
-        path: 'agency/:agencyId/client/:clientId/campaign/:campaignId',
+        path: 'agency/:agencyId/campaigns',
+        component: PublishersComponent,
+        data: {
+          level: 'agency',
+          entity: 'campaigns'
+        },
+      },
+      {
+        path: 'agency/:agencyId/jobgroups',
+        component: PublishersComponent,
+        data: {
+          level: 'agency',
+          entity: 'jobGroups'
+        },
+      },
+      {
+        path: 'agency/:agencyId/publishers',
+        component: PublishersComponent,
+        data: {
+          level: 'agency',
+          entity: 'publishers'
+        },
+      },
+      {
+        path: 'agency/:agencyId/client/:clientId/campaigns',
+        component: PublishersComponent,
+        data: {
+          level: 'client',
+          entity: 'campaigns'
+        },
+      },
+      {
+        path: 'agency/:agencyId/client/:clientId/jobgroups',
+        component: PublishersComponent,
+        data: {
+          level: 'client',
+          entity: 'jobGroups'
+        },
+      },
+      {
+        path: 'agency/:agencyId/client/:clientId/publishers',
+        component: PublishersComponent,
+        data: {
+          level: 'client',
+          entity: 'publishers'
+        },
+      },
+      {
+        path: 'agency/:agencyId/client/:clientId/campaign/:campaignId/jobgroups',
         component: PublishersComponent,
         data: {
           level: 'campaign',
+          entity: 'jobGroups'
+        },
+      },
+      {
+        path: 'agency/:agencyId/client/:clientId/campaign/:campaignId/publishers',
+        component: PublishersComponent,
+        data: {
+          level: 'campaign',
+          entity: 'publishers'
         },
       },
       {
         path:
-          'agency/:agencyId/client/:clientId/campaign/:campaignId/jobgroup/:jobgroupId',
+          'agency/:agencyId/client/:clientId/campaign/:campaignId/jobgroup/:jobgroupId/publishers',
         component: PublishersComponent,
         data: {
           level: 'jobgroup',
+          entity: 'publishers'
         },
       },
+      {
+        path: 'agency/:agencyId/publishers',
+        component: PublishersComponent,
+        data: {
+          level: 'agency',
+          entity: 'publishers'
+        },
+      }
     ],
   },
 ];

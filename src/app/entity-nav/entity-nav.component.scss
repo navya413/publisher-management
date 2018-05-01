@@ -114,3 +114,18 @@
 ::ng-deep .select-btn .mat-select-placeholder {
   color: #ffffff87;
 }
+
+.listitem{
+  background: #fff;
+  color: $primary;
+  cursor: pointer;
+}
+.listitem:hover{
+  background: $grey-2;
+  color: $primary;
+}
+
+.active{
+  background: $grey-3;
+  border-right: 2px solid $primary;
+}

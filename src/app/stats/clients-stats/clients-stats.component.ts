@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StatsService } from '../services/stats.service';
 import { UtilService } from '../../services/util.service';
-import 'rxjs/add/observable/forkJoin';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteDataService } from '../../services/route-data.service';
 import { StatsPopupComponent } from '../stats-popup/stats-popup.component';
 import { MatDialog } from '@angular/material';
-import {NewEntity} from "../../model/new-entity-state";
-
+import { NewEntity, NewEntityTwo } from '../../model/new-entity-state';
+import { Subject } from 'rxjs/Subject';
+import {forkJoin} from "rxjs/observable/forkJoin";
+import 'rxjs/add/operator/map'
 @Component({
   selector: 'app-clients-stats',
   templateUrl: './clients-stats.component.html',
@@ -24,6 +25,10 @@ export class ClientsStatsComponent implements OnDestroy {
   urlSubscription$;
 
   breadcrumbSegments;
+
+  cmStatsSubscription$: Subject<NewEntityTwo[]>;
+  joveoStatsSubscription$: Subject<NewEntityTwo[]>;
+  pubStatsSubscription$: Subject<NewEntityTwo[]>;
 
   constructor(
     private statsService: StatsService,
@@ -72,25 +77,70 @@ export class ClientsStatsComponent implements OnDestroy {
     }
 
     if (subLevel) {
-      const entityId = this.statsService.clientMap[this.routeData.params.entityId] || this.routeData.params.entityId;
+      const entityId =
+        this.statsService.clientMap[this.routeData.params.entityId] ||
+        this.routeData.params.entityId;
       this.breadcrumbSegments.push({ label: entityId });
       this.breadcrumbSegments.push({ label: subLevel });
     }
   }
 
   getStats = function() {
+    const level = this.routeData.data.level;
     this.loading = true;
     this.statsData = [];
-    this.statsService.getStats(this.routeData).subscribe(
-      (res: NewEntity[]) => {
-        this.loading = false;
-        res.map(entity => entity['name'] = this.statsService.clientMap[entity['entity']] || entity['entity']);
-        this.statsData = res;
-      },
-      err => {
-        this.loading = false;
-      },
-    );
+    const tempData = [];
+
+    this.cmStatsSubscription$ = this.statsService.getCMStats(level);
+    this.joveoStatsSubscription$ = this.statsService.getJoveoStats(level);
+    this.pubStatsSubscription$ = this.statsService.getPubStats(level);
+
+    forkJoin(this.cmStatsSubscription$, this.joveoStatsSubscription$, this.pubStatsSubscription$).subscribe((res: any[]) => {
+      res[0].map(entity => {
+        const obj = {};
+        obj['entity'] = entity.pivots.pivot1;
+        obj['name'] = this.statsService.clientMap[obj['entity']] || obj['entity'];
+        obj['cmStats'] = {
+          clicks: entity.stats.clicks,
+          applies: entity.stats.applies,
+          spend: entity.stats.spend,
+          botClicks: entity.stats.botClicks
+        };
+        obj['spendMojo'] = entity.stats.spendMojo;
+        obj['spendCD'] = entity.stats.spendCD;
+        obj['spendPubPortal'] = entity.stats.spendPubPortal;
+        obj['spendSelfServe'] = entity.stats.spendSelfServe;
+        tempData.push(obj);
+      });
+
+      res[1].map(entity => {
+        tempData.map(stat => {
+          if (stat.entity === entity.pivots.pivot1) {
+            stat['joveoStats'] = {
+              clicks: entity.stats.clicks,
+              applies: entity.stats.applies,
+              spend: entity.stats.spend,
+              botClicks: entity.stats.botClicks
+            };
+          }
+        });
+      });
+
+      res[2].map(entity => {
+        tempData.map(stat => {
+          if (stat.entity === entity.pivots.pivot1) {
+            stat['pubStats'] = {
+              clicks: entity.stats.clicks,
+              applies: entity.stats.applies,
+              spend: entity.stats.spend,
+              botClicks: entity.stats.botClicks
+            };
+          }
+        });
+      });
+      this.loading = false;
+      this.statsData = tempData;
+    });
   };
 
   onDateRangeChange(date) {
@@ -108,7 +158,7 @@ export class ClientsStatsComponent implements OnDestroy {
       width: '80vw',
       data: {
         row: row.data,
-        routeData: this.routeData
+        routeData: this.routeData,
       },
     });
   }
