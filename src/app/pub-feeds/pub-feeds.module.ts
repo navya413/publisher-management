@@ -9,6 +9,7 @@ import { FtpAlertsComponent } from './ftp-alerts/ftp-alerts.component';
 import { PubFeedsService } from './services/pub-feeds.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MomentumTableModule} from "momentum-table";
+import { ReconciliationComponent } from './reconciliation/reconciliation.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import {MomentumTableModule} from "momentum-table";
     MomentumTableModule,
     RouterModule,
   ],
-  declarations: [PubFeedsComponent, FtpManagementComponent, FtpAlertsComponent, DetailDialog],
+  declarations: [PubFeedsComponent, FtpManagementComponent, FtpAlertsComponent, DetailDialog, ReconciliationComponent],
   entryComponents: [DetailDialog],
   providers: [PubFeedsService],
 })

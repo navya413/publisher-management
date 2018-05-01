@@ -14,8 +14,8 @@ export class PubFeedsComponent implements OnInit {
     path: 'ftp-alerts',
     label: 'FTP Alerts'
   }, {
-    path: 'ftp-setup',
-    label: 'FTP Setup'
+    path: 'reconciliation',
+    label: 'Reconciliation Monitoring'
   }];
   constructor() { }
 
