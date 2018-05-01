@@ -1,6 +1,6 @@
 <div mat-dialog-title style="display: flex">
   {{data.publisher.name}}
-  <app-date-range [selectedDay]="pubMonitorService.selectedDay" [startDate]="pubMonitorService.startDate" [endDate]="pubMonitorService.endDate" (onDateRangeChange)="onDateRangeChange($event)" style="margin-left: auto"></app-date-range>
+  <app-date-range  (onDateRangeChange)="onDateRangeChange($event)" style="margin-left: auto"></app-date-range>
 </div>
 <div>
   <app-chart-view [loading]="loading" [data]="chartData"></app-chart-view>
