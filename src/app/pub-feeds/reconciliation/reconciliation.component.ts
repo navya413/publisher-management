@@ -38,4 +38,8 @@ export class ReconciliationComponent implements OnInit {
   getFormatedDate(date) {
     return moment(date).format('MM/DD/YYYY HH:mm');
   }
+
+  onReload() {
+    this.getReconciliationDetails();
+  }
 }
