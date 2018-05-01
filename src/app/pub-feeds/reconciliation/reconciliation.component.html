@@ -1,0 +1,34 @@
+<m-table [value]="placements"
+         (onReload)="onReload()"
+         [selectable]="false" [selectionHandler]="false">
+
+  <m-header [title]="'Reconciliation Monitoring'" [globalSearch]="true" [searchField]="'box'" [colSetting]="false" [reload]="true" [export]="true">
+  </m-header>
+
+  <m-footer [paginator]="true"></m-footer>
+
+  <m-column field="placement" header="Publisher">
+  </m-column>
+
+  <m-column field="uploadTime" header="File Last Drop">
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{getFormatedDate(row[field])}}
+    </ng-template>
+  </m-column>
+
+  <m-column field="totalRecords" header="Records Received">
+  </m-column>
+
+  <m-column field="unParsableLines" header="Failure(%)">
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{getFailurePer(row)}}
+    </ng-template>
+  </m-column>
+
+  <ng-template mTemplate="emptyTable">
+    <div *ngIf="loading" class="table-loading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <div>Loading...</div>
+    </div>
+  </ng-template>
+</m-table>

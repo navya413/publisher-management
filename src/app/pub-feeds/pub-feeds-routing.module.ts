@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { PubFeedsComponent } from './pub-feeds.component';
 import { FtpManagementComponent } from './ftp-management/ftp-management.component';
 import { FtpAlertsComponent } from './ftp-alerts/ftp-alerts.component';
+import {ReconciliationComponent} from './reconciliation/reconciliation.component';
 const routes: Routes = [
   {
     path: '',
@@ -18,8 +19,8 @@ const routes: Routes = [
         component: FtpAlertsComponent,
       },
       {
-        path: 'ftp-setup',
-        component: FtpAlertsComponent,
+        path: 'reconciliation',
+        component: ReconciliationComponent,
       },
     ],
   },

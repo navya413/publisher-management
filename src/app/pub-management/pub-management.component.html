@@ -154,20 +154,44 @@
       </ng-template>
     </m-column>
 
-    <m-column field="placementType"
-              header="Placement Type"
-              [sortable]="true">
+    <m-column field="feedIndexLatency"
+              [editable]="true"
+              [sortable]="true"
+              [editTrigger]="'button'">
+      <ng-template mTemplate="header">
+        Latency Window<br>(in hrs)
+      </ng-template>
       <ng-template let-col
                    let-row="row"
                    mTemplate="body">
-        {{(row['placement']['placementType'] && row['placement']['placementType']['name']) ? row['placement']['placementType']['name']
-        : '-'}}
+        {{row['placement'][col.field] }}
+      </ng-template>
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="editor">
+        <mat-card class="editor-container">
+          <div class="editor-body">
+            <mat-form-field>
+              <input matInput
+                     #inputEditor
+                     type="number"
+                     [ngModel]="row['placement'][col.field]">
+              <mat-hint class="error-hint">{{updateError}}</mat-hint>
+            </mat-form-field>
+          </div>
+          <app-editor-action primaryBtn="Update"
+                             [loading]="updating"
+                             (onSecondaryBtnClick)="closeEditor()"
+                             (onPrimaryBtnClick)="updateValue('feedIndexLatency', row, inputEditor.value)"></app-editor-action>
+        </mat-card>
       </ng-template>
     </m-column>
 
     <m-column field="activeClients"
-              header="Active Clients"
               [sortable]="true">
+      <ng-template mTemplate="header">
+        Active<br>Clients
+      </ng-template>
       <ng-template let-col
                    let-row="row"
                    mTemplate="body">
@@ -175,13 +199,31 @@
       </ng-template>
     </m-column>
 
-    <m-column field="country"
-              header="Country"
-              [sortable]="true">
+    <m-column field="perClientPlacements"
+              [editable]="true"
+              [sortable]="true"
+              [editTrigger]="'button'">
+      <ng-template mTemplate="header">
+        Feed Type
+      </ng-template>
       <ng-template let-col
                    let-row="row"
                    mTemplate="body">
-        {{(row['placement']['country']) ? row['placement']['country'] : '-' }}
+        {{row['placement'][col.field] ? 'Client' : 'Comprehensive'}}
+      </ng-template>
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="editor">
+        <mat-card class="editor-container">
+          <div class="editor-body" style="padding: 1rem 0">
+            <mat-checkbox #inputEditor [ngModel]="row['placement'][col.field]">Per client Feed</mat-checkbox>
+            <mat-hint class="error-hint">{{updateError}}</mat-hint>
+          </div>
+          <app-editor-action primaryBtn="Update"
+                             [loading]="updating"
+                             (onSecondaryBtnClick)="closeEditor()"
+                             (onPrimaryBtnClick)="updateValue('perClientPlacements', row, inputEditor.checked)"></app-editor-action>
+        </mat-card>
       </ng-template>
     </m-column>
 
@@ -191,21 +233,22 @@
       <ng-template let-col
                    let-row="row"
                    mTemplate="body">
-        {{row['placement']['bidType']['name']}}
+        {{row['placement']['bidType']['name'].replace('_', ' ')}}
       </ng-template>
     </m-column>
 
     <m-column field="minBid"
-              header="Min Bid"
               [sortable]="true"
               [editable]="true"
               [editTrigger]="'button'">
+      <ng-template mTemplate="header">
+        Min Bid/<br>Flat Bid
+      </ng-template>
       <ng-template let-col
                    let-row="row"
                    mTemplate="body">
-        {{row['placement'][col.field] ? row['placement'][col.field] : '-'}}
+        {{getBidDisplayValue(row['placement'])}}
       </ng-template>
-
       <ng-template let-col
                    let-row="row"
                    mTemplate="editor">
@@ -215,7 +258,7 @@
               <input type="number"
                      matInput
                      #inputEditor
-                     [ngModel]="row['placement'][col.field]">
+                     [ngModel]="row['placement']['flatBidValue'] || row['placement'][col.field]">
               <mat-hint class="error-hint">{{updateError}}</mat-hint>
             </mat-form-field>
           </div>
