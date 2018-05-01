@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
-import { NewEntity } from '../../model/new-entity-state';
+import {NewEntity, NewEntityTwo} from '../../model/new-entity-state';
 
 @Injectable()
 export class StatsService {
@@ -68,6 +68,46 @@ export class StatsService {
     }
     return this.http.get<NewEntity[]>(
       url,
+      {
+        params: params
+      },
+    );
+  }
+
+  getCMStats(group) {
+    const params = {
+      since: this.dateRange.startDate,
+      till: this.dateRange.endDate,
+      agencyIds: 'ripple'
+    };
+    return this.http.get<NewEntityTwo[]>(
+      'http://legolas.joveo.com:8080/gandalf/metrics/cm/by/' + group,
+      {
+        params: params
+      },
+    );
+  }
+  getPubStats(group) {
+    const params = {
+      since: this.dateRange.startDate,
+      till: this.dateRange.endDate,
+      agencyIds: 'ripple'
+    };
+    return this.http.get<NewEntityTwo[]>(
+      'http://legolas.joveo.com:8080/gandalf/metrics/pub/by/' + group,
+      {
+        params: params
+      },
+    );
+  }
+  getJoveoStats(group) {
+    const params = {
+      since: this.dateRange.startDate,
+      till: this.dateRange.endDate,
+      agencyIds: 'ripple'
+    };
+    return this.http.get<NewEntityTwo[]>(
+      'http://legolas.joveo.com:8080/gandalf/metrics/joveo/by/' + group,
       {
         params: params
       },

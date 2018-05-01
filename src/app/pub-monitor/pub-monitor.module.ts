@@ -13,6 +13,7 @@ import {
 import { PubMonitorService } from './services/pub-monitor.service';
 import { AmChartsModule } from '@amcharts/amcharts3-angular';
 import { CoreModule } from '../core/core.module';
+import {StatsTableComponent} from "./stats-table/stats-table.component";
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { CoreModule } from '../core/core.module';
     EntityNavComponent,
     PublishersComponent,
     PublisherDetailDialogComponent,
+    StatsTableComponent
   ],
   providers: [PubMonitorService],
   entryComponents: [PublisherDetailDialogComponent],

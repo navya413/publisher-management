@@ -63,6 +63,7 @@ export class PubMonitorComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe((res: any) => {
         this.entityNavComp.loading = false;
         this.clientTree = res.clientTree;
+        this.pubMonitorService.flattenEntityTree(res.clientTree);
       }, err => {
         this.entityNavComp.loading = false;
       });

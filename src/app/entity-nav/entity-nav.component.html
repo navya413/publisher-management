@@ -31,12 +31,15 @@
   </mat-autocomplete>
 </mat-form-field>
 <section *ngIf="!loading && entityNavTree" class="entity-tree">
-  <button [attr.data-count]='entityNavTree?.length'
-          class="entity-tree__title"
-          mat-button
-          [routerLink]="['./', 'agency', selectedAgency]">
-    All Clients
-  </button>
+  <mat-list role="list">
+    <!--<mat-list-item class="listitem" [routerLink]="['./', 'agency', selectedAgency, 'publishers']" [ngClass]="{'active': routeData.data.entity === 'publishers'}">-->
+      <!--All Publishers-->
+    <!--</mat-list-item>-->
+
+    <mat-list-item class="listitem" [routerLink]="['./', 'agency', selectedAgency, 'clients']" [ngClass]="{'active': routeData.data.entity === 'clients'}">
+      All Clients
+    </mat-list-item>
+  </mat-list>
   <ul class="entity-tree__list"
       data-type="client">
     <li class="entity-tree__item"
@@ -44,7 +47,7 @@
       <a class="entity-tree__item-link"
          [attr.data-id]="client.id"
          [class.entity-tree__item-link--active]="client.isActive"
-         [routerLink]="['./', 'agency', selectedAgency, 'client', client.id]">{{client.name}}
+         [routerLink]="['./', 'agency', selectedAgency, 'client', client.id, 'campaigns']">{{client.name}}
         <span class="entity-tree__item-expand"
               [class.entity-tree__item-expand--expanded]="client.isOpen"
               *ngIf="client.children.length">
@@ -59,7 +62,7 @@
           <a class="entity-tree__item-link"
              [attr.data-id]="campaign.id"
              [class.entity-tree__item-link--active]="campaign.isActive"
-             [routerLink]="['./', 'agency', selectedAgency, 'client', client.id, 'campaign', campaign.id]">{{campaign.name}}
+             [routerLink]="['./', 'agency', selectedAgency, 'client', client.id, 'campaign', campaign.id, 'jobgroups']">{{campaign.name}}
             <span class="entity-tree__item-expand"
                   [class.entity-tree__item-expand--expanded]="campaign.isOpen"
                   *ngIf="campaign.children.length">
@@ -74,7 +77,7 @@
               <a class="entity-tree__item-link"
                  [attr.data-id]="jobgroup.id"
                  [class.entity-tree__item-link--active]="jobgroup.isActive"
-                 [routerLink]="['./', 'agency', selectedAgency, 'client', client.id, 'campaign', campaign.id, 'jobgroup', jobgroup.id]">{{jobgroup.name}}
+                 [routerLink]="['./', 'agency', selectedAgency, 'client', client.id, 'campaign', campaign.id, 'jobgroup', jobgroup.id, 'publishers']">{{jobgroup.name}}
               </a>
             </li>
           </ul>

@@ -50,6 +50,7 @@ export class EntityNavComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges() {
+    console.log(this.routeData);
     if (this.clientTree && this.routeData) {
       this.buildAutocompleteOptions();
       this.buildEntityNavTree();
