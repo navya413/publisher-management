@@ -161,9 +161,21 @@ export class PublisherListComponent implements OnInit {
     this.updateError = null;
   }
 
+  getBidDisplayValue(publisher) {
+    if (publisher['bidType']['name'] === 'FLAT_CPC') {
+      return publisher['flatBidValue'];
+    } else {
+      return publisher['minBid'] ? publisher['minBid'] : '-';
+    }
+  }
+
   updateValue(type, row, value) {
+    if (type === 'feedIndexLatency') {
+      value = parseFloat(value);
+    }
     if (type === 'minBid') {
       value = parseFloat(value);
+      type = (row['placement']['bidType']['name'] === 'FLAT_CPC') ? 'flatBidValue' : 'minBid';
     }
     this.updating = true;
     this.updateError = null;
