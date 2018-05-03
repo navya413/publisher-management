@@ -35,8 +35,8 @@ export class ReconciliationComponent implements OnInit {
     return row['totalRecords'] ? Number.parseFloat((row['unParsableLines'] / row['totalRecords'] * 100).toFixed(2)) : 0;
   }
 
-  getFormatedDate(date) {
-    return moment(date).format('MM/DD/YYYY HH:mm');
+  getFormatedDate(row) {
+    return moment(row.uploadTime).format('MM/DD/YYYY HH:mm');
   }
 
   onReload() {
