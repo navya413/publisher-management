@@ -9,6 +9,7 @@ export class PubMonitorService {
   entityMap: object = {};
   timezones: any[];
   timezoneId: string;
+  statsView = 'all';
   dateRange = {
     days: 'Today',
     startDate: moment().format('YYYY-MM-DD'),
@@ -53,46 +54,18 @@ export class PubMonitorService {
     );
   }
 
-  getCMStats(routeData) {
-    const params = {
-      since: this.dateRange.startDate,
-      till: this.dateRange.endDate,
-      agencyIds: routeData.params.agencyId,
-      clientIds: routeData.params.clientId,
-      campaignIds: routeData.params.campaignId
-    };
-    return this.http.get<NewEntityTwo[]>(
-      'http://legolas.joveo.com:8080/gandalf/metrics/cm/by/' + routeData.data.entity,
-      {
-        params: JSON.parse(JSON.stringify(params))
-      },
-    );
-  }
-  getPubStats(routeData) {
+  getStats(routeData, projection, app = 'mojo') {
     const params = {
       since: this.dateRange.startDate,
       till: this.dateRange.endDate,
       agencyIds: routeData.params.agencyId,
       clientIds: routeData.params.clientId,
       campaignIds: routeData.params.campaignId,
+      page: 1,
+      limit: 10000
     };
     return this.http.get<NewEntityTwo[]>(
-      'http://legolas.joveo.com:8080/gandalf/metrics/pub/by/' + routeData.data.entity,
-      {
-        params: JSON.parse(JSON.stringify(params))
-      },
-    );
-  }
-  getJoveoStats(routeData) {
-    const params = {
-      since: this.dateRange.startDate,
-      till: this.dateRange.endDate,
-      agencyIds: routeData.params.agencyId,
-      clientIds: routeData.params.clientId,
-      campaignIds: routeData.params.campaignId,
-    };
-    return this.http.get<NewEntityTwo[]>(
-      'http://legolas.joveo.com:8080/gandalf/metrics/joveo/by/' + routeData.data.entity,
+      'http://34.238.240.44:8080/gandalf/app/' + app + '/metrics/' + projection + '/by/' + routeData.data.entity,
       {
         params: JSON.parse(JSON.stringify(params))
       },

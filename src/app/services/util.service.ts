@@ -59,6 +59,16 @@ export class UtilService {
     });
   }
 
+  getFormattedNumber (number, isPercent = false) {
+    let tempNumber;
+    if (!isPercent) {
+      tempNumber = Number.parseFloat(number.toFixed(2)).toLocaleString();
+    } else {
+      tempNumber = (number * 100).toFixed(2);
+    }
+    return tempNumber;
+  }
+
   getFtpPublishersList() {
     return this.ftpPublishers$;
   }

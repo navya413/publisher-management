@@ -8,20 +8,22 @@ import {AuthService} from '../auth/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  navLinks = [{
-    path: 'publisher-stats',
-    label: 'Publisher Stats'
-  }, {
-    path: 'publisher-management',
-    label: 'Publisher Management'
-  }, {
-    path: 'publisher-feeds',
-    label: 'Publisher Feeds'
-  },
-  // {
-  //   path: 'publisher-monitor',
-  //   label: 'Monitor'
-  // }
+  navLinks = [
+    {
+      path: 'publisher-monitor',
+      label: 'Publisher Stats'
+    },
+    // {
+    // path: 'publisher-stats',
+    // label: 'Publisher Stats'
+    // },
+    {
+      path: 'publisher-management',
+      label: 'Publisher Management'
+    }, {
+      path: 'publisher-feeds',
+      label: 'Publisher Feeds'
+    }
   ];
   constructor(public authService: AuthService) { }
 
