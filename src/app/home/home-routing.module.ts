@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      { path: '', redirectTo: 'publisher-stats', pathMatch: 'full' },
+      { path: '', redirectTo: 'publisher-monitor', pathMatch: 'full' },
       {
         path: 'publisher-monitor',
         loadChildren: '../pub-monitor/pub-monitor.module#PubMonitorModule'
