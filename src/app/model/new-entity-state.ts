@@ -1,27 +1,37 @@
 export interface NewEntity {
   entity: string;
-  cmStats: {
+  cmStats?: {
     clicks: number;
     applies: number;
     spend: number;
     botClicks: number;
   };
-  pubStats: {
+  pubStats?: {
     clicks: number;
     applies: number;
     spend: number;
     botClicks: number;
   };
-  joveoStats: {
+  joveoStats?: {
+    clicks: number;
+    applies: number;
+    spend: number;
+    botClicks: number;
+    cta?: number;
+    latentClicks?: number;
+    duplicateClicks?: number;
+  };
+  pubPortalStats?: {
     clicks: number;
     applies: number;
     spend: number;
     botClicks: number;
   };
-  spendMojo: number;
-  spendCD: number;
-  spendSelfServe: number;
-  spendPubPortal: number;
+  spendStats?: {
+    mojo: number;
+    cd: number;
+    vp: number;
+  };
 }
 
 export interface NewEntityTwo {
@@ -30,10 +40,11 @@ export interface NewEntityTwo {
     applies: number;
     botClicks: number;
     spend: number;
-    spendMojo: number;
-    spendCD: number;
-    spendSelfServe: number;
-    spendPubPortal: number;
+    latentClicks: number,
+    duplicateClicks: number,
+    cpc: number,
+    cpa: number,
+    cta: number,
   };
   pivots: {
     pivot1: string;
@@ -41,4 +52,5 @@ export interface NewEntityTwo {
     pivot3: string;
     pivot4: string;
   };
+  job: string;
 }

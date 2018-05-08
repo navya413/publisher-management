@@ -19,19 +19,19 @@ import {Subject} from "rxjs/Subject";
 })
 export class PublishersComponent implements OnInit, OnDestroy {
   agencyId: string;
-  timezoneId: string;
   statsData: any[];
   loading: boolean;
   routeData;
 
   routeDataSubscription$;
-  urlSubscription$;
   params: EntityState;
   level: string;
 
   cmStatsSubscription$: Subject<NewEntityTwo[]>;
-  joveoStatsSubscription$: Subject<NewEntityTwo[]>;
-  pubStatsSubscription$: Subject<NewEntityTwo[]>;
+
+  subscription1$: Subject<NewEntityTwo[]>;
+  subscription2$: Subject<NewEntityTwo[]>;
+  subscription3$: Subject<NewEntityTwo[]>;
 
   childNavLinks = [];
 
@@ -64,13 +64,16 @@ export class PublishersComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
+  statsViewChange(val) {
+    this.pubMonitorService.statsView = val.value;
+    this.getStats();
+  }
+
   getChildLinks() {
     switch (this.routeData.data.level) {
       case  'agency' :
         this.childNavLinks = [
           {path: '../clients', label: 'Clients'},
-          {path: '../campaigns', label: 'Campaigns'},
-          {path: '../jobgroups', label: 'Job Groups'},
           {path: '../publishers', label: 'Publishers'}
         ];
         break;
@@ -87,6 +90,11 @@ export class PublishersComponent implements OnInit, OnDestroy {
           {path: '../publishers', label: 'Publishers'}
         ];
         break;
+      case  'jobgroup' :
+        this.childNavLinks = [
+          {path: '../publishers', label: 'Publishers'}
+        ];
+        break;
     }
   }
 
@@ -100,37 +108,48 @@ export class PublishersComponent implements OnInit, OnDestroy {
     this.statsData = [];
     const tempData = [];
 
-    this.cmStatsSubscription$ = this.pubMonitorService.getCMStats(this.routeData);
-    this.joveoStatsSubscription$ = this.pubMonitorService.getJoveoStats(this.routeData);
-    this.pubStatsSubscription$ = this.pubMonitorService.getPubStats(this.routeData);
+    this.subscription1$ = this.pubMonitorService.getStats(this.routeData, 'joveo');
+    this.subscription2$ = this.pubMonitorService.statsView === 'billing' ?
+      this.pubMonitorService.getStats(this.routeData, 'joveo', 'cd') : this.pubMonitorService.getStats(this.routeData, 'pub');
+    this.subscription3$ = this.pubMonitorService.statsView === 'billing' ?
+      this.pubMonitorService.getStats(this.routeData, 'joveo', 'vp') : this.pubMonitorService.getStats(this.routeData, 'pub_portal');
 
-    forkJoin(this.cmStatsSubscription$, this.joveoStatsSubscription$, this.pubStatsSubscription$).subscribe((res: any[]) => {
+    forkJoin(this.subscription1$, this.subscription2$, this.subscription3$)
+    .subscribe((res: any[]) => {
       res[0].map(entity => {
         const obj = {};
         obj['entity'] = entity.pivots.pivot1;
         obj['name'] = this.pubMonitorService.entityMap[obj['entity']] || obj['entity'];
-        obj['cmStats'] = {
+        obj['joveoStats'] = {
           clicks: entity.stats.clicks,
           applies: entity.stats.applies,
           spend: entity.stats.spend,
-          botClicks: entity.stats.botClicks
+          botClicks: entity.stats.botClicks,
+          cta: entity.stats.cta,
+          latentClicks: entity.stats.latentClicks,
+          duplicateClicks: entity.stats.duplicateClicks,
         };
-        obj['spendMojo'] = entity.stats.spendMojo;
-        obj['spendCD'] = entity.stats.spendCD;
-        obj['spendPubPortal'] = entity.stats.spendPubPortal;
-        obj['spendSelfServe'] = entity.stats.spendSelfServe;
+        if (this.pubMonitorService.statsView === 'billing') {
+          obj['spendStats'] = {
+            mojo: entity.stats.spend
+          };
+        }
         tempData.push(obj);
       });
 
       res[1].map(entity => {
         tempData.map(stat => {
           if (stat.entity === entity.pivots.pivot1) {
-            stat['joveoStats'] = {
-              clicks: entity.stats.clicks,
-              applies: entity.stats.applies,
-              spend: entity.stats.spend,
-              botClicks: entity.stats.botClicks
-            };
+            if (this.pubMonitorService.statsView === 'billing') {
+              stat['spendStats']['cd'] = entity.stats.spend;
+            } else {
+              stat['pubStats'] = {
+                clicks: entity.stats.clicks,
+                applies: entity.stats.applies,
+                spend: entity.stats.spend,
+                botClicks: entity.stats.botClicks
+              };
+            }
           }
         });
       });
@@ -138,12 +157,16 @@ export class PublishersComponent implements OnInit, OnDestroy {
       res[2].map(entity => {
         tempData.map(stat => {
           if (stat.entity === entity.pivots.pivot1) {
-            stat['pubStats'] = {
-              clicks: entity.stats.clicks,
-              applies: entity.stats.applies,
-              spend: entity.stats.spend,
-              botClicks: entity.stats.botClicks
-            };
+            if (this.pubMonitorService.statsView === 'billing') {
+              stat['spendStats']['vp'] = entity.stats.spend;
+            } else {
+              stat['pubPortalStats'] = {
+                clicks: entity.stats.clicks,
+                applies: entity.stats.applies,
+                spend: entity.stats.spend,
+                botClicks: entity.stats.botClicks
+              };
+            }
           }
         });
       });
@@ -162,8 +185,15 @@ export class PublishersComponent implements OnInit, OnDestroy {
     this.getStats();
   }
 
+  onReload() {
+    this.getStats();
+  }
+
   ngOnDestroy() {
     this.routeDataSubscription$.unsubscribe();
+    // this.subscription1$.unsubscribe();
+    // this.subscription2$.unsubscribe();
+    // this.subscription3$.unsubscribe();
   }
 }
 
