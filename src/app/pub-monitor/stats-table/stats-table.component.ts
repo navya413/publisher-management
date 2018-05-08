@@ -1,5 +1,6 @@
 import {Component, DoCheck, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { UtilService } from '../../services/util.service';
+import {PubMonitorService} from "../services/pub-monitor.service";
 
 @Component({
   selector: 'app-stats-table',
@@ -16,7 +17,7 @@ export class StatsTableComponent implements OnInit {
 
   @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() reload: EventEmitter<any> = new EventEmitter<any>();
-  constructor(public utilService: UtilService) {}
+  constructor(public utilService: UtilService, public pubMonitorService: PubMonitorService) {}
 
   ngOnInit() {}
 
