@@ -68,7 +68,7 @@ export class PubMonitorService {
       params['tz'] = this.timezoneId;
     }
     return this.http.get<NewEntityTwo[]>(
-      'http://34.238.240.44:8080/gandalf/app/' + app + '/metrics/' + projection + '/by/' + routeData.data.entity,
+      'http://54.146.60.243:8080/gandalf/app/' + app + '/metrics/' + projection + '/by/' + routeData.data.entity,
       {
         params: JSON.parse(JSON.stringify(params))
       },
