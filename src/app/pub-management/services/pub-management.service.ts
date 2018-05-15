@@ -18,8 +18,15 @@ export class PubManagementService {
     return this.http.post<any>(environment.adminApi + 'publishers', data);
   }
 
-  updatePublisher(data) {
-    return this.http.put<any>(environment.adminApi + 'publishers', data);
+  updatePublisher(agency, data) {
+    agency = agency === 'All Agencies' ? '' : agency;
+    return this.http.put<any>(environment.adminApi + 'publishers',
+      data,
+      {
+        params: {
+          agency: agency
+        }
+      });
   }
 
   pausePublisher(param, data) {

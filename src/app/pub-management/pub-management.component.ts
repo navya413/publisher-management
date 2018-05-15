@@ -184,7 +184,7 @@ export class PublisherListComponent implements OnInit {
       update: {}
     };
     updateObj['update'][type] = value;
-    this.pubManagementService.updatePublisher(updateObj).subscribe(
+    this.pubManagementService.updatePublisher(this.selectedAgency, updateObj).subscribe(
       res => {
         this.updating = false;
         this.closeEditor();
@@ -235,7 +235,8 @@ export class PublisherListComponent implements OnInit {
       width: '60%',
       data: {
         publisher: this.selectedPublishers[0],
-        type: editType
+        type: editType,
+        selectedAgency: this.selectedAgency
       }
     });
 
@@ -569,7 +570,7 @@ export class PublisherEditDialog implements OnInit {
           }
         );
     } else {
-      this.pubManagementService.updatePublisher(tempData).subscribe(
+      this.pubManagementService.updatePublisher(this.data.selectedAgency, tempData).subscribe(
         res => {
           this.loading = false;
           this.dialogRef.close({ success: true });
