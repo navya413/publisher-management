@@ -3,5 +3,5 @@ export const environment = {
   authApi: '/api/',
   adminApi: '/api/admin/',
   feedsApi: 'http://54.144.227.5:8080/',
-  newStatsApi: 'http://legolas.joveo.com/gandalf/app/'
+  newStatsApi: 'http://gandalf.prod.joveo.com/gandalf/app/'
 };
