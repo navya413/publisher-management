@@ -39,24 +39,28 @@ export class PubManagementService {
     );
   }
 
-  getPublisherSchema(placementId) {
+  getPublisherSchema(agency, placementId) {
+    agency = agency === 'All Agencies' ? '' : agency;
     return this.http.get<any>(
       environment.adminApi + 'publishers/placementSchema',
       {
         params: {
-          placementId: placementId
+          placementId: placementId,
+          agency: agency
         }
       }
     );
   }
 
-  postPublisherSchema(placementId, data) {
+  postPublisherSchema(agency, placementId, data) {
+    agency = agency === 'All Agencies' ? '' : agency;
     return this.http.post<any>(
       environment.adminApi + 'publishers/placementSchema',
       data,
       {
         params: {
-          placementId: placementId
+          placementId: placementId,
+          agency: agency
         }
       }
     );
