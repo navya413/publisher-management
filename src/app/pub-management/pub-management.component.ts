@@ -121,7 +121,10 @@ export class PublisherListComponent implements OnInit {
   openPublisherSchemaDialog() {
     const dialogRef = this.dialog.open(PublisherSchemaDialog, {
       width: '80vw',
-      data: this.selectedPublishers[0]
+      data: {
+        publisher: this.selectedPublishers[0],
+        selectedAgency: this.selectedAgency
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -295,9 +298,10 @@ export class PublisherSchemaDialog implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.data);
     this.loading = true;
     this.pubManagementService
-      .getPublisherSchema(this.data.placement.id)
+      .getPublisherSchema(this.data.selectedAgency, this.data.publisher.placement.id)
       .subscribe(
         res => {
           this.loading = false;
@@ -344,7 +348,7 @@ export class PublisherSchemaDialog implements OnInit {
     data.schema['includeCurrencyInBidTag'] = this.includeCurrencyInBidTag;
 
     this.pubManagementService
-      .postPublisherSchema(this.data.placement.id, data)
+      .postPublisherSchema(this.data.selectedAgency, this.data.publisher.placement.id, data)
       .subscribe(res => {
         this.dialogRef.close({ success: true });
       });
