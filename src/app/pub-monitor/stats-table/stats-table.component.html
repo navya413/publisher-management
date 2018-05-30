@@ -38,13 +38,23 @@
       </ng-template>
     </m-column>
 
-    <m-column [field]="'pubPortalStats.clicks'" [sortable]="true">
+    <!--<m-column [field]="'pubPortalStats.clicks'" [sortable]="true">-->
+      <!--<ng-template let-col let-row="row" mTemplate="header">-->
+        <!--<div class="normal-linehight">Webscrape</div>-->
+        <!--<span>Clicks</span>-->
+      <!--</ng-template>-->
+      <!--<ng-template let-col let-row="row" mTemplate="body">-->
+        <!--{{row['pubPortalStats']['clicks'].toLocaleString()}}-->
+      <!--</ng-template>-->
+    <!--</m-column>-->
+
+    <m-column [field]="'cmStats.clicks'" [sortable]="true">
       <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">Webscrape</div>
+        <div class="normal-linehight">CM</div>
         <span>Clicks</span>
       </ng-template>
       <ng-template let-col let-row="row" mTemplate="body">
-        {{row['pubPortalStats']['clicks'].toLocaleString()}}
+        {{row['cmStats']['clicks'].toLocaleString()}}
       </ng-template>
     </m-column>
 
@@ -97,6 +107,16 @@
       </ng-template>
       <ng-template let-col let-row="row" mTemplate="body">
         {{row['pubStats']['applies'].toLocaleString()}}
+      </ng-template>
+    </m-column>
+
+    <m-column [field]="'cmStats.applies'" [sortable]="true">
+      <ng-template let-col let-row="row" mTemplate="header">
+        <div class="normal-linehight">CM</div>
+        <span>Applies</span>
+      </ng-template>
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{row['cmStats']['applies'].toLocaleString()}}
       </ng-template>
     </m-column>
 

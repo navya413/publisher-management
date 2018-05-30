@@ -27,11 +27,10 @@ export class PublishersComponent implements OnInit, OnDestroy {
   params: EntityState;
   level: string;
 
-  cmStatsSubscription$: Subject<NewEntityTwo[]>;
-
   subscription1$: Subject<NewEntityTwo[]>;
   subscription2$: Subject<NewEntityTwo[]>;
   subscription3$: Subject<NewEntityTwo[]>;
+  subscriptionCM$: Subject<NewEntityTwo[]>;
 
   childNavLinks = [];
 
@@ -114,7 +113,9 @@ export class PublishersComponent implements OnInit, OnDestroy {
     this.subscription3$ = this.pubMonitorService.statsView === 'billing' ?
       this.pubMonitorService.getStats(this.routeData, 'joveo', 'vp') : this.pubMonitorService.getStats(this.routeData, 'pub_portal');
 
-    forkJoin(this.subscription1$, this.subscription2$, this.subscription3$)
+    this.subscriptionCM$ = this.pubMonitorService.getStats(this.routeData, 'cm');
+
+    forkJoin(this.subscription1$, this.subscription2$, this.subscription3$, this.subscriptionCM$)
     .subscribe((res: any[]) => {
       res[0].map(entity => {
         const obj = {};
@@ -167,6 +168,19 @@ export class PublishersComponent implements OnInit, OnDestroy {
                 botClicks: entity.stats.botClicks
               };
             }
+          }
+        });
+      });
+
+      res[3].map(entity => {
+        tempData.map(stat => {
+          if (stat.entity === entity.pivots.pivot1) {
+              stat['cmStats'] = {
+                clicks: entity.stats.clicks,
+                applies: entity.stats.applies,
+                spend: entity.stats.spend,
+                botClicks: entity.stats.botClicks
+              };
           }
         });
       });
