@@ -132,6 +132,14 @@ td {
   padding: 1rem;
 }
 
+::ng-deep .border-left{
+  border-left: 1px solid #e0e0e0;;
+}
+
+::ng-deep .border-right{
+  border-right: 1px solid #e0e0e0;;
+}
+
 
 ::ng-deep .agencyList .mat-select-value {
   display: block !important;
