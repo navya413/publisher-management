@@ -8,6 +8,7 @@ export class PubManagementService {
 
   getPublishers(params) {
     const tempParam = JSON.parse(JSON.stringify(params));
+
     if(params.agencyId)
       tempParam['agency'] = params.agencyId;
     return this.http.get<any>(environment.adminApi + 'publishers', {

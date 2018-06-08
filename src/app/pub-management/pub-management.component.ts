@@ -58,6 +58,8 @@ export class PublisherListComponent implements OnInit {
 
   editOptions: Item[] = EDIT_OPTIONS;
 
+  public interval;
+
   constructor(
     private pubManagementService: PubManagementService,
     public dialog: MatDialog,
@@ -85,20 +87,45 @@ export class PublisherListComponent implements OnInit {
   }
 
   getPublisherList() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
     this.loading = true;
     this.publishers = [];
     this.selectedPublishers = [];
     this.pubManagementService.getPublishers(this.params).subscribe(
       (res: any) => {
         this.loading = false;
-        this.publisherResp = res.data;
-        this.publishers = this.publisherResp.records;
-        this.typeAhead = this.publisherResp.typeahead;
+        this.publishers = res.data.records;
+        this.typeAhead = res.data.typeahead;
+
+        this.publishers.map((pub: any) => {
+          if (pub.feedFileInfo && pub.feedFileInfo.toggleTimestamp) {
+            pub.feedFileInfo['timeElapsed'] = Date.now() - pub.feedFileInfo.toggleTimestamp;
+          }
+        });
+
+
+        this.interval = setInterval(() => {
+            this.publishers.map((pub: any) => {
+                if (pub.feedFileInfo['timeElapsed'] < 259200000) {
+                  pub.feedFileInfo['timeElapsed'] += 60000;
+                }
+            });
+        }, 60000);
       },
       err => {
         this.loading = false;
       }
     );
+  }
+
+  getRemainingHours(row) {
+    if (row['feedFileInfo'].timeElapsed) {
+      return Math.ceil((259200000 - row['feedFileInfo'].timeElapsed) / (1000 * 60 * 60));
+    } else {
+      return null;
+    }
   }
 
   openPublisherAddDialog(row) {
@@ -191,7 +218,15 @@ export class PublisherListComponent implements OnInit {
       res => {
         this.updating = false;
         this.closeEditor();
-        row['placement'][type] = value;
+        if (type === 'feedFileType') {
+          row['feedFileInfo']['fileType'] = value;
+          if (!row['feedFileInfo']['toggleTimestamp']){
+            row['feedFileInfo']['toggleTimestamp'] = new Date();
+            row['feedFileInfo']['timeElapsed'] = 1000;
+          }
+        } else {
+          row['placement'][type] = value;
+        }
         this.notifService.success('Success', 'Successfully updated');
       },
       err => {
@@ -298,7 +333,6 @@ export class PublisherSchemaDialog implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
     this.loading = true;
     this.pubManagementService
       .getPublisherSchema(this.data.selectedAgency, this.data.publisher.placement.id)

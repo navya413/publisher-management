@@ -90,7 +90,7 @@
               [pageSize]="params.limit"
               [pageIndex]="params.page - 1"
               [pageSizeOptions]="[10,20,50]"
-              [length]="publisherResp?.typeahead?.length"></m-footer>
+              [length]="typeAhead?.length"></m-footer>
 
     <m-column field="status"
               header="Status"
@@ -223,6 +223,77 @@
                              [loading]="updating"
                              (onSecondaryBtnClick)="closeEditor()"
                              (onPrimaryBtnClick)="updateValue('perClientPlacements', row, inputEditor.checked)"></app-editor-action>
+        </mat-card>
+      </ng-template>
+    </m-column>
+
+    <m-column *ngIf="selectedAgency && selectedAgency !== 'All Agencies'" [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
+      <ng-template mTemplate="header">
+        Old XML<br>Feed
+      </ng-template>
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="body">
+        <i *ngIf="row['feedFileInfo']['fileType'] === 'oldXml'" class="material-icons status-icon active">lens</i>
+        <i *ngIf="row['feedFileInfo']['fileType'] !== 'oldXml' && row['feedFileInfo'].timeElapsed && row['feedFileInfo'].timeElapsed <= 259200000" class="material-icons status-icon active md-inactive">remove_circle</i>
+        <i *ngIf="row['feedFileInfo']['fileType'] !== 'oldXml' && (!row['feedFileInfo'].timeElapsed || row['feedFileInfo'].timeElapsed > 259200000)" class="material-icons status-icon paused">block</i>
+        <span style="font-size: 0.6rem;color: #757575" *ngIf="getRemainingHours(row)">{{getRemainingHours(row)}} hrs</span>
+      </ng-template>
+    </m-column>
+
+    <m-column *ngIf="selectedAgency && selectedAgency !== 'All Agencies'" [editable]="true" [editTrigger]="'button'">
+      <ng-template mTemplate="header">
+        New XML<br>Feed
+      </ng-template>
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="body">
+        <i *ngIf="row['feedFileInfo']['fileType'] === 'newXml'" class="material-icons status-icon active">lens</i>
+        <i *ngIf="row['feedFileInfo']['fileType'] !== 'newXml'" class="material-icons status-icon active">panorama_fish_eye</i>
+        <!--<i *ngIf="row['feedFileInfo']['fileType'] === 'zipped'" class="material-icons status-icon paused">block</i>-->
+      </ng-template>
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="editor">
+        <mat-card class="editor-container">
+          <div class="editor-body" style="padding: 1rem 0">
+              <mat-checkbox [disabled]="row['feedFileInfo']['fileType'] === 'newXml'" [checked]="row['feedFileInfo']['fileType'] === 'newXml'">Use New XML Feed <mat-icon style="font-size: 1rem;" [matTooltipPosition]="'above'" matTooltip="Once you select the New XML feed, Old XML feed will automatically disable after 72 hours.">info</mat-icon></mat-checkbox>
+              <mat-hint class="error-hint">{{updateError}}</mat-hint>
+          </div>
+          <app-editor-action primaryBtn="Update"
+                             [loading]="updating"
+                             [primaryDisabled]="row['feedFileInfo']['fileType'] === 'newXml'"
+                             (onSecondaryBtnClick)="closeEditor()"
+                             (onPrimaryBtnClick)="updateValue('feedFileType', row, 'newXml')"></app-editor-action>
+        </mat-card>
+      </ng-template>
+    </m-column>
+
+    <m-column *ngIf="selectedAgency && selectedAgency !== 'All Agencies'" [editable]="true" [editTrigger]="'button'" [colBodyClass]="'border-right'" [colHeadClass]="'border-right'">
+      <ng-template mTemplate="header">
+        Zipped<br>Feed
+      </ng-template>
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="body">
+        <i *ngIf="row['feedFileInfo']['fileType'] === 'zipped'" class="material-icons status-icon active">lens</i>
+        <i *ngIf="row['feedFileInfo']['fileType'] !== 'zipped'" class="material-icons status-icon active">panorama_fish_eye</i>
+        <!--<i *ngIf="row['feedFileInfo']['fileType'] === 'newXml'" class="material-icons status-icon paused">block</i>-->
+      </ng-template>
+
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="editor">
+        <mat-card class="editor-container">
+          <div class="editor-body" style="padding: 1rem 0">
+            <mat-checkbox [disabled]="row['feedFileInfo']['fileType'] === 'zipped'" [checked]="row['feedFileInfo']['fileType'] === 'zipped'">Use Zipped Feed <mat-icon style="font-size: 1rem;" [matTooltipPosition]="'above'" matTooltip="Once you select the Zipped feed, Old XML feed will automatically disable after 72 hours.">info</mat-icon></mat-checkbox>
+            <mat-hint class="error-hint">{{updateError}}</mat-hint>
+          </div>
+          <app-editor-action primaryBtn="Update"
+                             [loading]="updating"
+                             [primaryDisabled]="row['feedFileInfo']['fileType'] === 'zipped'"
+                             (onSecondaryBtnClick)="closeEditor()"
+                             (onPrimaryBtnClick)="updateValue('feedFileType', row, 'zipped')"></app-editor-action>
         </mat-card>
       </ng-template>
     </m-column>
