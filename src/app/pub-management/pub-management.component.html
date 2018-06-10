@@ -257,12 +257,12 @@
                    mTemplate="editor">
         <mat-card class="editor-container">
           <div class="editor-body" style="padding: 1rem 0">
-              <mat-checkbox [disabled]="row['feedFileInfo']['fileType'] === 'newXml'" [checked]="row['feedFileInfo']['fileType'] === 'newXml'">Use New XML Feed <mat-icon style="font-size: 1rem;" [matTooltipPosition]="'above'" matTooltip="Once you select the New XML feed, Old XML feed will automatically disable after 72 hours.">info</mat-icon></mat-checkbox>
+              <mat-checkbox #check1 [disabled]="row['feedFileInfo']['fileType'] === 'newXml'" [checked]="row['feedFileInfo']['fileType'] === 'newXml'">Use New XML Feed <mat-icon style="font-size: 1rem;" [matTooltipPosition]="'above'" matTooltip="Once you select the New XML feed, Old XML feed will automatically disable after 72 hours.">info</mat-icon></mat-checkbox>
               <mat-hint class="error-hint">{{updateError}}</mat-hint>
           </div>
           <app-editor-action primaryBtn="Update"
                              [loading]="updating"
-                             [primaryDisabled]="row['feedFileInfo']['fileType'] === 'newXml'"
+                             [primaryDisabled]="row['feedFileInfo']['fileType'] === 'newXml' || !check1.checked"
                              (onSecondaryBtnClick)="closeEditor()"
                              (onPrimaryBtnClick)="updateValue('feedFileType', row, 'newXml')"></app-editor-action>
         </mat-card>
@@ -286,12 +286,12 @@
                    mTemplate="editor">
         <mat-card class="editor-container">
           <div class="editor-body" style="padding: 1rem 0">
-            <mat-checkbox [disabled]="row['feedFileInfo']['fileType'] === 'zipped'" [checked]="row['feedFileInfo']['fileType'] === 'zipped'">Use Zipped Feed <mat-icon style="font-size: 1rem;" [matTooltipPosition]="'above'" matTooltip="Once you select the Zipped feed, Old XML feed will automatically disable after 72 hours.">info</mat-icon></mat-checkbox>
+            <mat-checkbox #check2 [disabled]="row['feedFileInfo']['fileType'] === 'zipped'" [checked]="row['feedFileInfo']['fileType'] === 'zipped'">Use Zipped Feed <mat-icon style="font-size: 1rem;" [matTooltipPosition]="'above'" matTooltip="Once you select the Zipped feed, Old XML feed will automatically disable after 72 hours.">info</mat-icon></mat-checkbox>
             <mat-hint class="error-hint">{{updateError}}</mat-hint>
           </div>
           <app-editor-action primaryBtn="Update"
                              [loading]="updating"
-                             [primaryDisabled]="row['feedFileInfo']['fileType'] === 'zipped'"
+                             [primaryDisabled]="row['feedFileInfo']['fileType'] === 'zipped' || !check2.checked"
                              (onSecondaryBtnClick)="closeEditor()"
                              (onPrimaryBtnClick)="updateValue('feedFileType', row, 'zipped')"></app-editor-action>
         </mat-card>

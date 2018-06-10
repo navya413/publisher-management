@@ -122,7 +122,8 @@ export class PublisherListComponent implements OnInit {
 
   getRemainingHours(row) {
     if (row['feedFileInfo'].timeElapsed) {
-      return Math.ceil((259200000 - row['feedFileInfo'].timeElapsed) / (1000 * 60 * 60));
+      const remainingHrs = Math.ceil((259200000 - row['feedFileInfo'].timeElapsed) / (1000 * 60 * 60));
+      return remainingHrs >= 0 ? remainingHrs : null;
     } else {
       return null;
     }
