@@ -327,6 +327,7 @@
           <div class="editor-body">
             <mat-form-field>
               <input type="number"
+                     step="0.1"
                      matInput
                      #inputEditor
                      [ngModel]="row['placement']['flatBidValue'] || row['placement'][col.field]">
