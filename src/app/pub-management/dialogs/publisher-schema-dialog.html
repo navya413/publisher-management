@@ -178,6 +178,15 @@
           </mat-form-field>
         </div>
 
+        <div class="grid-item">
+          <mat-checkbox [(ngModel)]="fieldsWrappedInCdata['trackingUrl']"></mat-checkbox>
+          <mat-form-field>
+            <input matInput
+                   placeholder="Tracking URL"
+                   [(ngModel)]="schemaMapping.trackingUrl">
+          </mat-form-field>
+        </div>
+
         <div *ngFor="let node of additionalFields;trackBy: trackByFn;let i = index" class="grid-item">
           <mat-form-field>
             <input matInput
