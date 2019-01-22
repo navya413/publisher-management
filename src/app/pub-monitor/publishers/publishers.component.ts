@@ -11,7 +11,7 @@ import {UtilService} from "../../services/util.service";
 import {forkJoin} from "rxjs/observable/forkJoin";
 import {NewEntityTwo} from "../../model/new-entity-state";
 import {Subject} from "rxjs/Subject";
-import moment = require('moment');
+import * as moment from 'moment';
 import {LAST_30_DAYS, LAST_MONTH, LAST_WEEK, THIS_MONTH, THIS_WEEK, TODAY, YESTERDAY} from '../../date-range/presets.util';
 
 @Component({
