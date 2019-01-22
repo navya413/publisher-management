@@ -221,7 +221,7 @@ export class PublisherListComponent implements OnInit {
         this.closeEditor();
         if (type === 'feedFileType') {
           row['feedFileInfo']['fileType'] = value;
-          if (!row['feedFileInfo']['toggleTimestamp']) {
+          if (!row['feedFileInfo']['toggleTimestamp']){
             row['feedFileInfo']['toggleTimestamp'] = new Date();
             row['feedFileInfo']['timeElapsed'] = 1000;
           }
@@ -323,8 +323,7 @@ export class PublisherSchemaDialog implements OnInit {
       publishedDate: '',
       advertiser: '',
       cpc: '',
-      cpa: '',
-      trackingUrl: ''
+      cpa: ''
     };
     this.headerSchema = {
       publisherName: '',
@@ -640,7 +639,7 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
   public creationForm: FormGroup;
   ftpConfigSubscription$;
 
-  flatBidPublisher = false;
+  flatBidPublisher: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<PublisherAddDialog>,
