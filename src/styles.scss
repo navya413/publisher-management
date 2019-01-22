@@ -3,6 +3,7 @@
 @import '~material-design-icons/iconfont/material-icons.css';
 @import './scss/base';
 @import './scss/material-core';
+@import 'scss/datepicker';
 
 @import './scss/menu';
 
@@ -11,6 +12,19 @@
 =============================================*/
 
 /*=====  End of Momentum Table Overrides  ======*/
+
+/*=============================================
+=            Utilities            =
+=============================================*/
+
+@import 'scss/utils/general';
+@import 'scss/utils/flexbox';
+@import 'scss/utils/spacing';
+@import 'scss/utils/color-classes';
+@import 'scss/utils/text';
+
+/*=====  End of Utilities  ======*/
+
 
 .left-sticky {
   box-shadow: 4px 0 4px 0 rgba(0, 0, 0, 0.1);

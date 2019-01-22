@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { DateRangeComponent } from './components/date-range/date-range.component';
 import { MaterialModule } from '../material/material.module';
 import { CommonModule } from '@angular/common';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
@@ -8,6 +7,9 @@ import { ChartViewComponent } from './components/chart-view/chart-view.component
 import { AmChartsModule } from '@amcharts/amcharts3-angular';
 import { FormsModule } from '@angular/forms';
 import { EmptyViewComponent } from './components/empty-view/empty-view.component';
+import { DateRangeComponent } from '../date-range/date-range.component';
+import { NgxDaterangepickerMd } from '../daterangepicker/daterangepicker.module';
+import {DateRangeOldComponent} from './components/date-range/date-range.component';
 
 @NgModule({
   imports: [
@@ -16,15 +18,18 @@ import { EmptyViewComponent } from './components/empty-view/empty-view.component
     MaterialModule,
     RouterModule,
     AmChartsModule,
+    NgxDaterangepickerMd
   ],
   declarations: [
     DateRangeComponent,
+    DateRangeOldComponent,
     BreadcrumbComponent,
     ChartViewComponent,
-    EmptyViewComponent,
+    EmptyViewComponent
   ],
   exports: [
     DateRangeComponent,
+    DateRangeOldComponent,
     BreadcrumbComponent,
     ChartViewComponent,
     EmptyViewComponent,
