@@ -15,7 +15,7 @@ interface Range {
   templateUrl: './date-range.component.html',
   styleUrls: ['./date-range.component.scss']
 })
-export class DateRangeComponent implements OnInit, OnChanges {
+export class DateRangeOldComponent implements OnInit, OnChanges {
   @Output() onDateRangeChange: EventEmitter<any> = new EventEmitter();
 
   @Input() rangeFormat = 'MM/DD/YYYY';

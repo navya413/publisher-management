@@ -1,0 +1,79 @@
+$remspace: 1rem;
+
+$spaceamounts: (
+  0: $remspace * 0,
+  1: $remspace * 0.25,
+  2: $remspace * 0.5,
+  3: $remspace * 0.75,
+  4: $remspace,
+  5: $remspace * 1.25,
+  6: $remspace * 1.5,
+  7: $remspace * 1.75,
+  8: $remspace * 2,
+  9: $remspace * 3
+);
+
+$sides: (top, bottom, left, right);
+
+@for $space from 0 through 9 {
+  $style: #{map-get($spaceamounts, $space)} !important;
+  @each $side in $sides {
+    .m#{str-slice($side, 0, 1)}-#{$space} {
+      margin-#{$side}: $style;
+    }
+
+    .p#{str-slice($side, 0, 1)}-#{$space} {
+      padding-#{$side}: $style;
+    }
+  }
+  .mx-#{$space} {
+    margin-left: $style;
+    margin-right: $style;
+  }
+
+  .my-#{$space} {
+    margin-top: $style;
+    margin-bottom: $style;
+  }
+
+  .my-t-#{$space} {
+    margin-top: $style;
+  }
+
+  .my-b-#{$space} {
+    margin-bottom: $style;
+  }
+
+  .ma-#{$space} {
+    margin: $style;
+  }
+
+  .mx-r-#{$space} {
+    margin-right: $style;
+  }
+
+  .mx-l-#{$space} {
+    margin-left: $style;
+  }
+
+  .px-#{$space} {
+    padding-left: $style;
+    padding-right: $style;
+  }
+  .px-l-#{$space} {
+    padding-left: $style;
+  }
+
+  .py-#{$space} {
+    padding-top: $style;
+    padding-bottom: $style;
+  }
+
+  .py-t-#{$space} {
+    padding-top: $style;
+  }
+
+  .pa-#{$space} {
+    padding: $style;
+  }
+}

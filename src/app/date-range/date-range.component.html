@@ -1,0 +1,22 @@
+<div class="mat-elevation-z1 date-range__input display-flex flex-align-items-center">
+  <input type="text"
+         ngxDaterangepickerMd
+         [id]="'dateRangeControl__'+instanceId"
+         readonly
+         [maxDate]="max"
+         [ranges]="ranges"
+         [locale]="locale"
+         drops="down"
+         [opens]="direction"
+         [showRangeLabelOnInput]="true"
+         [alwaysShowCalendars]="true"
+         [showCustomRangeLabel]="true"
+         [linkedCalendars]="true"
+         (change)="onChange()"
+         [(ngModel)]="value"
+         class="date-range__control px-4" />
+  <label [for]="'dateRangeControl__'+instanceId"
+         class="date-range__label display-flex">
+    <mat-icon>date_range</mat-icon>
+  </label>
+</div>

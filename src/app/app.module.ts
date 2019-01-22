@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { RouteDataService } from './services/route-data.service';
-import {SimpleNotificationsModule} from "angular2-notifications";
+import { SimpleNotificationsModule} from 'angular2-notifications';
 
 @NgModule({
   declarations: [AppComponent],

@@ -1,0 +1,25 @@
+@import '../colors';
+/*=============================================
+=            Utility Classes for Colors            =
+=============================================*/
+
+.color--primary {
+  color: $primary !important;
+}
+.color--danger {
+  color: $danger !important;
+}
+
+/*=====  End of Utility Classes for Colors  ======*/
+
+/*=============================================
+=            Section comment block            =
+=============================================*/
+.bg--grey-1 {
+  background: $grey-1;
+}
+.bg--grey-2 {
+  background: $grey-2;
+}
+
+/*=====  End of Section comment block  ======*/

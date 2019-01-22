@@ -13,12 +13,21 @@
   </div>
   <div class="table-wrapper">
     <div class="head">
-      <app-date-range
-        class="date-selector"
-        [rangeFormat]="'YYYY-MM-DD'"
-        [selectedDay]="pubMonitorService.dateRange.days"
-        (onDateRangeChange)="onDateRangeChange($event)">
-      </app-date-range>
+      <!--<app-date-range-->
+        <!--class="date-selector"-->
+        <!--[rangeFormat]="'YYYY-MM-DD'"-->
+        <!--[selectedDay]="pubMonitorService.dateRange.days"-->
+        <!--(onDateRangeChange)="onDateRangeChange($event)">-->
+      <!--</app-date-range>-->
+
+      <jv-date-range [displayFormat]="'MMM DD, YY'"
+                     [outputFormat]="'YYYY-MM-DD'"
+                     [min]="minDate"
+                     [max]="maxDate"
+                     [presets]="datePresets"
+                     (dateChange)="onDateChange($event)"
+                     [(ngModel)]="dateRange"
+                     [direction]="'right'"></jv-date-range>
       <button mat-raised-button color="primary" class="select-btn" (click)=timezoneMenu.open()>
         <mat-select #timezoneMenu placeholder="Select Timezone" [(ngModel)]="pubMonitorService.timezoneId">
           <mat-option (click)="onTimezoneChange(timezone.id)" *ngFor="let timezone of pubMonitorService.timezones" [value]="timezone.id">{{timezone.value}} ({{timezone.id}})</mat-option>
