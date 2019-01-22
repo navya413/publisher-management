@@ -11,6 +11,8 @@ import {UtilService} from "../../services/util.service";
 import {forkJoin} from "rxjs/observable/forkJoin";
 import {NewEntityTwo} from "../../model/new-entity-state";
 import {Subject} from "rxjs/Subject";
+import moment = require('moment');
+import {LAST_30_DAYS, LAST_MONTH, LAST_WEEK, THIS_MONTH, THIS_WEEK, TODAY, YESTERDAY} from '../../date-range/presets.util';
 
 @Component({
   selector: 'app-publishers',
@@ -33,6 +35,20 @@ export class PublishersComponent implements OnInit, OnDestroy {
   subscriptionCM$: Subject<NewEntityTwo[]>;
 
   childNavLinks = [];
+
+  datePresets = [
+    TODAY,
+    YESTERDAY,
+    THIS_WEEK,
+    LAST_WEEK,
+    THIS_MONTH,
+    LAST_MONTH,
+    LAST_30_DAYS
+  ];
+  minDate = moment().subtract(3, 'days');
+  maxDate = moment();
+
+  dateRange;
 
   constructor(
     public pubMonitorService: PubMonitorService,
@@ -61,6 +77,14 @@ export class PublishersComponent implements OnInit, OnDestroy {
     );
   }
   ngOnInit() {
+    this.dateRange = {
+      startDate: THIS_MONTH.range[0],
+      endDate: THIS_MONTH.range[1]
+    };
+
+    this.pubMonitorService.setDate();
+
+    this.getStats();
   }
 
   statsViewChange(val) {
@@ -191,6 +215,11 @@ export class PublishersComponent implements OnInit, OnDestroy {
 
   onDateRangeChange(date) {
     this.pubMonitorService.dateRange = date.value;
+    this.getStats();
+  }
+
+  onDateChange(dateRange) {
+    this.pubMonitorService.setDate(dateRange);
     this.getStats();
   }
 

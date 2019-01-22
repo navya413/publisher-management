@@ -1,0 +1,91 @@
+/*=============================================
+=            box            =
+=============================================*/
+
+.display-flex {
+  display: flex !important;
+}
+.display-inline-flex {
+  display: inline-flex !important;
+}
+
+.fx-1 {
+  flex: 1;
+}
+/*=====  End of box  ======*/
+
+/*=============================================
+=            align-items            =
+=============================================*/
+
+.flex-align-items-center {
+  align-items: center;
+}
+.flex-align-items-start {
+  align-items: flex-end;
+}
+.flex-align-items-end {
+  align-items: flex-end;
+}
+
+/*=====  End of align-items  ======*/
+
+/*=============================================
+=            align-self            =
+=============================================*/
+.flex-align-self-center {
+  align-self: center;
+}
+.flex-align-self-start {
+  align-self: flex-end;
+}
+.flex-align-self-end {
+  align-self: flex-end;
+}
+
+/*=====  End of align-self  ======*/
+
+/*=============================================
+=            justify-content            =
+=============================================*/
+
+.flex-justify-content-center {
+  justify-content: center;
+}
+.flex-justify-content-start {
+  justify-content: flex-start;
+}
+.flex-justify-content-end {
+  justify-content: flex-end;
+}
+.flex-justify-content-around {
+  justify-content: space-around;
+}
+.flex-justify-content-between {
+  justify-content: space-between;
+}
+
+/*=====  End of justify-content  ======*/
+
+/*=============================================
+=            Direction            =
+=============================================*/
+
+.flex-direction-column {
+  flex-direction: column;
+}
+
+/*=====  End of Direction  ======*/
+
+/*=============================================
+=            Spacers            =
+=============================================*/
+
+.flex-spacer-right {
+  margin-right: auto;
+}
+.flex-spacer-left {
+  margin-left: auto;
+}
+
+/*=====  End of Spacers  ======*/

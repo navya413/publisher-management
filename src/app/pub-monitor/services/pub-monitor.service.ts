@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import {NewEntity, NewEntityTwo} from "../../model/new-entity-state";
 import * as moment from "moment";
+import {THIS_MONTH} from '../../date-range/presets.util';
 
 @Injectable()
 export class PubMonitorService {
@@ -11,15 +12,23 @@ export class PubMonitorService {
   timezoneId: string;
   statsView = 'all';
   dateRange = {
-    days: 'Today',
-    startDate: moment().format('YYYY-MM-DD'),
-    endDate: moment().format('YYYY-MM-DD'),
+    startDate: THIS_MONTH.range[0].format('YYYY-MM-DD'),
+    endDate: THIS_MONTH.range[1].format('YYYY-MM-DD')
   };
 
   constructor(private http: HttpClient) {
     this.getTimeZones().subscribe(res => {
       this.timezones = res;
     });
+  }
+
+  setDate(dateRange?) {
+    this.dateRange.startDate = dateRange
+      ? dateRange.startDate
+      : THIS_MONTH.range[0].format('YYYY-MM-DD');
+    this.dateRange.endDate = dateRange
+      ? dateRange.endDate
+      : THIS_MONTH.range[1].format('YYYY-MM-DD');
   }
 
   getClientHierarchy(agencyId) {

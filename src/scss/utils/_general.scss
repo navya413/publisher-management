@@ -1,0 +1,61 @@
+/*=============================================
+=            Transform Utils            =
+=============================================*/
+
+.rotate-45 {
+  transform: rotate(45deg);
+}
+
+/*=====  End of Transform Utils  ======*/
+
+/*=============================================
+=            Layout Utils            =
+=============================================*/
+
+.display-contents {
+  display: contents;
+}
+[hidden] {
+  display: none !important;
+}
+
+/*=====  End of Layout Utils  ======*/
+
+.cursor {
+  cursor: pointer;
+}
+
+/*=============================================
+=            Momentum Table Section            =
+=============================================*/
+
+.table-container {
+  --row-height: 52px;
+}
+.m-cell-data {
+  display: flex;
+  align-items: center;
+}
+.m-header-th {
+  white-space: nowrap;
+}
+.mat-icon.status-icon {
+  font-size: 1rem;
+  height: 1rem;
+  width: 1rem;
+  &.status-icon--paused,
+  &.status-icon--inactive {
+    color: $grey-5;
+  }
+  &.status-icon--inactive {
+    transform: rotate(45deg);
+  }
+  &.status-icon--active {
+    color: $primary;
+  }
+}
+.table-loading mat-progress-bar {
+  position: absolute;
+  top: 0;
+}
+/*=====  End of Momentum Table Section  ======*/
