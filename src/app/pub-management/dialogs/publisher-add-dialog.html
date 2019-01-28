@@ -20,8 +20,10 @@
       <mat-form-field>
         <input matInput
                placeholder="Publisher Name*"
+               pattern="[a-zA-Z0-9, ,.,_,(,),-]+$"
                formControlName="name">
-        <mat-error *ngIf="!creationForm.get('placement').get('name').valid && creationForm.get('placement').get('name').touched">Name is required
+        <mat-error *ngIf="creationForm.get('placement').get('name').errors && creationForm.get('placement').get('name').touched">
+          {{getFieldErrorMessage(creationForm.get('placement').get('name').errors)}}
         </mat-error>
       </mat-form-field>
       <mat-form-field>

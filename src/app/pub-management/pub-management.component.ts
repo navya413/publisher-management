@@ -745,6 +745,13 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
     });
   }
 
+  getFieldErrorMessage(error) {
+    const first = Object.keys(error)[0];
+    return first === 'pattern'
+      ? 'Only following special characters allowed . - _ ()'
+      : 'Name is required';
+  }
+
   onBidTypeChange(selectVal) {
     this.creationForm.get('placement').get('flatBidValue').setValue(null);
     if (selectVal.value === 'FLAT_CPC') {

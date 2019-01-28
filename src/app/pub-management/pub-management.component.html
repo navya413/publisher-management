@@ -141,12 +141,17 @@
           <div class="editor-body">
             <mat-form-field>
               <input matInput
-                     #inputEditor
+                     #inputEditor="ngModel"
+                     pattern="[a-zA-Z0-9, ,.,_,(,),-]+$"
                      [ngModel]="row['placement'][col.field]">
               <mat-hint class="error-hint">{{updateError}}</mat-hint>
+              <mat-hint class="error-hint" align="center" *ngIf="inputEditor.errors && inputEditor.errors.required">Name is required</mat-hint>
+              <mat-hint class="error-hint" align="center" *ngIf="inputEditor.errors && inputEditor.errors.pattern">Only following special
+                <br />characters allowed . - _ ()</mat-hint>
             </mat-form-field>
           </div>
           <app-editor-action primaryBtn="Update"
+                             class="mt-2"
                              [loading]="updating"
                              (onSecondaryBtnClick)="closeEditor()"
                              (onPrimaryBtnClick)="updateValue('name', row, inputEditor.value)"></app-editor-action>
