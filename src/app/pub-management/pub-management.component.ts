@@ -101,17 +101,31 @@ export class PublisherListComponent implements OnInit {
 
         this.publishers.map((pub: any) => {
           if (pub.feedFileInfo && pub.feedFileInfo.toggleTimestamp) {
-            pub.feedFileInfo['timeElapsed'] = Date.now() - pub.feedFileInfo.toggleTimestamp;
+            pub.feedFileInfo['timeElapsed'] =
+              Date.now() - pub.feedFileInfo.toggleTimestamp;
+          }
+          if (
+            pub.outboundFileToggleTimestamp &&
+            pub['placement']['perClientPlacements']
+          ) {
+            pub['elapsedOutboundTimestamp'] =
+              Date.now() - pub.outboundFileToggleTimestamp;
           }
         });
 
 
         this.interval = setInterval(() => {
-            this.publishers.map((pub: any) => {
-                if (pub.feedFileInfo['timeElapsed'] < 259200000) {
-                  pub.feedFileInfo['timeElapsed'] += 60000;
-                }
-            });
+          this.publishers.map((pub: any) => {
+            if (
+              pub.feedFileInfo &&
+              pub.feedFileInfo['timeElapsed'] < 259200000
+            ) {
+              pub.feedFileInfo['timeElapsed'] += 60000;
+            }
+            if (pub['elapsedOutboundTimestamp'] < 259200000) {
+              pub.elapsedoutboundTimestamp += 60000;
+            }
+          });
         }, 60000);
       },
       err => {
@@ -120,13 +134,21 @@ export class PublisherListComponent implements OnInit {
     );
   }
 
-  getRemainingHours(row) {
-    if (row['feedFileInfo'].timeElapsed) {
-      const remainingHrs = Math.ceil((259200000 - row['feedFileInfo'].timeElapsed) / (1000 * 60 * 60));
+  getRemainingHours(timestamp) {
+    // if (row['feedFileInfo'].timeElapsed) {
+    //   const remainingHrs = Math.ceil((259200000 - row['feedFileInfo'].timeElapsed) / (1000 * 60 * 60));
+    //   return remainingHrs >= 0 ? remainingHrs : null;
+    // } else {
+    //   return null;
+    // }
+
+    if (timestamp) {
+      const remainingHrs = Math.ceil(
+        (259200000 - timestamp) / (1000 * 60 * 60)
+      );
       return remainingHrs >= 0 ? remainingHrs : null;
-    } else {
-      return null;
     }
+    return null;
   }
 
   openPublisherAddDialog(row) {
@@ -225,7 +247,10 @@ export class PublisherListComponent implements OnInit {
             row['feedFileInfo']['toggleTimestamp'] = new Date();
             row['feedFileInfo']['timeElapsed'] = 1000;
           }
-        } else {
+        } else if (type === 'perClientPlacements' && value) {
+          row['elapsedOutboundTimestamp'] = 1000;
+          row['placement']['perClientPlacements'] = value;
+        }  else {
           row['placement'][type] = value;
         }
         this.notifService.success('Success', 'Successfully updated');

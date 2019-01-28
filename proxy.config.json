@@ -1,0 +1,18 @@
+{
+  "/batch/manualfeed": {
+    "target": "http://batch-orch.staging.joveo.com",
+    "secure": false
+  },
+  "/api": {
+    "target": "http://mojo2.staging.joveo.com",
+    "secure": false
+  },
+  "/thor/api": {
+    "target": "http://mojo2.staging.joveo.com",
+    "secure": false
+  },
+  "/gandalf/app/": {
+    "target": "http://gandalf.staging.joveo.com",
+    "secure": false
+  }
+}

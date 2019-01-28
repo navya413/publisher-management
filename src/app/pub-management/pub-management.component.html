@@ -199,30 +199,113 @@
       </ng-template>
     </m-column>
 
-    <m-column field="perClientPlacements"
+    <!--<m-column field="perClientPlacements"-->
+              <!--[editable]="true"-->
+              <!--[sortable]="true"-->
+              <!--[editTrigger]="'button'">-->
+      <!--<ng-template mTemplate="header">-->
+        <!--Feed Type-->
+      <!--</ng-template>-->
+      <!--<ng-template let-col-->
+                   <!--let-row="row"-->
+                   <!--mTemplate="body">-->
+        <!--{{row['placement'][col.field] ? 'Client' : 'Comprehensive'}}-->
+      <!--</ng-template>-->
+      <!--<ng-template let-col-->
+                   <!--let-row="row"-->
+                   <!--mTemplate="editor">-->
+        <!--<mat-card class="editor-container">-->
+          <!--<div class="editor-body" style="padding: 1rem 0">-->
+            <!--<mat-checkbox #inputEditor [ngModel]="row['placement'][col.field]">Per client Feed</mat-checkbox>-->
+            <!--<mat-hint class="error-hint">{{updateError}}</mat-hint>-->
+          <!--</div>-->
+          <!--<app-editor-action primaryBtn="Update"-->
+                             <!--[loading]="updating"-->
+                             <!--(onSecondaryBtnClick)="closeEditor()"-->
+                             <!--(onPrimaryBtnClick)="updateValue('perClientPlacements', row, inputEditor.checked)"></app-editor-action>-->
+        <!--</mat-card>-->
+      <!--</ng-template>-->
+    <!--</m-column>-->
+
+    <m-column *ngIf="selectedAgency && selectedAgency !== 'All Agencies'" field="perClientPlacements"
               [editable]="true"
-              [sortable]="true"
-              [editTrigger]="'button'">
+              [editTrigger]="'button'"
+              [colBodyClass]="'border-left'"
+              [colHeadClass]="'border-left'">
       <ng-template mTemplate="header">
-        Feed Type
+        Feed Type <br /> Comprehensive
       </ng-template>
+
       <ng-template let-col
                    let-row="row"
                    mTemplate="body">
-        {{row['placement'][col.field] ? 'Client' : 'Comprehensive'}}
+
+        <mat-icon *ngIf="getRemainingHours(row['elapsedOutboundTimestamp']) && row['placement'][col.field]"
+                  class="status-icon status-icon--active md-inactive">remove_circle</mat-icon>
+        <mat-icon *ngIf="!row['placement'][col.field]"
+                  class="status-icon status-icon--active">lens</mat-icon>
+        <mat-icon *ngIf="!getRemainingHours(row['elapsedOutboundTimestamp']) && row['placement'][col.field]"
+                  class="status-icon status-icon--active">panorama_fish_eye</mat-icon>
+        <span style="font-size: 0.6rem;color: #757575"
+              *ngIf="getRemainingHours(row['elapsedOutboundTimestamp'])">{{getRemainingHours(row['elapsedOutboundTimestamp'])}} hrs</span>
       </ng-template>
       <ng-template let-col
                    let-row="row"
                    mTemplate="editor">
         <mat-card class="editor-container">
-          <div class="editor-body" style="padding: 1rem 0">
-            <mat-checkbox #inputEditor [ngModel]="row['placement'][col.field]">Per client Feed</mat-checkbox>
+          <div class="editor-body"
+               style="padding: 1rem 0">
+            <mat-checkbox #check1
+                          [checked]="!row['placement'][col.field]">Set feed type to Comprehensive
+            </mat-checkbox>
             <mat-hint class="error-hint">{{updateError}}</mat-hint>
+            <mat-hint class="error-hint" *ngIf="getRemainingHours(row['elapsedOutboundTimestamp'])">The feed format cannot be changed now,
+              <br />as the switch made earlier is already in progress</mat-hint>
           </div>
           <app-editor-action primaryBtn="Update"
                              [loading]="updating"
-                             (onSecondaryBtnClick)="closeEditor()"
-                             (onPrimaryBtnClick)="updateValue('perClientPlacements', row, inputEditor.checked)"></app-editor-action>
+                             [primaryDisabled]="!row['placement'].perClientPlacements || !check1.checked || getRemainingHours(row['elapsedOutboundTimestamp'])"
+                             (onSecondaryBtnClick)="closeEditor($event)"
+                             (onPrimaryBtnClick)="updateValue('perClientPlacements', row, false)"></app-editor-action>
+        </mat-card>
+      </ng-template>
+    </m-column>
+
+    <m-column *ngIf="selectedAgency && selectedAgency !== 'All Agencies'" field="perClientPlacements"
+              [editable]="true"
+              [editTrigger]="'button'"
+              [colBodyClass]="'border-right'"
+              [colHeadClass]="'border-right'">
+      <ng-template mTemplate="header">
+        Feed Type <br /> Client
+      </ng-template>
+
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="body">
+        <mat-icon *ngIf="row['placement'][col.field]"
+                  class="status-icon status-icon--active">lens</mat-icon>
+        <mat-icon *ngIf="!row['placement'][col.field]"
+                  class="status-icon status-icon--active">panorama_fish_eye</mat-icon>
+      </ng-template>
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="editor">
+        <mat-card class="editor-container">
+          <div class="editor-body"
+               style="padding: 1rem 0">
+            <mat-checkbox #check1
+                          [checked]="row['placement'][col.field]">Set feed type to Client
+            </mat-checkbox>
+            <mat-hint class="error-hint">{{updateError}}</mat-hint>
+            <mat-hint class="error-hint" *ngIf="getRemainingHours(row['elapsedOutboundTimestamp'])">The feed format cannot be changed now,
+              <br />as the switch made earlier is already in progress</mat-hint>
+          </div>
+          <app-editor-action primaryBtn="Update"
+                             [loading]="updating"
+                             [primaryDisabled]="row['placement'].perClientPlacements || !check1.checked || getRemainingHours(row['elapsedOutboundTimestamp'])"
+                             (onSecondaryBtnClick)="closeEditor($event)"
+                             (onPrimaryBtnClick)="updateValue('perClientPlacements', row, true)"></app-editor-action>
         </mat-card>
       </ng-template>
     </m-column>
@@ -237,7 +320,7 @@
         <i *ngIf="row['feedFileInfo']['fileType'] === 'oldXml'" class="material-icons status-icon active">lens</i>
         <i *ngIf="row['feedFileInfo']['fileType'] !== 'oldXml' && row['feedFileInfo'].timeElapsed && row['feedFileInfo'].timeElapsed <= 259200000" class="material-icons status-icon active md-inactive">remove_circle</i>
         <i *ngIf="row['feedFileInfo']['fileType'] !== 'oldXml' && (!row['feedFileInfo'].timeElapsed || row['feedFileInfo'].timeElapsed > 259200000)" class="material-icons status-icon paused">block</i>
-        <span style="font-size: 0.6rem;color: #757575" *ngIf="getRemainingHours(row)">{{getRemainingHours(row)}} hrs</span>
+        <span style="font-size: 0.6rem;color: #757575" *ngIf="getRemainingHours(row['feedFileInfo'].timeElapsed)">{{getRemainingHours(row['feedFileInfo'].timeElapsed)}} hrs</span>
       </ng-template>
     </m-column>
 
