@@ -10,7 +10,7 @@ import {AuthService} from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   signupForm: FormGroup;
-  loginError = false;
+  loginError;
   rememberMe = false;
   returnURL = '';
 
@@ -41,8 +41,10 @@ export class LoginComponent implements OnInit {
         this.authService.setStorage(res.data);
         this.router.navigateByUrl(this.returnURL);
       } else {
-        this.loginError = true;
+        this.loginError = res.error;
       }
+    }, (error) => {
+      this.loginError = 'Unable to authenticate at the moment. Please try again.';
     });
   }
 
