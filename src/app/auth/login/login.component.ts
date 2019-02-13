@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.loginError = '';
     this.authService.rememberMe = this.rememberMe;
     const { email, password } = this.signupForm.value;
     const auth$ = this.authService.login(email, password);
