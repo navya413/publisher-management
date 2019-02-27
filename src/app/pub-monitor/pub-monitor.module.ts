@@ -7,7 +7,6 @@ import { MaterialModule } from '../material/material.module';
 import { MomentumTableModule } from 'momentum-table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  PublisherDetailDialogComponent,
   PublishersComponent,
 } from './publishers/publishers.component';
 import { PubMonitorService } from './services/pub-monitor.service';
@@ -30,10 +29,9 @@ import {StatsTableComponent} from "./stats-table/stats-table.component";
     PubMonitorComponent,
     EntityNavComponent,
     PublishersComponent,
-    PublisherDetailDialogComponent,
     StatsTableComponent
   ],
   providers: [PubMonitorService],
-  entryComponents: [PublisherDetailDialogComponent],
+  entryComponents: [],
 })
 export class PubMonitorModule {}

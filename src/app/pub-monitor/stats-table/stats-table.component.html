@@ -1,205 +1,510 @@
-<m-table [value]="value"
-         (onRowClick)="onRowClick($event)"
-         selection="false" [selectionHandler]="false"
-         (onReload)="onReload()">
+<div>
+  <div class="filters">
+    <jv-date-range [displayFormat]="'MMM DD, YY'"
+                   [outputFormat]="'YYYY-MM-DD'"
+                   [min]="minDate"
+                   [max]="maxDate"
+                   [presets]="datePresets"
+                   (dateChange)="onDateChange($event)"
+                   [(ngModel)]="dateRange"
+                   [direction]="'right'"></jv-date-range>
+    <button mat-raised-button class="select-timezone-btn" (click)=timezoneMenu.open()>
+      <mat-select #timezoneMenu placeholder="Select Timezone" [(ngModel)]="pubMonitorService.timezoneId">
+        <mat-option (click)="onTimezoneChange(timezone.id)" *ngFor="let timezone of pubMonitorService.timezones" [value]="timezone.id">{{timezone.value}} ({{timezone.id}})</mat-option>
+      </mat-select>
+    </button>
 
-  <m-header [title]="title" [colSetting]="false" [globalSearch]="true" [searchField]="'box'" [export]="true" [reload]="true">
-  </m-header>
-  <m-footer [paginator]="true"></m-footer>
-
-  <m-column [field]="'name'" [header]="'Entity'" [colBodyClass]="'left-sticky'" [colHeadClass]="'left-sticky'">
-    <ng-template let-col let-row="row" mTemplate="body">
-      <a *ngIf="!disableLink" [routerLink]="['./', row['entity']]" class="link-column">
-        {{row['name']}}
-      </a>
-      <span *ngIf="disableLink">{{row['name']}}</span>
-    </ng-template>
-  </m-column>
-
-  <div *ngIf="pubMonitorService.statsView === 'all'">
-    <!-------------------Clicks------------------->
-    <m-column [field]="'joveoStats.clicks'" [sortable]="true" [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">Joveo</div>
-        <span>Clicks</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{row['joveoStats']['clicks'].toLocaleString()}}
-      </ng-template>
-    </m-column>
-
-    <m-column [field]="'pubStats.clicks'" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">Pub Rec</div>
-        <span>Clicks</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{row['pubStats']['clicks'].toLocaleString()}}
-      </ng-template>
-    </m-column>
-
-    <!--<m-column [field]="'pubPortalStats.clicks'" [sortable]="true">-->
-      <!--<ng-template let-col let-row="row" mTemplate="header">-->
-        <!--<div class="normal-linehight">Webscrape</div>-->
-        <!--<span>Clicks</span>-->
-      <!--</ng-template>-->
-      <!--<ng-template let-col let-row="row" mTemplate="body">-->
-        <!--{{row['pubPortalStats']['clicks'].toLocaleString()}}-->
-      <!--</ng-template>-->
-    <!--</m-column>-->
-
-    <m-column [field]="'cmStats.clicks'" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">CM</div>
-        <span>Clicks</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{row['cmStats']['clicks'].toLocaleString()}}
-      </ng-template>
-    </m-column>
-
-    <!-------------------Spend------------------->
-    <m-column [field]="'joveoStats.spend'" [sortable]="true"  [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">Joveo</div>
-        <span>Spend</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{utilService.getFormattedNumber(row['joveoStats']['spend'])}}
-      </ng-template>
-    </m-column>
-
-    <m-column [field]="'pubStats.spend'" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">Pub Rec</div>
-        <span>Spend</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{utilService.getFormattedNumber(row['pubStats']['spend'])}}
-      </ng-template>
-    </m-column>
-
-    <m-column [field]="'pubPortalStats.spend'" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">Webscrape</div>
-        <span>Spend</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{utilService.getFormattedNumber(row['pubPortalStats']['spend'])}}
-      </ng-template>
-    </m-column>
-
-    <!-------------------Applies------------------->
-    <m-column [field]="'joveoStats.applies'" [sortable]="true" [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">Joveo</div>
-        <span>Applies</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{row['joveoStats']['applies'].toLocaleString()}}
-      </ng-template>
-    </m-column>
-
-    <m-column [field]="'pubStats.applies'" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">Pub Rec</div>
-        <span>Applies</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{row['pubStats']['applies'].toLocaleString()}}
-      </ng-template>
-    </m-column>
-
-    <m-column [field]="'cmStats.applies'" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">CM</div>
-        <span>Applies</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{row['cmStats']['applies'].toLocaleString()}}
-      </ng-template>
-    </m-column>
-
-    <m-column [field]="'joveoStats.cta'" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">Joveo</div>
-        <span>CTA(%)</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{utilService.getFormattedNumber(row['joveoStats']['cta'], true)}}
-      </ng-template>
-    </m-column>
-  </div>
-
-
-
-  <div *ngIf="pubMonitorService.statsView === 'billing'">
-    <m-column [field]="'spendStats.mojo'" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">Mojo</div>
-        <span>Spend</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{utilService.getFormattedNumber(row['spendStats']['mojo'])}}
-      </ng-template>
-    </m-column>
-
-    <m-column [field]="'spendStats.cd'" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">CD</div>
-        <span>Spend</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{utilService.getFormattedNumber(row['spendStats']['cd'])}}
-      </ng-template>
-    </m-column>
-
-    <m-column [field]="'spendStats.vp'" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="header">
-        <div class="normal-linehight">VP</div>
-        <span>Spend</span>
-      </ng-template>
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{utilService.getFormattedNumber(row['spendStats']['vp'])}}
-      </ng-template>
-    </m-column>
+    <mat-button-toggle-group name="statsView" [(ngModel)]="pubMonitorService.statsView" (change)="statsViewChange($event)" style="margin-left: 1rem">
+      <mat-button-toggle value="all">All</mat-button-toggle>
+      <mat-button-toggle value="billing">Billing</mat-button-toggle>
+      <mat-button-toggle value="clicks">Clicks</mat-button-toggle>
+    </mat-button-toggle-group>
 
   </div>
 
 
+  <m-table [value]="statsData"
+           (onRowClick)="onRowClick($event)"
+           selection="false" [selectionHandler]="false"
+           (onReload)="onReload()">
 
-  <div *ngIf="pubMonitorService.statsView === 'clicks'">
-    <m-column [field]="'joveoStats.clicks'" header="Clicks" [sortable]="true"  [colBodyClass]="'border-left'" [colHeadClass]="'border-left'">
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{row['joveoStats']['clicks'].toLocaleString()}}
+    <!--<m-header [title]="title" [colSetting]="false" [globalSearch]="true" [searchField]="'box'" [export]="true" [reload]="true">-->
+    <!--</m-header>-->
+
+    <m-header>
+      <ng-template let-header>
+        <div class="card-header">
+          <h2 style="margin: 0">Publishers</h2>
+
+
+          <div style="display: inline-flex; margin-left: auto;">
+
+            <button
+              class="card-header-item"
+              *ngIf="routeData.data.entity === 'publishers'"
+              #statusBtn
+              mat-raised-button
+              [matMenuTriggerFor]="statusMenu">
+              {{ status.key }}
+              <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #statusMenu="matMenu" [overlapTrigger]="false">
+              <button
+                mat-menu-item
+                *ngFor="let option of statusOptions"
+                class="dropdown-option"
+                (click)="onStatusChange(option)">
+                {{ option.key }}
+              </button>
+            </mat-menu>
+
+            <div class="box-search card-header-item ml-2">
+              <input [(ngModel)]='queryFilter'
+                     style="width: 20rem;"
+                     type="text"
+                     placeholder="Search..."
+                     (input)="onFilter()">
+              <div class="box-search-icon">
+                <button mat-icon-button>
+                  <mat-icon class="mat-24"
+                            aria-label="Search">search</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+    </m-header>
+    <m-footer [paginator]="true"></m-footer>
+
+    <!-- With sub header -->
+    <m-column [field]="'name'"
+              [header]="'Entity'"
+              [colBodyClass]="'left-sticky'"
+              [colHeadClass]="'left-sticky'"
+              *ngIf="pubMonitorService.statsView === 'all'">
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="body">
+        <span>{{row['name']}}</span>
+      </ng-template>
+      <div>
+        <ng-template mTemplate="subHeader" >
+          <span style="float: right">Compare with</span>
+        </ng-template>
+      </div>
+    </m-column>
+
+    <!-- Without sub header -->
+    <m-column [field]="'name'"
+              [header]="'Entity'"
+              [colBodyClass]="'left-sticky'"
+              [colHeadClass]="'left-sticky'"
+              *ngIf="pubMonitorService.statsView !== 'all'">
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="body">
+        <span>{{row['name']}}</span>
       </ng-template>
     </m-column>
 
-    <m-column [field]="'joveoStats.latentClicks'" header="Latent Clicks" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{row['joveoStats']['latentClicks'].toLocaleString()}}
-      </ng-template>
-    </m-column>
+    <div *ngIf="pubMonitorService.statsView === 'all'">
+      <!-------------------Clicks------------------->
+      <m-column [field]="'joveoStats.clicks'"
+                [sortable]="true"
+                [colBodyClass]="bodyClassDecider('clicks', 'joveo') ? 'highlight border-left' : 'border-left'"
+                [colHeadClass]="bodyClassDecider('clicks', 'joveo') ? 'highlight border-left' : 'border-left'">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">Joveo</div>
+          <span>Clicks</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{row['joveoStats']['clicks'].toLocaleString()}}
+        </ng-template>
+        <ng-template mTemplate="subHeader">
+          <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item class="mat-menu-item--compact"  *ngFor="let menu of compareMenu" (click)="onMenuSelection('Joveo Clicks', menu)">{{menu}}</button>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                  #trigger="matMenuTrigger" (click)="showCompareEntities('clicks', 0); trigger.openMenu()">
+            <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+          </button>
+        </ng-template>
+      </m-column>
 
-    <m-column [field]="'joveoStats.botClicks'" header="Bot Clicks" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{row['joveoStats']['botClicks'].toLocaleString()}}
-      </ng-template>
-    </m-column>
+      <m-column [field]="'pubStats.clicks'"
+                [sortable]="true"
+                [colBodyClass]="bodyClassDecider('clicks', 'pub') ? 'highlight' : ''"
+                [colHeadClass]="bodyClassDecider('clicks', 'pub') ? 'highlight' : ''">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">Pub Rec</div>
+          <span>Clicks</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{row['pubStats']['clicks'].toLocaleString()}}
+        </ng-template>
+        <ng-template mTemplate="subHeader">
+          <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item class="mat-menu-item--compact"  *ngFor="let menu of compareMenu" (click)="onMenuSelection('Pub Rec Clicks', menu)">{{menu}}</button>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                  #trigger="matMenuTrigger" (click)="showCompareEntities('clicks', 1); trigger.openMenu()">
+            <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+          </button>
+        </ng-template>
+      </m-column>
 
-    <m-column [field]="'joveoStats.duplicateClicks'" header="Duplicate Clicks" [sortable]="true">
-      <ng-template let-col let-row="row" mTemplate="body">
-        {{row['joveoStats']['duplicateClicks'].toLocaleString()}}
-      </ng-template>
-    </m-column>
-  </div>
+      <m-column [field]="'cmStats.clicks'"
+                [sortable]="true"
+                [colBodyClass]="bodyClassDecider('clicks', 'cm') ? 'highlight' : 'border-right'"
+                [colHeadClass]="bodyClassDecider('clicks', 'cm') ? 'highlight' : 'border-right'">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">CM</div>
+          <span>Clicks</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{row['cmStats']['clicks'].toLocaleString()}}
+        </ng-template>
+        <ng-template mTemplate="subHeader">
+          <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of compareMenu" (click)="onMenuSelection('CM Clicks', menu)">{{menu}}</button>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                  #trigger="matMenuTrigger" (click)="showCompareEntities('clicks', 2);trigger.openMenu()">
+            <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+          </button>
+        </ng-template>
+      </m-column>
 
+      <m-column [field]="compareClicksKey"
+                [sortable]="false"
+                [colHeadClass]="'highlight border-right'"
+                [colBodyClass]="'highlight border-right'"
+                *ngIf="compareClicksKey">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div matTooltip="{{labelToShow['clicks'][compareClicksKey]}}" [matTooltipPosition]="'above'">
+            <div class="normal-linehight">Clicks</div>
+            <span>Diff (%)</span>
+          </div>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+            <span [ngClass]="row[compareClicksKey] > 3 || row[compareClicksKey] < -3  ? 'redmarked' : ''">
+              {{row[compareClicksKey]}}</span>
+        </ng-template>
+        <ng-template mTemplate="subHeader">
+          <button mat-icon-button (click)="onCloseCompare('clicks')">
+            <mat-icon color="primary">compare_arrows</mat-icon>
+          </button>
+        </ng-template>
+      </m-column>
 
-  <ng-template mTemplate="emptyTable">
-    <div *ngIf="loading" class="table-loading">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      <div>Loading...</div>
+      <!-------------------Spend------------------->
+      <m-column [field]="'joveoStats.spend'"
+                [sortable]="true"
+                [colBodyClass]="bodyClassDecider('spend', 'joveo') ? 'highlight border-left' : 'border-left'"
+                [colHeadClass]="bodyClassDecider('spend', 'joveo') ? 'highlight border-left' : 'border-left'">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">Joveo</div>
+          <span>Spend</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{utilService.getFormattedNumber(row['joveoStats']['spend'])}}
+        </ng-template>
+        <ng-template mTemplate="subHeader">
+          <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of compareMenu" (click)="onMenuSelection('Joveo Spend', menu)">{{menu}}</button>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                  #trigger="matMenuTrigger" (click)="showCompareEntities('spend', 0);trigger.openMenu()">
+            <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+          </button>
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="'pubStats.spend'"
+                [sortable]="true"
+                [colBodyClass]="bodyClassDecider('spend', 'pub') ? 'highlight' : ''"
+                [colHeadClass]="bodyClassDecider('spend', 'pub') ? 'highlight' : ''">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">Pub Rec</div>
+          <span>Spend</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{utilService.getFormattedNumber(row['pubStats']['spend'])}}
+        </ng-template>
+        <ng-template mTemplate="subHeader">
+          <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of compareMenu" (click)="onMenuSelection('Pub Rec Spend', menu)">{{menu}}</button>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                  #trigger="matMenuTrigger" (click)="showCompareEntities('spend', 1);trigger.openMenu()">
+            <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+          </button>
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="'pubPortalStats.spend'"
+                [sortable]="true"
+                [colBodyClass]="bodyClassDecider('spend', 'web') ? 'highlight' : 'border-right'"
+                [colHeadClass]="bodyClassDecider('spend', 'web') ? 'highlight' : 'border-right'">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">Webscrape</div>
+          <span>Spend</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{(routeData.data.entity === 'publishers' && !row['webScrapEnabled']) ? 'NA' : utilService.getFormattedNumber(row['pubPortalStats']['spend']) }}
+        </ng-template>
+        <ng-template mTemplate="subHeader">
+          <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of compareMenu;" (click)="onMenuSelection('Webscrape Spend', menu)">{{menu}}</button>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                  #trigger="matMenuTrigger" (click)="showCompareEntities('spend', 2);trigger.openMenu()">
+            <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+          </button>
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="compareSpendKey"
+                [sortable]="false"
+                [colHeadClass]="'highlight border-right'"
+                [colBodyClass]="'highlight border-right'"
+                *ngIf="compareSpendKey">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div matTooltip="{{labelToShow['spend'][compareSpendKey]}}" [matTooltipPosition]="'above'">
+            <div class="normal-linehight">Spend</div>
+            <span>Diff (%)</span>
+          </div>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          <span [ngClass]="row[compareSpendKey] > 3 || row[compareSpendKey] < -3 ? 'redmarked' : ''">{{row[compareSpendKey]}}</span>
+        </ng-template>
+        <ng-template mTemplate="subHeader">
+          <button mat-icon-button (click)="onCloseCompare('spend')">
+            <mat-icon color="primary">compare_arrows</mat-icon>
+          </button>
+        </ng-template>
+      </m-column>
+
+      <!-------------------Applies------------------->
+      <m-column [field]="'joveoStats.applies'"
+                [sortable]="true"
+                [colBodyClass]="'border-left'"
+                [colHeadClass]="'border-left'">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">Joveo</div>
+          <span>Applies</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{row['joveoStats']['applies'].toLocaleString()}}
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="'pubStats.applies'"
+                [sortable]="true">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">Pub Rec</div>
+          <span>Applies</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{row['pubStats']['applies'].toLocaleString()}}
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="'cmStats.applies'"
+                [sortable]="true">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">CM</div>
+          <span>Applies</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{row['cmStats']['applies'].toLocaleString()}}
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="'joveoStats.cta'"
+                [sortable]="true">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">Joveo</div>
+          <span>CTA(%)</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{utilService.getFormattedNumber(row['joveoStats']['cta'], true)}}
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="'dLogic'"
+                [header]="'D Logic'"
+                [sortable]="true"
+                [hidden]="true"
+                [colBodyClass]="'d-logic-col border-left'"
+                [colHeadClass]="'d-logic-col border-left'">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          <mat-slide-toggle
+            class="example-margin"
+            (change)="toggleDLogic(row, $event)"
+            [(ngModel)]="row['dLogic']">
+          </mat-slide-toggle>
+          <mat-spinner [diameter]="20" *ngIf="dLogicToggling === row.entity"></mat-spinner>
+        </ng-template>
+      </m-column>
     </div>
-  </ng-template>
 
-</m-table>
+    <div *ngIf="pubMonitorService.statsView === 'billing'">
+      <m-column [field]="'spendStats.mojo'"
+                [sortable]="true">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">Mojo</div>
+          <span>Spend</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{utilService.getFormattedNumber(row['spendStats']['mojo'])}}
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="'spendStats.cd'"
+                [sortable]="true">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">CD</div>
+          <span>Spend</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{utilService.getFormattedNumber(row['spendStats']['cd'])}}
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="'spendStats.vp'"
+                [sortable]="true">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div class="normal-linehight">VP</div>
+          <span>Spend</span>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{utilService.getFormattedNumber(row['spendStats']['vp'])}}
+        </ng-template>
+      </m-column>
+
+    </div>
+
+    <div *ngIf="pubMonitorService.statsView === 'clicks'">
+      <m-column [field]="'joveoStats.clicks'"
+                header="Clicks"
+                [sortable]="true"
+                [colBodyClass]="'border-left'"
+                [colHeadClass]="'border-left'">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{row['joveoStats']['clicks'].toLocaleString()}}
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="'joveoStats.latentClicks'"
+                header="Latent Clicks"
+                [sortable]="true">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{row['joveoStats']['latentClicks'].toLocaleString()}}
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="'joveoStats.botClicks'"
+                header="Bot Clicks"
+                [sortable]="true">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{row['joveoStats']['botClicks'].toLocaleString()}}
+        </ng-template>
+      </m-column>
+
+      <m-column [field]="'joveoStats.duplicateClicks'"
+                header="Duplicate Clicks"
+                [sortable]="true">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+          {{row['joveoStats']['duplicateClicks'].toLocaleString()}}
+        </ng-template>
+      </m-column>
+    </div>
+
+
+    <ng-template mTemplate="emptyTable">
+      <div *ngIf="loading"
+           class="table-loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <div class="pa-4">Loading...</div>
+      </div>
+      <div *ngIf="!loading">
+        <div class="alert alert-primary ma-4">No records found.</div>
+      </div>
+    </ng-template>
+
+  </m-table>
+
+</div>

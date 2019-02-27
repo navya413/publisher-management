@@ -1,6 +1,22 @@
-:host{
+:host {
+  display: block;
+  padding: 1rem;
   --first-column-padding: 0 12px 0 24px;
 }
+
+.filters {
+  display: flex;
+  padding-bottom: 1rem;
+  button {
+    margin-left: 1rem;
+    max-width: 20rem;
+  }
+}
+
+.select-timezone-btn {
+  min-width: 10rem;
+}
+
 :host ::ng-deep th,
 :host ::ng-deep td {
   white-space: nowrap !important;
@@ -57,3 +73,48 @@
   border-left: 1px solid #e5e5e5;
 }
 
+.compare-dropdown {
+  cursor: pointer;
+}
+
+:host ::ng-deep .highlight {
+  margin: 5px;
+  background-color: rgba(217, 228, 236, 0.5);
+}
+
+:host ::ng-deep .redmarked {
+  color: red;
+}
+
+.dropdown-option {
+  height: 2rem;
+  line-height: 2rem;
+  font-size: 0.8rem;
+}
+
+
+.box-search {
+  display: inline-flex;
+  border-radius: 2px;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+  0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  input {
+    border: none;
+    outline: none;
+    padding: 9px 12px;
+    background: none;
+  }
+  .box-search-icon {
+    float: right;
+    display: flex;
+    button {
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      color: gray;
+    }
+  }
+  .box-search-input-wrapper {
+    display: flex;
+  }
+}

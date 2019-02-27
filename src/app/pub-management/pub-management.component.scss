@@ -109,7 +109,7 @@
 }
 .error-hint {
   color: red;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   display: block;
 }
 
@@ -155,3 +155,7 @@ td {
   min-height: 55px;
 }
 
+
+:host ::ng-deep mat-error {
+  font-size: 0.6rem;
+}

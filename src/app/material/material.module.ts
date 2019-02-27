@@ -27,6 +27,7 @@ import {
   MatButtonToggleModule,
   MatChipsModule
 } from '@angular/material';
+import {SvgIconsComponent} from './svg-icons/svg-icons.component';
 
 @NgModule({
   imports: [
@@ -83,7 +84,9 @@ import {
     MatMenuModule,
     MatSlideToggleModule,
     MatStepperModule,
-    MatChipsModule
-  ]
+    MatChipsModule,
+    SvgIconsComponent
+  ],
+  declarations: [SvgIconsComponent]
 })
 export class MaterialModule {}
