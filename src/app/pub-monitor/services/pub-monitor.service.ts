@@ -31,7 +31,7 @@ export class PubMonitorService {
 
   getPublisherDetails() {
     return this.http.get<any>(
-      `${environment.authApi}/placements/publisherFilters`
+      `${environment.authApi}placements/publisherFilters`
     );
   }
 

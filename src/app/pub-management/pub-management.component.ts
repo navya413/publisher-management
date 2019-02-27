@@ -710,7 +710,7 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
         currency: new FormControl('', Validators.required),
         minBid: new FormControl(),
         flatBidValue: new FormControl(),
-        placementType: new FormControl(),
+        placementType: new FormControl('', Validators.required),
         url: new FormControl('', Validators.required),
         country: new FormControl(),
         industry: new FormControl(),
