@@ -1,6 +1,5 @@
 <div *ngIf="routeData.data.entity">
   <div>
-    <!--<app-breadcrumb [segments]="breadcrumbSegments"></app-breadcrumb>-->
     <nav mat-tab-nav-bar style="background: #fff">
       <a mat-tab-link
          *ngFor="let link of childNavLinks"
@@ -11,43 +10,11 @@
       </a>
     </nav>
   </div>
-  <div class="table-wrapper">
-    <div class="head">
-      <!--<app-date-range-->
-        <!--class="date-selector"-->
-        <!--[rangeFormat]="'YYYY-MM-DD'"-->
-        <!--[selectedDay]="pubMonitorService.dateRange.days"-->
-        <!--(onDateRangeChange)="onDateRangeChange($event)">-->
-      <!--</app-date-range>-->
 
-      <jv-date-range [displayFormat]="'MMM DD, YY'"
-                     [outputFormat]="'YYYY-MM-DD'"
-                     [min]="minDate"
-                     [max]="maxDate"
-                     [presets]="datePresets"
-                     (dateChange)="onDateChange($event)"
-                     [(ngModel)]="dateRange"
-                     [direction]="'right'"></jv-date-range>
-      <button mat-raised-button color="primary" class="select-btn" (click)=timezoneMenu.open()>
-        <mat-select #timezoneMenu placeholder="Select Timezone" [(ngModel)]="pubMonitorService.timezoneId">
-          <mat-option (click)="onTimezoneChange(timezone.id)" *ngFor="let timezone of pubMonitorService.timezones" [value]="timezone.id">{{timezone.value}} ({{timezone.id}})</mat-option>
-        </mat-select>
-      </button>
-
-      <mat-button-toggle-group name="statsView" [(ngModel)]="pubMonitorService.statsView" (change)="statsViewChange($event)" style="margin-left: 1rem">
-        <mat-button-toggle value="all">All</mat-button-toggle>
-        <mat-button-toggle value="billing">Billing</mat-button-toggle>
-        <mat-button-toggle value="clicks">Clicks</mat-button-toggle>
-      </mat-button-toggle-group>
-
-    </div>
-
-    <app-stats-table [title]="'Stats'"
-                     [value]="statsData"
-                     [loading]="loading"
+  <app-stats-table [title]="'Stats'"
+                     [routeData]="routeData"
                      (rowClick)="onRowClick($event)"
-                     (reload)="onReload()"
                      [disableLink]="(routeData.data.subLevel)">
     </app-stats-table>
   </div>
-</div>
+

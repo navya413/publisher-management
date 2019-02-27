@@ -20,8 +20,10 @@
       <mat-form-field>
         <input matInput
                placeholder="Publisher Name*"
+               pattern="[a-zA-Z0-9, ,.,_,(,),-]+$"
                formControlName="name">
-        <mat-error *ngIf="!creationForm.get('placement').get('name').valid && creationForm.get('placement').get('name').touched">Name is required
+        <mat-error *ngIf="creationForm.get('placement').get('name').errors && creationForm.get('placement').get('name').touched">
+          {{getFieldErrorMessage(creationForm.get('placement').get('name').errors)}}
         </mat-error>
       </mat-form-field>
       <mat-form-field>
@@ -72,6 +74,54 @@
                formControlName="url">
         <mat-error *ngIf="!creationForm.get('placement').get('url').valid && creationForm.get('placement').get('url').touched">URL is required</mat-error>
       </mat-form-field>
+
+      <mat-card class="full-width-col">
+        <mat-card-title style="font-size: 15px;">
+          Publisher Contact Details
+        </mat-card-title>
+        <mat-card-content>
+          <div formGroupName="publisherContactDetails" class="inner-grid">
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Name"
+                name="name"
+                formControlName="name"
+                required>
+              <mat-error *ngIf="!creationForm.get('placement').get('publisherContactDetails').get('name').valid && creationForm.get('placement').get('publisherContactDetails').get('name').touched">Name is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Phone"
+                name="phone"
+                formControlName="phone"
+                required>
+              <mat-error *ngIf="!creationForm.get('placement').get('publisherContactDetails').get('phone').valid && creationForm.get('placement').get('publisherContactDetails').get('phone').touched">Phone number is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput
+                     placeholder="Email"
+                     formControlName="email"
+                     name="email"
+                     required>
+              <mat-error *ngIf="!creationForm.get('placement').get('publisherContactDetails').get('email').valid && creationForm.get('placement').get('publisherContactDetails').get('email').touched">Email is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput
+                     placeholder="BillingEmail"
+                     formControlName="billingEmail"
+                     name="billingEmail"
+                     required>
+              <mat-error *ngIf="!creationForm.get('placement').get('publisherContactDetails').get('billingEmail').valid && creationForm.get('placement').get('publisherContactDetails').get('billingEmail').touched">Billing email is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
 
       <mat-accordion class="full-width-col">
         <mat-expansion-panel>
@@ -186,38 +236,6 @@
               <input matInput
                      placeholder="Password"
                      formControlName="password">
-            </mat-form-field>
-          </div>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Publisher Contact Details
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div formGroupName="publisherContactDetails" class="inner-grid">
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Name"
-                formControlName="name">
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Phone"
-                formControlName="phone">
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput
-                     placeholder="Email"
-                     formControlName="email">
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput
-                     placeholder="BillingEmail"
-                     formControlName="billingEmail">
             </mat-form-field>
           </div>
         </mat-expansion-panel>

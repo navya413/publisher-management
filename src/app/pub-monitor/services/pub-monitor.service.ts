@@ -16,10 +16,23 @@ export class PubMonitorService {
     endDate: THIS_MONTH.range[1].format('YYYY-MM-DD')
   };
 
+  publisherDetails = [];
+
   constructor(private http: HttpClient) {
     this.getTimeZones().subscribe(res => {
       this.timezones = res;
     });
+    this.getPublisherDetails().subscribe(res => {
+      if (res && res.data) {
+        this.publisherDetails = res.data.data;
+      }
+    });
+  }
+
+  getPublisherDetails() {
+    return this.http.get<any>(
+      `${environment.authApi}/placements/publisherFilters`
+    );
   }
 
   setDate(dateRange?) {
@@ -37,30 +50,6 @@ export class PubMonitorService {
         agencyId: agencyId,
       },
     });
-  }
-
-  getDailyStats(routeData, entityId) {
-    const agencyId = routeData.params.agencyId;
-    const level = routeData.data.level;
-    let url = environment.newStatsApi + 'agency/' + agencyId + '/';
-    if (!routeData.params.entityId) {
-      url += level + '/' + entityId + '/days';
-    } else {
-      url += level + '/' + routeData.params.entityId + '/' + routeData.data.subLevel + '/' + entityId + '/days';
-    }
-    const params = {
-      since: this.dateRange.startDate,
-      till: this.dateRange.endDate
-    };
-    if (this.timezoneId) {
-      params['tz'] = this.timezoneId;
-    }
-    return this.http.get<NewEntity[]>(
-      url,
-      {
-        params: params
-      },
-    );
   }
 
   getStats(routeData, projection, app = 'mojo') {
@@ -82,6 +71,13 @@ export class PubMonitorService {
         params: JSON.parse(JSON.stringify(params))
       },
     );
+  }
+
+  getPublisherNameDetails(pub) {
+    const publisherNamedetails = this.publisherDetails.find(item => {
+      return item.value === pub;
+    });
+    return publisherNamedetails && publisherNamedetails['name'];
   }
 
   getTimeZones() {
