@@ -153,7 +153,7 @@ export class PublisherListComponent implements OnInit {
 
   openPublisherAddDialog(row) {
     const dialogRef = this.dialog.open(PublisherAddDialog, {
-      width: '600px',
+      width: '800px',
       data: row
     });
 
@@ -730,10 +730,10 @@ export class PublisherAddDialog implements OnInit, OnDestroy {
           password: new FormControl()
         }),
         publisherContactDetails: new FormGroup({
-          name: new FormControl(),
-          phone: new FormControl(),
-          email: new FormControl(),
-          billingEmail: new FormControl()
+          name: new FormControl('', Validators.required),
+          phone: new FormControl('', Validators.required),
+          email: new FormControl('', Validators.required),
+          billingEmail: new FormControl('', Validators.required)
         }),
         publisherReconciliationDetails: new FormGroup({
           mode: new FormControl(),
