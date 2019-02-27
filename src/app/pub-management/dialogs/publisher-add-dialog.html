@@ -62,7 +62,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-select formControlName="placementType"
-                    placeholder="Placement Type">
+                    placeholder="Placement Type*">
           <mat-option *ngFor="let type of placementTypes" [value]="type.value">
             {{ type.name }}
           </mat-option>
