@@ -22,17 +22,21 @@ export class PubMonitorService {
     this.getTimeZones().subscribe(res => {
       this.timezones = res;
     });
-    this.getPublisherDetails().subscribe(res => {
+  }
+
+  getPublisherDetails(agencyId) {
+    this.http.get<any>(
+      `${environment.authApi}placements/publisherFilters`,
+      {
+        params: {
+          agencyId: agencyId
+        }
+      }
+    ).subscribe(res => {
       if (res && res.data) {
         this.publisherDetails = res.data.data;
       }
     });
-  }
-
-  getPublisherDetails() {
-    return this.http.get<any>(
-      `${environment.authApi}placements/publisherFilters`
-    );
   }
 
   setDate(dateRange?) {
