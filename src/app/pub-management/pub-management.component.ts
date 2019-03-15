@@ -323,6 +323,8 @@ export class PublisherSchemaDialog implements OnInit {
   loading: boolean;
   schemaMapping;
   additionalFields: string[];
+  additionalFieldsV2: object;
+  additionalFieldsV2Arr: any[] = [];
   fieldsWrappedInCdata = {};
   includeCurrencyInBidTag: boolean;
   headerSchema;
@@ -370,7 +372,15 @@ export class PublisherSchemaDialog implements OnInit {
           fieldsWrappedInCdata.map(item => {
             this.fieldsWrappedInCdata[item] = true;
           });
-          this.additionalFields = res.additionalFields;
+          this.additionalFieldsV2 = res.additionalFieldsV2;
+          Object.keys(this.additionalFieldsV2).forEach(item => {
+            const cData = fieldsWrappedInCdata.includes(item);
+            this.additionalFieldsV2Arr.push({
+              key: item,
+              value: this.additionalFieldsV2[item],
+              cData: cData
+            });
+          });
 
           Object.assign(this.schemaMapping, res.jobSchema);
           Object.assign(this.headerSchema, res.headerSchema);
@@ -381,16 +391,16 @@ export class PublisherSchemaDialog implements OnInit {
       );
   }
 
-  addCustomNode() {
-    this.additionalFields.push('');
-  }
-
   trackByFn(index, item) {
     return index;
   }
 
+  addCustomNode() {
+    this.additionalFieldsV2Arr.push({ key: '', value: '', cData: false });
+  }
+
   removeNode(index) {
-    this.additionalFields.splice(index, 1);
+    this.additionalFieldsV2Arr.splice(index, 1);
   }
 
   onSubmit() {
@@ -403,9 +413,19 @@ export class PublisherSchemaDialog implements OnInit {
       this.fieldsWrappedInCdata
     ).filter(key => this.fieldsWrappedInCdata[key]);
     data.schema['jobSchema'] = this.schemaMapping;
-    data.schema['additionalFields'] = this.additionalFields;
+    data.schema['additionalFields'] = [];
     data.schema['headerSchema'] = this.headerSchema;
     data.schema['includeCurrencyInBidTag'] = this.includeCurrencyInBidTag;
+
+    data.schema['additionalFieldsV2'] = {};
+
+    this.additionalFieldsV2Arr.forEach(item => {
+      data.schema['additionalFieldsV2'][item.key] = item.value;
+
+      if (item.cData) {
+        data.schema['fieldsWrappedInCdata'].push(item.key);
+      }
+    });
 
     this.pubManagementService
       .postPublisherSchema(this.data.selectedAgency, this.data.publisher.placement.id, data)
