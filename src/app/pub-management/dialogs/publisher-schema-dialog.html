@@ -178,21 +178,37 @@
           </mat-form-field>
         </div>
 
-        <div *ngFor="let node of additionalFields;trackBy: trackByFn;let i = index" class="grid-item">
+      </div>
+
+    </div>
+
+    <div style="background: #efefef; padding: 1rem;">
+      <mat-checkbox [(ngModel)]="includeCurrencyInBidTag">Include Currency in Bid</mat-checkbox>
+    </div>
+
+    <div style="background: #efefef; padding: 1rem;">
+      <div class="mat-caption mb-4" style="font-size: 1rem">
+        Custom Nodes
+        <mat-icon matTooltip="Mapping supports custom nodes from inbound feeds. In addition you can use the following field names: jobgroup, campaign, client." [matTooltipPosition]="'after'" style="font-size: 1rem">info_outline</mat-icon>
+      </div>
+      <div class="nested-grid-container">
+        <div *ngFor="let node of additionalFieldsV2Arr;trackBy: trackByFn; let i = index" class="grid-item">
+          <mat-checkbox [(ngModel)]="node.cData"></mat-checkbox>
           <mat-form-field>
             <input matInput
-                   [(ngModel)]="additionalFields[i]"
-                   placeholder="Enter Node Name">
+                   [(ngModel)]="node.key"
+                   placeholder="XML Node">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput
+                   [(ngModel)]="node.value"
+                   placeholder="Field Name">
           </mat-form-field>
           <button mat-icon-button (click)="removeNode(i)"><mat-icon>clear</mat-icon></button>
         </div>
       </div>
 
-      <button type="button" mat-raised-button color="primary" (click)="addCustomNode()">Add Custom Node</button>
-    </div>
-
-    <div style="background: #efefef; padding: 1rem;">
-      <mat-checkbox [(ngModel)]="includeCurrencyInBidTag">Include Currency in Bid</mat-checkbox>
+      <button type="button" mat-raised-button color="primary" (click)="addCustomNode()">Add Field</button>
     </div>
 
   </div>
