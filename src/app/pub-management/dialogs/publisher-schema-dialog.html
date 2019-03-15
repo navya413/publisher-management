@@ -196,12 +196,12 @@
           <mat-checkbox [(ngModel)]="node.cData"></mat-checkbox>
           <mat-form-field>
             <input matInput
-                   [(ngModel)]="node.key"
+                   [(ngModel)]="node.value"
                    placeholder="XML Node">
           </mat-form-field>
           <mat-form-field>
             <input matInput
-                   [(ngModel)]="node.value"
+                   [(ngModel)]="node.key"
                    placeholder="Field Name">
           </mat-form-field>
           <button mat-icon-button (click)="removeNode(i)"><mat-icon>clear</mat-icon></button>
