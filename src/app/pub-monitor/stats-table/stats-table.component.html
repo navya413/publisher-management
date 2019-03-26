@@ -23,18 +23,16 @@
   </div>
 
 
-  <m-table [value]="statsData"
+  <m-table  #table
+            [value]="statsData"
            (onRowClick)="onRowClick($event)"
            selection="false" [selectionHandler]="false"
            (onReload)="onReload()">
 
-    <!--<m-header [title]="title" [colSetting]="false" [globalSearch]="true" [searchField]="'box'" [export]="true" [reload]="true">-->
-    <!--</m-header>-->
-
     <m-header>
       <ng-template let-header>
         <div class="card-header">
-          <h2 style="margin: 0">Publishers</h2>
+          <h2 style="margin: 0">{{title}}</h2>
 
 
           <div style="display: inline-flex; margin-left: auto;">
@@ -73,6 +71,9 @@
             </div>
           </div>
 
+          <button mat-icon-button (click)="export()">
+            <mat-icon style="color: #797979">file_download</mat-icon>
+          </button>
         </div>
       </ng-template>
     </m-header>
