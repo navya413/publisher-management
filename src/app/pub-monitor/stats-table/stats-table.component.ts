@@ -1,4 +1,4 @@
-import {Component, DoCheck, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, DoCheck, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import { UtilService } from '../../services/util.service';
 import {PubMonitorService} from "../services/pub-monitor.service";
 import {forkJoin} from 'rxjs/observable/forkJoin';
@@ -6,6 +6,7 @@ import {Subject} from 'rxjs/Subject';
 import {NewEntityTwo} from '../../model/new-entity-state';
 import {LAST_30_DAYS, LAST_MONTH, LAST_WEEK, THIS_MONTH, THIS_WEEK, TODAY, YESTERDAY} from '../../date-range/presets.util';
 import * as moment from 'moment';
+import {DataTable} from 'momentum-table';
 
 @Component({
   selector: 'app-stats-table',
@@ -106,6 +107,9 @@ export class StatsTableComponent implements OnInit {
   ];
   status = this.statusOptions[0];
   queryFilter: string;
+
+  @ViewChild(DataTable)
+  table: DataTable;
 
   constructor(public utilService: UtilService, public pubMonitorService: PubMonitorService) {}
 
@@ -368,6 +372,10 @@ export class StatsTableComponent implements OnInit {
           : this.compareSpendKey;
       }
     }
+  }
+
+  export() {
+    this.table.exportCSV(',', 'report', false);
   }
 
   onCloseCompare(metric) {
