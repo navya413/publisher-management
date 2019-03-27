@@ -383,23 +383,23 @@
         </ng-template>
       </m-column>
 
-      <m-column [field]="'dLogic'"
-                [header]="'D Logic'"
-                [sortable]="true"
-                [hidden]="true"
-                [colBodyClass]="'d-logic-col border-left'"
-                [colHeadClass]="'d-logic-col border-left'">
-        <ng-template let-col
-                     let-row="row"
-                     mTemplate="body">
-          <mat-slide-toggle
-            class="example-margin"
-            (change)="toggleDLogic(row, $event)"
-            [(ngModel)]="row['dLogic']">
-          </mat-slide-toggle>
-          <mat-spinner [diameter]="20" *ngIf="dLogicToggling === row.entity"></mat-spinner>
-        </ng-template>
-      </m-column>
+      <!--<m-column [field]="'dLogic'"-->
+                <!--[header]="'D Logic'"-->
+                <!--[sortable]="true"-->
+                <!--[hidden]="true"-->
+                <!--[colBodyClass]="'d-logic-col border-left'"-->
+                <!--[colHeadClass]="'d-logic-col border-left'">-->
+        <!--<ng-template let-col-->
+                     <!--let-row="row"-->
+                     <!--mTemplate="body">-->
+          <!--<mat-slide-toggle-->
+            <!--class="example-margin"-->
+            <!--(change)="toggleDLogic(row, $event)"-->
+            <!--[(ngModel)]="row['dLogic']">-->
+          <!--</mat-slide-toggle>-->
+          <!--<mat-spinner [diameter]="20" *ngIf="dLogicToggling === row.entity"></mat-spinner>-->
+        <!--</ng-template>-->
+      <!--</m-column>-->
     </div>
 
     <div *ngIf="pubMonitorService.statsView === 'billing'">
