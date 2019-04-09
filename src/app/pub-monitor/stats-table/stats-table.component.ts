@@ -228,6 +228,12 @@ export class StatsTableComponent implements OnInit {
         this.loading = false;
         this.allStatsData = tempData;
         this.statsData = tempData;
+
+        if(this.queryFilter)
+        {
+          this.onFilter()
+        }
+        
       });
   };
 
