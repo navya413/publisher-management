@@ -61,6 +61,10 @@ export class UtilService {
 
   getFormattedNumber (number, isPercent = false) {
     let tempNumber;
+    
+    if(isNaN(number)){
+        return number;
+    }
     if (!isPercent) {
       tempNumber = Number.parseFloat(number.toFixed(2)).toLocaleString();
     } else {

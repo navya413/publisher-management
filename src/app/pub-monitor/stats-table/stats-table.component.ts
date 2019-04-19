@@ -172,7 +172,9 @@ export class StatsTableComponent implements OnInit {
               mojo: entity.stats.spend
             };
           }
-          tempData.push(obj);
+          
+          tempData.push(this.fillNA(obj));
+          
         });
 
         res[1].map(entity => {
@@ -236,6 +238,21 @@ export class StatsTableComponent implements OnInit {
         
       });
   };
+
+  fillNA(obj) {
+    let statsProps = ['pubStats', 'pubPortalStats', 'cmStats'];
+    
+    statsProps.forEach (item => {
+      obj[item] = {
+        clicks: 'NA',
+        applies: 'NA',
+        spend: 'NA',
+        botClicks: 'NA'
+      }
+    })
+
+    return obj;
+  }
 
   onFilter() {
     this.statsData = this.allStatsData.filter(rec => {
