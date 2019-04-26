@@ -148,7 +148,7 @@ export class StatsTableComponent implements OnInit {
               this.pubMonitorService.getPublisherNameDetails(obj['entity']) ||
               obj['entity'];
             const filterTemp = this.pubMonitorService.publisherDetails.filter(
-              item => item.publisher === entity.pivots.pivot1
+              item => item.value === entity.pivots.pivot1
             )[0];
             if (filterTemp) {
               obj['dLogic'] = filterTemp['dLogicEnabled'];
@@ -172,9 +172,9 @@ export class StatsTableComponent implements OnInit {
               mojo: entity.stats.spend
             };
           }
-          
+
           tempData.push(this.fillNA(obj));
-          
+
         });
 
         res[1].map(entity => {
@@ -235,13 +235,13 @@ export class StatsTableComponent implements OnInit {
         {
           this.onFilter()
         }
-        
+
       });
   };
 
   fillNA(obj) {
     let statsProps = ['pubStats', 'pubPortalStats', 'cmStats'];
-    
+
     statsProps.forEach (item => {
       obj[item] = {
         clicks: 'NA',
