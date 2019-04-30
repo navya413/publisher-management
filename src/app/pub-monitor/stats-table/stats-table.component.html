@@ -502,7 +502,8 @@
         <div class="pa-4">Loading...</div>
       </div>
       <div *ngIf="!loading">
-        <div class="alert alert-primary ma-4">No records found.</div>
+        <div *ngIf="!errorMessage" class="alert alert-primary ma-4">No records found.</div>
+        <div *ngIf="errorMessage" class="alert alert-primary ma-4">{{errorMessage}}</div>
       </div>
     </ng-template>
 

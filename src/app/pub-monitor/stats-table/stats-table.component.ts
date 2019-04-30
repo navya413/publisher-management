@@ -126,6 +126,7 @@ export class StatsTableComponent implements OnInit {
 
   getStats = function() {
     this.loading = true;
+    this.errorMessage = undefined
     this.statsData = [];
     const tempData = [];
 
@@ -232,10 +233,11 @@ export class StatsTableComponent implements OnInit {
         this.statsData = tempData;
 
         if(this.queryFilter)
-        {
           this.onFilter()
-        }
 
+      }, error => {
+        this.errorMessage = "Something went wrong!!! Please try again"
+        this.loading = false;
       });
   };
 
