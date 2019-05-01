@@ -140,6 +140,8 @@ export class ClientsStatsComponent implements OnDestroy {
       });
       this.loading = false;
       this.statsData = tempData;
+    }, error => {
+      this.loading = false;
     });
   };
 
