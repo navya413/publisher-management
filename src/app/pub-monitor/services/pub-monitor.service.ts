@@ -39,7 +39,7 @@ export class PubMonitorService {
     }
 
     return this.http.get<any>(
-      `${environment.authApi}/placements/publisherFilters`,
+      `${environment.authApi}placements/publisherFilters`,
       {
         params: params
       }
