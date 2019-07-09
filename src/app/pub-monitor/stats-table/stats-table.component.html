@@ -1,7 +1,6 @@
 <div>
   <div class="filters">
     <jv-date-range [displayFormat]="'MMM DD, YY'"
-                   [outputFormat]="'YYYY-MM-DD'"
                    [min]="minDate"
                    [max]="maxDate"
                    [presets]="datePresets"
@@ -112,7 +111,7 @@
 
     <div *ngIf="pubMonitorService.statsView === 'all'">
       <!-------------------Clicks------------------->
-      <m-column [field]="'joveoStats.clicks'"
+      <m-column [field]="'pubPortalStats.clicks'"
                 [sortable]="true"
                 [colBodyClass]="bodyClassDecider('clicks', 'joveo') ? 'highlight border-left' : 'border-left'"
                 [colHeadClass]="bodyClassDecider('clicks', 'joveo') ? 'highlight border-left' : 'border-left'">
@@ -125,7 +124,7 @@
         <ng-template let-col
                      let-row="row"
                      mTemplate="body">
-          {{row['joveoStats']['clicks'].toLocaleString()}}
+          {{row['pubPortalStats']['clicks'].toLocaleString()}}
         </ng-template>
         <ng-template mTemplate="subHeader">
           <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
@@ -217,7 +216,7 @@
       </m-column>
 
       <!-------------------Spend------------------->
-      <m-column [field]="'joveoStats.spend'"
+      <m-column [field]="'pubPortalStats.spend'"
                 [sortable]="true"
                 [colBodyClass]="bodyClassDecider('spend', 'joveo') ? 'highlight border-left' : 'border-left'"
                 [colHeadClass]="bodyClassDecider('spend', 'joveo') ? 'highlight border-left' : 'border-left'">
@@ -230,11 +229,11 @@
         <ng-template let-col
                      let-row="row"
                      mTemplate="body">
-          {{utilService.getFormattedNumber(row['joveoStats']['spend'])}}
+          {{utilService.getFormattedNumber(row['pubPortalStats']['spend'])}}
         </ng-template>
         <ng-template mTemplate="subHeader">
           <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
-            <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of compareMenu" (click)="onMenuSelection('Joveo Spend', menu)">{{menu}}</button>
+            <button mat-menu-item class="mat-menu-item--compact" [disabled]="routeData.data.entity !== 'publishers' && menu.includes('Webscrape')" *ngFor="let menu of compareMenu" (click)="onMenuSelection('Joveo Spend', menu)">{{menu}}</button>
           </mat-menu>
           <button mat-icon-button [matMenuTriggerFor]="appMenu"
                   #trigger="matMenuTrigger" (click)="showCompareEntities('spend', 0);trigger.openMenu()">
@@ -260,7 +259,7 @@
         </ng-template>
         <ng-template mTemplate="subHeader">
           <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
-            <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of compareMenu" (click)="onMenuSelection('Pub Rec Spend', menu)">{{menu}}</button>
+            <button mat-menu-item class="mat-menu-item--compact" [disabled]="routeData.data.entity !== 'publishers' && menu.includes('Webscrape')" *ngFor="let menu of compareMenu" (click)="onMenuSelection('Pub Rec Spend', menu)">{{menu}}</button>
           </mat-menu>
           <button mat-icon-button [matMenuTriggerFor]="appMenu"
                   #trigger="matMenuTrigger" (click)="showCompareEntities('spend', 1);trigger.openMenu()">
@@ -269,7 +268,8 @@
         </ng-template>
       </m-column>
 
-      <m-column [field]="'pubPortalStats.spend'"
+      <m-column [field]="'webScrap.spend'"
+                *ngIf="routeData.data.entity === 'publishers'"
                 [sortable]="true"
                 [colBodyClass]="bodyClassDecider('spend', 'web') ? 'highlight' : 'border-right'"
                 [colHeadClass]="bodyClassDecider('spend', 'web') ? 'highlight' : 'border-right'">
@@ -282,7 +282,7 @@
         <ng-template let-col
                      let-row="row"
                      mTemplate="body">
-          {{(routeData.data.entity === 'publishers' && !row['webScrapEnabled']) ? 'NA' : utilService.getFormattedNumber(row['pubPortalStats']['spend']) }}
+          {{getFormattedWebScrapeSpend(row)}}
         </ng-template>
         <ng-template mTemplate="subHeader">
           <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
@@ -321,7 +321,7 @@
       </m-column>
 
       <!-------------------Applies------------------->
-      <m-column [field]="'joveoStats.applies'"
+      <m-column [field]="'pubPortalStats.applies'"
                 [sortable]="true"
                 [colBodyClass]="'border-left'"
                 [colHeadClass]="'border-left'">
@@ -334,7 +334,7 @@
         <ng-template let-col
                      let-row="row"
                      mTemplate="body">
-          {{row['joveoStats']['applies'].toLocaleString()}}
+          {{row['pubPortalStats']['applies'].toLocaleString()}}
         </ng-template>
       </m-column>
 
@@ -368,7 +368,7 @@
         </ng-template>
       </m-column>
 
-      <m-column [field]="'joveoStats.cta'"
+      <m-column [field]="'pubPortalStats.cta'"
                 [sortable]="true">
         <ng-template let-col
                      let-row="row"
@@ -379,7 +379,7 @@
         <ng-template let-col
                      let-row="row"
                      mTemplate="body">
-          {{utilService.getFormattedNumber(row['joveoStats']['cta'], true)}}
+          {{utilService.getFormattedNumber(row['pubPortalStats']['cta'], true)}}
         </ng-template>
       </m-column>
 
@@ -451,7 +451,7 @@
     </div>
 
     <div *ngIf="pubMonitorService.statsView === 'clicks'">
-      <m-column [field]="'joveoStats.clicks'"
+      <m-column [field]="'pubPortalStats.clicks'"
                 header="Clicks"
                 [sortable]="true"
                 [colBodyClass]="'border-left'"
@@ -459,37 +459,37 @@
         <ng-template let-col
                      let-row="row"
                      mTemplate="body">
-          {{row['joveoStats']['clicks'].toLocaleString()}}
+          {{row['pubPortalStats']['clicks'].toLocaleString()}}
         </ng-template>
       </m-column>
 
-      <m-column [field]="'joveoStats.latentClicks'"
+      <m-column [field]="'pubPortalStats.latentClicks'"
                 header="Latent Clicks"
                 [sortable]="true">
         <ng-template let-col
                      let-row="row"
                      mTemplate="body">
-          {{row['joveoStats']['latentClicks'].toLocaleString()}}
+          {{row['pubPortalStats']['latentClicks'].toLocaleString()}}
         </ng-template>
       </m-column>
 
-      <m-column [field]="'joveoStats.botClicks'"
+      <m-column [field]="'pubPortalStats.botClicks'"
                 header="Bot Clicks"
                 [sortable]="true">
         <ng-template let-col
                      let-row="row"
                      mTemplate="body">
-          {{row['joveoStats']['botClicks'].toLocaleString()}}
+          {{row['pubPortalStats']['botClicks'].toLocaleString()}}
         </ng-template>
       </m-column>
 
-      <m-column [field]="'joveoStats.duplicateClicks'"
+      <m-column [field]="'pubPortalStats.duplicateClicks'"
                 header="Duplicate Clicks"
                 [sortable]="true">
         <ng-template let-col
                      let-row="row"
                      mTemplate="body">
-          {{row['joveoStats']['duplicateClicks'].toLocaleString()}}
+          {{row['pubPortalStats']['duplicateClicks'].toLocaleString()}}
         </ng-template>
       </m-column>
     </div>

@@ -37,9 +37,13 @@ export class StatsTableComponent implements OnInit {
 
   dateRange;
 
+  errorMessage: String;
+
   statsData;
   allStatsData;
   loading: boolean;
+  subscription0$: Subject<any>;
+
   subscription1$: Subject<NewEntityTwo[]>;
   subscription2$: Subject<NewEntityTwo[]>;
   subscription3$: Subject<NewEntityTwo[]>;
@@ -130,7 +134,14 @@ export class StatsTableComponent implements OnInit {
     this.statsData = [];
     const tempData = [];
 
-    this.subscription1$ = this.pubMonitorService.getStats(this.routeData, 'joveo');
+    this.subscription0$ = this.pubMonitorService.getPublisherDetails(this.routeData);
+
+    // this.subscription1$ = this.pubMonitorService.getStats(this.routeData, 'joveo');
+
+    this.subscription1$ =
+      this.pubMonitorService.statsView === 'billing'
+        ? this.pubMonitorService.getStats(this.routeData, 'pub_portal')
+        : this.pubMonitorService.getStats(this.routeData, 'joveo');
     this.subscription2$ = this.pubMonitorService.statsView === 'billing' ?
       this.pubMonitorService.getStats(this.routeData, 'joveo', 'cd') : this.pubMonitorService.getStats(this.routeData, 'pub');
     this.subscription3$ = this.pubMonitorService.statsView === 'billing' ?
@@ -138,22 +149,41 @@ export class StatsTableComponent implements OnInit {
 
     this.subscriptionCM$ = this.pubMonitorService.getStats(this.routeData, 'cm');
 
-    forkJoin(this.subscription1$, this.subscription2$, this.subscription3$, this.subscriptionCM$)
+    forkJoin(this.subscription0$, this.subscription1$, this.subscription2$, this.subscription3$, this.subscriptionCM$)
       .subscribe((res: any[]) => {
-        res[0].map(entity => {
+        this.pubMonitorService.publisherDetails = res[0].data.data;
+        res[1].map(entity => {
           const obj = {};
           obj['entity'] = entity.pivots.pivot1;
 
           if (this.routeData.data.entity === 'publishers') {
+            // obj['name'] =
+            //   this.pubMonitorService.getPublisherNameDetails(obj['entity']) ||
+            //   obj['entity'];
+            // const filterTemp = this.pubMonitorService.publisherDetails.filter(
+            //   item => item.value === entity.pivots.pivot1
+            // )[0];
+            // if (filterTemp) {
+            //   obj['dLogic'] = filterTemp['dLogicEnabled'];
+            //   obj['webScrapEnabled'] = filterTemp['webScrapeEnabled'];
+            // }
+
             obj['name'] =
               this.pubMonitorService.getPublisherNameDetails(obj['entity']) ||
               obj['entity'];
             const filterTemp = this.pubMonitorService.publisherDetails.filter(
               item => item.value === entity.pivots.pivot1
             )[0];
+
+            obj['webScrap'] = { spend: 0 };
             if (filterTemp) {
               obj['dLogic'] = filterTemp['dLogicEnabled'];
               obj['webScrapEnabled'] = filterTemp['webScrapeEnabled'];
+
+
+              obj['webScrap']['spend'] = obj['webScrapEnabled']
+                ? filterTemp['webScrapeSpendValue']
+                : 'NA';
             }
           } else {
             obj['name'] = this.pubMonitorService.entityMap[obj['entity']] || obj['entity'];
@@ -178,7 +208,7 @@ export class StatsTableComponent implements OnInit {
 
         });
 
-        res[1].map(entity => {
+        res[2].map(entity => {
           tempData.map(stat => {
             if (stat.entity === entity.pivots.pivot1) {
               if (this.pubMonitorService.statsView === 'billing') {
@@ -195,7 +225,7 @@ export class StatsTableComponent implements OnInit {
           });
         });
 
-        res[2].map(entity => {
+        res[3].map(entity => {
           tempData.map(stat => {
             if (stat.entity === entity.pivots.pivot1) {
               if (this.pubMonitorService.statsView === 'billing') {
@@ -205,14 +235,17 @@ export class StatsTableComponent implements OnInit {
                   clicks: entity.stats.clicks,
                   applies: entity.stats.applies,
                   spend: entity.stats.spend,
-                  botClicks: entity.stats.botClicks
+                  botClicks: entity.stats.botClicks,
+                  cta: entity.stats.cta,
+                  latentClicks: entity.stats.latentClicks,
+                  duplicateClicks: entity.stats.duplicateClicks
                 };
               }
             }
           });
         });
 
-        res[3].map(entity => {
+        res[4].map(entity => {
           tempData.map(stat => {
             if (stat.entity === entity.pivots.pivot1) {
               stat['cmStats'] = {
@@ -233,16 +266,16 @@ export class StatsTableComponent implements OnInit {
         this.statsData = tempData;
 
         if(this.queryFilter)
-          this.onFilter()
+          this.onFilter();
 
       }, error => {
-        this.errorMessage = "Something went wrong!!! Please try again"
+        this.errorMessage = 'Something went wrong!!! Please try again'
         this.loading = false;
       });
   };
 
   fillNA(obj) {
-    let statsProps = ['pubStats', 'pubPortalStats', 'cmStats'];
+    const statsProps = ['pubStats', 'pubPortalStats', 'cmStats'];
 
     statsProps.forEach (item => {
       obj[item] = {
@@ -250,8 +283,8 @@ export class StatsTableComponent implements OnInit {
         applies: 'NA',
         spend: 'NA',
         botClicks: 'NA'
-      }
-    })
+      };
+    });
 
     return obj;
   }
@@ -285,7 +318,7 @@ export class StatsTableComponent implements OnInit {
     tempData.forEach(element => {
       // Clicks discrepancies
       element.joveoToPubClicksDiscr = this.getDiscrPerc(
-        element.joveoStats.clicks,
+        element.pubPortalStats.clicks,
         element.pubStats.clicks
       );
       element.pubToCMClicksDiscr = this.getDiscrPerc(
@@ -293,17 +326,17 @@ export class StatsTableComponent implements OnInit {
         element.cmStats.clicks
       );
       element.joveoToCMClicksDiscr = this.getDiscrPerc(
-        element.joveoStats.clicks,
+        element.pubPortalStats.clicks,
         element.cmStats.clicks
       );
 
       element.pubToJoveoClicksDiscr = this.getDiscrPerc(
         element.pubStats.clicks,
-        element.joveoStats.clicks
+        element.pubPortalStats.clicks
       );
       element.cmToJoveoClicksDiscr = this.getDiscrPerc(
         element.cmStats.clicks,
-        element.joveoStats.clicks
+        element.pubPortalStats.clicks
       );
       element.cmToPubClicksDiscr = this.getDiscrPerc(
         element.cmStats.clicks,
@@ -312,30 +345,36 @@ export class StatsTableComponent implements OnInit {
 
       // Spend discrepancies
       element.joveoToPubSpendDiscr = this.getDiscrPerc(
-        element.joveoStats.spend,
+        element.pubPortalStats.spend,
         element.pubStats.spend
       );
-      element.pubToWebscrapedSpendDiscr = this.getDiscrPerc(
-        element.pubStats.spend,
-        element.pubPortalStats.spend
-      );
-      element.joveoToWebscrapedSpendDiscr = this.getDiscrPerc(
-        element.joveoStats.spend,
-        element.pubPortalStats.spend
-      );
+
+      if (this.routeData.data.entity === 'publishers') {
+        element.pubToWebscrapedSpendDiscr = this.getDiscrPerc(
+          element.pubStats.spend,
+          element.webScrap.spend
+        );
+        element.joveoToWebscrapedSpendDiscr = this.getDiscrPerc(
+          element.pubPortalStats.spend,
+          element.webScrap.spend
+        );
+
+        element.webscrapedToJoveoSpendDiscr = this.getDiscrPerc(
+          element.webScrap.spend,
+          element.pubPortalStats.spend
+        );
+        element.webscrapedToPubSpendDiscr = this.getDiscrPerc(
+          element.webScrap.spend,
+          element.pubStats.spend
+        );
+      }
+
 
       element.pubToJoveoSpendDiscr = this.getDiscrPerc(
         element.pubStats.spend,
-        element.joveoStats.spend
+        element.pubPortalStats.spend
       );
-      element.webscrapedToJoveoSpendDiscr = this.getDiscrPerc(
-        element.pubPortalStats.spend,
-        element.joveoStats.spend
-      );
-      element.webscrapedToPubSpendDiscr = this.getDiscrPerc(
-        element.pubPortalStats.spend,
-        element.pubStats.spend
-      );
+
     });
   }
 
@@ -347,6 +386,18 @@ export class StatsTableComponent implements OnInit {
     } else {
       return Math.round(((val1 - val2) / val1) * 100 * 100) / 100;
     }
+  }
+
+  getFormattedWebScrapeSpend(row: any) {
+    if (!row.webScrapEnabled && row['webScrap']['spend'] === -1) {
+      return 'Agency only';
+    }
+
+    if (!row.webScrapEnabled) {
+      return 'NA';
+    }
+
+    return this.utilService.getFormattedNumber(row['webScrap']['spend']);
   }
 
   onDateRangeChange(date) {

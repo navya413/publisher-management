@@ -114,8 +114,8 @@ export class DateRangeComponent implements ControlValueAccessor, OnInit {
         this.outputFormat
       );
     } else {
-      outputValue.startDate = this.value.startDate.toString();
-      outputValue.endDate = this.value.endDate.toString();
+      outputValue.startDate = this.value.startDate;
+      outputValue.endDate = this.value.endDate;
     }
     this.propagateChange(outputValue);
     this.dateChange.emit(outputValue);

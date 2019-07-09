@@ -4,15 +4,15 @@
     "secure": false
   },
   "/api": {
-    "target": "http://mojo2.staging.joveo.com",
+    "target": "http://aragorn-api.prod.joveo.com:11001",
     "secure": false
   },
   "/thor/api": {
-    "target": "http://mojo2.staging.joveo.com",
+    "target": "http://aragorn-api.prod.joveo.com:11001",
     "secure": false
   },
   "/gandalf/app/": {
-    "target": "http://gandalf.staging.joveo.com",
+    "target": "http://gandalf.prod.joveo.com",
     "secure": false
   }
 }
