@@ -67,7 +67,7 @@ export class PubMonitorComponent implements OnInit, OnChanges, OnDestroy {
       }, err => {
         this.entityNavComp.loading = false;
       });
-    this.pubMonitorService.getPublisherDetails(agencyId);
+    // this.pubMonitorService.getPublisherDetails(agencyId);
   }
 
   ngOnDestroy() {

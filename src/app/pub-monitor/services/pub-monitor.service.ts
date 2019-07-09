@@ -12,8 +12,8 @@ export class PubMonitorService {
   timezoneId: string;
   statsView = 'all';
   dateRange = {
-    startDate: THIS_MONTH.range[0].format('YYYY-MM-DD'),
-    endDate: THIS_MONTH.range[1].format('YYYY-MM-DD')
+    startDate: THIS_MONTH.range[0],
+    endDate: THIS_MONTH.range[1]
   };
 
   publisherDetails = [];
@@ -24,28 +24,34 @@ export class PubMonitorService {
     });
   }
 
-  getPublisherDetails(agencyId) {
-    this.http.get<any>(
-      `${environment.authApi}placements/publisherFilters`,
+  getPublisherDetails(routeData: any) {
+    const params = {
+      agencyId: routeData.params.agencyId,
+      startDate: this.dateRange.startDate.format('MM/DD/YYYY'),
+      endDate: this.dateRange.endDate.format('MM/DD/YYYY'),
+      days: 'CUSTOM'
+    };
+
+    const clientId = routeData.params.clientId
+    if (clientId && clientId !== 'all') {
+      params['clientId'] = clientId.clientId;
+    }
+
+    return this.http.get<any>(
+      `${environment.authApi}/placements/publisherFilters`,
       {
-        params: {
-          agencyId: agencyId
-        }
+        params: params
       }
-    ).subscribe(res => {
-      if (res && res.data) {
-        this.publisherDetails = res.data.data;
-      }
-    });
+    );
   }
 
   setDate(dateRange?) {
     this.dateRange.startDate = dateRange
       ? dateRange.startDate
-      : THIS_MONTH.range[0].format('YYYY-MM-DD');
+      : THIS_MONTH.range[0];
     this.dateRange.endDate = dateRange
       ? dateRange.endDate
-      : THIS_MONTH.range[1].format('YYYY-MM-DD');
+      : THIS_MONTH.range[1];
   }
 
   getClientHierarchy(agencyId) {
@@ -58,8 +64,8 @@ export class PubMonitorService {
 
   getStats(routeData, projection, app = 'mojo') {
     const params = {
-      since: this.dateRange.startDate,
-      till: this.dateRange.endDate,
+      since: this.dateRange.startDate.format('YYYY-MM-DD'),
+      till: this.dateRange.endDate.format('YYYY-MM-DD'),
       agencyIds: routeData.params.agencyId,
       clientIds: routeData.params.clientId,
       campaignIds: routeData.params.campaignId,
