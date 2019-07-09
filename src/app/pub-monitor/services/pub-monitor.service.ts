@@ -32,9 +32,10 @@ export class PubMonitorService {
       days: 'CUSTOM'
     };
 
-    const clientId = routeData.params.clientId
+    console.log(routeData.params);
+    const clientId = routeData.params.clientId;
     if (clientId && clientId !== 'all') {
-      params['clientId'] = clientId.clientId;
+      params['clientId'] = clientId;
     }
 
     return this.http.get<any>(
