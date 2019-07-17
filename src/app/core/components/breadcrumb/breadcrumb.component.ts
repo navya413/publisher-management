@@ -6,6 +6,7 @@ import { BreadcrumbSegment } from './breadcrumb.model';
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss']
 })
+
 export class BreadcrumbComponent {
   @Input() segments: BreadcrumbSegment[] = [];
   constructor() {}

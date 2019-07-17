@@ -1,0 +1,60 @@
+
+.btn-margin{
+    margin-right: 1rem;
+}
+
+.agencyFilter{
+    margin-left: auto;
+    margin-right: 1rem;
+}
+
+::ng-deep .agencyList .mat-select-value {
+    display: block !important;
+    max-width: unset !important;
+    width: inherit !important;
+  }
+  
+  ::ng-deep .agencyList .mat-select-placeholder {
+    color: #000;
+  }
+
+.card-header{
+    display: flex;
+    flex: 1;
+    height: 4rem;
+    align-items: center;
+}
+  
+
+.box-search{
+    display: inline-block;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    input{
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      padding: 9px 12px;
+    }
+    .box-search-icon{
+      float: right;
+      display: flex;
+      button{
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        color: gray;
+      }
+    }
+    .box-search-input-wrapper{
+      display: flex;
+    }
+  }
+
+  .sub-header{
+    opacity: .5;
+    font-size: 10px;
+    color: #000000;
+    font-weight: normal;
+  }

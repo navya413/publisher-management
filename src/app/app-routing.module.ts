@@ -9,6 +9,11 @@ const routes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     loadChildren: './home/home.module#HomeModule'
+  },
+  {
+    path: 'v2',
+    canActivate: [AuthGuard],
+    loadChildren: './v2/v2.module#V2Module'
   }
 ];
 

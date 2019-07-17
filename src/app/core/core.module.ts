@@ -10,6 +10,7 @@ import { EmptyViewComponent } from './components/empty-view/empty-view.component
 import { DateRangeComponent } from '../date-range/date-range.component';
 import { NgxDaterangepickerMd } from '../daterangepicker/daterangepicker.module';
 import {DateRangeOldComponent} from './components/date-range/date-range.component';
+import { MomentumTableModule } from 'momentum-table';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {DateRangeOldComponent} from './components/date-range/date-range.componen
     MaterialModule,
     RouterModule,
     AmChartsModule,
-    NgxDaterangepickerMd
+    NgxDaterangepickerMd,
+    MomentumTableModule
   ],
   declarations: [
     DateRangeComponent,
@@ -33,6 +35,8 @@ import {DateRangeOldComponent} from './components/date-range/date-range.componen
     BreadcrumbComponent,
     ChartViewComponent,
     EmptyViewComponent,
+    MaterialModule,
+    MomentumTableModule
   ],
 })
 export class CoreModule {}

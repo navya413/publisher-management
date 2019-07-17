@@ -1,0 +1,13 @@
+<nav mat-tab-nav-bar class="header-nav-bar">
+  <div class="logo-wrapper">
+    <img src="../../assets/images/pubmato.png">
+  </div>
+  <!-- <a mat-tab-link
+     *ngFor="let link of navLinks"
+     [routerLink]="['/',link.path]"
+     routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive">
+    {{link.label}}
+  </a> -->
+  <button mat-raised-button class="logout-btn" (click)="authService.logout()">Logout</button>
+</nav>

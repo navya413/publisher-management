@@ -4,4 +4,5 @@ export const environment = {
   adminApi: '/api/admin/',
   feedsApi: '/api/',
   newStatsApi: '/gandalf/app/',
+  v2api : "/papi"
 };

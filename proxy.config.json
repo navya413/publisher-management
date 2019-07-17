@@ -4,15 +4,21 @@
     "secure": false
   },
   "/api": {
-    "target": "http://aragorn-api.prod.joveo.com:11001",
+    "target": "http://aragorn-api.staging.joveo.com:11001",
     "secure": false
   },
   "/thor/api": {
-    "target": "http://aragorn-api.prod.joveo.com:11001",
+    "target": "http://aragorn-api.staging.joveo.com:11001",
     "secure": false
   },
   "/gandalf/app/": {
     "target": "http://gandalf.prod.joveo.com",
     "secure": false
+  },
+  "/papi": {
+    "target": "http://3zok9.mocklab.io",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

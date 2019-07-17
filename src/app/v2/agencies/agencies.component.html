@@ -1,0 +1,37 @@
+<div>
+  <nav mat-tab-nav-bar style="background: #fff">
+    <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+      {{ link.label }}
+    </a>
+  </nav>
+</div>
+
+<div class="pa-2">
+  <m-table [value]="agencies" (onRowClick)="onRowClick($event)" (onReload)="onReload()" [selectable]="false" [selectionHandler]="false">
+    <m-header [title]="'Agencies'" [globalSearch]="true" [searchField]="'box'" [colSetting]="false" [export]="true"> </m-header>
+
+    <m-footer [paginator]="true"></m-footer>
+
+    <m-column field="name" header="Agency Name"></m-column>
+
+    <m-column field="agencyType" header="Agency Type">
+    </m-column>
+
+    <m-column field="clientCount" header="Clients">
+    </m-column>
+
+
+    <m-column field="publisherCount" header="Publishers">
+    </m-column>
+
+    <m-column field="activePublisherCount" header="Active Publishers">
+    </m-column>
+
+    <ng-template mTemplate="emptyTable">
+      <div *ngIf="loading" class="table-loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <div>Loading...</div>
+      </div>
+    </ng-template>
+  </m-table>
+</div>

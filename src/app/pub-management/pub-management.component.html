@@ -16,6 +16,7 @@
                   color="primary"
                   (click)="openPublisherAddDialog($event)"
                   class="btn-margin">Add Publisher</button>
+
           <button [disabled]="!selectedPublishers.length"
                   mat-raised-button
                   (click)=editMenu.open()
@@ -104,6 +105,7 @@
         <i class="material-icons status-icon paused"
            *ngIf="!(row['additionalFields']['activeClients']).length">pause_circle_filled</i>
       </ng-template>
+      
       <ng-template let-col
                    let-row="row"
                    mTemplate="editor">

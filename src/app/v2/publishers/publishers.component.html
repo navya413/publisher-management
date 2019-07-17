@@ -1,0 +1,148 @@
+<div>
+  <nav mat-tab-nav-bar style="background: #fff">
+    <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+      {{ link.label }}
+    </a>
+  </nav>
+</div>
+
+<div class="pa-2">
+  <m-table [value]="publishers" [selectable]="true" [selectionMode]="'single'"
+  (onRowClick)="onRowClick($event)" (onReload)="onReload()">
+    
+  <m-header>
+      <ng-template let-header>
+        <div class="card-header">
+          <button mat-raised-button color="primary" (click)="openPublisherAddDialog($event)" class="btn-margin">Add Publisher</button>
+          
+          <div class="box-search btn-margin">
+            <div class="box-search-icon">
+              <button mat-icon-button (click)="onQuerySearch(searchInput.value)">
+                <mat-icon class="mat-24" aria-label="Search icon">search</mat-icon>
+              </button>
+            </div>
+            <div class="box-search-input-wrapper">
+              <input type="text" [(ngModel)]="filters.query" placeholder="Search..." />
+            </div>
+          </div>
+
+          <button [disabled]="!selectedPublishers.length"
+                  mat-raised-button
+                  (click)=editMenu.open()
+                  class="btn-margin">
+            <mat-select [disabled]="!selectedPublishers.length"
+                        #editMenu
+                        placeholder="Manage"
+                        class="agencyList">
+              <!-- <mat-option (click)="editPublisher(option)"
+                          *ngFor="let option of editOptions">{{option.name}}</mat-option> -->
+            </mat-select>
+          </button>
+
+          <button
+            mat-raised-button
+            (click)=statusMenu.open()
+            class="btn-margin">
+            <mat-select
+                        #statusMenu
+                        placeholder="Status"
+                        class="agencyList">
+              <mat-option
+                          *ngFor="let option of statusOptions">{{option.name}}</mat-option>
+            </mat-select>
+          </button>
+          <!-- <button mat-raised-button
+                  *ngIf="selectedPublishers.length"
+                  (click)="openPublisherSchemaDialog()"
+                  class="btn-margin">Schema Mapping</button> -->
+
+          <!-- <button mat-raised-button
+                  (click)=agencyMenu.open()
+                  class="agencyFilter">
+            <mat-select #agencyMenu
+                        [(ngModel)]="selectedAgency"
+                        class="agencyList">
+              <mat-option (click)="onAgencyChange()"
+                          value="All Agencies">All Agencies</mat-option>
+            </mat-select>
+          </button> -->
+
+          <!-- <div class="box-search">
+            <div class="box-search-icon">
+              <button mat-icon-button
+                      (click)="onQuerySearch(searchInput.value)">
+                <mat-icon class="mat-24"
+                          aria-label="Search icon">search</mat-icon>
+              </button>
+            </div>
+            
+            <div class="box-search-input-wrapper">
+              <input 
+                     type="text"
+                     placeholder="Search...">
+            </div>
+          </div> -->
+
+          <!-- <div class="table-options">
+            <button mat-icon-button
+                    class="col-setting-btn"
+                    (click)="onRefresh()">
+              <mat-icon class="mat-24"
+                        aria-label="refresh">refresh</mat-icon>
+            </button>
+          </div> -->
+        </div>
+      </ng-template>
+    </m-header>
+
+    <m-footer [paginator]="true"></m-footer>
+
+    <m-column field="status" header="Active"></m-column>
+    <m-column field="name" header="Publisher Name"></m-column>
+
+    <m-column field="agencyCount"
+              [sortable]="true">
+      <ng-template mTemplate="header">
+        <span>Assigned</span>
+        <br>
+        <span class="sub-header">(Agencies)</span>
+      </ng-template>
+
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="body">
+        {{row['agencyCount']}}
+      </ng-template>
+    </m-column>
+
+    <m-column field="agencyCount"
+              [sortable]="true">
+      <ng-template mTemplate="header">
+        <span>Active</span>
+        <br>
+        <span class="sub-header">(Agencies)</span>
+      </ng-template>
+
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="body">
+        {{row['activeAgencyCount']}}
+      </ng-template>
+    </m-column>
+
+
+    <m-column field="feedType" header="Feed Type"></m-column>
+    <m-column field="bidType" header="Bid Type"></m-column>
+    <m-column field="currency" header="Currency"></m-column>
+    <m-column field="minBid" header="Min Bid"></m-column>
+    <m-column field="vpAccessMails" header="VP Access"></m-column>
+    <m-column field="notificationMails" header="Notifications"></m-column>
+
+    <ng-template mTemplate="emptyTable">
+      <div *ngIf="loading" class="table-loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <div>Loading...</div>
+      </div>
+    </ng-template>
+  </m-table>
+</div>
