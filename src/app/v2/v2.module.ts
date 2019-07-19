@@ -9,6 +9,8 @@ import { AgenciesComponent } from './agencies/agencies.component';
 import { PublishersComponent } from './publishers/publishers.component';
 import { ApiService } from '../services/api.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AgencyViewComponent } from './agency-view/agency-view.component';
+import { PublisherViewComponent } from './publisher-view/publisher-view.component';
 
 @NgModule({
   imports: [
@@ -18,7 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     V2RoutingModule,
     CoreModule
   ],
-  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent],
+  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent],
   providers : [ApiService]
 })
 export class V2Module { }

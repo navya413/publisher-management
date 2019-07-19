@@ -20,7 +20,21 @@
     content: none;
   }
   a {
-    color: $primary;
+    color: $segment-active-color;
+    font-weight: normal;
+    font-size: 13px;
     text-decoration: none;
   }
+}
+
+.segment-title{
+  color: #000000;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.segment-sub-title{
+  color: #000000;
+  font-size: 13px;
+  font-weight: normal;
 }

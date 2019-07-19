@@ -1,0 +1,67 @@
+<div class="head">
+  <app-breadcrumb [segments]="breadcrumbSegments"></app-breadcrumb>
+</div>
+
+<div class="pa-2">
+  <m-table
+    [value]="agencies"
+    (onFilter)="onFilter($event)"
+    (onRowClick)="onRowClick($event)"
+    (onReload)="onReload()"
+    [selectable]="true"
+    [selectionMode]="'single'"
+  >
+    <m-header>
+      <ng-template let-header>
+        <div class="card-header">
+          <button mat-raised-button color="primary" (click)="openPublisherAddDialog($event)" class="btn-margin">Assign Publisher</button>
+
+          <!-- Manage section  -->
+          <button [disabled]="!selectedPublishers.length" mat-raised-button (click)="editMenu.open()" class="btn-margin">
+            <mat-select [disabled]="!selectedPublishers.length" #editMenu placeholder="Manage" class="agencyList">
+              <!-- <mat-option (click)="editPublisher(option)"
+                  *ngFor="let option of editOptions">{{option.name}}</mat-option> -->
+            </mat-select>
+          </button>
+
+          <!-- Search box -->
+          <div class="box-search btn-margin">
+            <div class="box-search-icon">
+              <button mat-icon-button (click)="getAgencies()">
+                <mat-icon class="mat-24" aria-label="Search icon">search</mat-icon>
+              </button>
+            </div>
+            <div class="box-search-input-wrapper">
+              <input type="text" [(ngModel)]="filters.query" placeholder="Search..." (keyup.enter)="getAgencies()" />
+            </div>
+          </div>
+
+          <!-- Status filter -->
+          <button mat-raised-button (click)="statusMenu.open()" class="btn-margin">
+            <mat-select #statusMenu placeholder="Status" [(ngModel)]="filters.status" (change)="getPublishers()" class="agencyList">
+              <mat-option *ngFor="let option of statusOptions" [value]="option.value">{{ option.name }}</mat-option>
+            </mat-select>
+          </button>
+
+          <!-- Models filter -->
+          <button mat-raised-button (click)="modelMenu.open()" class="btn-margin">
+            <mat-select #modelMenu placeholder="Model" [(ngModel)]="filters.model" (change)="getPublishers()" class="agencyList">
+              <mat-option *ngFor="let option of modelsOptions" [value]="option.value">{{ option.name }}</mat-option>
+            </mat-select>
+          </button>
+        </div>
+      </ng-template>
+    </m-header>
+
+    <m-column field="status" header="Active">
+      <ng-template let-col let-row="row" mTemplate="body">
+        <i class="material-icons status-icon active" *ngIf="row.status === 'A'">check_circle</i>
+        <i class="material-icons status-icon paused" *ngIf="row.status !== 'A'">pause_circle_filled</i>
+      </ng-template>
+    </m-column>
+
+    <m-column field="name" header="Publisher Name"></m-column>
+
+    <m-footer [paginator]="true"></m-footer>
+  </m-table>
+</div>

@@ -2,7 +2,11 @@
      class="segments">
   <span class="segment"
         *ngFor="let segment of segments">
-    <strong class="segment__label" *ngIf="!segment.url">{{segment.label}}</strong>
+      <span *ngIf="!segment.url && segment.subTitle">
+        <span class="segment-title">{{segment.label}}</span>
+        <span>{{segment.subTitle}}</span>
+      </span>
+      <strong class="segment__label" *ngIf="!segment.url && !segment.subTitle">{{segment.label}}</strong>
     <a class="segment__name segment__name--link"
        color='primary'
        *ngIf="segment.url"

@@ -10,6 +10,7 @@ import { environment } from "../../../environments/environment";
 export class PublishersComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
+  loading :boolean = true;
   publishers = []
   selectedPublishers = []
   navLinks = [{ path: "../agencies", label: "All Agencies" }, { path: "../publishers", label: "All Publishers" }];
@@ -19,7 +20,7 @@ export class PublishersComponent implements OnInit {
   }
 
 
-  statusOptions = [{"name":"Active","value":"Active"}]
+  statusOptions = [{"name":"All","value":"All"},{"name":"Paused","value":"Paused"},{"name":"Disabled","value":"Disabled"}]
   ngOnInit() {
     this.getPublishers();
   }
@@ -27,6 +28,7 @@ export class PublishersComponent implements OnInit {
   getPublishers() {
     this.apiService.get(environment.v2api + "/loki/admin/publisher",this.filters).subscribe(resp => {
       this.publishers = resp.data;
+      this.loading = false
     });
   }
 }

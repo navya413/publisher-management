@@ -16,7 +16,7 @@
     "secure": false
   },
   "/papi": {
-    "target": "http://3zok9.mocklab.io",
+    "target": "https://8ab465d6-2bfa-4bff-86c5-6aeff134030e.mock.pstmn.io",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
