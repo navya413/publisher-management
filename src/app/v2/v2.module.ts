@@ -11,6 +11,10 @@ import { ApiService } from '../services/api.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgencyViewComponent } from './agency-view/agency-view.component';
 import { PublisherViewComponent } from './publisher-view/publisher-view.component';
+import { AssignPublisherComponent } from './assign-publisher/assign-publisher.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from '../home/token.interceptor';
+import { PublisherStatsComponent } from './publisher-stats/publisher-stats.component';
 
 @NgModule({
   imports: [
@@ -20,7 +24,8 @@ import { PublisherViewComponent } from './publisher-view/publisher-view.componen
     V2RoutingModule,
     CoreModule
   ],
-  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent],
+  entryComponents : [AssignPublisherComponent],
+  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignPublisherComponent, PublisherStatsComponent],
   providers : [ApiService]
 })
 export class V2Module { }

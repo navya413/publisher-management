@@ -1,0 +1,33 @@
+<div mat-dialog-title class="dialog-header" style="margin-bottom: 0px;">
+  <span>Assign Joveo Publishers</span>
+  <i class="material-icons float-right my-1 cursor" (click)="close()">
+    close
+  </i>
+</div>
+
+<div mat-dialog-content style="padding: 10px 20px;margin: 0px;">
+    <!-- Search box -->
+    <div class="box-search btn-margin" style="width:80%">
+        <div class="box-search-icon">
+          <button mat-icon-button class="icon-button">
+            <mat-icon class="mat-24">search</mat-icon>
+          </button>
+        </div>
+        <div class="box-search-input-wrapper">
+          <input type="text" [(ngModel)]="searchText" placeholder="Search..." style="width: 100%"/>
+        </div>
+    </div>
+
+  <div class="pub-container"> 
+      <div *ngFor="let publisher of publishers | localSearch: searchText:'name'" style="margin-bottom: 10px;">
+          <mat-checkbox [(ngModel)]="publisher.active" [disabled]="publisher.disabled">{{publisher.name}}</mat-checkbox>
+      </div>
+  </div>  
+  
+  
+</div>
+
+<div mat-dialog-actions class="dialog-footer">
+  <button mat-button (click)="close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="assignPublisher()" class="btn-margin">Assign Publisher</button>
+</div>

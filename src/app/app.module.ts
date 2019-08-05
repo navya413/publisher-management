@@ -6,6 +6,9 @@ import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { RouteDataService } from './services/route-data.service';
 import { SimpleNotificationsModule} from 'angular2-notifications';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './home/token.interceptor';
+import { UtilService } from './services/util.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +19,11 @@ import { SimpleNotificationsModule} from 'angular2-notifications';
     AuthModule,
     SimpleNotificationsModule.forRoot(),
   ],
-  providers: [RouteDataService],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true,
+  },RouteDataService,UtilService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

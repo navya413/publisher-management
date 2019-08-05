@@ -1,0 +1,19 @@
+@import "../../../scss/v2";
+
+.dialog-header{
+    color: #000000;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+.dialog-footer{
+    margin-bottom: unset;
+    border-top: 1px solid #ccc;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+.pub-container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

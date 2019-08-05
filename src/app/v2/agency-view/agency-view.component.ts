@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { BreadcrumbSegment } from "../../core/components/breadcrumb/breadcrumb.model";
 import { ActivatedRoute } from "@angular/router";
+import { ApiService } from "../../services/api.service";
+import { AssignPublisherComponent } from "../assign-publisher/assign-publisher.component";
+import { MatDialog } from "@angular/material";
 
 @Component({
   selector: "app-agency-view",
@@ -8,11 +11,14 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ["./agency-view.component.scss"]
 })
 export class AgencyViewComponent implements OnInit {
-  breadcrumbSegments: BreadcrumbSegment[];
+  breadcrumbSegments: BreadcrumbSegment[] = [];
   agencyId: string;
   filters: any = { query: "" };
   selectedPublishers = [];
+  publishers = []
   statusOptions = [{ name: "All", value: "All" }, { name: "Paused", value: "Paused" }, { name: "Disabled", value: "Disabled" }];
+  setupView:boolean = true
+
   modelsOptions = [
     { name: "Pay Per Click", value: "Pay Per Click" },
     { name: "Pay Per Apply", value: "Pay Per Apply" },
@@ -22,14 +28,32 @@ export class AgencyViewComponent implements OnInit {
     { name: "Flat Pay Per Click", value: "Flat Pay Per Click" },
     { name: "Pay Per Posting", value: "Pay Per Posting" }
   ];
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute,private apiService : ApiService,private dialog: MatDialog) {}
 
   ngOnInit() {
     this.agencyId = this.activatedRoute.snapshot.params.agencyId;
     this.buildBreadcrumb();
+    this.getAllPublishers();
+  }
+
+  getAllPublishers(){
+    this.apiService.get("/api/loki/admin/agency/"+ this.agencyId +"/publisher/setup").subscribe(resp=>{
+      console.log("RESP :::::>>>>>>>>>>>>>>",resp)
+      this.publishers = resp.data
+    })
   }
 
   buildBreadcrumb() {
     this.breadcrumbSegments = [{ label: "All Agencies", url: ["../../..", "agencies"] }, { label: "Agency : ", subTitle: this.agencyId }];
+  }
+
+  openAssignPublisherModal(){
+    let dialogRef = this.dialog.open(AssignPublisherComponent, {
+      panelClass: 'app-full-bleed-dialog',
+      // height: '400px',
+      //  minHeight : '400px',
+       width: '500px',
+       minWidth : '500'
+    });
   }
 }

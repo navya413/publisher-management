@@ -4,7 +4,7 @@
     "secure": false
   },
   "/api": {
-    "target": "http://aragorn-api.staging.joveo.com:11001",
+    "target": "http://172.16.1.132:11001",
     "secure": false
   },
   "/thor/api": {
@@ -16,7 +16,7 @@
     "secure": false
   },
   "/papi": {
-    "target": "https://8ab465d6-2bfa-4bff-86c5-6aeff134030e.mock.pstmn.io",
+    "target": "http://172.16.1.132:11001",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

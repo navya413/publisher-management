@@ -2,9 +2,9 @@
   <app-breadcrumb [segments]="breadcrumbSegments"></app-breadcrumb>
 </div>
 
-<div class="pa-2">
+<div class="pa-2" *ngIf="setupView">
   <m-table
-    [value]="agencies"
+    [value]="publishers"
     (onFilter)="onFilter($event)"
     (onRowClick)="onRowClick($event)"
     (onReload)="onReload()"
@@ -14,7 +14,7 @@
     <m-header>
       <ng-template let-header>
         <div class="card-header">
-          <button mat-raised-button color="primary" (click)="openPublisherAddDialog($event)" class="btn-margin">Assign Publisher</button>
+          <button mat-raised-button color="primary" (click)="openAssignPublisherModal($event)" class="btn-margin">Assign Publisher</button>
 
           <!-- Manage section  -->
           <button [disabled]="!selectedPublishers.length" mat-raised-button (click)="editMenu.open()" class="btn-margin">
@@ -49,6 +49,11 @@
               <mat-option *ngFor="let option of modelsOptions" [value]="option.value">{{ option.name }}</mat-option>
             </mat-select>
           </button>
+
+          <div class="flex-1-end toggle-wrapper">
+            <span class="view-setup-labe">View Setup</span>
+            <mat-slide-toggle [(ngModel)]="setupView" disableRipple="true"></mat-slide-toggle>
+          </div>
         </div>
       </ng-template>
     </m-header>
@@ -62,6 +67,38 @@
 
     <m-column field="name" header="Publisher Name"></m-column>
 
+    <m-column field="activeClientsCount"
+              [sortable]="true">
+      <ng-template mTemplate="header">
+        <span>Active</span>
+        <br>
+        <span class="sub-header">(Clients)</span>
+      </ng-template>
+
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="body">
+        {{row['activeClientsCount']}}
+      </ng-template>
+    </m-column>
+
+    <m-column field="feedType" header="Feed Type"></m-column>
+    <m-column field="bidType" header="Bid Type"></m-column>
+    <m-column field="currency" header="Currency"></m-column>
+    <m-column field="minBid" header="Min Bid"></m-column>
+    <m-column field="vpAccessMails" header="VP Access"></m-column>
+    <m-column field="notificationMails" header="Notifications"></m-column>
+    <m-column field="reconciliation" header="Reconciliation">
+      <ng-template let-col let-row="row" mTemplate="body">
+        <i class="material-icons status-icon active" *ngIf="row.reconciliation">check_circle</i>
+        <i class="material-icons status-icon paused" *ngIf="!row.reconciliation">check_circle</i>
+      </ng-template>
+    </m-column>
+
     <m-footer [paginator]="true"></m-footer>
   </m-table>
+</div>
+
+<div *ngIf="!setupView">
+  <app-publisher-stats></app-publisher-stats>
 </div>

@@ -55,53 +55,10 @@
                   *ngFor="let option of statusOptions" [value]="option.value">{{option.name}}</mat-option>
             </mat-select>
           </button>
-          <!-- <button mat-raised-button
-                  *ngIf="selectedPublishers.length"
-                  (click)="openPublisherSchemaDialog()"
-                  class="btn-margin">Schema Mapping</button> -->
-
-          <!-- <button mat-raised-button
-                  (click)=agencyMenu.open()
-                  class="agencyFilter">
-            <mat-select #agencyMenu
-                        [(ngModel)]="selectedAgency"
-                        class="agencyList">
-              <mat-option (click)="onAgencyChange()"
-                          value="All Agencies">All Agencies</mat-option>
-            </mat-select>
-          </button> -->
-
-          <!-- <div class="box-search">
-            <div class="box-search-icon">
-              <button mat-icon-button
-                      (click)="onQuerySearch(searchInput.value)">
-                <mat-icon class="mat-24"
-                          aria-label="Search icon">search</mat-icon>
-              </button>
-            </div>
-            
-            <div class="box-search-input-wrapper">
-              <input 
-                     type="text"
-                     placeholder="Search...">
-            </div>
-          </div> -->
-
-          <!-- <div class="table-options">
-            <button mat-icon-button
-                    class="col-setting-btn"
-                    (click)="onRefresh()">
-              <mat-icon class="mat-24"
-                        aria-label="refresh">refresh</mat-icon>
-            </button>
-          </div> -->
         </div>
       </ng-template>
     </m-header>
-
     <m-footer [paginator]="true"></m-footer>
-
-
     <m-column field="status"
               header="Active"
               >

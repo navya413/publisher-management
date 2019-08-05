@@ -1,0 +1,11 @@
+<div class="pa-2" *ngIf="setupView">
+    <m-table
+      [value]="stats"
+      (onFilter)="onFilter($event)"
+      (onRowClick)="onRowClick($event)"
+      (onReload)="onReload()"
+      [selectable]="true"
+      [selectionMode]="'single'"
+    >
+    </m-table>
+  </div>

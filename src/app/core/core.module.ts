@@ -11,6 +11,8 @@ import { DateRangeComponent } from '../date-range/date-range.component';
 import { NgxDaterangepickerMd } from '../daterangepicker/daterangepicker.module';
 import {DateRangeOldComponent} from './components/date-range/date-range.component';
 import { MomentumTableModule } from 'momentum-table';
+import { LocalSearchPipe } from "../services/local-search.pipe";
+
 
 @NgModule({
   imports: [
@@ -27,7 +29,8 @@ import { MomentumTableModule } from 'momentum-table';
     DateRangeOldComponent,
     BreadcrumbComponent,
     ChartViewComponent,
-    EmptyViewComponent
+    EmptyViewComponent,
+    LocalSearchPipe
   ],
   exports: [
     DateRangeComponent,
@@ -36,7 +39,8 @@ import { MomentumTableModule } from 'momentum-table';
     ChartViewComponent,
     EmptyViewComponent,
     MaterialModule,
-    MomentumTableModule
+    MomentumTableModule,
+    LocalSearchPipe
   ],
 })
 export class CoreModule {}

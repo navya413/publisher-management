@@ -16,7 +16,7 @@ const routes: Routes = [
         component: AgenciesComponent
       },
       {
-        path: "agency/:agencyId/view",
+        path: "agency/:agencyId/publishers",
         component: AgencyViewComponent
       },
       { path: "publishers", component: PublishersComponent },
