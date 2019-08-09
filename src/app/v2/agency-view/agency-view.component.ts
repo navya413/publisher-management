@@ -13,10 +13,10 @@ import { MatDialog } from "@angular/material";
 export class AgencyViewComponent implements OnInit {
   breadcrumbSegments: BreadcrumbSegment[] = [];
   agencyId: string;
-  filters: any = { query: "" };
+  filters: any = { query: "",status:"All" };
   selectedPublishers = [];
   publishers = []
-  statusOptions = [{ name: "All", value: "All" }, { name: "Paused", value: "Paused" }, { name: "Disabled", value: "Disabled" }];
+  statusOptions = [{ name: "All", value: "All" }, { name: "Paused", value: "I" }, { name: "Disabled", value: "A" }];
   setupView:boolean = true
 
   modelsOptions = [
@@ -37,8 +37,7 @@ export class AgencyViewComponent implements OnInit {
   }
 
   getAllPublishers(){
-    this.apiService.get("/api/loki/admin/agency/"+ this.agencyId +"/publisher/setup").subscribe(resp=>{
-      console.log("RESP :::::>>>>>>>>>>>>>>",resp)
+    this.apiService.get("/api/loki/admin/agency/"+ this.agencyId +"/publisher/setup",this.filters).subscribe(resp=>{
       this.publishers = resp.data
     })
   }
@@ -53,7 +52,17 @@ export class AgencyViewComponent implements OnInit {
       // height: '400px',
       //  minHeight : '400px',
        width: '500px',
-       minWidth : '500'
+       minWidth : '500',
+       data : {
+        entityId : this.agencyId,
+        entityAddKey : "publisherIds",
+        setupType : "publisher"
+       }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed',result);
+      this.getAllPublishers();
     });
   }
 }

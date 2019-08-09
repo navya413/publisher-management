@@ -10,4 +10,9 @@ export class ApiService {
     return this.http.get(url, { params: params });
   }
 
+  post(url, data?: any): any {
+    return this.http.post(url, data);
+  }
+
+
 }

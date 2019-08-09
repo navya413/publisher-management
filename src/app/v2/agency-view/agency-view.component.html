@@ -27,25 +27,25 @@
           <!-- Search box -->
           <div class="box-search btn-margin">
             <div class="box-search-icon">
-              <button mat-icon-button (click)="getAgencies()">
+              <button mat-icon-button (click)="getAllPublishers()">
                 <mat-icon class="mat-24" aria-label="Search icon">search</mat-icon>
               </button>
             </div>
             <div class="box-search-input-wrapper">
-              <input type="text" [(ngModel)]="filters.query" placeholder="Search..." (keyup.enter)="getAgencies()" />
+              <input type="text" [(ngModel)]="filters.query" placeholder="Search..." (keyup.enter)="getAllPublishers()" />
             </div>
           </div>
 
           <!-- Status filter -->
           <button mat-raised-button (click)="statusMenu.open()" class="btn-margin">
-            <mat-select #statusMenu placeholder="Status" [(ngModel)]="filters.status" (change)="getPublishers()" class="agencyList">
+            <mat-select #statusMenu placeholder="Status" [(ngModel)]="filters.status" (change)="getAllPublishers()" class="agencyList">
               <mat-option *ngFor="let option of statusOptions" [value]="option.value">{{ option.name }}</mat-option>
             </mat-select>
           </button>
 
           <!-- Models filter -->
           <button mat-raised-button (click)="modelMenu.open()" class="btn-margin">
-            <mat-select #modelMenu placeholder="Model" [(ngModel)]="filters.model" (change)="getPublishers()" class="agencyList">
+            <mat-select #modelMenu placeholder="Model" [(ngModel)]="filters.model" (change)="getAllPublishers()" class="agencyList">
               <mat-option *ngFor="let option of modelsOptions" [value]="option.value">{{ option.name }}</mat-option>
             </mat-select>
           </button>
@@ -82,17 +82,34 @@
       </ng-template>
     </m-column>
 
-    <m-column field="feedType" header="Feed Type"></m-column>
-    <m-column field="bidType" header="Bid Type"></m-column>
+    <m-column field="feedType" header="Feed Type">
+        <ng-template let-col let-row="row" mTemplate="body">
+          {{row.feedDelivery.feedType}}
+        </ng-template>
+    </m-column>
+    <m-column field="publisherModel" header="Publisher Model"></m-column>
     <m-column field="currency" header="Currency"></m-column>
     <m-column field="minBid" header="Min Bid"></m-column>
     <m-column field="vpAccessMails" header="VP Access"></m-column>
     <m-column field="notificationMails" header="Notifications"></m-column>
+    
     <m-column field="reconciliation" header="Reconciliation">
       <ng-template let-col let-row="row" mTemplate="body">
         <i class="material-icons status-icon active" *ngIf="row.reconciliation">check_circle</i>
         <i class="material-icons status-icon paused" *ngIf="!row.reconciliation">check_circle</i>
       </ng-template>
+    </m-column>
+
+    <m-column field="feedType" header="Avg.Freq(24 hrs)">
+        <ng-template let-col let-row="row" mTemplate="body">
+          {{row.jobRunStats?.day?.frequency}}
+        </ng-template>
+    </m-column>
+
+    <m-column field="feedType" header="Avg.Freq(Last 7 day)">
+        <ng-template let-col let-row="row" mTemplate="body">
+          {{row.jobRunStats?.week?.frequency}}
+        </ng-template>
     </m-column>
 
     <m-footer [paginator]="true"></m-footer>

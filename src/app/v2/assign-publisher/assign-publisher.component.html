@@ -1,5 +1,5 @@
 <div mat-dialog-title class="dialog-header" style="margin-bottom: 0px;">
-  <span>Assign Joveo Publishers</span>
+  <span>{{title}}</span>
   <i class="material-icons float-right my-1 cursor" (click)="close()">
     close
   </i>
@@ -29,5 +29,5 @@
 
 <div mat-dialog-actions class="dialog-footer">
   <button mat-button (click)="close()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="assignPublisher()" class="btn-margin">Assign Publisher</button>
+  <button mat-raised-button color="primary" (click)="assignPublisher()" class="btn-margin">{{btnLabel}}</button>
 </div>

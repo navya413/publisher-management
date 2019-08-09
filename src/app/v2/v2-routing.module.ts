@@ -5,6 +5,7 @@ import { AgenciesComponent } from "./agencies/agencies.component";
 import { PublishersComponent } from "./publishers/publishers.component";
 import { AgencyViewComponent } from "./agency-view/agency-view.component";
 import { PublisherViewComponent } from "./publisher-view/publisher-view.component";
+import { AgencySetupComponent } from "./agency-setup/agency-setup.component";
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
         component: AgencyViewComponent
       },
       { path: "publishers", component: PublishersComponent },
+      { path: "publisher/:publisherId/agencies", component: AgencySetupComponent },
       { path: "publisher/:publisherId/view", component: PublisherViewComponent }
     ]
   }

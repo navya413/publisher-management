@@ -4,11 +4,12 @@
     "secure": false
   },
   "/api": {
-    "target": "http://172.16.1.132:11001",
-    "secure": false
+    "target": "http://54.92.216.47:11001",
+    "secure": false,
+    "logLevel": "debug"
   },
   "/thor/api": {
-    "target": "http://aragorn-api.staging.joveo.com:11001",
+    "target": "http://54.92.216.47:11001",
     "secure": false
   },
   "/gandalf/app/": {
@@ -16,7 +17,7 @@
     "secure": false
   },
   "/papi": {
-    "target": "http://172.16.1.132:11001",
+    "target": "http://54.92.216.47:11001",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

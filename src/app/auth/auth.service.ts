@@ -25,8 +25,8 @@ export class AuthService {
     const base64Credentials = window.btoa(email + ':' + password);
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.set('Authorization', 'Basic ' + base64Credentials);
-
-    return this.http.post(environment.authApi + 'login', null, {
+    console.log("Before ..",environment.authApi)
+    return this.http.post(environment.authApi + 'login', {}, {
       headers,
     });
   }

@@ -17,7 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
      if (request.url.indexOf('slack') === -1) {
        request = request.clone({
          setHeaders: {
-           'MojoAccessToken': auth.getToken() || null
+           'MojoAccessToken': auth.getToken() || ""
          }
        });
      }
