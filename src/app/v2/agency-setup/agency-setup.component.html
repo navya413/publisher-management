@@ -9,70 +9,67 @@
     (onRowClick)="onRowClick($event)"
     (onReload)="onReload()"
     [selectable]="true"
+    (onPage)="onPageChange($event)"
     [selectionMode]="'single'"
   >
+    <m-header>
+      <ng-template let-header>
+        <div class="card-header">
+          <button mat-raised-button color="primary" (click)="openAssignAgencyModal($event)" class="btn-margin">Assign Agency</button>
 
-  <m-header>
-    <ng-template let-header>
-      <div class="card-header">
-        <button mat-raised-button color="primary" (click)="openAssignAgencyModal($event)" class="btn-margin">Assign Agency</button>
-
-        <!-- Manage section  -->
-        <button [disabled]="!selectedAgencies.length" mat-raised-button (click)="editMenu.open()" class="btn-margin">
-          <mat-select [disabled]="!selectedAgencies.length" #editMenu placeholder="Manage" class="agencyList">
-            <!-- <mat-option (click)="editPublisher(option)"
+          <!-- Manage section  -->
+          <button [disabled]="!selectedAgencies.length" mat-raised-button (click)="editMenu.open()" class="btn-margin">
+            <mat-select [disabled]="!selectedAgencies.length" #editMenu placeholder="Manage" class="agencyList">
+              <!-- <mat-option (click)="editPublisher(option)"
                 *ngFor="let option of editOptions">{{option.name}}</mat-option> -->
-          </mat-select>
-        </button>
+            </mat-select>
+          </button>
 
-        <!-- Search box -->
-        <div class="box-search btn-margin">
-          <div class="box-search-icon">
-            <button mat-icon-button (click)="getAllPublishers()">
-              <mat-icon class="mat-24" aria-label="Search icon">search</mat-icon>
-            </button>
+          <!-- Search box -->
+          <div class="box-search btn-margin">
+            <div class="box-search-icon">
+              <button mat-icon-button (click)="getAllPublishers()">
+                <mat-icon class="mat-24" aria-label="Search icon">search</mat-icon>
+              </button>
+            </div>
+            <div class="box-search-input-wrapper">
+              <input type="text" [(ngModel)]="filters.query" placeholder="Search..." (keyup.enter)="getAllPublishers()" />
+            </div>
           </div>
-          <div class="box-search-input-wrapper">
-            <input type="text" [(ngModel)]="filters.query" placeholder="Search..." (keyup.enter)="getAllPublishers()" />
+
+          <!-- Status filter -->
+          <button mat-raised-button (click)="statusMenu.open()" class="btn-margin">
+            <mat-select #statusMenu placeholder="Status" [(ngModel)]="filters.status" (change)="getAllPublishers()" class="agencyList">
+              <mat-option *ngFor="let option of statusOptions" [value]="option.value">{{ option.name }}</mat-option>
+            </mat-select>
+          </button>
+
+          <div class="flex-1-end toggle-wrapper">
+            <span class="view-setup-labe">View Setup</span>
+            <mat-slide-toggle [(ngModel)]="setupView" disableRipple="true"></mat-slide-toggle>
           </div>
         </div>
+      </ng-template>
+    </m-header>
 
-        <!-- Status filter -->
-        <button mat-raised-button (click)="statusMenu.open()" class="btn-margin">
-          <mat-select #statusMenu placeholder="Status" [(ngModel)]="filters.status" (change)="getAllPublishers()" class="agencyList">
-            <mat-option *ngFor="let option of statusOptions" [value]="option.value">{{ option.name }}</mat-option>
-          </mat-select>
-        </button>
+    <m-column field="status" header="Active">
+      <ng-template let-col let-row="row" mTemplate="body">
+        <i class="material-icons status-icon active" *ngIf="row.status === 'A'">check_circle</i>
+        <i class="material-icons status-icon paused" *ngIf="row.status !== 'A'">pause_circle_filled</i>
+      </ng-template>
+    </m-column>
 
-        <div class="flex-1-end toggle-wrapper">
-          <span class="view-setup-labe">View Setup</span>
-          <mat-slide-toggle [(ngModel)]="setupView" disableRipple="true"></mat-slide-toggle>
-        </div>
-      </div>
-    </ng-template>
-  </m-header>
-
-  <m-column field="status" header="Active">
-    <ng-template let-col let-row="row" mTemplate="body">
-      <i class="material-icons status-icon active" *ngIf="row.status === 'A'">check_circle</i>
-      <i class="material-icons status-icon paused" *ngIf="row.status !== 'A'">pause_circle_filled</i>
-    </ng-template>
-  </m-column>
-
-  <m-column field="name" header="Agency Name"></m-column>
-  <m-column field="agencyType" header="Agency Type"></m-column>
-  <m-column field="clientsCount"
-              [sortable]="true">
+    <m-column field="name" header="Agency Name"></m-column>
+    <m-column field="agencyType" header="Agency Type"></m-column>
+    <m-column field="clientsCount" [sortable]="true">
       <ng-template mTemplate="header">
         <span>Active</span>
-        <br>
+        <br />
         <span class="sub-header">(Clients)</span>
       </ng-template>
 
-      <ng-template let-col
-                   let-row="row"
-                   mTemplate="body">
-        {{row['clientsCount']}}
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["clientsCount"] }}
       </ng-template>
     </m-column>
 
@@ -92,17 +89,44 @@
 
     <m-column field="frequency" header="Avg.Freq(24 hrs)">
       <ng-template let-col let-row="row" mTemplate="body">
-        {{row.jobRunStats?.day?.frequency}}
+        {{ row.jobRunStats?.day?.frequency }}
       </ng-template>
-  </m-column>
+    </m-column>
 
-  <m-column field="frequency" header="Avg.Freq(Last 7 day)">
+    <m-column field="frequency" header="Avg.Freq(Last 7 day)">
       <ng-template let-col let-row="row" mTemplate="body">
-        {{row.jobRunStats?.week?.frequency}}
+        {{ row.jobRunStats?.week?.frequency }}
       </ng-template>
-  </m-column>
+    </m-column>
 
+    <m-column field="activeClientsCount" [sortable]="true">
+      <ng-template mTemplate="header">
+        <span>Last Access</span>
+        <br />
+        <span class="sub-header">(Feed)</span>
+      </ng-template>
 
-  <m-footer [paginator]="true"></m-footer>
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row.jobRunStats.lastSuccessTimeMillis | date: "MM/dd/yyyy hh:mm:ss" }}
+      </ng-template>
+    </m-column>
+    
+    
+    <m-footer [paginator]="true"
+    [pageSize]="filters.limit"
+    [pageIndex]="filters.page - 1"
+    [pageSizeOptions]="[10,20,50]"
+    [length]="totalResp.totalRecords"></m-footer>
+
+    <ng-template mTemplate="emptyTable">
+      <div *ngIf="loading" class="table-loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <div>Loading...</div>
+      </div>
+
+      <div *ngIf="!loading">
+        <div class="alert alert-primary ma-4">No records found.</div>
+      </div>
+    </ng-template>
   </m-table>
 </div>

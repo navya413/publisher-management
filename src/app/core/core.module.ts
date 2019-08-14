@@ -14,6 +14,7 @@ import { MomentumTableModule } from 'momentum-table';
 import { LocalSearchPipe } from "../services/local-search.pipe";
 
 
+
 @NgModule({
   imports: [
     CommonModule,

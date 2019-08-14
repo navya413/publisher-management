@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssignPublisherComponent } from './assign-publisher.component';
+import { AddAgencyComponent } from './add-agency.component';
 
-describe('AssignPublisherComponent', () => {
-  let component: AssignPublisherComponent;
-  let fixture: ComponentFixture<AssignPublisherComponent>;
+describe('AddAgencyComponent', () => {
+  let component: AddAgencyComponent;
+  let fixture: ComponentFixture<AddAgencyComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AssignPublisherComponent ]
+      declarations: [ AddAgencyComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AssignPublisherComponent);
+    fixture = TestBed.createComponent(AddAgencyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -8,9 +8,10 @@
 
 <div class="pa-2">
   <m-table
-    [value]="agencies"
+    [value]="totalResp.data"
     (onFilter)="onFilter($event)"
     (onRowClick)="onRowClick($event)"
+    (onPage)="onPageChange($event)"
     (onReload)="onReload()"
     [selectable]="false"
     [selectionHandler]="false"
@@ -18,6 +19,7 @@
     <m-header>
       <ng-template let-header>
         <div class="card-header">
+          <button mat-raised-button color="primary" (click)="openAgencyAddDialog($event)" class="btn-margin">Add Agency</button>
           <div class="box-search btn-margin">
             <div class="box-search-icon">
               <button mat-icon-button (click)="getAgencies()">
@@ -34,7 +36,11 @@
 
     <!-- <m-header [title]="'Agencies'" [globalSearch]="true" [searchField]="'box'" [colSetting]="false" [export]="true"> </m-header> -->
 
-    <m-footer [paginator]="true"></m-footer>
+    <m-footer [paginator]="true"
+    [pageSize]="filters.limit"
+    [pageIndex]="filters.page - 1"
+    [pageSizeOptions]="[10,20,50]"
+    [length]="totalResp.totalRecords"></m-footer>
 
     <m-column field="name" header="Agency Name"></m-column>
 
@@ -50,6 +56,10 @@
       <div *ngIf="loading" class="table-loading">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         <div>Loading...</div>
+      </div>
+      
+      <div *ngIf="!loading">
+        <div class="alert alert-primary ma-4">No records found.</div>
       </div>
     </ng-template>
   </m-table>

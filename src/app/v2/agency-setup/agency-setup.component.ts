@@ -3,7 +3,7 @@ import { BreadcrumbSegment } from '../../core/components/breadcrumb/breadcrumb.m
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { MatDialog } from '@angular/material';
-import { AssignPublisherComponent } from '../assign-publisher/assign-publisher.component';
+import { AssignEntityComponent } from '../assign-entity/assign-entity.component';
 
 @Component({
   selector: 'app-agency-setup',
@@ -14,9 +14,11 @@ export class AgencySetupComponent implements OnInit {
   breadcrumbSegments: BreadcrumbSegment[] = [];
   publisherId: string;
   setupView : boolean = true;
+  loading : boolean = true;
   agencies = []
+  totalResp :any = {}
   selectedAgencies = [];
-  filters = {}
+  filters = {page:1,limit:10}
 
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -34,16 +36,27 @@ export class AgencySetupComponent implements OnInit {
     let url = "/api/loki/admin/publisher/"+ this.publisherId +"/agency/setup"
     this.apiService.get(url).subscribe((resp:any)=>{
       this.agencies = resp.data;
+      this.totalResp = resp;
+      this.loading = false;
     })
   }
 
+  onPageChange(pageData) {
+    this.filters.page = pageData.pageIndex + 1;
+    this.filters.limit = pageData.pageSize;
+    this.getAgenciesSetup();
+  }
+
+  viewContactDetails(row:any){
+    console.log(row)
+  }
 
   buildBreadcrumb() {
     this.breadcrumbSegments = [{ label: "All Publishers", url: ["../../..", "publishers"] }, { label: "Agency : ", subTitle: this.publisherId }];
   }
 
   openAssignAgencyModal(){
-    let dialogRef = this.dialog.open(AssignPublisherComponent, {
+    let dialogRef = this.dialog.open(AssignEntityComponent, {
       panelClass: 'app-full-bleed-dialog',
        width: '500px',
        minWidth : '500',

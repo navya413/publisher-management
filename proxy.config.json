@@ -4,12 +4,12 @@
     "secure": false
   },
   "/api": {
-    "target": "http://54.92.216.47:11001",
+    "target": "http://172.16.1.177:11001",
     "secure": false,
     "logLevel": "debug"
   },
   "/thor/api": {
-    "target": "http://54.92.216.47:11001",
+    "target": "http://172.16.1.177:11001",
     "secure": false
   },
   "/gandalf/app/": {
@@ -17,7 +17,7 @@
     "secure": false
   },
   "/papi": {
-    "target": "http://54.92.216.47:11001",
+    "target": "http://172.16.1.177:11001",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

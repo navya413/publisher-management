@@ -3,11 +3,11 @@ import { ApiService } from '../../services/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-  selector: 'app-assign-publisher',
-  templateUrl: './assign-publisher.component.html',
-  styleUrls: ['./assign-publisher.component.scss']
+  selector: 'app-assign-entity',
+  templateUrl: './assign-entity.component.html',
+  styleUrls: ['./assign-entity.component.scss']
 })
-export class AssignPublisherComponent implements OnInit {
+export class AssignEntityComponent implements OnInit {
   publishers = []
   searchText = ""
   inputData :any
@@ -16,7 +16,7 @@ export class AssignPublisherComponent implements OnInit {
   
   constructor(private apiService  : ApiService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<AssignPublisherComponent>) { 
+    public dialogRef: MatDialogRef<AssignEntityComponent>) { 
       this.inputData = data;
       this.getTitle();
     }
@@ -52,7 +52,7 @@ export class AssignPublisherComponent implements OnInit {
     data[this.inputData.entityAddKey] = entityIds
 
     this.apiService.post(this.entityCreateUrl(),data).subscribe((resp:any)=>{
-      this.dialogRef.close()
+      this.dialogRef.close(resp)
     })
   }
 
@@ -85,7 +85,7 @@ export class AssignPublisherComponent implements OnInit {
     }
 
     if (this.inputData.setupType === "agency"){
-      return "/api/loki/publisher/"+this.inputData.entityId+"/agency/add"
+      return "/api/loki/admin/publisher/"+this.inputData.entityId+"/agency/add"
     }
     return ""
   }

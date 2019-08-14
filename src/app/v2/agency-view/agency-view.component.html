@@ -6,9 +6,11 @@
   <m-table
     [value]="publishers"
     (onFilter)="onFilter($event)"
-    (onRowClick)="onRowClick($event)"
     (onReload)="onReload()"
     [selectable]="true"
+    (onPage)="onPageChange($event)"
+    [selection] = "selectedPublishers"
+    (selectionChange)="onRowSelectionChange($event)"
     [selectionMode]="'single'"
   >
     <m-header>
@@ -19,8 +21,8 @@
           <!-- Manage section  -->
           <button [disabled]="!selectedPublishers.length" mat-raised-button (click)="editMenu.open()" class="btn-margin">
             <mat-select [disabled]="!selectedPublishers.length" #editMenu placeholder="Manage" class="agencyList">
-              <!-- <mat-option (click)="editPublisher(option)"
-                  *ngFor="let option of editOptions">{{option.name}}</mat-option> -->
+              <mat-option (click)="editPublisher(option)"
+                  *ngFor="let option of editOptions">{{option.name}}</mat-option>
             </mat-select>
           </button>
 
@@ -90,9 +92,20 @@
     <m-column field="publisherModel" header="Publisher Model"></m-column>
     <m-column field="currency" header="Currency"></m-column>
     <m-column field="minBid" header="Min Bid"></m-column>
-    <m-column field="vpAccessMails" header="VP Access"></m-column>
-    <m-column field="notificationMails" header="Notifications"></m-column>
-    
+
+    <m-column field="vpAccess" header="VP Access">
+      <ng-template let-col let-row="row" mTemplate="body">
+        <span [class.cursor]="row.vpAccess && row.vpAccess.length > 0" (click)="viewContactDetails(row.vpAccess)">{{getContactsCount(row.vpAccess,'Email')}}</span>
+      </ng-template>
+    </m-column>
+
+
+    <m-column field="notificationMails" header="Notifications">
+      <ng-template let-col let-row="row" mTemplate="body">
+        <span [class.cursor]="row.notificationMails && row.notificationMails.length > 0" (click)="viewContactDetails(row.notificationMails)">{{getContactsCount(row.notificationMails,'Contact')}}</span>
+      </ng-template>
+    </m-column>
+
     <m-column field="reconciliation" header="Reconciliation">
       <ng-template let-col let-row="row" mTemplate="body">
         <i class="material-icons status-icon active" *ngIf="row.reconciliation">check_circle</i>
@@ -100,19 +113,71 @@
       </ng-template>
     </m-column>
 
-    <m-column field="feedType" header="Avg.Freq(24 hrs)">
-        <ng-template let-col let-row="row" mTemplate="body">
-          {{row.jobRunStats?.day?.frequency}}
-        </ng-template>
+
+    <m-column field="activeClientsCount"
+              [sortable]="true">
+      <ng-template mTemplate="header">
+        <span>Avg.Freq</span>
+        <br>
+        <span class="sub-header">(24 hrs)</span>
+      </ng-template>
+
+      <ng-template let-col
+                   let-row="row"
+                   mTemplate="body">
+        {{row.jobRunStats?.day?.frequency}}
+      </ng-template>
     </m-column>
 
-    <m-column field="feedType" header="Avg.Freq(Last 7 day)">
-        <ng-template let-col let-row="row" mTemplate="body">
-          {{row.jobRunStats?.week?.frequency}}
-        </ng-template>
+
+    <m-column field="activeClientsCount"
+          [sortable]="true">
+      <ng-template mTemplate="header">
+      <span>Avg.Freq</span>
+      <br>
+      <span class="sub-header">(Last 7 days)</span>
+      </ng-template>
+
+      <ng-template let-col
+              let-row="row"
+              mTemplate="body">
+        {{row.jobRunStats?.week?.frequency}}
+      </ng-template>
     </m-column>
 
-    <m-footer [paginator]="true"></m-footer>
+    <m-column field="activeClientsCount"
+          [sortable]="true">
+      <ng-template mTemplate="header">
+      <span>Last Access</span>
+      <br>
+      <span class="sub-header">(Feed)</span>
+      </ng-template>
+
+      <ng-template let-col
+              let-row="row"
+              mTemplate="body">
+          {{row.jobRunStats?.lastSuccessTimeMillis | date:"MM/dd/yyyy hh:mm:ss"}}
+      </ng-template>
+    </m-column>
+
+
+    <m-footer [paginator]="true"
+    [pageSize]="filters.limit"
+    [pageIndex]="filters.page - 1"
+    [pageSizeOptions]="[10,20,50]"
+    [length]="totalResp.totalRecords"></m-footer>
+
+    <ng-template mTemplate="emptyTable">
+      <div *ngIf="loading" class="table-loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <div>Loading...</div>
+      </div>
+
+      <div *ngIf="!loading">
+        <div class="alert alert-primary ma-4">No records found.</div>
+      </div>
+      
+    </ng-template>
   </m-table>
 </div>
 

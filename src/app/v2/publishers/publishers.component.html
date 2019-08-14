@@ -7,7 +7,9 @@
 </div>
 
 <div class="pa-2">
-  <m-table [value]="publishers" [selectable]="true" [selectionMode]="'single'"
+  <m-table [value]="totalResp.data" 
+  (onPage)="onPageChange($event)"
+  [selectable]="true" [selectionMode]="'single'"
   (onRowClick)="onRowClick($event)" (onReload)="onReload()">
     
   <m-header>
@@ -41,7 +43,7 @@
             </div>
           </div>
 
-          <button
+          <!-- <button
             mat-raised-button
             (click)=statusMenu.open()
             class="btn-margin">
@@ -54,11 +56,10 @@
               <mat-option
                   *ngFor="let option of statusOptions" [value]="option.value">{{option.name}}</mat-option>
             </mat-select>
-          </button>
+          </button> -->
         </div>
       </ng-template>
     </m-header>
-    <m-footer [paginator]="true"></m-footer>
     <m-column field="status"
               header="Active"
               >
@@ -109,13 +110,34 @@
     <m-column field="bidType" header="Bid Type"></m-column>
     <m-column field="currency" header="Currency"></m-column>
     <m-column field="minBid" header="Min Bid"></m-column>
-    <m-column field="vpAccessMails" header="VP Access"></m-column>
-    <m-column field="notificationMails" header="Notifications"></m-column>
+
+    <m-column field="vpAccessMails" header="VP Access">
+      <ng-template let-col let-row="row" mTemplate="body">
+        <span [class.cursor]="row.vpAccessMails && row.vpAccessMails.length > 0" (click)="viewContactDetails(row.vpAccessMails)">{{getContactsCount(row.vpAccessMails,'Email')}}</span>
+      </ng-template>
+    </m-column>
+
+
+    <m-column field="notificationMails" header="Notifications">
+      <ng-template let-col let-row="row" mTemplate="body">
+        <span [class.cursor]="row.notificationMails && row.notificationMails.length > 0" (click)="viewContactDetails(row.notificationMails)">{{getContactsCount(row.notificationMails,'Contact')}}</span>
+      </ng-template>
+    </m-column>
+
+    <m-footer [paginator]="true"
+    [pageSize]="filters.limit"
+    [pageIndex]="filters.page - 1"
+    [pageSizeOptions]="[10,20,50]"
+    [length]="totalResp.totalRecords"></m-footer>
 
     <ng-template mTemplate="emptyTable">
       <div *ngIf="loading" class="table-loading">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         <div>Loading...</div>
+      </div>
+
+      <div *ngIf="!loading">
+        <div class="alert alert-primary ma-4">No records found.</div>
       </div>
     </ng-template>
   </m-table>

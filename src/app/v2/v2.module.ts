@@ -11,11 +11,11 @@ import { ApiService } from '../services/api.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgencyViewComponent } from './agency-view/agency-view.component';
 import { PublisherViewComponent } from './publisher-view/publisher-view.component';
-import { AssignPublisherComponent } from './assign-publisher/assign-publisher.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from '../home/token.interceptor';
+import { AssignEntityComponent } from './assign-entity/assign-entity.component';
 import { PublisherStatsComponent } from './publisher-stats/publisher-stats.component';
 import { AgencySetupComponent } from './agency-setup/agency-setup.component';
+import { ViewContactsComponent } from './view-contacts/view-contacts.component';
+import { AddAgencyComponent } from './add-agency/add-agency.component';
 
 @NgModule({
   imports: [
@@ -25,8 +25,8 @@ import { AgencySetupComponent } from './agency-setup/agency-setup.component';
     V2RoutingModule,
     CoreModule
   ],
-  entryComponents : [AssignPublisherComponent],
-  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignPublisherComponent, PublisherStatsComponent, AgencySetupComponent],
+  entryComponents : [AssignEntityComponent,ViewContactsComponent,AddAgencyComponent],
+  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent],
   providers : [ApiService]
 })
 export class V2Module { }

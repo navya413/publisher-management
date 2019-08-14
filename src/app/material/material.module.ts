@@ -25,7 +25,8 @@ import {
   MatSlideToggleModule,
   MatStepperModule,
   MatButtonToggleModule,
-  MatChipsModule
+  MatChipsModule,
+  MatSnackBarModule
 } from '@angular/material';
 import {SvgIconsComponent} from './svg-icons/svg-icons.component';
 
@@ -56,7 +57,8 @@ import {SvgIconsComponent} from './svg-icons/svg-icons.component';
     MatMenuModule,
     MatSlideToggleModule,
     MatStepperModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSnackBarModule
   ],
   exports: [
     MatToolbarModule,
@@ -85,7 +87,8 @@ import {SvgIconsComponent} from './svg-icons/svg-icons.component';
     MatSlideToggleModule,
     MatStepperModule,
     MatChipsModule,
-    SvgIconsComponent
+    SvgIconsComponent,
+    MatSnackBarModule
   ],
   declarations: [SvgIconsComponent]
 })
