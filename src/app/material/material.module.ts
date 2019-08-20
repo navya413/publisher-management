@@ -28,6 +28,7 @@ import {
   MatChipsModule,
   MatSnackBarModule
 } from '@angular/material';
+
 import {SvgIconsComponent} from './svg-icons/svg-icons.component';
 
 @NgModule({

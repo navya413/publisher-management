@@ -16,6 +16,7 @@ import { PublisherStatsComponent } from './publisher-stats/publisher-stats.compo
 import { AgencySetupComponent } from './agency-setup/agency-setup.component';
 import { ViewContactsComponent } from './view-contacts/view-contacts.component';
 import { AddAgencyComponent } from './add-agency/add-agency.component';
+import { V2Service } from './v2.service';
 
 @NgModule({
   imports: [
@@ -27,6 +28,6 @@ import { AddAgencyComponent } from './add-agency/add-agency.component';
   ],
   entryComponents : [AssignEntityComponent,ViewContactsComponent,AddAgencyComponent],
   declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent],
-  providers : [ApiService]
+  providers : [ApiService,V2Service]
 })
 export class V2Module { }

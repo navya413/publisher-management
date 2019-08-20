@@ -6,7 +6,6 @@ import { StatsComponent } from './stats.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
-import { StatsService } from './services/stats.service';
 import { MomentumTableModule } from 'momentum-table';
 import { StatsTableComponent } from './stats-table/stats-table.component';
 import { StatsPopupComponent } from './stats-popup/stats-popup.component';
@@ -22,7 +21,7 @@ import { CoreModule } from '../core/core.module';
     MomentumTableModule,
     CoreModule,
   ],
-  providers: [StatsService],
+  providers: [],
   declarations: [
     ClientsStatsComponent,
     StatsComponent,

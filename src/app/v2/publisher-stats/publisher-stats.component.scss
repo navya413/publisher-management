@@ -1,0 +1,12 @@
+@import "../../../scss/v2";
+
+::ng-deep .border-right{
+    border-right: 1px solid #e0e0e0;;
+}
+
+:host ::ng-deep .left-sticky {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: #fff;
+}

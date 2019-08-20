@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { BreadcrumbSegment } from "../../core/components/breadcrumb/breadcrumb.model";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../services/api.service";
 import { AssignEntityComponent } from "../assign-entity/assign-entity.component";
 import { MatDialog, MatSnackBar } from "@angular/material";
@@ -22,6 +22,8 @@ export class AgencyViewComponent implements OnInit {
   statusOptions = [{ name: "All", value: "All" }, { name: "Active", value: "active" }, { name: "Paused", value: "inactive" }];
   setupView:boolean = true;
   loading : boolean = true;
+  selectedView:string = "Settings";
+  viewOptions :string[]  = ["Settings","Stats","Billing","Clicks"]
 
   modelsOptions = [
     { name: "Select Model", value: "" },
@@ -35,6 +37,7 @@ export class AgencyViewComponent implements OnInit {
   ];
   constructor(private activatedRoute: ActivatedRoute,
     private snackbar : MatSnackBar,
+    private router : Router,
     private apiService : ApiService,private dialog: MatDialog) {}
 
   ngOnInit() {
@@ -51,6 +54,11 @@ export class AgencyViewComponent implements OnInit {
       console.log(":::::",this.totalResp.totalRecords)
       this.loading = false;
     })
+  }
+
+  changeView(){
+    console.log(":::::",this.selectedView)
+    this.router.navigate(["v2","agency",this.agencyId,this.selectedView.toLowerCase()])
   }
 
   onPageChange(pageData) {

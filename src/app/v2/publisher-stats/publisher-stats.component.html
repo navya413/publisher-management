@@ -1,11 +1,394 @@
-<div class="pa-2" *ngIf="setupView">
-    <m-table
-      [value]="stats"
-      (onFilter)="onFilter($event)"
-      (onRowClick)="onRowClick($event)"
-      (onReload)="onReload()"
-      [selectable]="true"
-      [selectionMode]="'single'"
+<div class="head">
+  <app-breadcrumb [segments]="breadcrumbSegments"></app-breadcrumb>
+</div>
+
+
+<div class="pa-2">
+  <m-table
+    [value]="totalStatsResp.data"
+    (onFilter)="onFilter($event)"
+    selection="false"
+    [selectionHandler]="false"
+    (onRowClick)="onRowClick($event)"
+    (onReload)="onReload()"
+  >
+    <m-header>
+      <ng-template let-header>
+        <div class="card-header">
+          <div class="btn-margin">
+            <jv-date-range
+              [displayFormat]="'MMM DD, YY'"
+              [min]="minDate"
+              [max]="maxDate"
+              [presets]="datePresets"
+              (dateChange)="onDateChange($event)"
+              [(ngModel)]="dateRange"
+              [direction]="'right'"
+            ></jv-date-range>
+          </div>
+          <!-- 
+          <button mat-raised-button class="select-timezone-btn" (click)=timezoneMenu.open()>
+              <mat-select #timezoneMenu placeholder="Select Timezone" [(ngModel)]="pubMonitorService.timezoneId">
+                <mat-option (click)="onTimezoneChange(timezone.id)" *ngFor="let timezone of pubMonitorService.timezones" [value]="timezone.id">{{timezone.value}} ({{timezone.id}})</mat-option>
+              </mat-select>
+          </button> -->
+
+          <!-- View Settings filter -->
+          <button mat-raised-button (click)="viewMenu.open()" class="btn-margin">
+            <mat-select #viewMenu placeholder="View" [(ngModel)]="selectedView" class="agencyList">
+              <mat-option *ngFor="let option of viewOptions" [value]="option" (click)="v2Service.changeView(agencyId, option)">{{
+                option
+              }}</mat-option>
+            </mat-select>
+          </button>
+        </div>
+      </ng-template>
+    </m-header>
+
+    <!-- With sub header -->
+    <m-column [field]="'name'" [header]="'Publisher Name'" [colBodyClass]="'left-sticky'" [colHeadClass]="'left-sticky'">
+      <ng-template let-col let-row="row" mTemplate="body">
+        <span>{{ row["name"] }}</span>
+      </ng-template>
+      <div>
+        <ng-template mTemplate="subHeader">
+          <span style="float: right">Compare with</span>
+        </ng-template>
+      </div>
+    </m-column>
+
+    <!-- Joveo clicks -->
+    <m-column
+      [field]="'clicks'"
+      [sortable]="true"
     >
-    </m-table>
-  </div>
+
+      <ng-template mTemplate="header">
+        <span>Joveo</span>
+        <br>
+        <span class="sub-header">Clicks</span>
+      </ng-template>
+
+
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["clicks"]["joveo"]?.toLocaleString() }}
+      </ng-template>
+
+      <ng-template mTemplate="subHeader">
+        <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+          <button
+            mat-menu-item
+            class="mat-menu-item--compact"
+            *ngFor="let menu of compareOptions.joveo_clicks"
+            (click)="onMenuSelection('Joveo Clicks', menu)"
+          >
+            {{ menu }}
+          </button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+          <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+        </button>
+      </ng-template>
+    </m-column>
+
+    <!-- Pub Rec clicks -->
+    <m-column
+      [field]="'pubStats.clicks'"
+      [sortable]="true"
+    >
+
+     <ng-template mTemplate="header">
+        <span>Pub Rec</span>
+        <br>
+        <span class="sub-header">Clicks</span>
+      </ng-template>
+
+
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["clicks"]["pub"]?.toLocaleString() }}
+      </ng-template>
+      <ng-template mTemplate="subHeader">
+        <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+          <button
+            mat-menu-item
+            class="mat-menu-item--compact"
+            *ngFor="let menu of compareOptions.pubrec_clicks"
+            (click)="onMenuSelection('Pub Rec Clicks', menu)"
+          >
+            {{ menu }}
+          </button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+          <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+        </button>
+      </ng-template>
+    </m-column>
+
+    <!-- CM clicks -->
+    <m-column
+      [field]="'cmStats.clicks'"
+      [sortable]="true"
+    >
+      <ng-template mTemplate="header">
+        <span>CM</span>
+        <br>
+        <span class="sub-header">Clicks</span>
+      </ng-template>
+
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["clicks"]["cm"]?.toLocaleString() }}
+      </ng-template>
+      <ng-template mTemplate="subHeader">
+        <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of cm_clicks" (click)="onMenuSelection('CM Clicks', menu)">
+            {{ menu }}
+          </button>
+        </mat-menu>
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="appMenu"
+          #trigger="matMenuTrigger"
+        >
+          <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+        </button>
+      </ng-template>
+    </m-column>
+
+    <!-- CH clicks -->
+    <m-column
+      [field]="'clicks.ch'"
+      [sortable]="true"
+      [colBodyClass]="'border-right'"
+      [colHeadClass]="'border-right'"
+    >
+      <ng-template mTemplate="header">
+        <span>CH</span>
+        <br>
+        <span class="sub-header">Clicks</span>
+      </ng-template>
+      
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["clicks"]["ch"]?.toLocaleString() }}
+      </ng-template>
+      <ng-template mTemplate="subHeader">
+        <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of ch_clicks" (click)="onMenuSelection('CM Clicks', menu)">
+            {{ menu }}
+          </button>
+        </mat-menu>
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="appMenu"
+          #trigger="matMenuTrigger"
+        >
+          <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+        </button>
+      </ng-template>
+    </m-column>
+
+    <!-- Joveo spend -->
+    <m-column
+      [field]="'spend'"
+      [sortable]="true"
+    >
+
+      <ng-template mTemplate="header">
+        <span>Joveo</span>
+        <br>
+        <span class="sub-header">Spend</span>
+      </ng-template>
+      
+
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["spend"]["joveo"]?.toLocaleString() }}
+      </ng-template>
+
+      <ng-template mTemplate="subHeader">
+        <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+          <button
+            mat-menu-item
+            class="mat-menu-item--compact"
+            *ngFor="let menu of compareOptions.joveo_spend"
+            (click)="onMenuSelection('Joveo Clicks', menu)"
+          >
+            {{ menu }}
+          </button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+          <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+        </button>
+      </ng-template>
+    </m-column>
+
+    <!-- Pub Rec spend -->
+    <m-column
+      [field]="'spend'"
+      [sortable]="true"
+    >
+      <ng-template mTemplate="header">
+        <span>Pub Rec</span>
+        <br>
+        <span class="sub-header">Spend</span>
+      </ng-template>
+      
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["spend"]["pub"]?.toLocaleString() }}
+      </ng-template>
+
+      <ng-template mTemplate="subHeader">
+        <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+          <button
+            mat-menu-item
+            class="mat-menu-item--compact"
+            *ngFor="let menu of compareOptions.pub_spend"
+            (click)="onMenuSelection('Joveo Clicks', menu)"
+          >
+            {{ menu }}
+          </button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+          <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+        </button>
+      </ng-template>
+    </m-column>
+
+    <!-- Webscrape Spend -->
+    <m-column
+      [field]="'spend'"
+      [sortable]="true"
+    >
+      <ng-template mTemplate="header">
+        <span>Webscrape</span>
+        <br>
+        <span class="sub-header">Spend</span>
+      </ng-template>
+
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["spend"]["pubPortal"] }}
+      </ng-template>
+      <ng-template mTemplate="subHeader">
+        <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of compareOptions.web_spend" (click)="onMenuSelection('Webscrape Spend', menu)">
+            {{ menu }}
+          </button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+          <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+        </button>
+      </ng-template>
+    </m-column>
+
+
+    <!-- HC Spend -->
+    <m-column
+      [field]="'spend'"
+      [sortable]="true"
+      [colBodyClass]="bodyClassDecider('spend', 'web') ? 'highlight' : 'border-right'"
+      [colHeadClass]="bodyClassDecider('spend', 'web') ? 'highlight' : 'border-right'"
+    >
+
+      <ng-template mTemplate="header">
+        <span>HC</span>
+        <br>
+        <span class="sub-header">Spend</span>
+      </ng-template>
+
+
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["spend"]["ch"] }}
+      </ng-template>
+      <ng-template mTemplate="subHeader">
+        <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of compareOptions.ch_spend" (click)="onMenuSelection('Webscrape Spend', menu)">
+            {{ menu }}
+          </button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+          <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
+        </button>
+      </ng-template>
+    </m-column>
+
+    <!-- Joveo Applies -->
+    <m-column
+      [field]="'applies'"
+      [sortable]="true"
+      [colBodyClass]="bodyClassDecider('applies', 'joveo') ? 'highlight border-left' : 'border-left'"
+      [colHeadClass]="bodyClassDecider('applies', 'joveo') ? 'highlight border-left' : 'border-left'"
+    >
+      <ng-template mTemplate="header">
+        <span>Joveo</span>
+        <br>
+        <span class="sub-header">Applies</span>
+      </ng-template>
+
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["applies"]["joveo"]?.toLocaleString() }}
+      </ng-template>
+    </m-column>
+
+    <!-- Pub Rec Applies -->
+    <m-column
+      [field]="'applies'"
+      [sortable]="true"
+      [colBodyClass]="bodyClassDecider('applies', 'pub') ? 'highlight' : ''"
+      [colHeadClass]="bodyClassDecider('applies', 'pub') ? 'highlight' : ''"
+    >
+      <ng-template mTemplate="header">
+        <span>Pub Rec</span>
+        <br>
+        <span class="sub-header">Applies</span>
+      </ng-template>
+
+
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["applies"]["pub"]?.toLocaleString() }}
+      </ng-template>
+    </m-column>
+
+    <!-- CM Applies -->
+    <m-column
+      [field]="'applies'"
+      [sortable]="true"
+    >
+      <ng-template mTemplate="header">
+        <span>CM</span>
+        <br>
+        <span class="sub-header">Applies</span>
+      </ng-template>
+
+      <ng-template let-col let-row="row" mTemplate="body">
+        {{ row["applies"]["cm"]?.toLocaleString() }}
+      </ng-template>
+    </m-column>
+
+
+     <!-- Joveo CTA -->
+     <m-column
+     [field]="'joveoCTAPerc'"
+     [sortable]="true"
+   >
+     <ng-template mTemplate="header">
+       <span>Joveo</span>
+       <br>
+       <span class="sub-header">CTA(%)</span>
+     </ng-template>
+
+     <ng-template let-col let-row="row" mTemplate="body">
+       {{ row["joveoCTAPerc"]}}
+     </ng-template>
+   </m-column>
+
+
+    <ng-template mTemplate="emptyTable">
+      <div *ngIf="loading" class="table-loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <div>Loading...</div>
+      </div>
+
+      <div *ngIf="!loading">
+        <div class="alert alert-primary ma-4">No records found.</div>
+      </div>
+    </ng-template>
+  </m-table>
+</div>

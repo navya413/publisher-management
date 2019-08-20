@@ -12,6 +12,7 @@ import { NgxDaterangepickerMd } from '../daterangepicker/daterangepicker.module'
 import {DateRangeOldComponent} from './components/date-range/date-range.component';
 import { MomentumTableModule } from 'momentum-table';
 import { LocalSearchPipe } from "../services/local-search.pipe";
+import { StatsService } from '../stats/services/stats.service';
 
 
 
@@ -33,6 +34,7 @@ import { LocalSearchPipe } from "../services/local-search.pipe";
     EmptyViewComponent,
     LocalSearchPipe
   ],
+  providers : [StatsService],
   exports: [
     DateRangeComponent,
     DateRangeOldComponent,
