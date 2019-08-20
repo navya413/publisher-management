@@ -61,6 +61,8 @@
     <m-column
       [field]="'clicks'"
       [sortable]="true"
+      [colBodyClass]="bodyClassDecider('Joveo Clicks') ? 'highlight border-left' : 'border-left'"
+      [colHeadClass]="bodyClassDecider('Joveo Clicks') ? 'highlight border-left' : 'border-left'"
     >
 
       <ng-template mTemplate="header">
@@ -79,13 +81,13 @@
           <button
             mat-menu-item
             class="mat-menu-item--compact"
-            *ngFor="let menu of compareOptions.joveo_clicks"
-            (click)="onMenuSelection('Joveo Clicks', menu)"
+            *ngFor="let menu of comparemenu"
+            (click)="onMenuSelection('clicks','joveo',menu)"
           >
-            {{ menu }}
+            {{ menu.label }}
           </button>
         </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger" (click)="showClicksCompareEntities('Joveo Clicks');">
           <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
         </button>
       </ng-template>
@@ -95,6 +97,8 @@
     <m-column
       [field]="'pubStats.clicks'"
       [sortable]="true"
+      [colBodyClass]="bodyClassDecider('Pub Rec Clicks') ? 'highlight border-left' : 'border-left'"
+      [colHeadClass]="bodyClassDecider('Pub Rec Clicks') ? 'highlight border-left' : 'border-left'"
     >
 
      <ng-template mTemplate="header">
@@ -112,13 +116,13 @@
           <button
             mat-menu-item
             class="mat-menu-item--compact"
-            *ngFor="let menu of compareOptions.pubrec_clicks"
-            (click)="onMenuSelection('Pub Rec Clicks', menu)"
+            *ngFor="let menu of comparemenu"
+            (click)="onMenuSelection('clicks','pub',menu)"
           >
-            {{ menu }}
+            {{ menu.label }}
           </button>
         </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger" (click)="showClicksCompareEntities('Pub Rec Clicks');">
           <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
         </button>
       </ng-template>
@@ -128,6 +132,8 @@
     <m-column
       [field]="'cmStats.clicks'"
       [sortable]="true"
+      [colBodyClass]="bodyClassDecider('CM Clicks') ? 'highlight border-left' : 'border-left'"
+      [colHeadClass]="bodyClassDecider('CM Clicks') ? 'highlight border-left' : 'border-left'"
     >
       <ng-template mTemplate="header">
         <span>CM</span>
@@ -140,14 +146,15 @@
       </ng-template>
       <ng-template mTemplate="subHeader">
         <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
-          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of cm_clicks" (click)="onMenuSelection('CM Clicks', menu)">
-            {{ menu }}
+          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of comparemenu" (click)="onMenuSelection('clicks','cm',menu)">
+            {{ menu.label }}
           </button>
         </mat-menu>
         <button
           mat-icon-button
           [matMenuTriggerFor]="appMenu"
           #trigger="matMenuTrigger"
+          (click)="showClicksCompareEntities('CM Clicks');"
         >
           <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
         </button>
@@ -158,8 +165,8 @@
     <m-column
       [field]="'clicks.ch'"
       [sortable]="true"
-      [colBodyClass]="'border-right'"
-      [colHeadClass]="'border-right'"
+      [colBodyClass]="bodyClassDecider('CH Clicks') ? 'highlight border-right' : 'border-right'"
+      [colHeadClass]="bodyClassDecider('CH Clicks') ? 'highlight border-right' : 'border-right'"
     >
       <ng-template mTemplate="header">
         <span>CH</span>
@@ -172,24 +179,55 @@
       </ng-template>
       <ng-template mTemplate="subHeader">
         <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
-          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of ch_clicks" (click)="onMenuSelection('CM Clicks', menu)">
-            {{ menu }}
+          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of comparemenu" (click)="onMenuSelection('clicks','ch',menu)">
+            {{ menu.label }}
           </button>
         </mat-menu>
         <button
           mat-icon-button
           [matMenuTriggerFor]="appMenu"
           #trigger="matMenuTrigger"
+          (click)="showClicksCompareEntities('CH Clicks');"
         >
           <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
         </button>
       </ng-template>
     </m-column>
 
+
+    <m-column [field]="compareClicksKey"
+                [sortable]="false"
+                [colHeadClass]="'highlight border-right'"
+                [colBodyClass]="'highlight border-right'"
+                *ngIf="compareClicksKey">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div matTooltip="{{compareTooltip}}" [matTooltipPosition]="'above'">
+            <div class="normal-linehight">Clicks</div>
+            <span>Diff (%)</span>
+          </div>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+            <span [ngClass]="row[compareClicksKey] > 3 || row[compareClicksKey] < -3  ? 'redmarked' : ''">
+              {{row[compareClicksKey]}}</span>
+        </ng-template>
+        <ng-template mTemplate="subHeader">
+          <button mat-icon-button (click)="onCloseCompare('clicks')">
+            <mat-icon color="primary">compare_arrows</mat-icon>
+          </button>
+        </ng-template>
+    </m-column>
+
+
     <!-- Joveo spend -->
     <m-column
       [field]="'spend'"
       [sortable]="true"
+      [colBodyClass]="bodyClassDecider('Joveo Spend') ? 'highlight border-right' : 'border-right'"
+      [colHeadClass]="bodyClassDecider('Joveo Spend') ? 'highlight border-right' : 'border-right'"
     >
 
       <ng-template mTemplate="header">
@@ -208,13 +246,12 @@
           <button
             mat-menu-item
             class="mat-menu-item--compact"
-            *ngFor="let menu of compareOptions.joveo_spend"
-            (click)="onMenuSelection('Joveo Clicks', menu)"
-          >
-            {{ menu }}
+            *ngFor="let menu of comparemenu"
+            (click)="onSpendMenuSelection('spend','joveo',menu)">
+            {{ menu.label }}
           </button>
         </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger" (click)="showSpendCompareEntities('Joveo Spend');" >
           <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
         </button>
       </ng-template>
@@ -224,6 +261,8 @@
     <m-column
       [field]="'spend'"
       [sortable]="true"
+      [colBodyClass]="bodyClassDecider('Pub Rec Spend') ? 'highlight border-right' : 'border-right'"
+      [colHeadClass]="bodyClassDecider('Pub Rec Spend') ? 'highlight border-right' : 'border-right'"
     >
       <ng-template mTemplate="header">
         <span>Pub Rec</span>
@@ -240,13 +279,12 @@
           <button
             mat-menu-item
             class="mat-menu-item--compact"
-            *ngFor="let menu of compareOptions.pub_spend"
-            (click)="onMenuSelection('Joveo Clicks', menu)"
-          >
-            {{ menu }}
+            *ngFor="let menu of comparemenu"
+            (click)="onSpendMenuSelection('spend','pub',menu)">
+            {{ menu.label }}
           </button>
         </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger" (click)="showSpendCompareEntities('Pub Rec Spend');">
           <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
         </button>
       </ng-template>
@@ -256,6 +294,8 @@
     <m-column
       [field]="'spend'"
       [sortable]="true"
+      [colBodyClass]="bodyClassDecider('Webscrape Spend') ? 'highlight border-right' : 'border-right'"
+      [colHeadClass]="bodyClassDecider('Webscrape Spend') ? 'highlight border-right' : 'border-right'"
     >
       <ng-template mTemplate="header">
         <span>Webscrape</span>
@@ -268,27 +308,28 @@
       </ng-template>
       <ng-template mTemplate="subHeader">
         <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
-          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of compareOptions.web_spend" (click)="onMenuSelection('Webscrape Spend', menu)">
-            {{ menu }}
+          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of comparemenu" 
+          (click)="onSpendMenuSelection('spend','pubPortal',menu)">
+            {{ menu.label }}
           </button>
         </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger" (click)="showSpendCompareEntities('Webscrape Spend');">
           <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
         </button>
       </ng-template>
     </m-column>
 
 
-    <!-- HC Spend -->
+    <!-- CH Spend -->
     <m-column
       [field]="'spend'"
       [sortable]="true"
-      [colBodyClass]="bodyClassDecider('spend', 'web') ? 'highlight' : 'border-right'"
-      [colHeadClass]="bodyClassDecider('spend', 'web') ? 'highlight' : 'border-right'"
+      [colBodyClass]="bodyClassDecider('CH Spend') ? 'highlight border-right' : 'border-right'"
+      [colHeadClass]="bodyClassDecider('CH Spend') ? 'highlight border-right' : 'border-right'"
     >
 
       <ng-template mTemplate="header">
-        <span>HC</span>
+        <span>CH</span>
         <br>
         <span class="sub-header">Spend</span>
       </ng-template>
@@ -299,14 +340,41 @@
       </ng-template>
       <ng-template mTemplate="subHeader">
         <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
-          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of compareOptions.ch_spend" (click)="onMenuSelection('Webscrape Spend', menu)">
-            {{ menu }}
+          <button mat-menu-item class="mat-menu-item--compact" *ngFor="let menu of comparemenu" 
+          (click)="onSpendMenuSelection('spend','ch',menu)">
+            {{ menu.label }}
           </button>
         </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger">
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" #trigger="matMenuTrigger" (click)="showSpendCompareEntities('CH Spend');">
           <mat-icon color="primary" style="width: 18px;" svgIcon="multi-drop"></mat-icon>
         </button>
       </ng-template>
+    </m-column>
+
+    <m-column [field]="compareSpendKey"
+                [sortable]="false"
+                [colHeadClass]="'highlight border-right'"
+                [colBodyClass]="'highlight border-right'"
+                *ngIf="compareSpendKey">
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="header">
+          <div matTooltip="{{spendcompareTooltip}}" [matTooltipPosition]="'above'">
+            <div class="normal-linehight">Spend</div>
+            <span>Diff (%)</span>
+          </div>
+        </ng-template>
+        <ng-template let-col
+                     let-row="row"
+                     mTemplate="body">
+            <span [ngClass]="row[compareSpendKey] > 3 || row[compareSpendKey] < -3  ? 'redmarked' : ''">
+              {{row[compareSpendKey]}}</span>
+        </ng-template>
+        <ng-template mTemplate="subHeader">
+          <button mat-icon-button (click)="onCloseCompare('spend')">
+            <mat-icon color="primary">compare_arrows</mat-icon>
+          </button>
+        </ng-template>
     </m-column>
 
     <!-- Joveo Applies -->

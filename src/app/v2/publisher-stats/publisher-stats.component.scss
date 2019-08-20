@@ -10,3 +10,12 @@
     z-index: 1;
     background: #fff;
 }
+
+:host ::ng-deep .redmarked {
+    color: red;
+}
+
+:host ::ng-deep .highlight {
+    margin: 5px;
+    background-color: rgba(217, 228, 236, 0.5);
+  }
