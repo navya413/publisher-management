@@ -44,10 +44,14 @@
             </mat-select>
           </button>
 
-          <div class="flex-1-end toggle-wrapper">
-            <span class="view-setup-labe">View Setup</span>
-            <mat-slide-toggle [(ngModel)]="setupView" disableRipple="true"></mat-slide-toggle>
-          </div>
+           <!-- View Settings filter -->
+           <button mat-raised-button (click)="viewMenu.open()" class="btn-margin">
+              <mat-select #viewMenu placeholder="View" [(ngModel)]="selectedView" class="agencyList">
+                <mat-option *ngFor="let option of viewOptions" [value]="option" (click)="v2Service.changeView(publisherId,'publisher', option)">{{
+                  option
+                }}</mat-option>
+              </mat-select>
+            </button>
         </div>
       </ng-template>
     </m-header>

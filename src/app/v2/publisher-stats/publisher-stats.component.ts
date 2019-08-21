@@ -34,6 +34,7 @@ export class PublisherStatsComponent implements OnInit {
   minDate = moment().subtract(3, 'days');
   maxDate = moment();
   dateRange;
+  routeType:string
 
   selectedView:string = "Stats";
   viewOptions :string[]  = VIEW_OPTIONS
@@ -110,7 +111,9 @@ export class PublisherStatsComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.agencyId = this.activatedRoute.snapshot.params.agencyId;
+    console.log("DATA ::::",this.activatedRoute.snapshot.data.routeType)
+    this.routeType = this.activatedRoute.snapshot.data.routeType;
+    this.agencyId = this.activatedRoute.snapshot.params.entityId;
     this.dateRange = {
       startDate: THIS_MONTH.range[0],
       endDate: THIS_MONTH.range[1]
@@ -153,12 +156,19 @@ export class PublisherStatsComponent implements OnInit {
   }
 
   buildBreadcrumb() {
-    this.breadcrumbSegments = [{ label: "All Agencies", url: ["../../..", "agencies"] }, { label: "Agency : ", subTitle: this.agencyId }];
+    if(this.activatedRoute.snapshot.data.routeType === "agency"){
+      this.breadcrumbSegments = [{ label: "All Agencies", url: ["../../..", "agencies"] }, { label: "Agency : ", subTitle: this.agencyId }];
+      return
+    }
+    this.breadcrumbSegments = [{ label: "All Publishers", url: ["../../..", "publishers"] }, { label: "Publisher : ", subTitle: this.agencyId }];
   }
 
   onDateRangeChange(date) {
   }
 
+  changeView(entityId,tmp, option){
+    this.v2Service.changeView(entityId,this.routeType,option)
+  }
 
   bodyClassDecider(metric) {
     if(metric.indexOf("Spend") != -1){
@@ -228,7 +238,7 @@ export class PublisherStatsComponent implements OnInit {
 
   getStats(){
     this.loading = true;
-    let url = "api/loki/admin/agency/"+ this.agencyId +"/publisher/stats"
+    let url = this.getUrl()
     let params = {
       // "since":this.dateRange.startDate.format('YYYY-MM-DD'),
       "since" : "2019-03-01",
@@ -237,10 +247,6 @@ export class PublisherStatsComponent implements OnInit {
       limit : this.filters.limit,
       query : this.filters.query
   }
-
-    // if(this.filters.query){
-    //   params["query"] = this.filters.query
-    // }
 
     if(this.timezoneId){
       params["tz"] = this.timezoneId
@@ -251,6 +257,14 @@ export class PublisherStatsComponent implements OnInit {
       this.totalStatsResp = resp
       this.loading = false
     })
+  }
+
+  getUrl(){
+    // Agency Stats url:
+    if(this.activatedRoute.snapshot.data.routeType === "agency"){
+      return "api/loki/admin/agency/"+ this.agencyId +"/publisher/stats"
+    }
+    return "api/loki/admin/publisher/"+ this.agencyId +"/agency/stats"
   }
 
   onQuerySearch(){

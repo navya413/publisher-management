@@ -50,7 +50,7 @@
           <!-- View Settings filter -->
           <button mat-raised-button (click)="viewMenu.open()" class="btn-margin">
             <mat-select #viewMenu placeholder="View" [(ngModel)]="selectedView" class="agencyList">
-              <mat-option *ngFor="let option of viewOptions" [value]="option" (click)="v2Service.changeView(agencyId, option)">{{
+              <mat-option *ngFor="let option of viewOptions" [value]="option" (click)="changeView(agencyId,'agency', option)">{{
                 option
               }}</mat-option>
             </mat-select>
@@ -65,7 +65,7 @@
     </m-header>
 
     <!-- With sub header -->
-    <m-column [field]="'name'" [header]="'Publisher Name'" [colBodyClass]="'left-sticky'" [colHeadClass]="'left-sticky'">
+    <m-column [field]="'name'" [header]="'Publisher Name'" [colBodyClass]="'left-sticky'" [colHeadClass]="'left-sticky'" *ngIf="routeType === 'agency'">
       <ng-template let-col let-row="row" mTemplate="body">
         <span>{{ row["name"] }}</span>
       </ng-template>
@@ -75,6 +75,18 @@
         </ng-template>
       </div>
     </m-column>
+
+    <!-- With sub header -->
+    <m-column [field]="'name'" [header]="'Agency Name'" [colBodyClass]="'left-sticky'" [colHeadClass]="'left-sticky'" *ngIf="routeType === 'publisher'">
+        <ng-template let-col let-row="row" mTemplate="body">
+          <span>{{ row["id"] }}</span>
+        </ng-template>
+        <div>
+          <ng-template mTemplate="subHeader">
+            <span style="float: right">Compare with</span>
+          </ng-template>
+        </div>
+      </m-column>
 
     <!-- Joveo clicks -->
     <m-column

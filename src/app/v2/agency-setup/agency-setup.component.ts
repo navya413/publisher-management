@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { MatDialog } from '@angular/material';
 import { AssignEntityComponent } from '../assign-entity/assign-entity.component';
+import { VIEW_OPTIONS } from '../utils/util';
+import { V2Service } from '../v2.service';
 
 @Component({
   selector: 'app-agency-setup',
@@ -19,10 +21,13 @@ export class AgencySetupComponent implements OnInit {
   totalResp :any = {}
   selectedAgencies = [];
   filters = {page:1,limit:10}
+  viewOptions :string[]  = VIEW_OPTIONS
+  selectedView:string = "Settings";
 
 
   constructor(private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
+    private v2Service : V2Service,
     private apiService : ApiService) { }
 
   ngOnInit() {

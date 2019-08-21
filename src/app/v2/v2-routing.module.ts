@@ -27,8 +27,11 @@ const routes: Routes = [
         component: AgencyViewComponent
       },
       {
-        path: "agency/:agencyId/stats",
-        component: PublisherStatsComponent
+        path: "agency/:entityId/stats",
+        component: PublisherStatsComponent,
+        data : {
+          "routeType" : "agency"
+        }
       },
       {
         path: "agency/:agencyId/billing",
@@ -36,7 +39,15 @@ const routes: Routes = [
       },
       { path: "publishers", component: PublishersComponent },
       { path: "publisher/:publisherId/agencies", component: AgencySetupComponent },
-      { path: "publisher/:publisherId/view", component: PublisherViewComponent }
+      {
+        path: "publisher/:entityId/stats",
+        component: PublisherStatsComponent,
+        data : {
+          "routeType" : "publisher"
+        }
+      },
+      { path: "publisher/:publisherId/view", component: PublisherViewComponent },
+      { path: "publisher/:publisherId/settings", component: AgencySetupComponent }
     ]
   }
 ];

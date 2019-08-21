@@ -12,10 +12,14 @@ export class V2Service {
     });
   }
 
-  changeView(agencyId,selectedView){
+  // pageType - agency
+  changeView(agencyId,pageType,selectedView){
       console.log(":::::",selectedView)
-      this.router.navigate(["v2","agency",agencyId,selectedView.toLowerCase()])   
+      this.router.navigate(["v2",pageType,agencyId,selectedView.toLowerCase()])   
   }
+
+  
+
 
   getTimeZones() {
     return this.http.get<any>('./assets/mock-data/timezone-data.json');

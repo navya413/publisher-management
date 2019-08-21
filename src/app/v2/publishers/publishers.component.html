@@ -111,7 +111,7 @@
     <m-column field="currency" header="Currency"></m-column>
     <m-column field="minBid" header="Min Bid"></m-column>
 
-    <m-column field="vpAccessMails" header="VP Access">
+    <!-- <m-column field="vpAccessMails" header="VP Access">
       <ng-template let-col let-row="row" mTemplate="body">
         <span [class.cursor]="row.vpAccessMails && row.vpAccessMails.length > 0" (click)="viewContactDetails(row.vpAccessMails)">{{getContactsCount(row.vpAccessMails,'Email')}}</span>
       </ng-template>
@@ -122,7 +122,7 @@
       <ng-template let-col let-row="row" mTemplate="body">
         <span [class.cursor]="row.notificationMails && row.notificationMails.length > 0" (click)="viewContactDetails(row.notificationMails)">{{getContactsCount(row.notificationMails,'Contact')}}</span>
       </ng-template>
-    </m-column>
+    </m-column> -->
 
     <m-footer [paginator]="true"
     [pageSize]="filters.limit"
