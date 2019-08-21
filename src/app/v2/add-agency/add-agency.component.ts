@@ -24,6 +24,10 @@ export class AddAgencyComponent implements OnInit {
     });
   }
 
+  addAgency(){
+
+  }
+  
   close(){
     this.dialogRef.close()
   }

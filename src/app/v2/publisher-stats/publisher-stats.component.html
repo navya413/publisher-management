@@ -381,8 +381,6 @@
     <m-column
       [field]="'applies'"
       [sortable]="true"
-      [colBodyClass]="bodyClassDecider('applies', 'joveo') ? 'highlight border-left' : 'border-left'"
-      [colHeadClass]="bodyClassDecider('applies', 'joveo') ? 'highlight border-left' : 'border-left'"
     >
       <ng-template mTemplate="header">
         <span>Joveo</span>
@@ -399,8 +397,6 @@
     <m-column
       [field]="'applies'"
       [sortable]="true"
-      [colBodyClass]="bodyClassDecider('applies', 'pub') ? 'highlight' : ''"
-      [colHeadClass]="bodyClassDecider('applies', 'pub') ? 'highlight' : ''"
     >
       <ng-template mTemplate="header">
         <span>Pub Rec</span>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StatsService } from '../../stats/services/stats.service';
 import { TODAY, YESTERDAY, THIS_WEEK, LAST_WEEK, THIS_MONTH, LAST_MONTH, LAST_30_DAYS } from '../../date-range/presets.util';
-import moment = require('moment');
+import * as moment from 'moment'
 import { VIEW_OPTIONS } from '../utils/util';
 import { ApiService } from '../../services/api.service';
 import { ActivatedRoute } from '@angular/router';
@@ -106,6 +106,18 @@ export class PublisherStatsComponent implements OnInit {
     };
     this.buildBreadcrumb()
     this.getStats()
+  }
+
+  onReload(){
+
+  }
+
+  onRowClick(event){
+
+  }
+
+  onFilter(event){
+    
   }
 
   comparemenu;

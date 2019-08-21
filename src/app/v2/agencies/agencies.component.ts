@@ -39,6 +39,10 @@ export class AgenciesComponent implements OnInit {
     this.getAgencies();
   }
   
+  onReload(){
+
+  }
+  
   onRowClick(event){
     console.log("Event :::",event)
     this.router.navigate(["v2","agency",event.data.name,"publishers"])
