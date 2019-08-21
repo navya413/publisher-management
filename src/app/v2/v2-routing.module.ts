@@ -7,6 +7,7 @@ import { AgencyViewComponent } from "./agency-view/agency-view.component";
 import { PublisherViewComponent } from "./publisher-view/publisher-view.component";
 import { AgencySetupComponent } from "./agency-setup/agency-setup.component";
 import { PublisherStatsComponent } from "./publisher-stats/publisher-stats.component";
+import { BillingComponent } from "./billing/billing.component";
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
       {
         path: "agency/:agencyId/stats",
         component: PublisherStatsComponent
+      },
+      {
+        path: "agency/:agencyId/billing",
+        component: BillingComponent
       },
       { path: "publishers", component: PublishersComponent },
       { path: "publisher/:publisherId/agencies", component: AgencySetupComponent },

@@ -1,0 +1,93 @@
+
+<div class="head">
+    <app-breadcrumb [segments]="breadcrumbSegments"></app-breadcrumb>
+</div>
+
+<m-table #table [value]="totalResp.data" (onRowClick)="onRowClick($event)" selection="false" [selectionHandler]="false" (onReload)="onReload()">
+  <m-header>
+    <ng-template let-header>
+      <div class="card-header">
+          <div class="card-header">
+              <div class="btn-margin">
+                <jv-date-range
+                  [displayFormat]="'MMM DD, YY'"
+                  [min]="minDate"
+                  [max]="maxDate"
+                  [presets]="datePresets"
+                  (dateChange)="onDateChange($event)"
+                  [(ngModel)]="dateRange"
+                  [direction]="'right'"
+                ></jv-date-range>
+              </div>
+              <!-- 
+              <button mat-raised-button class="select-timezone-btn" (click)=timezoneMenu.open()>
+                  <mat-select #timezoneMenu placeholder="Select Timezone" [(ngModel)]="pubMonitorService.timezoneId">
+                    <mat-option (click)="onTimezoneChange(timezone.id)" *ngFor="let timezone of pubMonitorService.timezones" [value]="timezone.id">{{timezone.value}} ({{timezone.id}})</mat-option>
+                  </mat-select>
+              </button> -->
+    
+              <!-- View Settings filter -->
+              <button mat-raised-button (click)="viewMenu.open()" class="btn-margin">
+                <mat-select #viewMenu placeholder="View" [(ngModel)]="selectedView" class="agencyList">
+                  <mat-option *ngFor="let option of viewOptions" [value]="option" (click)="v2Service.changeView(agencyId, option)">{{
+                    option
+                  }}</mat-option>
+                </mat-select>
+              </button>
+            </div>
+            
+        <!-- <h2 style="margin: 0">Billing</h2> -->
+        <div style="display: inline-flex; margin-left: auto;">
+          <div class="box-search card-header-item ml-2">
+            <input [(ngModel)]="queryFilter" style="width: 20rem;" type="text" placeholder="Search..." (input)="onFilter()" />
+            <div class="box-search-icon">
+              <button mat-icon-button>
+                <mat-icon class="mat-24" aria-label="Search">search</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button mat-icon-button (click)="export()">
+          <mat-icon style="color: #797979">file_download</mat-icon>
+        </button>
+      </div>
+    </ng-template>
+  </m-header>
+
+  <m-column [field]="'name'" [header]="'Entity'" [colBodyClass]="'left-sticky'" [colHeadClass]="'left-sticky'">
+    <ng-template let-col let-row="row" mTemplate="body">
+      <span>{{ row["name"] }}</span>
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'spendStats?.mojo'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">Mojo</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{ utilService.getFormattedNumber(row["spendStats"]["mojo"]) }}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'spendStats?.cd'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">CD</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{ utilService.getFormattedNumber(row["spendStats"]["cd"]) }}
+    </ng-template>
+  </m-column>
+
+  <m-column [field]="'spendStats?.vp'" [sortable]="true">
+    <ng-template let-col let-row="row" mTemplate="header">
+      <div class="normal-linehight">VP</div>
+      <span>Spend</span>
+    </ng-template>
+    <ng-template let-col let-row="row" mTemplate="body">
+      {{ utilService.getFormattedNumber(row["spendStats"]["vp"]) }}
+    </ng-template>
+  </m-column>
+</m-table>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StatsService } from '../../stats/services/stats.service';
 import { TODAY, YESTERDAY, THIS_WEEK, LAST_WEEK, THIS_MONTH, LAST_MONTH, LAST_30_DAYS } from '../../date-range/presets.util';
 import * as moment from 'moment'
@@ -9,6 +9,7 @@ import { V2Service } from '../v2.service';
 import { BreadcrumbSegment } from '../../core/components/breadcrumb/breadcrumb.model';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DataTable } from 'momentum-table';
 
 @Component({
   selector: 'app-publisher-stats',
@@ -20,6 +21,7 @@ export class PublisherStatsComponent implements OnInit {
   loading :boolean = true;
   totalStatsResp :any = {}
   agencyId: string;
+  timezoneId;
   datePresets = [
     TODAY,
     YESTERDAY,
@@ -35,6 +37,15 @@ export class PublisherStatsComponent implements OnInit {
 
   selectedView:string = "Stats";
   viewOptions :string[]  = VIEW_OPTIONS
+  @ViewChild(DataTable)
+  table: DataTable;
+
+  filters :any = {
+    query : "",
+    status : "",
+    page : 1,
+    limit : 10
+  }
 
 
   clicks_compare_config = [
@@ -220,14 +231,45 @@ export class PublisherStatsComponent implements OnInit {
     let url = "api/loki/admin/agency/"+ this.agencyId +"/publisher/stats"
     let params = {
       // "since":this.dateRange.startDate.format('YYYY-MM-DD'),
-      "since" : "2019/03/01",
-      "till":this.dateRange.endDate.format('YYYY-MM-DD')
+      "since" : "2019-03-01",
+      "till":this.dateRange.endDate.format('YYYY-MM-DD'),
+      page : this.filters.page,
+      limit : this.filters.limit,
+      query : this.filters.query
+  }
+
+    // if(this.filters.query){
+    //   params["query"] = this.filters.query
+    // }
+
+    if(this.timezoneId){
+      params["tz"] = this.timezoneId
     }
+
     this.apiSerivce.get(url,params).subscribe(resp=>{
       console.log(">>>>RESP:::",resp)
       this.totalStatsResp = resp
       this.loading = false
     })
+  }
+
+  onQuerySearch(){
+    this.getStats()
+  }
+
+  export() {
+    this.table.exportCSV(',', 'report', false);
+  }
+
+  onTimezoneChange(timezoneId){
+      console.log("Time Zone ::",timezoneId)
+      this.getStats();
+  }
+
+  onPageChange(pageData) {
+    this.filters.page = pageData.pageIndex + 1;
+    this.filters.limit = pageData.pageSize;
+    this.getStats();
   }
 
 }
