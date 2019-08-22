@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PubManagementRoutingModule } from './pub-management-routing.module';
+import { PublisherListComponent } from './pub-management.component';
 import {
-  PublisherAddDialog,
-  PublisherEditDialog,
-  PublisherInfoDialog,
-  PublisherListComponent,
-  PublisherSchemaDialog,
-} from './pub-management.component';
+  PublisherDetailsComponent, PublisherSchemaDialog, PublisherInfoDialog,
+} from './publisher-details/publisher-details.component';
 import { MomentumTableModule } from 'momentum-table';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PubManagementService } from './services/pub-management.service';
 import { EditorActionComponent } from './editor-action/editor-action.component';
+import { PublisherCreateComponent } from './publisher-create/publisher-create.component';
 
 @NgModule({
   imports: [
@@ -21,17 +19,18 @@ import { EditorActionComponent } from './editor-action/editor-action.component';
     ReactiveFormsModule,
     MaterialModule,
     MomentumTableModule,
-    PubManagementRoutingModule,
+    PubManagementRoutingModule
+    
   ],
   declarations: [
     PublisherListComponent,
-    PublisherAddDialog,
-    PublisherInfoDialog,
-    PublisherEditDialog,
+    EditorActionComponent,
+    PublisherCreateComponent,
+    PublisherDetailsComponent,
     PublisherSchemaDialog,
-    EditorActionComponent
+    PublisherInfoDialog
   ],
-  entryComponents: [PublisherAddDialog, PublisherInfoDialog, PublisherEditDialog, PublisherSchemaDialog],
+  entryComponents: [PublisherSchemaDialog, PublisherInfoDialog],
   providers: [PubManagementService],
 })
 export class PubManagementModule {}

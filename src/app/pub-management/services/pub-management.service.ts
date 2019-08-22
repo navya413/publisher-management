@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class PubManagementService {
   constructor(private http: HttpClient) {}
+
+  publisherDetailsObs$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   getPublishers(params) {
     const tempParam = JSON.parse(JSON.stringify(params));
@@ -15,7 +18,9 @@ export class PubManagementService {
       params: tempParam
     });
   }
-
+  setPublisherData(pubData) {
+    this.publisherDetailsObs$.next(pubData);
+  }
   addPublisher(data) {
     return this.http.post<any>(environment.adminApi + 'publishers', data);
   }
