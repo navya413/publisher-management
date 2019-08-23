@@ -1,93 +1,151 @@
-
 <div class="head">
-    <app-breadcrumb [segments]="breadcrumbSegments"></app-breadcrumb>
+  <app-breadcrumb [segments]="breadcrumbSegments"></app-breadcrumb>
 </div>
 
-<m-table #table [value]="totalResp.data" (onRowClick)="onRowClick($event)" selection="false" [selectionHandler]="false" (onReload)="onReload()">
-  <m-header>
-    <ng-template let-header>
-      <div class="card-header">
+<div class="pa-2">
+  <m-table #table [value]="totalResp.data" (onRowClick)="onRowClick($event)" selection="false" [selectionHandler]="false" (onReload)="onReload()" (onPage)="onPageChange($event)">
+    <m-header>
+      <ng-template let-header>
+        <div class="card-header">
           <div class="card-header">
-              <div class="btn-margin">
-                <jv-date-range
-                  [displayFormat]="'MMM DD, YY'"
-                  [min]="minDate"
-                  [max]="maxDate"
-                  [presets]="datePresets"
-                  (dateChange)="onDateChange($event)"
-                  [(ngModel)]="dateRange"
-                  [direction]="'right'"
-                ></jv-date-range>
-              </div>
-              <!-- 
-              <button mat-raised-button class="select-timezone-btn" (click)=timezoneMenu.open()>
-                  <mat-select #timezoneMenu placeholder="Select Timezone" [(ngModel)]="pubMonitorService.timezoneId">
-                    <mat-option (click)="onTimezoneChange(timezone.id)" *ngFor="let timezone of pubMonitorService.timezones" [value]="timezone.id">{{timezone.value}} ({{timezone.id}})</mat-option>
-                  </mat-select>
-              </button> -->
-    
+            <div class="btn-margin">
+              <jv-date-range
+                [displayFormat]="'MMM DD, YY'"
+                [min]="minDate"
+                [max]="maxDate"
+                [presets]="datePresets"
+                (dateChange)="onDateChange($event)"
+                [(ngModel)]="dateRange"
+                [direction]="'right'"
+              ></jv-date-range>
+            </div>
+            
+            <button mat-raised-button class="select-timezone-btn btn-margin" (click)=timezoneMenu.open()>
+                <mat-select #timezoneMenu placeholder="Select Timezone" [(ngModel)]="timezoneId">
+                  <mat-option (click)="onTimezoneChange(timezone.id)" *ngFor="let timezone of v2Service.timezones" [value]="timezone.id">{{timezone.value}} ({{timezone.id}})</mat-option>
+                </mat-select>
+            </button>
+            
+
+            <div class="box-search card-header-item ml-2 btn-margin">
+                <input [(ngModel)]="filters.query" style="width: 20rem;" type="text" placeholder="Search..." (keyup.enter)="onFilter()" />
+                <div class="box-search-icon">
+                  <button mat-icon-button (click)="onFilter()">
+                    <mat-icon class="mat-24" aria-label="Search">search</mat-icon>
+                  </button>
+                </div>
+            </div>
+
               <!-- View Settings filter -->
-              <button mat-raised-button (click)="viewMenu.open()" class="btn-margin">
+            <button mat-raised-button (click)="viewMenu.open()" class="btn-margin">
                 <mat-select #viewMenu placeholder="View" [(ngModel)]="selectedView" class="agencyList">
-                  <mat-option *ngFor="let option of viewOptions" [value]="option" (click)="v2Service.changeView(agencyId, option)">{{
+                  <mat-option *ngFor="let option of viewOptions" [value]="option" (click)="changeView(agencyId, option)">{{
                     option
                   }}</mat-option>
                 </mat-select>
-              </button>
-            </div>
-            
-        <!-- <h2 style="margin: 0">Billing</h2> -->
-        <div style="display: inline-flex; margin-left: auto;">
-          <div class="box-search card-header-item ml-2">
-            <input [(ngModel)]="queryFilter" style="width: 20rem;" type="text" placeholder="Search..." (input)="onFilter()" />
-            <div class="box-search-icon">
-              <button mat-icon-button>
-                <mat-icon class="mat-24" aria-label="Search">search</mat-icon>
-              </button>
-            </div>
+            </button>
           </div>
+
+          <button mat-icon-button (click)="export()">
+            <mat-icon style="color: #797979">file_download</mat-icon>
+          </button>
         </div>
+      </ng-template>
+    </m-header>
 
-        <button mat-icon-button (click)="export()">
-          <mat-icon style="color: #797979">file_download</mat-icon>
-        </button>
+    <m-column [field]="'name'" [header]="'Entity'" [colBodyClass]="'left-sticky'" [colHeadClass]="'left-sticky'">
+        <ng-template let-col let-row="row" mTemplate="body">
+          <span>{{ row["id"] }}</span>
+        </ng-template>
+    </m-column>
+
+      <!-- Billing  START-->  
+      <m-column  *ngIf="screen === 'billing'"  [field]="'spend.mojo'" [sortable]="true">
+        <ng-template let-col let-row="row" mTemplate="header">
+          <div class="normal-linehight">Mojo</div>
+          <span>Spend</span>
+        </ng-template>
+        <ng-template let-col let-row="row" mTemplate="body">
+          {{ utilService.getFormattedNumber(row["spend"]["joveo"]) }}
+        </ng-template>
+      </m-column>
+  
+      <m-column  *ngIf="screen === 'billing'"  [field]="'spend.cd'" [sortable]="true">
+        <ng-template let-col let-row="row" mTemplate="header">
+          <div class="normal-linehight">CD</div>
+          <span>Spend</span>
+        </ng-template>
+        <ng-template let-col let-row="row" mTemplate="body">
+          {{ utilService.getFormattedNumber(row["spend"]["cd"]) }}
+        </ng-template>
+      </m-column>
+  
+      <m-column *ngIf="screen === 'billing'"  [field]="'spend.vp'" [sortable]="true">
+        <ng-template let-col let-row="row" mTemplate="header">
+          <div class="normal-linehight">VP</div>
+          <span>Spend</span>
+        </ng-template>
+        <ng-template let-col let-row="row" mTemplate="body">
+          {{ utilService.getFormattedNumber(row["spend"]["vp"]) }}
+        </ng-template>
+      </m-column>
+    <!-- Billing END -->
+
+    <!-- Clicks  START-->  
+      <m-column  *ngIf="screen === 'clicks'"  [field]="'clicks.joveo'" [sortable]="true">
+          <ng-template let-col let-row="row" mTemplate="header">
+            <div class="normal-linehight">Clicks</div>
+          </ng-template>
+          <ng-template let-col let-row="row" mTemplate="body">
+            {{ utilService.getFormattedNumber(row["clicks"]["joveo"]) }}
+          </ng-template>
+      </m-column>
+
+      <m-column *ngIf="screen === 'clicks'"  [field]="'latentClicks.joveo'" [sortable]="true">
+          <ng-template let-col let-row="row" mTemplate="header">
+            <div class="normal-linehight">Latent Clicks</div>
+          </ng-template>
+          <ng-template let-col let-row="row" mTemplate="body">
+            {{ utilService.getFormattedNumber(row["latentClicks"]["joveo"]) }}
+          </ng-template>
+      </m-column>
+
+      <m-column *ngIf="screen === 'clicks'"  [field]="'botClicks.vp'" [sortable]="true">
+          <ng-template let-col let-row="row" mTemplate="header">
+            <div class="normal-linehight">Bot Clicks</div>
+          </ng-template>
+          <ng-template let-col let-row="row" mTemplate="body">
+            {{ utilService.getFormattedNumber(row["botClicks"]["joveo"]) }}
+          </ng-template>
+      </m-column>
+
+      <m-column *ngIf="screen === 'clicks'"  [field]="'botClicks.vp'" [sortable]="true">
+          <ng-template let-col let-row="row" mTemplate="header">
+            <div class="normal-linehight">Duplicate Clicks</div>
+          </ng-template>
+          <ng-template let-col let-row="row" mTemplate="body">
+            {{ utilService.getFormattedNumber(row["duplicateClicks"]["joveo"]) }}
+          </ng-template>
+      </m-column>
+
+    <!-- Clicks  END-->  
+
+    <m-footer [paginator]="true"
+    [pageSize]="filters.limit"
+    [pageIndex]="filters.page - 1"
+    [pageSizeOptions]="[10,20,50]"
+    [length]="totalResp.totalRecords"></m-footer>
+
+    <ng-template mTemplate="emptyTable">
+      <div *ngIf="loading" class="table-loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <div>Loading...</div>
       </div>
-    </ng-template>
-  </m-header>
 
-  <m-column [field]="'name'" [header]="'Entity'" [colBodyClass]="'left-sticky'" [colHeadClass]="'left-sticky'">
-    <ng-template let-col let-row="row" mTemplate="body">
-      <span>{{ row["name"] }}</span>
+      <div *ngIf="!loading">
+        <div class="alert alert-primary ma-4">No records found.</div>
+      </div>
+      
     </ng-template>
-  </m-column>
-
-  <m-column [field]="'spendStats?.mojo'" [sortable]="true">
-    <ng-template let-col let-row="row" mTemplate="header">
-      <div class="normal-linehight">Mojo</div>
-      <span>Spend</span>
-    </ng-template>
-    <ng-template let-col let-row="row" mTemplate="body">
-      {{ utilService.getFormattedNumber(row["spendStats"]["mojo"]) }}
-    </ng-template>
-  </m-column>
-
-  <m-column [field]="'spendStats?.cd'" [sortable]="true">
-    <ng-template let-col let-row="row" mTemplate="header">
-      <div class="normal-linehight">CD</div>
-      <span>Spend</span>
-    </ng-template>
-    <ng-template let-col let-row="row" mTemplate="body">
-      {{ utilService.getFormattedNumber(row["spendStats"]["cd"]) }}
-    </ng-template>
-  </m-column>
-
-  <m-column [field]="'spendStats?.vp'" [sortable]="true">
-    <ng-template let-col let-row="row" mTemplate="header">
-      <div class="normal-linehight">VP</div>
-      <span>Spend</span>
-    </ng-template>
-    <ng-template let-col let-row="row" mTemplate="body">
-      {{ utilService.getFormattedNumber(row["spendStats"]["vp"]) }}
-    </ng-template>
-  </m-column>
-</m-table>
+  </m-table>
+</div>

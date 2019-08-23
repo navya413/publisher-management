@@ -34,8 +34,22 @@ const routes: Routes = [
         }
       },
       {
-        path: "agency/:agencyId/billing",
-        component: BillingComponent
+        path: "agency/:entityId/billing",
+        component: BillingComponent ,
+        data : {
+          "routeType" : "agency",
+          "screen" : "billing",
+          "selectedView" : "Billing"
+        }
+      },
+      {
+        path: "agency/:entityId/clicks",
+        component: BillingComponent ,
+        data : {
+          "routeType" : "agency",
+          "screen" : "clicks",
+          "selectedView" : "Clicks"
+        }
       },
       { path: "publishers", component: PublishersComponent },
       { path: "publisher/:publisherId/agencies", component: AgencySetupComponent },
@@ -44,6 +58,24 @@ const routes: Routes = [
         component: PublisherStatsComponent,
         data : {
           "routeType" : "publisher"
+        }
+      },
+      {
+        path: "publisher/:entityId/billing",
+        component: BillingComponent,
+        data : {
+          "routeType" : "publisher",
+          "screen" : "billing",
+          "selectedView" : "Billing"
+        }
+      }, 
+      {
+        path: "publisher/:entityId/clicks",
+        component: BillingComponent,
+        data : {
+          "routeType" : "publisher",
+          "screen" : "clicks",
+          "selectedView" : "Clicks"
         }
       },
       { path: "publisher/:publisherId/view", component: PublisherViewComponent },

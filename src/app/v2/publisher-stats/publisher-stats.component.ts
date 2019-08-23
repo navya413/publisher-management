@@ -166,7 +166,8 @@ export class PublisherStatsComponent implements OnInit {
   onDateRangeChange(date) {
   }
 
-  changeView(entityId,tmp, option){
+  changeView(entityId,option){
+    console.log("this.routeType...",this.routeType)
     this.v2Service.changeView(entityId,this.routeType,option)
   }
 

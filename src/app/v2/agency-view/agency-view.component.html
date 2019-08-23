@@ -97,7 +97,7 @@
 
     <m-column field="vpAccess" header="VP Access">
       <ng-template let-col let-row="row" mTemplate="body">
-        <span [class.cursor]="row.vpAccess && row.vpAccess.length > 0" (click)="viewContactDetails(row.vpAccess)">{{getContactsCount(row.vpAccess,'Email')}}</span>
+        <span [class.cursor]="row.vpAccess && row.vpAccess.length > 0" (click)="viewContactDetails(row.vpAccess)">{{getContactsCount(row.vpAccess,'Contact')}}</span>
       </ng-template>
     </m-column>
 

@@ -1,14 +1,15 @@
 <div mat-dialog-title class="dialog-header" style="margin-bottom: 0px;">
-  <span>Emails</span>
+  <span>Contacts</span>
   <i class="material-icons float-right my-1 cursor" (click)="close()">
     close
   </i>
 </div>
 
 <div mat-dialog-content style="padding: 10px 20px;margin: 0px;">
-  <div class="pub-container"> 
-    <div *ngFor="let data of data.emails" style="margin-bottom: 10px;">
-        <span>{{data.email}}</span>
-    </div>
-  </div> 
+  <div class="pub-container">
+    <m-table [value]="data.emails" [selectable]="false" [selectionHandler]="false" [selectionMode]="'single'">
+      <m-column field="url" header="URL"></m-column>
+      <m-column field="username" header="Username"></m-column>
+    </m-table>
+  </div>
 </div>

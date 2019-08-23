@@ -50,7 +50,7 @@
           <!-- View Settings filter -->
           <button mat-raised-button (click)="viewMenu.open()" class="btn-margin">
             <mat-select #viewMenu placeholder="View" [(ngModel)]="selectedView" class="agencyList">
-              <mat-option *ngFor="let option of viewOptions" [value]="option" (click)="changeView(agencyId,'agency', option)">{{
+              <mat-option *ngFor="let option of viewOptions" [value]="option" (click)="changeView(agencyId,option)">{{
                 option
               }}</mat-option>
             </mat-select>

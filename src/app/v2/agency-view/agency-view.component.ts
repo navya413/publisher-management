@@ -72,6 +72,7 @@ export class AgencyViewComponent implements OnInit {
   }
 
   viewContactDetails(contacts:any){
+    console.log(">>>",contacts)
     if(!contacts || contacts.length === 0){
       return;
     }
