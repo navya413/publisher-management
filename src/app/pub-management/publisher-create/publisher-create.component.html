@@ -97,7 +97,7 @@
             <b class="mb-0">Publisher Contact Details</b>
           </div>
           <div class="grid-item-12" formArrayName="publisherContactDetailsR" [ngStyle]="{'grid-row-start': '5', 'grid-row-end': creationForm['controls'].placement['controls'].publisherContactDetailsR['controls'].length + 5}">
-            <div  *ngFor="let pubContact of creationForm['controls'].placement['controls'].publisherContactDetailsR['controls']; trackBy: index; let index=index;">
+            <div  *ngFor="let pubContact of creationForm['controls'].placement['controls'].publisherContactDetailsR['controls']; let index=index;">
               <div [formGroupName] = "index" class="contact-details">
                 <mat-form-field appearance="outline" class="contact-field">
                     <mat-label>Email ID</mat-label>
@@ -139,8 +139,8 @@
         </div>
         <b class="mb-0">Publisher Portal Details</b>
         <div formArrayName="vendorPortalDetails" class="grid-container">
-          <div class="grid-item-12" *ngFor="let pubContact of creationForm['controls'].placement['controls'].vendorPortalDetails['controls']; trackBy: index; let index=index;">
-            <div [formGroupName] = "index" class="contact-details">
+          <div class="grid-item-12" *ngFor="let pubContact of creationForm['controls'].placement['controls'].vendorPortalDetails['controls']; let i=index;">
+            <div [formGroupName] = "i" class="contact-details">
               <mat-form-field appearance="outline" class="contact-field">
                 <mat-label>URL</mat-label>
                 <input

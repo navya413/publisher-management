@@ -35,6 +35,17 @@ export class PubManagementService {
         }
       });
   }
+  getPublisherV2(agency, publisher) {
+    return this.http.get<any>(
+      environment.adminApi + 'publishers/perPublisher',
+      {
+        params: {
+          agency: agency,
+          placementValue: publisher
+        }
+      }
+    );
+  }
 
   pausePublisher(param, data) {
     return this.http.post<any>(

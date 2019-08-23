@@ -8,6 +8,8 @@ import { PublisherViewComponent } from "./publisher-view/publisher-view.componen
 import { AgencySetupComponent } from "./agency-setup/agency-setup.component";
 import { PublisherStatsComponent } from "./publisher-stats/publisher-stats.component";
 import { BillingComponent } from "./billing/billing.component";
+import { PublisherCreateComponent } from "./publisher-create/publisher-create.component";
+import { PublisherDetailsResolver } from "./publisher-create/publisher-details-resolver"
 
 const routes: Routes = [
   {
@@ -79,7 +81,17 @@ const routes: Routes = [
         }
       },
       { path: "publisher/:publisherId/view", component: PublisherViewComponent },
-      { path: "publisher/:publisherId/settings", component: AgencySetupComponent }
+      { path: "publisher/:publisherId/settings", component: AgencySetupComponent },
+      { path: "publisher/create",
+        component: PublisherCreateComponent
+      },
+      { path: "publisher/:publisherId/edit", 
+        component: PublisherCreateComponent,
+        resolve: {
+          data: PublisherDetailsResolver
+        }
+      }
+      
     ]
   }
 ];

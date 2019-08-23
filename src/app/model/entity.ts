@@ -32,8 +32,8 @@ export const PUB_RECONCILIATION_DETAILS: Item = {
 };
 export const AGENCIES: Item = { name: 'Agencies', value: 'agencies' };
 export const PUB_DETAILS: Item = {
-  name: 'Pub Details',
-  value: 'pubDetails'
+  name: 'Edit Publisher',
+  value: 'editPublisher'
 }
 
 export const EDIT_OPTIONS: Item[] = [

@@ -1,0 +1,395 @@
+<div class="head">
+  <app-breadcrumb [segments]="breadcrumbSegments"></app-breadcrumb>
+</div>
+<mat-card class="jv-form">
+  <form
+    [formGroup]="creationForm"
+    novalidate
+    (ngSubmit)="onSubmit()"
+    class="publisher-create"
+  >
+    <div>
+      <div formGroupName="placement">
+        <div style="display:flow-root">
+          <b class="mb-0">Publisher Details</b>
+          <!-- <button
+            class="pull-right"
+            color="primary"
+            mat-icon-button
+            (click)="navigateBack()"
+          >
+            <mat-icon aria-label="Example icon-button with a heart icon"
+              >clear</mat-icon
+            >
+          </button> -->
+        </div>
+        <div class="grid-container">
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>Publisher Name*</mat-label>
+            <input
+              matInput
+              placeholder="Publisher Name*"
+              pattern="[a-zA-Z0-9, ,.,_,(,),-]+$"
+              formControlName="name"
+            />
+            <mat-error
+              *ngIf="
+                creationForm.get('placement').get('name').errors &&
+                creationForm.get('placement').get('name').touched
+              "
+            >
+              <p>
+                {{
+                  getFieldErrorMessage(
+                    creationForm.get("placement").get("name").errors
+                  )
+                }}
+              </p>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>Publisher URL*</mat-label>
+            <input
+              matInput
+              placeholder="Publisher URL*"
+              formControlName="url"
+            />
+            <mat-error
+              *ngIf="
+                !creationForm.get('placement').get('url').valid &&
+                creationForm.get('placement').get('url').touched
+              "
+              >URL is required</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>Publisher Model*</mat-label>
+            <mat-select formControlName="bidType" placeholder="Bid Type*">
+              <mat-option *ngFor="let type of bidTypes" [value]="type.value">
+                {{ type.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                !creationForm.get('placement').get('bidType').valid &&
+                creationForm.get('placement').get('bidType').touched
+              "
+              >Publisher Model is required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>Industry</mat-label>
+            <mat-select
+              formControlName="industry"
+              placeholder="Industry"
+              multiple
+            >
+              <mat-option
+                *ngFor="let industry of utilService.industries"
+                [value]="industry"
+              >
+                {{ industry }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country" placeholder="Country">
+              <mat-option
+                *ngFor="let country of utilService.countries"
+                [value]="country"
+              >
+                {{ country }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>Currency*</mat-label>
+            <mat-select formControlName="currency" placeholder="Currency*">
+              <mat-option
+                *ngFor="let currency of utilService.currencies"
+                [value]="currency"
+              >
+                {{ currency }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                !creationForm.get('placement').get('currency').valid &&
+                creationForm.get('placement').get('currency').touched
+              "
+              >Currency is required</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            class="grid-item-4"
+            *ngIf="!flatBidPublisher"
+          >
+            <mat-label>Minimum Bid</mat-label>
+            <input
+              type="number"
+              matInput
+              step="0.1"
+              placeholder="Min Bid"
+              formControlName="minBid"
+            />
+          </mat-form-field>
+          <div class="grid-item-12">
+            <b class="mb-0">Publisher Contact Details</b>
+          </div>
+          <div
+            class="grid-item-12"
+            formArrayName="publisherContactDetailsRevamp"
+            [ngStyle]="{
+              'grid-row-start': '5',
+              'grid-row-end':
+                creationForm['controls'].placement['controls']
+                  .publisherContactDetailsRevamp['controls'].length + 5
+            }"
+          >
+            <div
+              *ngFor="
+                let pubContact of creationForm['controls'].placement['controls']
+                  .publisherContactDetailsRevamp['controls'];
+                let index = index
+              "
+            >
+              <div [formGroupName]="index" class="contact-details">
+                <mat-form-field appearance="outline" class="contact-field">
+                  <mat-label>Email ID</mat-label>
+                  <input
+                    matInput
+                    placeholder="Email"
+                    formControlName="email"
+                    name="email"
+                  />
+                </mat-form-field>
+                <div class="contact-vp">
+                  <mat-checkbox formControlName="vpAccessEnabled">
+                    VP Access
+                  </mat-checkbox>
+                  <mat-checkbox
+                    class="contact-notification"
+                    formControlName="notificationEnabled"
+                  >
+                    Send Notification if feed is not picked in
+                    <mat-form-field appearance="outline" class="">
+                      <input matInput name="hours"  formControlName="notificationAlertThreshold"/>
+                    </mat-form-field>
+                    Hours
+                  </mat-checkbox>
+                  <button
+                    class="pull-right"
+                    color="primary"
+                    mat-icon-button
+                    (click)="removePubContact(index)"
+                  >
+                    <mat-icon aria-label="Example icon-button with a heart icon"
+                      >clear</mat-icon
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid-item-12 mt-3">
+            <button
+              type="button"
+              mat-raised-button
+              class="button-inline small-button"
+              color="primary"
+              (click)="addPubContact()"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+        <b class="mb-0">Publisher Portal Details</b>
+        <div formArrayName="vendorPortalDetails" class="grid-container">
+          <div
+            class="grid-item-12"
+            *ngFor="
+              let pubContact of creationForm['controls'].placement['controls']
+                .vendorPortalDetails['controls'];
+              let index = index
+            "
+          >
+            <div [formGroupName]="index" class="contact-details">
+              <mat-form-field appearance="outline" class="contact-field">
+                <mat-label>URL</mat-label>
+                <input matInput placeholder="URL" formControlName="url" />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="contact-field">
+                <mat-label>Username</mat-label>
+                <input
+                  matInput
+                  placeholder="Username"
+                  formControlName="username"
+                />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width:380px">
+                <mat-label>Password</mat-label>
+                <input
+                  matInput
+                  placeholder="Password"
+                  formControlName="password"
+                />
+              </mat-form-field>
+              <button
+                class="pull-right"
+                color="primary"
+                mat-icon-button
+                (click)="removeVendorDetails(index)"
+              >
+                <mat-icon aria-label="Example icon-button with a heart icon"
+                  >clear</mat-icon
+                >
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            mat-raised-button
+            class="button-inline small-button"
+            color="primary"
+            (click)="addVendorDetails()"
+          >
+            Add
+          </button>
+        </div>
+        <b class="mb-0"> Feed Configuration</b>
+        <div class="grid-container">
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>Feed Type</mat-label>
+            <mat-select formControlName="perClientPlacements" placeholder="Mode">
+                <mat-option
+                  *ngFor="let type of feedTypes"
+                  [value]="type.value"
+                >
+                {{ type.name}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
+          <div class="grid-item-4">
+            <mat-checkbox formControlName="isCompressedFeed">
+              Compress Feed (ZIP)
+            </mat-checkbox>
+          </div>
+        </div>
+        <b class="mb-0">
+          <mat-checkbox formControlName="deliverFeedByFTP">
+            Deliver feed by FTP
+          </mat-checkbox></b
+        >
+
+        <div formGroupName="ftpConfig">
+          <div formGroupName="credentials" class="grid-container">
+            <mat-form-field appearance="outline" class="grid-item-4">
+              <mat-label>Host Name*</mat-label>
+              <input matInput placeholder="Host*" formControlName="host" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="grid-item-4">
+              <mat-label>Username*</mat-label>
+              <input
+                matInput
+                placeholder="Username*"
+                formControlName="username"
+              />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="grid-item-4">
+              <mat-label>Password*</mat-label>
+              <input
+                matInput
+                placeholder="Password*"
+                formControlName="password"
+              />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="grid-item-4">
+              <mat-label>FTP Path*</mat-label>
+              <input
+                matInput
+                name="ftpPath"
+                placeholder="FTP Path"
+                formControlName="pathTemplate"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <b class="mb-0">Reconciliation Details</b>
+
+        <div
+          formGroupName="publisherReconciliationDetails"
+          class="grid-container"
+        >
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>Mode</mat-label>
+            <mat-select formControlName="mode" placeholder="Mode">
+              <mat-option
+                *ngFor="let mode of utilService.modesOfFile"
+                [value]="mode"
+              >
+                {{ mode }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>Start Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="startDate"
+              placeholder="Start Date"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>Frequency</mat-label>
+            <input
+              matInput
+              placeholder="Frequency"
+              formControlName="frequency"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>Timezone</mat-label>
+            <input matInput placeholder="Timezone" formControlName="timezone" />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <mat-card-actions>
+      <button
+        type="button"
+        *ngIf="!loading"
+        mat-raised-button
+        (click)="navigateBack()"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        mat-raised-button
+        [disabled]="loading"
+        class="button-inline"
+        color="primary"
+      >
+        {{ isModeEdit ? "Edit Publisher" : "Add Publisher" }}
+        <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

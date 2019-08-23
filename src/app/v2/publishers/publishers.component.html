@@ -10,12 +10,13 @@
   <m-table [value]="totalResp.data" 
   (onPage)="onPageChange($event)"
   [selectable]="true" [selectionMode]="'single'"
+  [(selection)]="selectedPublishers"  
   (onRowClick)="onRowClick($event)" (onReload)="onReload()">
     
   <m-header>
       <ng-template let-header>
         <div class="card-header">
-          <button mat-raised-button color="primary" (click)="openPublisherAddDialog($event)" class="btn-margin">Add Publisher</button>
+          <button mat-raised-button color="primary" [routerLink]="['../publisher','create']" class="btn-margin">Add Publisher</button>
           
     
 
@@ -27,8 +28,8 @@
                         #editMenu
                         placeholder="Manage"
                         class="agencyList">
-              <!-- <mat-option (click)="editPublisher(option)"
-                          *ngFor="let option of editOptions">{{option.name}}</mat-option> -->
+              <mat-option (click)="editPublisher(option)"
+                          *ngFor="let option of editOptions">{{option.name}}</mat-option>
             </mat-select>
           </button>
 

@@ -8,6 +8,7 @@ import { CoreModule } from '../core/core.module';
 import { AgenciesComponent } from './agencies/agencies.component';
 import { PublishersComponent } from './publishers/publishers.component';
 import { ApiService } from '../services/api.service';
+import { PubManagementService } from '../pub-management/services/pub-management.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgencyViewComponent } from './agency-view/agency-view.component';
 import { PublisherViewComponent } from './publisher-view/publisher-view.component';
@@ -18,6 +19,8 @@ import { ViewContactsComponent } from './view-contacts/view-contacts.component';
 import { AddAgencyComponent } from './add-agency/add-agency.component';
 import { V2Service } from './v2.service';
 import { BillingComponent } from './billing/billing.component';
+import { PublisherCreateComponent } from './publisher-create/publisher-create.component';
+import { PublisherDetailsResolver } from './publisher-create/publisher-details-resolver';
 
 @NgModule({
   imports: [
@@ -28,7 +31,7 @@ import { BillingComponent } from './billing/billing.component';
     CoreModule
   ],
   entryComponents : [AssignEntityComponent,ViewContactsComponent,AddAgencyComponent],
-  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent, BillingComponent],
-  providers : [ApiService,V2Service]
+  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent, BillingComponent, PublisherCreateComponent],
+  providers : [ApiService, PubManagementService,PublisherDetailsResolver,V2Service]
 })
 export class V2Module { }

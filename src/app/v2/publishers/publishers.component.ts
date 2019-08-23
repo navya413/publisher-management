@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../../services/api.service";
 import { environment } from "../../../environments/environment";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { MatDialog } from "@angular/material";
 import { ViewContactsComponent } from "../view-contacts/view-contacts.component";
+import { Item, PUB_EDIT_OPTIONS } from "../../model/entity";
+import { PubManagementService } from "../../pub-management/services/pub-management.service";
 
 @Component({
   selector: "app-publishers",
@@ -11,12 +13,18 @@ import { ViewContactsComponent } from "../view-contacts/view-contacts.component"
   styleUrls: ["./publishers.component.scss"]
 })
 export class PublishersComponent implements OnInit {
-  constructor(private apiService: ApiService,private router : Router,private dialog: MatDialog) {}
+  selectedAgency: any;
+  constructor(private apiService: ApiService,private router : Router,private dialog: MatDialog,
+    private pubManagementService: PubManagementService,
+    public route: ActivatedRoute 
+  ) {}
 
   loading :boolean = true;
   publishers = []
   totalResp:any = {}
   selectedPublishers = []
+  editOptions: Item[] = PUB_EDIT_OPTIONS;
+  
   navLinks = [{ path: "../agencies", label: "All Agencies" }, { path: "../publishers", label: "All Publishers" }];
   filters :any = {
     query : "",
@@ -87,5 +95,13 @@ export class PublishersComponent implements OnInit {
     this.filters.page = pageData.pageIndex + 1;
     this.filters.limit = pageData.pageSize;
     this.getPublishers();
+  }
+  editPublisher(editType) {
+    const editData =  {
+      publisher: this.selectedPublishers[0],
+      selectedAgency: this.selectedAgency
+    }
+    this.pubManagementService.setPublisherData(editData);
+    this.router.navigate(["v2","publisher",editData.publisher.id,"edit"])
   }
 }
