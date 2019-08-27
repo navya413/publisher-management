@@ -20,6 +20,31 @@
                      pattern="[a-zA-Z0-9, ,.,_,(,),-]+$"
                      formControlName="name">
             </mat-form-field>
+
+            <mat-form-field>
+              <input matInput
+                     type="number"
+                     placeholder="Markup"
+                     required
+                     formControlName="markup">
+            </mat-form-field>  
+
+            <mat-form-field>
+              <input matInput
+                     placeholder="Feed Prefix"
+                     required
+                     formControlName="feedPrefix">
+            </mat-form-field>  
+            <mat-form-field>
+                <mat-label>Currency</mat-label>
+                <mat-select
+                  formControlName="currency"
+                  placeholder="Currency">
+                  <mat-option *ngFor="let item of utilService.currenciesWithSymbol" [value]="item.name">
+                    {{ item.name }}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
       </div>
 
     </form>

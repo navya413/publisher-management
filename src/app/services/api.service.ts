@@ -15,4 +15,10 @@ export class ApiService {
   }
 
 
+  put(url, data?: any): any {
+    return this.http.put(url, data);
+  }
+
+
+
 }

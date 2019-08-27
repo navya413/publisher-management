@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../../services/api.service";
 import { environment } from "../../../environments/environment";
 import { Router } from "@angular/router";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
 import { AddAgencyComponent } from "../add-agency/add-agency.component";
 
 @Component({
@@ -15,7 +15,9 @@ export class AgenciesComponent implements OnInit {
   agencies  = []
   totalResp : any = {};
   loading:boolean = true
-  constructor(private apiService : ApiService,private router : Router,private dialog : MatDialog) {}
+  editOptions = [{"name":"Edit","value":"Edit"}]
+  selectedAgency;
+  constructor(private snackbar : MatSnackBar,private apiService : ApiService,private router : Router,private dialog : MatDialog) {}
 
 
   filters :any = {query:"",page:1,limit:10}
@@ -42,6 +44,12 @@ export class AgenciesComponent implements OnInit {
   onReload(){
 
   }
+  handleMenuChange(option){
+    if(option.value === "Edit"){
+      this.openAgencyAddDialog("Edit")
+    }
+    console.log("Options >>>",option)
+  }
   
   onRowClick(event){
     console.log("Event :::",event)
@@ -53,18 +61,46 @@ export class AgenciesComponent implements OnInit {
     this.getAgencies();
   }
 
+  enrichEditData(event){
+    if(event == "Edit"){
+      return {
+        entityType : "Update",
+        title : "Edit Agency",
+        selectedAgency : this.selectedAgency[0]
+       }
+    }
+
+    return {
+      entityType : "Add",
+      title : "Add Agency"
+     }
+  }
+
   openAgencyAddDialog(event){
-    console.log("In add agency .....")
     let dialogRef = this.dialog.open(AddAgencyComponent, {
       panelClass: 'app-full-bleed-dialog',
-      // height: '400px',
-      //  minHeight : '400px',
        width: '500px',
        minWidth : '500',
-       data : {
-        entityType : "Add",
-        title : "Add Agency"
-       }
+       data : this.enrichEditData(event)
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed',result);
+
+      if(result && result === "Created"){
+        this.snackbar.open("Agency Added successfully","",{
+          duration : 4 * 1000
+        });
+        this.getAgencies();
+      }
+
+      if(result && result === "Updated"){
+        this.snackbar.open("Agency Updated successfully","",{
+          duration : 4 * 1000
+        });
+        this.getAgencies();
+      }
+      
     });
   }
 }

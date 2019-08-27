@@ -13,13 +13,21 @@
     (onRowClick)="onRowClick($event)"
     (onPage)="onPageChange($event)"
     (onReload)="onReload()"
-    [selectable]="false"
-    [selectionHandler]="false"
+    [selectable]="true" [selectionMode]="'single'"
+    [(selection)]="selectedAgency"  
   >
     <m-header>
       <ng-template let-header>
         <div class="card-header">
           <button mat-raised-button color="primary" (click)="openAgencyAddDialog($event)" class="btn-margin">Add Agency</button>
+          <!-- Manage section  -->
+          <button [disabled]="!selectedAgency" mat-raised-button (click)="editMenu.open()" class="btn-margin">
+            <mat-select [disabled]="!selectedAgency" #editMenu placeholder="Manage" class="agencyList">
+              <mat-option (click)="handleMenuChange(option)"
+                  *ngFor="let option of editOptions">{{option.name}}</mat-option>
+            </mat-select>
+          </button>
+
           <div class="box-search btn-margin">
             <div class="box-search-icon">
               <button mat-icon-button (click)="getAgencies()">

@@ -57,7 +57,7 @@ export class AgencySetupComponent implements OnInit {
   }
 
   buildBreadcrumb() {
-    this.breadcrumbSegments = [{ label: "All Publishers", url: ["../../..", "publishers"] }, { label: "Agency : ", subTitle: this.publisherId }];
+    this.breadcrumbSegments = [{ label: "All Publishers", url: ["../../..", "publishers"] }, { label: "Publisher : ", subTitle: this.publisherId }];
   }
 
   openAssignAgencyModal(){

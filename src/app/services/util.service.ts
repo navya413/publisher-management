@@ -10,6 +10,7 @@ export class UtilService {
   industries: string[];
   categories: string[];
   currencies: string[];
+  currenciesWithSymbol: any[];
   modesOfFile: string[];
 
   private ftpPublishers$: BehaviorSubject<string[]> = new BehaviorSubject(null);
@@ -46,6 +47,14 @@ export class UtilService {
     this.getEnums('currency').subscribe(res => {
       this.currencies = res;
     });
+  
+    this.getEnums('currencySymbol').subscribe(res => {
+      this.currenciesWithSymbol = []
+      res.forEach((curr:string)=>{
+        this.currenciesWithSymbol.push({name:curr.split("__")[0],unicode:curr.split("__")[1]})
+      })
+    });
+
     this.getEnums('modeOfFile').subscribe(res => {
       this.modesOfFile = res;
     });
