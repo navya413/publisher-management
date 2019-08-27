@@ -1,4 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
+import * as moment from 'moment';
+
 
 @Pipe({
   name: "localSearch"
@@ -31,5 +33,21 @@ export class LocalSearchPipe implements PipeTransform {
     }
 
     return results;
+  }
+}
+
+@Pipe({
+  name: 'timerange',
+  pure: true
+})
+export class TimerangeFormatterPipe implements PipeTransform {
+  constructor() {}
+  transform(val: any): any {
+    const seconds = moment.duration(val).seconds();
+    const minutes = moment.duration(val).minutes();
+    const hours = Math.trunc(moment.duration(val).asHours());
+    return `${hours.toString().length < 2 ? '0' : ''}${hours} : ${
+      minutes.toString().length < 2 ? '0' : ''
+    }${minutes} : ${seconds.toString().length < 2 ? '0' : ''}${seconds}`;
   }
 }

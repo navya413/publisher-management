@@ -35,6 +35,9 @@ export class PubManagementService {
         }
       });
   }
+  getAgencyClients(agencyId) {
+    return this.http.get<any>(environment.v2api + "/loki/admin/agency/" + agencyId + "/clients")
+  }
   getPublisherV2(agency, publisher) {
     return this.http.get<any>(
       environment.adminApi + 'publishers/perPublisher',
@@ -98,5 +101,13 @@ export class PubManagementService {
         }
       }
     );
+  }
+  uploadBotFile(file, key, agencyId) {
+    const url = `${
+      environment.adminApi
+    }publishers/uploadBotIps?agencyId=${agencyId}`;
+    const fd = new FormData();
+    fd.append(key, file);
+    return this.http.post(url, fd);
   }
 }

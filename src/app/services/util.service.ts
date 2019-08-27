@@ -138,4 +138,31 @@ export class UtilService {
       });
     }
   }
+  downloadCSV(headers, model, fileName) {
+    const data = [];
+    data.push(headers);
+
+    model.map(record => {
+      const row = [];
+      let parsedData = '';
+      for (const key in headers) {
+        if (headers[key] === 'IpAdress') {
+          row.push(record.IpAdress);
+        }
+      }
+      data.push(row);
+    });
+
+    let csvContent = 'data:text/csv;charset=utf-8,';
+    data.map((infoArray, index) => {
+      const dataString = infoArray.join(',');
+      csvContent += index < data.length ? dataString + '\n' : dataString;
+    });
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+  }
 }

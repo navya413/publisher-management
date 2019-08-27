@@ -5,6 +5,8 @@ import { ApiService } from "../../services/api.service";
 import { AssignEntityComponent } from "../assign-entity/assign-entity.component";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { ViewContactsComponent } from "../view-contacts/view-contacts.component";
+import { PubManagementService } from "../../pub-management/services/pub-management.service";
+import { AGENCY_ENABLE_EDIT_OPTIONS, AGENCY_PAUSE_EDIT_OPTIONS } from "../../model/entity"
 
 @Component({
   selector: "app-agency-view",
@@ -38,7 +40,9 @@ export class AgencyViewComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private snackbar : MatSnackBar,
     private router : Router,
-    private apiService : ApiService,private dialog: MatDialog) {}
+    private apiService : ApiService,
+    private dialog: MatDialog,
+    private pubManagementService: PubManagementService) {}
 
   ngOnInit() {
     this.agencyId = this.activatedRoute.snapshot.params.agencyId;
@@ -94,9 +98,9 @@ export class AgencyViewComponent implements OnInit {
     this.selectedPublishers= event
     this.editOptions =[]
     if(this.selectedPublishers.length>0 && event[0].status === 'A'){
-      this.editOptions = [{"name":"Pause",value:"Pause"}]
-    }else{
-      // this.editOptions = [{"name":"Enable",value:"Enable"}]
+      this.editOptions = AGENCY_ENABLE_EDIT_OPTIONS;
+    } else {
+      this.editOptions = AGENCY_PAUSE_EDIT_OPTIONS;
     }
   }
 
@@ -118,6 +122,13 @@ export class AgencyViewComponent implements OnInit {
   editPublisher(option){
     if(option.value === "Pause"){
       this.pausePublisher();
+    } else if (option.value === "editPublisher") {
+      const editData =  {
+        publisher: this.selectedPublishers[0],
+        selectedAgency: this.activatedRoute.snapshot.params.agencyId
+      }
+      this.pubManagementService.setPublisherData(editData);
+      this.router.navigate(["v2","agency",editData.selectedAgency,"publisher",editData.publisher.id,"edit"])
     }
   }
 

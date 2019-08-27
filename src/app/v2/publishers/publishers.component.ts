@@ -96,12 +96,14 @@ export class PublishersComponent implements OnInit {
     this.filters.limit = pageData.pageSize;
     this.getPublishers();
   }
-  editPublisher(editType) {
-    const editData =  {
-      publisher: this.selectedPublishers[0],
-      selectedAgency: this.selectedAgency
+  editPublisher(option) {
+    if (option.value === "editPublisher") {
+      const editData =  {
+        publisher: this.selectedPublishers[0],
+        selectedAgency: this.selectedAgency
+      }
+      this.pubManagementService.setPublisherData(editData);
+      this.router.navigate(["v2","publisher",editData.publisher.id,"edit"])
     }
-    this.pubManagementService.setPublisherData(editData);
-    this.router.navigate(["v2","publisher",editData.publisher.id,"edit"])
   }
 }

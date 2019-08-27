@@ -25,6 +25,17 @@ const routes: Routes = [
         component: AgencyViewComponent
       },
       {
+        path: "agency/:agencyId/publisher/:publisherId/edit", 
+        component: PublisherCreateComponent,
+        data: {
+          "routeType" : "agency",
+        },
+        resolve: {
+          data: PublisherDetailsResolver,
+
+        }
+      },
+      {
         path: "agency/:agencyId/settings",
         component: AgencyViewComponent
       },

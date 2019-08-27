@@ -21,6 +21,8 @@ import { V2Service } from './v2.service';
 import { BillingComponent } from './billing/billing.component';
 import { PublisherCreateComponent } from './publisher-create/publisher-create.component';
 import { PublisherDetailsResolver } from './publisher-create/publisher-details-resolver';
+import { TimerangePickerComponent } from './timerange-picker/timerange-picker.component';
+import { TimerangeFormatterPipe } from '../services/local-search.pipe';
 
 @NgModule({
   imports: [
@@ -31,7 +33,7 @@ import { PublisherDetailsResolver } from './publisher-create/publisher-details-r
     CoreModule
   ],
   entryComponents : [AssignEntityComponent,ViewContactsComponent,AddAgencyComponent],
-  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent, BillingComponent, PublisherCreateComponent],
+  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent, BillingComponent, PublisherCreateComponent, TimerangePickerComponent, TimerangeFormatterPipe],
   providers : [ApiService, PubManagementService,PublisherDetailsResolver,V2Service]
 })
 export class V2Module { }

@@ -31,10 +31,12 @@ export const PUB_RECONCILIATION_DETAILS: Item = {
   value: 'publisherReconciliationDetails'
 };
 export const AGENCIES: Item = { name: 'Agencies', value: 'agencies' };
-export const PUB_DETAILS: Item = {
+export const EDIT_DETAILS: Item = {
   name: 'Edit Publisher',
   value: 'editPublisher'
 }
+export const PAUSE_DETAILS: Item = { name: 'Pause', value: 'Pause' };
+export const ENABLE_DETAILS: Item = { name: 'Enable', value: 'Enable' };
 
 export const EDIT_OPTIONS: Item[] = [
   AGENCIES,
@@ -44,5 +46,13 @@ export const EDIT_OPTIONS: Item[] = [
   PUB_RECONCILIATION_DETAILS
 ];
 export const PUB_EDIT_OPTIONS: Item[] = [
-  PUB_DETAILS
+  EDIT_DETAILS
+]
+export const AGENCY_ENABLE_EDIT_OPTIONS: Item[] = [
+  PAUSE_DETAILS,
+  EDIT_DETAILS
+];
+export const AGENCY_PAUSE_EDIT_OPTIONS: Item[] = [
+  ENABLE_DETAILS,
+  EDIT_DETAILS
 ]

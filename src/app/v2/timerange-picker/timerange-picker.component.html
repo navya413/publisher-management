@@ -1,0 +1,96 @@
+<button type="button" mat-button mat-icon-button class="timer-button" aria-label="time" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="timeMenu">
+    <mat-icon>access_time</mat-icon>
+  </button>
+  <mat-menu #timeMenu="matMenu" class="timerange-menu__wrapper" [overlapTrigger]="false" [xPosition]="'before'">
+    <div style="padding: 1rem"
+         (click)="$event.stopPropagation()"
+         (keyup)="$event.stopPropagation()">
+  
+      <div class="time-entity-wrapper">
+        <div class="time-entity">
+          <b>HH</b>        
+          <button mat-icon-button (click)="increase('hours')">
+            <mat-icon>arrow_drop_up</mat-icon>
+          </button>
+            <input type="text"
+               matInput
+               placeholder="HH"
+               name="hours"
+               [max]="100"
+               jvNumbersOnly
+               [(ngModel)]="hours"
+               class="timer-input">
+          <button mat-icon-button (click)="decrease('hours')">
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+        </div>
+  
+        <span style="display: flex;align-items: center;padding-top:25px;">:</span>
+  
+        <div class="time-entity">
+          <b>MM</b>
+          <button mat-icon-button (click)="increase('minutes')">
+            <mat-icon>arrow_drop_up</mat-icon>
+          </button>
+            <input type="text"
+               matInput
+               placeholder="MM"
+               name="minutes"
+               [max]="59"
+               jvNumbersOnly
+               [(ngModel)]="minutes"
+               class="timer-input">
+          <button mat-icon-button (click)="decrease('minutes')">
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+        </div>
+  
+        <span style="display: flex;align-items: center;padding-top:25px;">:</span>
+  
+        <div class="time-entity">
+          <b>SS</b>        
+          <button mat-icon-button (click)="increase('seconds')">
+            <mat-icon>arrow_drop_up</mat-icon>
+          </button>
+            <input type="text"
+               matInput
+               placeholder="SS"
+               name="seconds"
+               [max]="59"
+               jvNumbersOnly
+               [(ngModel)]="seconds"
+               class="timer-input">
+          <button mat-icon-button (click)="decrease('seconds')">
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+        </div>
+  
+      </div>
+  
+      <!--<mat-form-field appearance="outline" class="small-input">-->
+        <!--<mat-label>hours</mat-label>-->
+        <!--<input matInput type="number" name="hours" [(ngModel)]="hours" max="23" min="0">-->
+      <!--</mat-form-field>-->
+      <!--<mat-form-field appearance="outline" class="small-input">-->
+        <!--<mat-label>minutes</mat-label>-->
+        <!--<input type="number" name="minutes" [(ngModel)]="minutes" max="59" min="0" matInput>-->
+      <!--</mat-form-field>-->
+      <!--<mat-form-field appearance="outline" class="small-input">-->
+        <!--<mat-label>seconds</mat-label>-->
+        <!--<input type="number" name="seconds" [(ngModel)]="seconds" max="59" min="0" matInput>-->
+      <!--</mat-form-field>-->
+      <!---->
+  
+  
+      <div style="display: flex; justify-content: flex-end">
+        <button mat-button (click)="menuTrigger.closeMenu()">
+          Cancel
+        </button>
+        <button mat-stroked-button color="primary" (click)="onApply()">
+          Apply
+        </button>
+      </div>
+  
+    </div>
+  </mat-menu>
+  

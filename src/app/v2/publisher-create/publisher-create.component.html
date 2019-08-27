@@ -326,7 +326,7 @@
         <div
           formGroupName="publisherReconciliationDetails"
           class="grid-container"
-        >
+          >
           <mat-form-field appearance="outline" class="grid-item-4">
             <mat-label>Mode</mat-label>
             <mat-select formControlName="mode" placeholder="Mode">
@@ -368,6 +368,124 @@
             <input matInput placeholder="Timezone" formControlName="timezone" />
           </mat-form-field>
         </div>
+
+        <b class="mb-0" *ngIf="enableClickDefs">Clicks Definitions</b>
+        
+        <div *ngIf="enableClickDefs">
+    
+            <button type="button" mat-stroked-button color="primary" style="float: right" [disabled]="!creationForm.get('placement').get('perClientPlacements').value" (click)="addClientDef()">Add Client</button>
+    
+            <mat-form-field class="right-input ml-2" style="display: block; width: 300px;">
+              <input type="text"
+                     matInput
+                     [readonly]="true"
+                     name="req-input-file"
+                     [placeholder]="'Upload Bot IPs'"
+                     accept=".csv">
+              <input type="file" accept=".csv" [hidden]="true" id="reqInput" (change)="uploadBotFile($event)">
+              <mat-spinner *ngIf="uploadingFile" matSuffix [strokeWidth]="2" [diameter]="20"></mat-spinner>
+              <label class="mat-raised-button mat-primary"
+                     [for]="'reqInput'"
+                     matPrefix>Browse</label>
+              <button
+                *ngIf="botFile"
+                matSuffix
+                mat-icon-button
+                (click)="download()"
+                class="col-setting-btn">
+                <mat-icon color="primary" aria-label="download" style="font-size: 1.2rem">file_download</mat-icon>
+              </button>
+              <a matSuffix class="cursor anchor pl-2" target="_blank" (click) = "downloadSampleCSV()" [ngClass]="{'sample-download': botFile}" matTooltip="Download Sample CSV File Format">
+                  <mat-icon class="primary-text-color">info</mat-icon>
+              </a>
+            </mat-form-field>
+    
+            <m-table
+              [value]="clientDefs"
+              [selectionHandler]="false">
+              <m-column [field]="'name'" [header]="'Client'" [colHeadClass]="'custom-appearance'" [colBodyClass]="'custom-appearance'">
+                <ng-template mTemplate="body" let-row="row" let-rowIndex="rowIndex" let-col>
+    
+                  <mat-form-field appearance="outline" *ngIf="rowIndex !== 0;else non_select" class="click-defs">
+                    <mat-select (selectionChange)="row['name'] = $event.value.name;row['id'] = $event.value.id;" [value]="row['selectedClient']">
+                      <mat-option *ngFor="let client of clients" [value]="client">
+                        {{client.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+    
+                  <ng-template #non_select>
+                    {{row['name']}}
+                  </ng-template>
+    
+                </ng-template>
+              </m-column>
+              <m-column [header]="'Preset'" [colHeadClass]="'custom-appearance'" [colBodyClass]="'custom-appearance'">
+                <ng-template let-row="row" mTemplate="body">
+                  <mat-form-field appearance="outline" style="width: 100%" class="click-defs">
+                    <mat-select (selectionChange)="changePreset($event, row)">
+                      <mat-option *ngFor="let preset of defPresets" [value]="preset">
+                        {{preset.name}}
+                        <span style="font-size: 0.7rem;">{{preset.def}}</span>
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ng-template>
+              </m-column>
+    
+              <m-column [field]="'duplicate'" [colHeadClass]="'custom-appearance'" [colBodyClass]="'custom-appearance'">
+                <ng-template mTemplate="header">
+                    Duplicate Clicks <br> (HH:MM:SS)
+                </ng-template>
+                <ng-template mTemplate="body" let-row="row">
+                  <mat-checkbox class="mr-4" [checked]="row.allowDuplicate"></mat-checkbox>
+                  <mat-form-field appearance="outline" class="small-input click-defs">
+                    <input matInput [readonly]="true" [disabled]="!row.allowDuplicate" value="{{row.duplicate | timerange}}">
+                    <jv-timerange id = "duplicateTimepicker" matSuffix [timeRange]="row.duplicate" (apply)="row.duplicate = $event"></jv-timerange>
+                  </mat-form-field>
+                </ng-template>
+              </m-column>
+    
+              <m-column [field]="'latent'" [colHeadClass]="'custom-appearance'" [colBodyClass]="'custom-appearance'">
+                <ng-template mTemplate="header">
+                    Latent Clicks <br> (HH:MM:SS)
+                </ng-template>
+                <ng-template mTemplate="body" let-row="row">
+                  <mat-checkbox class="mr-4" [checked]="row.allowLatent" ></mat-checkbox>
+                  <mat-form-field appearance="outline" floatLabel="never" class="small-input click-defs">
+                    <input matInput [readonly]="true" [disabled]="!row.allowLatent" value="{{row.latent | timerange}}">
+                    <jv-timerange matSuffix [timeRange]="row.latent" (apply)="row.latent = $event"></jv-timerange>
+                  </mat-form-field>
+                </ng-template>
+              </m-column>
+    
+              <m-column [header]="'Foreign Clicks'" [colHeadClass]="'custom-appearance'" [colBodyClass]="'custom-appearance'">
+                <ng-template let-row="row" let-col mTemplate="body">
+                  <mat-checkbox class="mr-4" [checked]="row.allowForeign" ></mat-checkbox>
+                  <mat-form-field appearance="outline" class="small-input click-defs">
+                    <mat-select [disabled]="!row.allowForeign" (selectionChange)="row.foreign = $event.value" [value]="row.foreign">
+                      <mat-option *ngFor="let item of foreignClicksOptions" [value]="item.value">
+                        {{item.display}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ng-template>
+              </m-column>
+              <m-column [field]="'bot'" [header]="'Bot Clicks'">
+              <ng-template mTemplate="body" let-row="row" let-col>
+                    <mat-checkbox [checked]="row['bot']" ></mat-checkbox>
+                </ng-template>
+              </m-column>
+    
+              <m-column [header]="'Delete'">
+                <ng-template mTemplate="body" let-row="row" let-rowIndex="rowIndex">
+                  <button type="button" mat-icon-button (click)="deleteClientCong(row,rowIndex)" [disabled]="rowIndex === 0">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </ng-template>
+              </m-column>
+            </m-table>
+            </div>
       </div>
     </div>
 

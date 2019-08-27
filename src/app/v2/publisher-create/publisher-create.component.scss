@@ -66,6 +66,9 @@ mat-card-actions {
   padding: 0.5em 0 !important;
   margin-left: 0.3em;
 }
+:host ::ng-deep .click-defs .mat-form-field-flex > .mat-form-field-infix {
+  padding: 1.5em 0 !important;
+}
 :host ::ng-deep .mat-form-field-label-wrapper {
   top: -1.4em;
 }
