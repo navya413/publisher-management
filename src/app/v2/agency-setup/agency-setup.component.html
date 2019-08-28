@@ -18,12 +18,12 @@
           <button mat-raised-button color="primary" (click)="openAssignAgencyModal($event)" class="btn-margin">Assign Agency</button>
 
           <!-- Manage section  -->
-          <button [disabled]="!selectedAgencies.length" mat-raised-button (click)="editMenu.open()" class="btn-margin">
+          <!-- <button [disabled]="!selectedAgencies.length" mat-raised-button (click)="editMenu.open()" class="btn-margin">
             <mat-select [disabled]="!selectedAgencies.length" #editMenu placeholder="Manage" class="agencyList">
-              <!-- <mat-option (click)="editPublisher(option)"
-                *ngFor="let option of editOptions">{{option.name}}</mat-option> -->
+              <mat-option (click)="editPublisher(option)"
+                *ngFor="let option of editOptions">{{option.name}}</mat-option>
             </mat-select>
-          </button>
+          </button> -->
 
           <!-- Search box -->
           <div class="box-search btn-margin">

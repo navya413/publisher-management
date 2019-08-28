@@ -29,5 +29,5 @@
 
 <div mat-dialog-actions class="dialog-footer">
   <button mat-button (click)="close()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="assignPublisher()" class="btn-margin">{{btnLabel}}</button>
+  <button mat-raised-button color="primary" [disabled]="isAssignEntityDisabled()" (click)="assignPublisher()" class="btn-margin">{{btnLabel}}</button>
 </div>

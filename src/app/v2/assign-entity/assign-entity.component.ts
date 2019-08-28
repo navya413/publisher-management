@@ -67,6 +67,13 @@ export class AssignEntityComponent implements OnInit {
     })
   }
 
+  isAssignEntityDisabled(){
+    let newList  = this.publishers.filter(it=>{
+      return it.active && !it.disabled
+    })
+    return newList.length == 0
+  }
+
 
   entityGetUrl(){
     if (this.inputData.setupType === "publisher"){

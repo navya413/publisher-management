@@ -160,7 +160,7 @@ export class AgencyViewComponent implements OnInit {
       console.log('The dialog was closed',result);
 
       if (result){
-        this.snackbar.open("Publisher assigned","",{
+        this.snackbar.open("Publishers assigned successfully","",{
           duration : 1 * 1000
         });
       }

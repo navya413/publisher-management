@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BreadcrumbSegment } from '../../core/components/breadcrumb/breadcrumb.model';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { AssignEntityComponent } from '../assign-entity/assign-entity.component';
 import { VIEW_OPTIONS } from '../utils/util';
 import { V2Service } from '../v2.service';
@@ -29,6 +29,7 @@ export class AgencySetupComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private v2Service : V2Service,
+    private snackbar : MatSnackBar,
     private apiService : ApiService) { }
 
   ngOnInit() {
@@ -85,6 +86,12 @@ export class AgencySetupComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed',result);
+
+      if (result){
+        this.snackbar.open("Agencies assigned successfully","",{
+          duration : 1 * 1000
+        });
+      }
       this.getAgenciesSetup();
     });
   }
