@@ -32,8 +32,7 @@ export class AddAgencyComponent implements OnInit {
       this.agencyForm = new FormGroup({
         name: new FormControl(this.selectedAgency.name),
         currency :new FormControl(this.selectedAgency.currency.name),
-        markup : new FormControl(this.selectedAgency.markup),
-        feedPrefix :new FormControl(this.selectedAgency.feedPrefix),
+        markup : new FormControl(this.selectedAgency.markup)
       });  
       return;
     }
@@ -41,7 +40,6 @@ export class AddAgencyComponent implements OnInit {
       name: new FormControl(),
       currency :new FormControl(''),
       markup : new FormControl(''),
-      feedPrefix :new FormControl(''),
     });
   }
 
