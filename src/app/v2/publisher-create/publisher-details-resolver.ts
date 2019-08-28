@@ -11,6 +11,6 @@ export class PublisherDetailsResolver implements Resolve<any> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any>|Promise<any>|any {
-    return this.pubManagementService.getPublisherV2(route.params.agencyId,route.params.publisherId);
+    return this.pubManagementService.getPublisherV2(route.params.agencyId || '',route.params.publisherId);
   }
 }

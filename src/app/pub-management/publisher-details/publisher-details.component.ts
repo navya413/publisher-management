@@ -327,7 +327,7 @@ constructor(
 ngOnInit() {
   this.loading = true;
   this.pubManagementService
-    .getPublisherSchema(this.data.selectedAgency, this.data.publisher.placement.id)
+    .getPublisherSchema(this.data.selectedAgency, this.data.publisher.placement.id || this.data.publisher.id)
     .subscribe(
       res => {
         this.loading = false;

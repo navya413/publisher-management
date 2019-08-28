@@ -6,6 +6,8 @@ import { MatDialog } from "@angular/material";
 import { ViewContactsComponent } from "../view-contacts/view-contacts.component";
 import { Item, PUB_EDIT_OPTIONS } from "../../model/entity";
 import { PubManagementService } from "../../pub-management/services/pub-management.service";
+import { PublisherSchemaDialog } from "../../pub-management/publisher-details/publisher-details.component";
+import { NotificationsService } from "angular2-notifications";
 
 @Component({
   selector: "app-publishers",
@@ -13,10 +15,11 @@ import { PubManagementService } from "../../pub-management/services/pub-manageme
   styleUrls: ["./publishers.component.scss"]
 })
 export class PublishersComponent implements OnInit {
-  selectedAgency: any;
+  selectedAgency = 'All Agencies';
   constructor(private apiService: ApiService,private router : Router,private dialog: MatDialog,
     private pubManagementService: PubManagementService,
-    public route: ActivatedRoute 
+    public route: ActivatedRoute,
+    public notifService: NotificationsService 
   ) {}
 
   loading :boolean = true;
@@ -98,6 +101,24 @@ export class PublishersComponent implements OnInit {
     this.filters.page = pageData.pageIndex + 1;
     this.filters.limit = pageData.pageSize;
     this.getPublishers();
+  }
+
+  openPublisherSchemaDialog() {
+    this.pubManagementService.getPublisherV2('',this.selectedPublishers[0].id).subscribe(res => {
+      const dialogRef = this.dialog.open(PublisherSchemaDialog, {
+        width: '80vw',
+        data: {
+          publisher: res,
+          selectedAgency: this.selectedAgency
+        }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result && result.success) {
+          this.notifService.success('Success', 'Successfully updated');
+        }
+      });
+    })
   }
   editPublisher(option) {
     if (option.value === "editPublisher") {

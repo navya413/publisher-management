@@ -132,6 +132,7 @@
             <input
               type="number"
               matInput
+              numbersOnly
               step="0.1"
               placeholder="Min Bid"
               formControlName="minBid"
@@ -154,7 +155,7 @@
               *ngFor="
                 let pubContact of creationForm['controls'].placement['controls']
                   .publisherContactDetailsRevamp['controls'];
-                let index = index
+                let index = index; let length = count;
               "
             >
               <div [formGroupName]="index" class="contact-details">
@@ -168,7 +169,7 @@
                   />
                 </mat-form-field>
                 <div class="contact-vp">
-                  <mat-checkbox formControlName="vpAccessEnabled">
+                  <mat-checkbox formControlName="vpAccessEnabled" class="contact-vp-access">
                     VP Access
                   </mat-checkbox>
                   <mat-checkbox
@@ -177,7 +178,7 @@
                   >
                     Send Notification if feed is not picked in
                     <mat-form-field appearance="outline" class="">
-                      <input matInput name="hours"  formControlName="notificationAlertThreshold"/>
+                      <input type="number" matInput numbersOnly name="hours"  formControlName="notificationAlertThreshold"/>
                     </mat-form-field>
                     Hours
                   </mat-checkbox>
@@ -186,6 +187,7 @@
                     color="primary"
                     mat-icon-button
                     (click)="removePubContact(index)"
+                    *ngIf = "length>1"
                   >
                     <mat-icon aria-label="Example icon-button with a heart icon"
                       >clear</mat-icon
@@ -214,8 +216,7 @@
             *ngFor="
               let pubContact of creationForm['controls'].placement['controls']
                 .vendorPortalDetails['controls'];
-              let index = index
-            "
+              let index = index; let length = count;"
           >
             <div [formGroupName]="index" class="contact-details">
               <mat-form-field appearance="outline" class="contact-field">
@@ -245,6 +246,7 @@
                 color="primary"
                 mat-icon-button
                 (click)="removeVendorDetails(index)"
+                *ngIf = "length>1"                
               >
                 <mat-icon aria-label="Example icon-button with a heart icon"
                   >clear</mat-icon
@@ -438,7 +440,7 @@
                     Duplicate Clicks <br> (HH:MM:SS)
                 </ng-template>
                 <ng-template mTemplate="body" let-row="row">
-                  <mat-checkbox class="mr-4" [checked]="row.allowDuplicate"></mat-checkbox>
+                  <mat-checkbox class="mr-4" [checked]="row.allowDuplicate" (change)="toogleCHDefs(row,'allowDuplicate')"></mat-checkbox>
                   <mat-form-field appearance="outline" class="small-input click-defs">
                     <input matInput [readonly]="true" [disabled]="!row.allowDuplicate" value="{{row.duplicate | timerange}}">
                     <jv-timerange id = "duplicateTimepicker" matSuffix [timeRange]="row.duplicate" (apply)="row.duplicate = $event"></jv-timerange>
@@ -451,7 +453,7 @@
                     Latent Clicks <br> (HH:MM:SS)
                 </ng-template>
                 <ng-template mTemplate="body" let-row="row">
-                  <mat-checkbox class="mr-4" [checked]="row.allowLatent" ></mat-checkbox>
+                  <mat-checkbox class="mr-4" [checked]="row.allowLatent" (change)="toogleCHDefs(row,'allowLatent')"></mat-checkbox>
                   <mat-form-field appearance="outline" floatLabel="never" class="small-input click-defs">
                     <input matInput [readonly]="true" [disabled]="!row.allowLatent" value="{{row.latent | timerange}}">
                     <jv-timerange matSuffix [timeRange]="row.latent" (apply)="row.latent = $event"></jv-timerange>
@@ -461,7 +463,7 @@
     
               <m-column [header]="'Foreign Clicks'" [colHeadClass]="'custom-appearance'" [colBodyClass]="'custom-appearance'">
                 <ng-template let-row="row" let-col mTemplate="body">
-                  <mat-checkbox class="mr-4" [checked]="row.allowForeign" ></mat-checkbox>
+                  <mat-checkbox class="mr-4" [checked]="row.allowForeign" (change)="toogleCHDefs(row,'allowForeign')"></mat-checkbox>
                   <mat-form-field appearance="outline" class="small-input click-defs">
                     <mat-select [disabled]="!row.allowForeign" (selectionChange)="row.foreign = $event.value" [value]="row.foreign">
                       <mat-option *ngFor="let item of foreignClicksOptions" [value]="item.value">
@@ -473,7 +475,7 @@
               </m-column>
               <m-column [field]="'bot'" [header]="'Bot Clicks'">
               <ng-template mTemplate="body" let-row="row" let-col>
-                    <mat-checkbox [checked]="row['bot']" ></mat-checkbox>
+                    <mat-checkbox [checked]="row['bot']" (change)="toogleCHDefs(row,'bot')"></mat-checkbox>
                 </ng-template>
               </m-column>
     
@@ -502,11 +504,11 @@
         type="submit"
         mat-raised-button
         [disabled]="loading"
-        class="button-inline"
+        class="button-inline submit-btn"
         color="primary"
       >
         {{ isModeEdit ? "Edit Publisher" : "Add Publisher" }}
-        <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
+        <mat-spinner *ngIf="loading" [diameter]="20" style="margin:10px;"></mat-spinner>
       </button>
     </mat-card-actions>
   </form>

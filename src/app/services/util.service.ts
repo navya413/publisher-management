@@ -155,10 +155,11 @@ export class UtilService {
       const row = [];
       let parsedData = '';
       for (const key in headers) {
-        if (headers[key] === 'IpAdress') {
-          row.push(record.IpAdress);
+        
+        if (headers[key] == 'IP Address') {
+          row.push(record['IpAddress']);
         }
-      }
+      }     
       data.push(row);
     });
 

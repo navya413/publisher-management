@@ -124,12 +124,23 @@ mat-card-actions {
 .contact-details {
     display: flex;
     .contact-field {
-        width: 380px;
+        width: 390px;
         margin-right: 110px;
     }
     .contact-vp {
+      display: flex;
+        .contact-vp-access {
+          margin-top: 13px;
+        }
+        .contact-vp .mat-checkbox-layout .mat-checkbox-inner-container {
+          margin-top: 4px !important;
+        }
         .contact-notification {
-            margin-left: 200px;
+          margin-left: 120px;
         }
     }
+}
+
+:host ::ng-deep .submit-btn .mat-button-wrapper {
+  display: inline-flex !important;
 }

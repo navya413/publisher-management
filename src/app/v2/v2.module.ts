@@ -1,3 +1,4 @@
+import {PublisherSchemaDialog} from '../pub-management/publisher-details/publisher-details.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -23,6 +24,7 @@ import { PublisherCreateComponent } from './publisher-create/publisher-create.co
 import { PublisherDetailsResolver } from './publisher-create/publisher-details-resolver';
 import { TimerangePickerComponent } from './timerange-picker/timerange-picker.component';
 import { TimerangeFormatterPipe } from '../services/local-search.pipe';
+import { NumberDirective } from './utils/util.directives'
 
 @NgModule({
   imports: [
@@ -32,8 +34,8 @@ import { TimerangeFormatterPipe } from '../services/local-search.pipe';
     V2RoutingModule,
     CoreModule
   ],
-  entryComponents : [AssignEntityComponent,ViewContactsComponent,AddAgencyComponent],
-  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent, BillingComponent, PublisherCreateComponent, TimerangePickerComponent, TimerangeFormatterPipe],
+  entryComponents : [AssignEntityComponent,ViewContactsComponent,AddAgencyComponent, PublisherSchemaDialog],
+  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent, BillingComponent, PublisherCreateComponent, TimerangePickerComponent, TimerangeFormatterPipe, NumberDirective],
   providers : [ApiService, PubManagementService,PublisherDetailsResolver,V2Service]
 })
 export class V2Module { }

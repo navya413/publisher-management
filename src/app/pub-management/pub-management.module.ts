@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PubManagementService } from './services/pub-management.service';
 import { EditorActionComponent } from './editor-action/editor-action.component';
 import { PublisherCreateComponent } from './publisher-create/publisher-create.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { PublisherCreateComponent } from './publisher-create/publisher-create.co
     ReactiveFormsModule,
     MaterialModule,
     MomentumTableModule,
-    PubManagementRoutingModule
+    PubManagementRoutingModule,
+    CoreModule
     
   ],
   declarations: [
@@ -27,7 +29,6 @@ import { PublisherCreateComponent } from './publisher-create/publisher-create.co
     EditorActionComponent,
     PublisherCreateComponent,
     PublisherDetailsComponent,
-    PublisherSchemaDialog,
     PublisherInfoDialog
   ],
   entryComponents: [PublisherSchemaDialog, PublisherInfoDialog],

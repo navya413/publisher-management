@@ -13,6 +13,7 @@ import {DateRangeOldComponent} from './components/date-range/date-range.componen
 import { MomentumTableModule } from 'momentum-table';
 import { LocalSearchPipe } from "../services/local-search.pipe";
 import { StatsService } from '../stats/services/stats.service';
+import { PublisherSchemaDialog } from '../pub-management/publisher-details/publisher-details.component';
 
 
 
@@ -32,9 +33,11 @@ import { StatsService } from '../stats/services/stats.service';
     BreadcrumbComponent,
     ChartViewComponent,
     EmptyViewComponent,
-    LocalSearchPipe
+    LocalSearchPipe,
+    PublisherSchemaDialog
   ],
   providers : [StatsService],
+  entryComponents : [PublisherSchemaDialog],
   exports: [
     DateRangeComponent,
     DateRangeOldComponent,

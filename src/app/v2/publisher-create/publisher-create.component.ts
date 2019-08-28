@@ -9,6 +9,7 @@ import { FOREIGN_CLICKS_OPTIONS, DEF_PRESETS, FEED_TYPES} from '../utils/util';
 import { UtilService } from '../../services/util.service';
 import { BreadcrumbSegment } from '../../core/components/breadcrumb/breadcrumb.model';
 import { PubManagementService } from '../../pub-management/services/pub-management.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-publisher-create',
@@ -44,6 +45,7 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public utilService: UtilService,
     public pubManagementService: PubManagementService,
+    public notifService: NotificationsService
   ) { }
 
   ngOnInit() {
@@ -95,7 +97,7 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
         country: [],
         industry: [],
         deliverFeedByFTP: [],
-        perClientPlacements: [],
+        perClientPlacements: false,
         isCompressedFeed: [],
         ftpConfig: this.fb.group({
           credentials: this.fb.group({
@@ -215,7 +217,7 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
         ].controls.credentials.controls.pathTemplate.patchValue(
           placementFields[item].pathTemplate
         );
-      }  else if (item === 'clickDefinitions') {
+      }  else if (item === 'clickDefinitions' && this.agency) {
         const agencyDef =
           placementFields[item].agencies[this.agency].definition;
 
@@ -265,7 +267,7 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
           url: ["../../..", "publishers"] 
         },
         {
-          label: "Edd Publisher : ",
+          label: "Edit Publisher : ",
           subTitle: this.editPublisher.placement.name
         }
       ];
@@ -284,7 +286,7 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
           url: ["../../..", "publishers"] 
         },
         {
-          label: "Edd Publisher : ",
+          label: "Edit Publisher : ",
           subTitle: this.editPublisher.placement.name
         }]
     }
@@ -299,10 +301,6 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
       notificationEnabled: [false],
       notificationAlertThreshold: []
     }))
-  }
-  trackByItems(index:string, item:any) {
-    console.log('inside track by', index, item);
-    return item.id;
   }
   removePubContact(index) {
     const control = this.creationForm.controls['placement'].controls['publisherContactDetailsRevamp'];
@@ -326,7 +324,9 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     ? 'Only following special characters allowed . - _ ()'
     : 'Name is required';
   }
-  
+  toogleCHDefs(row, definition) {
+    row[definition] = !row[definition];
+  }
   onSubmit() {
     if (!this.creationForm.valid) {
       return;
@@ -369,13 +369,21 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     if (!this.isModeEdit) {
       this.addPublisher(dataObj);
     } else {
-      this.bindClickDefs(dataObj);
-      const updatedData = {
-        id: dataObj.placement.id,
-        update: {}
-      };
-      updatedData['update']= dataObj.placement;
-      this.updatePublisher(updatedData);
+      if (this.agency) {
+        this.bindClickDefs(dataObj);
+        const updatedData = {
+          agencyId: this.agency,
+          placement: dataObj.placement
+        }
+        this.agencyUpdatePublisher(updatedData);
+      } else {
+        const updatedData = {
+          id: dataObj.placement.id,
+          update: {}
+        };
+        updatedData['update']= dataObj.placement;
+        this.updatePublisher(updatedData);
+      }
     }
     
   }
@@ -411,10 +419,12 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     this.pubManagementService.addPublisher(dataObj).subscribe(
       res => {
         this.loading = false;
+        this.notifService.success('Success', 'Successfully created');        
         this.navigateBack();
       },
       err => {
         this.error = 'something went wrong, please try again';
+        this.notifService.error('Error', this.error);
         this.loading = false;
       }
     );
@@ -425,10 +435,26 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     this.pubManagementService.updatePublisher(agency,dataObj).subscribe(
       res => {
         this.loading = false;
+        this.notifService.success('Success', 'Successfully updated');        
         this.navigateBack();
       },
       err => {
         this.error = 'something went wrong, please try again';
+        this.notifService.error('Error', this.error);        
+        this.loading = false;
+      }
+    );
+  }
+  agencyUpdatePublisher(dataObj) {
+    this.pubManagementService.updateAgencyPublisher(dataObj).subscribe(
+      res => {
+        this.loading = false;
+        this.notifService.success('Success', 'Successfully updated');        
+        this.navigateBack();
+      },
+      err => {
+        this.error = 'something went wrong, please try again';
+        this.notifService.error('Error', this.error);        
         this.loading = false;
       }
     );
@@ -515,13 +541,12 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
         this.loading = false;
         console.log(response);
         if (response.data && !response.data.success) {
-          // this.snackbar.open(response.data.error.msg, '', { duration: 3000 });
+        this.notifService.error('Error', response.data.error.msg);
           return;
         }
         this.botFile = response.data.id;
-        // this.snackbar.open('File uploaded successfully.', '', {
-        //   duration: 3000
-        // });
+        this.notifService.success('Success', 'Successfully uploaded');
+
       });
   }
 
@@ -529,8 +554,8 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     window.open(this.botFile, '_blank');
   }
   downloadSampleCSV() {
-    const header = ['IpAdress'];
-    const data = [{ IpAdress: '31.2.43' }, { IpAdress: '172.4.00' }];
+    const header = ['IP Address'];
+    const data = [{ IpAddress: '31.2.43' }, { IpAddress: '172.4.00' }];
     this.utilService.downloadCSV(header, data, 'Sample Bot Ips');
   }
 

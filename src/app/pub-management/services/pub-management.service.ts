@@ -35,6 +35,12 @@ export class PubManagementService {
         }
       });
   }
+  updateAgencyPublisher(data) {
+    return this.http.put<any>(
+      environment.adminApi + 'publishers/perPublisher',
+      data
+    )
+  }
   getAgencyClients(agencyId) {
     return this.http.get<any>(environment.v2api + "/loki/admin/agency/" + agencyId + "/clients")
   }
