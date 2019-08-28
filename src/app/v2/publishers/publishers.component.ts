@@ -43,9 +43,9 @@ export class PublishersComponent implements OnInit {
     
   }
 
-  onRowClick(event){
-    console.log("Event :::",event)
-    this.router.navigate(["v2","publisher",event.data.name,"agencies"])
+  onRowClick(row){
+    console.log("Event :::",row)
+    this.router.navigate(["v2","publisher",row.name,"agencies"])
   }
 
   getContactsCount(contacts:any,label:string){
@@ -84,6 +84,9 @@ export class PublishersComponent implements OnInit {
 
   getPublishers() {
     this.loading = true;
+    this.publishers = []
+    this.totalResp = {data:[]};
+
     this.apiService.get(environment.v2api + "/loki/admin/publisher",this.filters).subscribe(resp => {
       this.publishers = resp.data;
       this.totalResp = resp;

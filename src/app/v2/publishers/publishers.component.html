@@ -10,15 +10,12 @@
   <m-table [value]="totalResp.data" 
   (onPage)="onPageChange($event)"
   [selectable]="true" [selectionMode]="'single'"
-  [(selection)]="selectedPublishers"  
-  (onRowClick)="onRowClick($event)" (onReload)="onReload()">
+  [(selection)]="selectedPublishers" (onReload)="onReload()">
     
   <m-header>
       <ng-template let-header>
         <div class="card-header">
           <button mat-raised-button color="primary" [routerLink]="['../publisher','create']" class="btn-margin">Add Publisher</button>
-          
-    
 
           <button [disabled]="!selectedPublishers.length"
                   mat-raised-button
@@ -35,7 +32,7 @@
 
           <div class="box-search btn-margin">
             <div class="box-search-icon">
-              <button mat-icon-button (click)="onQuerySearch(searchInput.value)">
+              <button mat-icon-button (click)="getPublishers()">
                 <mat-icon class="mat-24" aria-label="Search icon">search</mat-icon>
               </button>
             </div>
@@ -74,7 +71,11 @@
       </ng-template>
     </m-column>
 
-    <m-column field="name" header="Publisher Name"></m-column>
+    <m-column field="name" header="Publisher Name" >
+      <ng-template let-col let-row="row" mTemplate="body">
+        <span class="cursor" (click)="onRowClick(row)">{{ row.name }}</span>
+      </ng-template>
+    </m-column>
 
     <m-column field="agencyCount"
               [sortable]="true">

@@ -51,9 +51,9 @@ export class AgenciesComponent implements OnInit {
     console.log("Options >>>",option)
   }
   
-  onRowClick(event){
+  onRowClick(row){
     console.log("Event :::",event)
-    this.router.navigate(["v2","agency",event.data.name,"publishers"])
+    this.router.navigate(["v2","agency",row.name,"publishers"])
   }
 
   onFilter(event){

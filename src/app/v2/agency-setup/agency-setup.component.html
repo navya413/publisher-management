@@ -28,18 +28,18 @@
           <!-- Search box -->
           <div class="box-search btn-margin">
             <div class="box-search-icon">
-              <button mat-icon-button (click)="getAllPublishers()">
+              <button mat-icon-button (click)="getAgenciesSetup()">
                 <mat-icon class="mat-24" aria-label="Search icon">search</mat-icon>
               </button>
             </div>
             <div class="box-search-input-wrapper">
-              <input type="text" [(ngModel)]="filters.query" placeholder="Search..." (keyup.enter)="getAllPublishers()" />
+              <input type="text" [(ngModel)]="filters.query" placeholder="Search..." (keyup.enter)="getAgenciesSetup()" />
             </div>
           </div>
 
           <!-- Status filter -->
           <button mat-raised-button (click)="statusMenu.open()" class="btn-margin">
-            <mat-select #statusMenu placeholder="Status" [(ngModel)]="filters.status" (change)="getAllPublishers()" class="agencyList">
+            <mat-select #statusMenu placeholder="Status" [(ngModel)]="filters.status" (change)="getAgenciesSetup()" class="agencyList">
               <mat-option *ngFor="let option of statusOptions" [value]="option.value">{{ option.name }}</mat-option>
             </mat-select>
           </button>
@@ -111,7 +111,7 @@
       </ng-template>
 
       <ng-template let-col let-row="row" mTemplate="body">
-        {{ row.jobRunStats.lastSuccessTimeMillis | date: "MM/dd/yyyy hh:mm:ss" }}
+        {{ row.jobRunStats?.lastSuccessTimeMillis | date: "MM/dd/yyyy hh:mm:ss" }}
       </ng-template>
     </m-column>
     

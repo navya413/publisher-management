@@ -20,9 +20,10 @@ export class AgencySetupComponent implements OnInit {
   agencies = []
   totalResp :any = {}
   selectedAgencies = [];
-  filters = {page:1,limit:10}
+  filters = {page:1,limit:10,query:"",status:"All"}
   viewOptions :string[]  = VIEW_OPTIONS
   selectedView:string = "Settings";
+  statusOptions = [{ name: "All", value: "All" }, { name: "Active", value: "active" }, { name: "Paused", value: "inactive" }];
 
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -38,8 +39,18 @@ export class AgencySetupComponent implements OnInit {
 
 
   getAgenciesSetup(){
+    this.loading = true;
+    this.totalResp = {};
+    this.agencies = [];
     let url = "/api/loki/admin/publisher/"+ this.publisherId +"/agency/setup"
-    this.apiService.get(url).subscribe((resp:any)=>{
+
+    let params = {}
+    if(this.filters.query){
+      params["query"] = this.filters.query
+    }
+    params["status"] = this.filters.status
+
+    this.apiService.get(url,params).subscribe((resp:any)=>{
       this.agencies = resp.data;
       this.totalResp = resp;
       this.loading = false;

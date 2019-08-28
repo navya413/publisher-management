@@ -34,7 +34,7 @@ export class AgencyViewComponent implements OnInit {
     { name: "Organic", value: "organic" },
     { name: "Job Postings", value: "cpj" },
     { name: "Job Slots", value: "cps" },
-    { name: "Flat Pay Per Click", value: "flat_cpc" },
+    { name: "Flat Pay Per Click", value: "flat cpc" },
     { name: "Pay Per Posting", value: "ppp" }
   ];
   constructor(private activatedRoute: ActivatedRoute,
