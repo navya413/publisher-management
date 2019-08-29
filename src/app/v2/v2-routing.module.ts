@@ -9,7 +9,7 @@ import { AgencySetupComponent } from "./agency-setup/agency-setup.component";
 import { PublisherStatsComponent } from "./publisher-stats/publisher-stats.component";
 import { BillingComponent } from "./billing/billing.component";
 import { PublisherCreateComponent } from "./publisher-create/publisher-create.component";
-import { PublisherDetailsResolver } from "./publisher-create/publisher-details-resolver"
+import { PublisherDetailsResolver, PublisherClientsResolver } from "./publisher-create/publisher-details-resolver"
 
 const routes: Routes = [
   {
@@ -32,7 +32,7 @@ const routes: Routes = [
         },
         resolve: {
           data: PublisherDetailsResolver,
-
+          clients: PublisherClientsResolver
         }
       },
       {

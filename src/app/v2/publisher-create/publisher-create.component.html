@@ -169,12 +169,13 @@
                   />
                 </mat-form-field>
                 <div class="contact-vp">
-                  <mat-checkbox formControlName="vpAccessEnabled" class="contact-vp-access">
+                  <mat-checkbox formControlName="vpAccessEnabled" class="contact-vp-access" (change)="changeVpAccess(pubContact)">
                     VP Access
                   </mat-checkbox>
                   <mat-checkbox
                     class="contact-notification"
                     formControlName="notificationEnabled"
+                    (change)="changeSendNotification(pubContact)"
                   >
                     Send Notification if feed is not picked in
                     <mat-form-field appearance="outline" class="">
@@ -289,7 +290,7 @@
           </mat-checkbox></b
         >
 
-        <div formGroupName="ftpConfig">
+        <div formGroupName="ftpConfig" *ngIf="creationForm.controls.placement.controls.deliverFeedByFTP.value">
           <div formGroupName="credentials" class="grid-container">
             <mat-form-field appearance="outline" class="grid-item-4">
               <mat-label>Host Name*</mat-label>
@@ -323,7 +324,7 @@
           </div>
         </div>
 
-        <b class="mb-0">Reconciliation Details</b>
+        <b class="mb-0 recon-details">Reconciliation Details</b>
 
         <div
           formGroupName="publisherReconciliationDetails"

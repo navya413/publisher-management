@@ -56,9 +56,7 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     if (this.route.snapshot.data.routeType === "agency") {
       this.enableClickDefs = true;
       this.agency = this.route.snapshot.params.agencyId;
-      this.pubManagementService.getAgencyClients(this.agency).subscribe(clients => {
-        this.clients = this.clients.concat(clients);
-      })
+      this.clients = this.route.snapshot.data.clients;
     }
     this.buildBreadcrumb();  
     this.initForm();
@@ -133,7 +131,6 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
 
     if (this.isModeEdit) {
       this.bindEditData();
-      this.addClientDef(true);
     }
   }
 
@@ -318,6 +315,16 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     const control = this.creationForm.controls['placement'].controls['vendorPortalDetails'];
     control.removeAt(index);    
   }
+  changeVpAccess(pubContact) {
+    const vpAccessValue = pubContact.controls.vpAccessEnabled.value;
+    pubContact.controls.email.setValidators(vpAccessValue ? Validators.required : '');
+    pubContact.controls.email.updateValueAndValidity( {emitEvent: false});
+  }
+  changeSendNotification (pubContact) {
+    const sendNotifValue = pubContact.controls.notificationEnabled.value;
+    pubContact.controls.notificationAlertThreshold.setValidators(sendNotifValue ? Validators.required : '');
+    pubContact.controls.notificationAlertThreshold.updateValueAndValidity( {emitEvent: false});
+  }
   getFieldErrorMessage(error) {
     const first = Object.keys(error)[0];
     return first === 'pattern'
@@ -466,22 +473,6 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     this.router.navigate([this.isModeEdit ? '../../../publishers' :'../../publishers'], { relativeTo: this.route });
   }
   
-  addClientDef(isAgency?) {
-    this.clientDefs = this.clientDefs.concat([
-      {
-        name: isAgency ? 'All Clients' : '',
-        id: isAgency ? this.agency : '',
-        preset: {},
-        bot: true,
-        allowDuplicate: false,
-        duplicate: 0,
-        allowForeign: false,
-        foreign: this.foreignClicksOptions[0].value,
-        allowLatent: true,
-        latent: 172800000
-      }
-    ]);
-  }
   deleteClientCong(row, rowIndex) {
     this.clientDefs.splice(rowIndex, 1);
     this.clientDefs = [...this.clientDefs];

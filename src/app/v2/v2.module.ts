@@ -21,7 +21,7 @@ import { AddAgencyComponent } from './add-agency/add-agency.component';
 import { V2Service } from './v2.service';
 import { BillingComponent } from './billing/billing.component';
 import { PublisherCreateComponent } from './publisher-create/publisher-create.component';
-import { PublisherDetailsResolver } from './publisher-create/publisher-details-resolver';
+import { PublisherDetailsResolver, PublisherClientsResolver } from './publisher-create/publisher-details-resolver';
 import { TimerangePickerComponent } from './timerange-picker/timerange-picker.component';
 import { TimerangeFormatterPipe } from '../services/local-search.pipe';
 import { NumberDirective } from './utils/util.directives'
@@ -36,6 +36,6 @@ import { NumberDirective } from './utils/util.directives'
   ],
   entryComponents : [AssignEntityComponent,ViewContactsComponent,AddAgencyComponent, PublisherSchemaDialog],
   declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent, BillingComponent, PublisherCreateComponent, TimerangePickerComponent, TimerangeFormatterPipe, NumberDirective],
-  providers : [ApiService, PubManagementService,PublisherDetailsResolver,V2Service]
+  providers : [ApiService, PubManagementService,PublisherDetailsResolver, PublisherClientsResolver,V2Service]
 })
 export class V2Module { }
