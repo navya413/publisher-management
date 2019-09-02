@@ -38,7 +38,7 @@ export class AddAgencyComponent implements OnInit {
     }
     this.agencyForm = new FormGroup({
       name: new FormControl(),
-      currency :new FormControl(''),
+      currency :new FormControl('USD'),
       markup : new FormControl(''),
     });
   }
