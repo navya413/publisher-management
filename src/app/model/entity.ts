@@ -4,11 +4,11 @@ export interface Item {
 }
 
 export const BID_TYPES: Item[] = [
-  { name: 'CPC', value: 'CPC' },
-  { name: 'CPA', value: 'CPA' },
+  { name: 'Pay Per Click', value: 'CPC' },
+  { name: 'Pay Per Apply', value: 'CPA' },
   { name: 'Organic', value: 'Organic' },
-  { name: 'PPP', value: 'PPP' },
-  { name: 'Flat CPC', value: 'FLAT_CPC' },
+  { name: 'Pay Per Posting', value: 'PPP' },
+  { name: 'Flat Pay Per Click', value: 'FLAT_CPC' },
 ];
 
 export const PLACEMENT_TYPES: Item[] = [
@@ -35,6 +35,10 @@ export const EDIT_DETAILS: Item = {
   name: 'Edit Publisher',
   value: 'editPublisher'
 }
+export const FEED_MAPPING: Item = {
+  name: 'Feed Mapping',
+  value: 'feedMapping'
+}
 export const PAUSE_DETAILS: Item = { name: 'Pause', value: 'Pause' };
 export const ENABLE_DETAILS: Item = { name: 'Enable', value: 'Enable' };
 
@@ -46,13 +50,16 @@ export const EDIT_OPTIONS: Item[] = [
   PUB_RECONCILIATION_DETAILS
 ];
 export const PUB_EDIT_OPTIONS: Item[] = [
-  EDIT_DETAILS
+  EDIT_DETAILS,
+  FEED_MAPPING
 ]
 export const AGENCY_ENABLE_EDIT_OPTIONS: Item[] = [
   PAUSE_DETAILS,
-  EDIT_DETAILS
+  EDIT_DETAILS,
+  FEED_MAPPING
 ];
 export const AGENCY_PAUSE_EDIT_OPTIONS: Item[] = [
   ENABLE_DETAILS,
-  EDIT_DETAILS
+  EDIT_DETAILS,
+  FEED_MAPPING
 ]

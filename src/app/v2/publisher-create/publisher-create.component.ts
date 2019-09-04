@@ -88,22 +88,22 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     this.creationForm = this.fb.group({
       placement: this.fb.group({
         name: ['', Validators.required],
-        bidType: ['', Validators.required],
-        currency: ['', Validators.required],
+        bidType: [{value:'', disabled: this.agency ? true : false}, Validators.required],
+        currency: [{value:'', disabled: this.agency ? true : false}, Validators.required],
         minBid: [],
-        url: ['', Validators.required],
-        country: [],
-        industry: [],
-        deliverFeedByFTP: [],
+        url: [{value:'', disabled: this.agency ? true : false}, Validators.required],
+        country: [{value:'', disabled: this.agency ? true : false}],
+        industry: [{value:'', disabled: this.agency ? true : false}],
+        deliverFeedByFTP: false,
         perClientPlacements: false,
-        isCompressedFeed: [],
+        isCompressedFeed: false,
         ftpConfig: this.fb.group({
           credentials: this.fb.group({
             host: [],
             username: [],
-            password: [],
-            pathTemplate: []
-          })
+            password: []
+          }),
+          pathTemplate: []          
         }),
         vendorPortalDetails: this.fb.array([
           this.fb.group({
@@ -131,6 +131,10 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
 
     if (this.isModeEdit) {
       this.bindEditData();
+      if (!this.editPublisher.placement.clickDefinitions ||
+        Object.getOwnPropertyNames(this.editPublisher.placement.clickDefinitions.agencies).length === 0) {
+          this.addClientDef(true);
+        }
     }
   }
 
@@ -144,13 +148,17 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
           'minBid',
           'url',
           'country',
-          'deliverFeedByFTP',
           'perClientPlacements',
-          'isCompressedFeed'
         ].includes(item)
       ) {
         this.creationForm.controls.placement.controls[item].patchValue(
           placementFields[item]
+        );
+      } else if (item === 'feedFileType') {
+        this.creationForm.controls.placement.controls.isCompressedFeed.patchValue(placementFields[item].name === "zipped");
+      }  else if (item === 'industry') {
+        this.creationForm.controls.placement.controls[item].patchValue(
+          placementFields[item].name
         );
       } else if (item === 'bidType') {
         this.creationForm.controls.placement.controls[item].patchValue(
@@ -194,6 +202,7 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
           item
         ].controls.timezone.patchValue(placementFields[item].timezone);
       } else if (item === 'ftpConfig') {
+        this.creationForm.controls.placement.controls.deliverFeedByFTP.patchValue(true);
         this.creationForm.controls.placement.controls[
           item
         ].controls.credentials.controls.host.patchValue(
@@ -211,10 +220,10 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
         );
         this.creationForm.controls.placement.controls[
           item
-        ].controls.credentials.controls.pathTemplate.patchValue(
+        ].controls.pathTemplate.patchValue(
           placementFields[item].pathTemplate
         );
-      }  else if (item === 'clickDefinitions' && this.agency) {
+      }  else if (item === 'clickDefinitions' && Object.getOwnPropertyNames(placementFields[item].agencies).length != 0) {
         const agencyDef =
           placementFields[item].agencies[this.agency].definition;
 
@@ -222,11 +231,14 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
           this.botFile =
             placementFields[item].agencies[this.agency].botIpsFileUrl;
         }
-        this.clientDefs = [this.encodeClickDef(agencyDef)];
+        this.clientDefs = [];        
         const allClientsMap = placementFields[item].agencies[this.agency].clients;
-
-// wait until clients exist
-        Object.keys(allClientsMap).forEach(client => {
+        const allClients = Object.keys(allClientsMap);
+         if (allClients.length === 0 || this.agency !== allClients[0]) {
+           this.clientDefs = [this.encodeClickDef(agencyDef)];
+         }
+        // wait until clients exist
+        allClients.forEach(client => {
           if (!client) {
             return;
           }
@@ -289,6 +301,22 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     }
     
   }
+  addClientDef(isAgency?) {
+    this.clientDefs = this.clientDefs.concat([
+      {
+        name: isAgency ? 'All Clients' : '',
+        id: isAgency ? this.agency : '',
+        preset: {},
+        bot: true,
+        allowDuplicate: false,
+        duplicate: 0,
+        allowForeign: false,
+        foreign: this.foreignClicksOptions[0].value,
+        allowLatent: true,
+        latent: 172800000
+      }
+    ]);
+  }
 
   addPubContact() {
     const control = this.creationForm.controls['placement'].controls['publisherContactDetailsRevamp'];
@@ -346,6 +374,7 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
       '';
     }
     this.utilService.objectCleaner(this.creationForm.value);
+    
     this.createPublisher();
   }
   
@@ -362,13 +391,7 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
       ] = this.editPublisher.placement.value;
       this.creationForm.value.placement['id'] = this.editPublisher.placement.id;
     }
-    
-    if (this.flatBidPublisher) {
-      delete this.creationForm.value.placement['minBid'];
-    } else {
-      delete this.creationForm.value.placement['flatBidValue'];
-    }
-    
+    this.modifyDataObj();
     const dataObj = this.creationForm.value;
     this.loading = true;
     this.error = null;
@@ -395,6 +418,33 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
     
   }
   
+  modifyDataObj() {
+    if (this.flatBidPublisher) {
+      delete this.creationForm.value.placement['minBid'];
+    } else {
+      delete this.creationForm.value.placement['flatBidValue'];
+    }
+    if (!this.creationForm.value.placement['deliverFeedByFTP']) {
+      delete this.creationForm.value.placement['ftpConfig'];
+    }
+    this.creationForm.value.placement['feedFileType'] = this.creationForm.value.placement.isCompressedFeed ? "zipped" : "newXml";
+    if (this.creationForm.value.placement['publisherContactDetailsRevamp']) {
+      this.creationForm.value.placement['publisherContactDetailsRevamp'] = this.removeNullValues(this.creationForm.value.placement, "publisherContactDetailsRevamp");
+    }
+    if (this.creationForm.value.placement['vendorPortalDetails']) {
+      this.creationForm.value.placement['vendorPortalDetails'] = this.removeNullValues(this.creationForm.value.placement, "vendorPortalDetails");
+    }
+    if (this.agency) {
+      this.creationForm.value.placement['bidType'] = this.creationForm.controls.placement.controls.bidType.value;
+      this.creationForm.value.placement['currency'] = this.creationForm.controls.placement.controls.currency.value;
+      this.creationForm.value.placement['url'] = this.creationForm.controls.placement.controls.url.value;
+      this.creationForm.value.placement['industry'] = this.creationForm.controls.placement.controls.industry.value;
+      this.creationForm.value.placement['country'] = this.creationForm.controls.placement.controls.country.value;      
+    }
+  }
+  removeNullValues(data, key){
+    return data[key].filter(value => value);
+  }
   bindClickDefs(dataObj) {
     dataObj.placement['clickDefinitions'] = {
       agencies: {

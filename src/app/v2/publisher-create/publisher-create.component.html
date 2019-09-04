@@ -84,7 +84,6 @@
             <mat-select
               formControlName="industry"
               placeholder="Industry"
-              multiple
             >
               <mat-option
                 *ngFor="let industry of utilService.industries"
@@ -291,37 +290,39 @@
         >
 
         <div formGroupName="ftpConfig" *ngIf="creationForm.controls.placement.controls.deliverFeedByFTP.value">
-          <div formGroupName="credentials" class="grid-container">
-            <mat-form-field appearance="outline" class="grid-item-4">
-              <mat-label>Host Name*</mat-label>
-              <input matInput placeholder="Host*" formControlName="host" />
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="grid-item-4">
-              <mat-label>Username*</mat-label>
-              <input
-                matInput
-                placeholder="Username*"
-                formControlName="username"
-              />
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="grid-item-4">
-              <mat-label>Password*</mat-label>
-              <input
-                matInput
-                placeholder="Password*"
-                formControlName="password"
-              />
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="grid-item-4">
-              <mat-label>FTP Path*</mat-label>
-              <input
-                matInput
-                name="ftpPath"
-                placeholder="FTP Path"
-                formControlName="pathTemplate"
-              />
-            </mat-form-field>
-          </div>
+          <div class="grid-container">
+            <div formGroupName="credentials" class="grid-container grid-item-12 p-0">
+              <mat-form-field appearance="outline" class="grid-item-4">
+                <mat-label>Host Name*</mat-label>
+                <input matInput placeholder="Host*" formControlName="host" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="grid-item-4">
+                <mat-label>Username*</mat-label>
+                <input
+                  matInput
+                  placeholder="Username*"
+                  formControlName="username"
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="grid-item-4">
+                <mat-label>Password*</mat-label>
+                <input
+                  matInput
+                  placeholder="Password*"
+                  formControlName="password"
+                />
+              </mat-form-field>
+            </div>
+          <mat-form-field appearance="outline" class="grid-item-4">
+            <mat-label>FTP Path*</mat-label>
+            <input
+              matInput
+              name="ftpPath"
+              placeholder="FTP Path"
+              formControlName="pathTemplate"
+            />
+          </mat-form-field>
+        </div>
         </div>
 
         <b class="mb-0 recon-details">Reconciliation Details</b>

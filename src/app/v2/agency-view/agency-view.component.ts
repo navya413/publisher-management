@@ -7,6 +7,8 @@ import { MatDialog, MatSnackBar } from "@angular/material";
 import { ViewContactsComponent } from "../view-contacts/view-contacts.component";
 import { PubManagementService } from "../../pub-management/services/pub-management.service";
 import { AGENCY_ENABLE_EDIT_OPTIONS, AGENCY_PAUSE_EDIT_OPTIONS } from "../../model/entity"
+import { PublisherSchemaDialog } from "../../pub-management/publisher-details/publisher-details.component";
+import { NotificationsService } from "angular2-notifications";
 
 @Component({
   selector: "app-agency-view",
@@ -42,7 +44,8 @@ export class AgencyViewComponent implements OnInit {
     private router : Router,
     private apiService : ApiService,
     private dialog: MatDialog,
-    private pubManagementService: PubManagementService) {}
+    private pubManagementService: PubManagementService,
+    private notifService: NotificationsService) {}
 
   ngOnInit() {
     this.agencyId = this.activatedRoute.snapshot.params.agencyId;
@@ -118,7 +121,23 @@ export class AgencyViewComponent implements OnInit {
     }
 
   }
-
+  openPublisherSchemaDialog() {
+    this.pubManagementService.getPublisherV2('',this.selectedPublishers[0].id).subscribe(res => {
+      const dialogRef = this.dialog.open(PublisherSchemaDialog, {
+        width: '80vw',
+        data: {
+          publisher: res,
+          selectedAgency: this.agencyId
+        }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result && result.success) {
+          this.notifService.success('Success', 'Successfully updated');
+        }
+      });
+    })
+  }
   editPublisher(option){
     if(option.value === "Pause"){
       this.pausePublisher();
@@ -129,6 +148,8 @@ export class AgencyViewComponent implements OnInit {
       }
       this.pubManagementService.setPublisherData(editData);
       this.router.navigate(["v2","agency",editData.selectedAgency,"publisher",editData.publisher.id,"edit"])
+    } else if (option.value === "feedMapping") {
+        this.openPublisherSchemaDialog();
     }
   }
 

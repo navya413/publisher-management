@@ -128,6 +128,8 @@ export class PublishersComponent implements OnInit {
       }
       this.pubManagementService.setPublisherData(editData);
       this.router.navigate(["v2","publisher",editData.publisher.id,"edit"])
+    } else if (option.value === "feedMapping") {
+      this.openPublisherSchemaDialog();
     }
   }
 }

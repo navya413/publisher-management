@@ -40,13 +40,6 @@
               <input type="text" [(ngModel)]="filters.query" placeholder="Search..." (keyup.enter)="getPublishers()"/>
             </div>
           </div>
-
-          <button mat-raised-button
-            *ngIf="selectedPublishers.length"
-            (click)="openPublisherSchemaDialog()"
-            class="btn-margin">Schema Mapping
-          </button>          
-
           <!-- <button
             mat-raised-button
             (click)=statusMenu.open()

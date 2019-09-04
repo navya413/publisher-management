@@ -80,14 +80,14 @@
     <m-column field="reconciliation" header="Reconciliation">
       <ng-template let-col let-row="row" mTemplate="body">
         <i class="material-icons status-icon active" *ngIf="row.reconciliation">check_circle</i>
-        <i class="material-icons status-icon paused" *ngIf="!row.reconciliation">check_circle</i>
+        <i class="material-icons status-icon paused" *ngIf="!row.reconciliation">cancel</i>
       </ng-template>
     </m-column>
 
     <m-column field="reconciliation" header="Web scraping">
       <ng-template let-col let-row="row" mTemplate="body">
         <i class="material-icons status-icon active" *ngIf="row.webScraping">check_circle</i>
-        <i class="material-icons status-icon paused" *ngIf="!row.webScraping">check_circle</i>
+        <i class="material-icons status-icon paused" *ngIf="!row.webScraping">cancel</i>
       </ng-template>
     </m-column>
 
