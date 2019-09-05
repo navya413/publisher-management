@@ -24,7 +24,8 @@ import { PublisherCreateComponent } from './publisher-create/publisher-create.co
 import { PublisherDetailsResolver, PublisherClientsResolver } from './publisher-create/publisher-details-resolver';
 import { TimerangePickerComponent } from './timerange-picker/timerange-picker.component';
 import { TimerangeFormatterPipe } from '../services/local-search.pipe';
-import { NumberDirective } from './utils/util.directives'
+import { NumberDirective } from './utils/util.directives';
+import { DailyReportsComponent } from './agency-view/daily-reports/daily-reports.component'
 
 @NgModule({
   imports: [
@@ -34,8 +35,8 @@ import { NumberDirective } from './utils/util.directives'
     V2RoutingModule,
     CoreModule
   ],
-  entryComponents : [AssignEntityComponent,ViewContactsComponent,AddAgencyComponent, PublisherSchemaDialog],
-  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent, BillingComponent, PublisherCreateComponent, TimerangePickerComponent, TimerangeFormatterPipe, NumberDirective],
+  entryComponents : [AssignEntityComponent,ViewContactsComponent,AddAgencyComponent, PublisherSchemaDialog,DailyReportsComponent],
+  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent, BillingComponent, PublisherCreateComponent, TimerangePickerComponent, TimerangeFormatterPipe, NumberDirective, DailyReportsComponent],
   providers : [ApiService, PubManagementService,PublisherDetailsResolver, PublisherClientsResolver,V2Service]
 })
 export class V2Module { }

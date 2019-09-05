@@ -66,7 +66,7 @@
           <span>Spend</span>
         </ng-template>
         <ng-template let-col let-row="row" mTemplate="body">
-          {{ utilService.getFormattedNumber(row["spend"]["joveo"]) }}
+          {{ utilService.getFormattedNumber(row["spend"]["joveo"]) || 'NA' }}
         </ng-template>
       </m-column>
   
@@ -76,7 +76,7 @@
           <span>Spend</span>
         </ng-template>
         <ng-template let-col let-row="row" mTemplate="body">
-          {{ utilService.getFormattedNumber(row["spend"]["cd"]) }}
+          {{ utilService.getFormattedNumber(row["spend"]["cd"]) || 'NA'}}
         </ng-template>
       </m-column>
   
@@ -86,7 +86,7 @@
           <span>Spend</span>
         </ng-template>
         <ng-template let-col let-row="row" mTemplate="body">
-          {{ utilService.getFormattedNumber(row["spend"]["vp"]) }}
+          {{ utilService.getFormattedNumber(row["spend"]["vp"]) || 'NA'}}
         </ng-template>
       </m-column>
     <!-- Billing END -->
@@ -97,7 +97,7 @@
             <div class="normal-linehight">Clicks</div>
           </ng-template>
           <ng-template let-col let-row="row" mTemplate="body">
-            {{ utilService.getFormattedNumber(row["clicks"]["joveo"]) }}
+            {{ utilService.getFormattedNumber(row["clicks"]["joveo"]) || 'NA'}}
           </ng-template>
       </m-column>
 
@@ -106,7 +106,7 @@
             <div class="normal-linehight">Latent Clicks</div>
           </ng-template>
           <ng-template let-col let-row="row" mTemplate="body">
-            {{ utilService.getFormattedNumber(row["latentClicks"]["joveo"]) }}
+            {{ utilService.getFormattedNumber(row["latentClicks"]["joveo"])|| 'NA' }}
           </ng-template>
       </m-column>
 
@@ -115,7 +115,7 @@
             <div class="normal-linehight">Bot Clicks</div>
           </ng-template>
           <ng-template let-col let-row="row" mTemplate="body">
-            {{ utilService.getFormattedNumber(row["botClicks"]["joveo"]) }}
+            {{ utilService.getFormattedNumber(row["botClicks"]["joveo"]) || 'NA'}}
           </ng-template>
       </m-column>
 
@@ -124,7 +124,7 @@
             <div class="normal-linehight">Duplicate Clicks</div>
           </ng-template>
           <ng-template let-col let-row="row" mTemplate="body">
-            {{ utilService.getFormattedNumber(row["duplicateClicks"]["joveo"]) }}
+            {{ utilService.getFormattedNumber(row["duplicateClicks"]["joveo"]) || 'NA' }}
           </ng-template>
       </m-column>
 

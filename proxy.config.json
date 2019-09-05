@@ -4,20 +4,20 @@
     "secure": false
   },
   "/api": {
-    "target": "http://172.16.1.177:11001",
+    "target": "http://172.16.1.44:11001",
     "secure": false,
     "logLevel": "debug"
   },
   "/thor/api": {
-    "target": "http://172.16.1.177:11001",
+    "target": "http://172.16.1.44:11001",
     "secure": false
   },
   "/gandalf/app/": {
-    "target": "http://gandalf.prod.joveo.com",
+    "target": "http://172.16.1.44:8080",
     "secure": false
   },
   "/papi": {
-    "target": "http://172.16.1.177:11001",
+    "target": "http://172.16.1.44:11001",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

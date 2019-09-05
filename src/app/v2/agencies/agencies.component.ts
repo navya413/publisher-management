@@ -4,6 +4,7 @@ import { environment } from "../../../environments/environment";
 import { Router } from "@angular/router";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { AddAgencyComponent } from "../add-agency/add-agency.component";
+import { UtilService } from "../../services/util.service";
 
 @Component({
   selector: "app-agencies",
@@ -17,7 +18,9 @@ export class AgenciesComponent implements OnInit {
   loading:boolean = true
   editOptions = [{"name":"Edit","value":"Edit"}]
   selectedAgency;
-  constructor(private snackbar : MatSnackBar,private apiService : ApiService,private router : Router,private dialog : MatDialog) {}
+  constructor(private snackbar : MatSnackBar,private apiService : ApiService,
+    private utilService : UtilService,
+    private router : Router,private dialog : MatDialog) {}
 
 
   filters :any = {query:"",page:1,limit:10}
@@ -43,6 +46,11 @@ export class AgenciesComponent implements OnInit {
   
   onReload(){
 
+  }
+
+  export(){
+    let headers  = [{"name":"Name",field:"name"},{"name":"Currency",field:"currency.name"}]
+    this.utilService.downloadCSVGeneric(headers,this.agencies,"reports")
   }
   handleMenuChange(option){
     if(option.value === "Edit"){

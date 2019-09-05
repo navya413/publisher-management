@@ -10,6 +10,7 @@ import { BreadcrumbSegment } from '../../core/components/breadcrumb/breadcrumb.m
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DataTable } from 'momentum-table';
+import { UtilService } from '../../services/util.service';
 
 @Component({
   selector: 'app-publisher-stats',
@@ -101,6 +102,7 @@ export class PublisherStatsComponent implements OnInit {
   ]
 
   constructor(private apiSerivce : ApiService,private activatedRoute : ActivatedRoute,private v2Service : V2Service,
+    private utilService : UtilService,
     private domSanitizer: DomSanitizer,
     iconRegistry: MatIconRegistry) { 
 
@@ -237,9 +239,7 @@ export class PublisherStatsComponent implements OnInit {
     this.getStats();
   }
 
-  getStats(){
-    this.loading = true;
-    let url = this.getUrl()
+  getParams(){
     let params = {
       // "since":this.dateRange.startDate.format('YYYY-MM-DD'),
       "since" : "2019-03-01",
@@ -253,8 +253,15 @@ export class PublisherStatsComponent implements OnInit {
       params["tz"] = this.timezoneId
     }
 
+    return params;
+  }
+
+  getStats(){
+    this.loading = true;
+    let url = this.getUrl();
+    let params = this.getParams();
+
     this.apiSerivce.get(url,params).subscribe(resp=>{
-      console.log(">>>>RESP:::",resp)
       this.totalStatsResp = resp
       this.loading = false
     })
@@ -272,8 +279,75 @@ export class PublisherStatsComponent implements OnInit {
     this.getStats()
   }
 
+  getNameHeader(){
+    if(this.routeType === 'agency'){
+      return {name:"Publisher Name","field":"name"}
+    }
+    return {name:"Agency Name","field":"id"}
+  }
+
+  getHeaders(){
+   return [ this.getNameHeader(),
+      {
+        name : "Joveo Clicks",
+        field : "clicks.joveo"
+      },{
+        name : "Pub Rec",
+        field : "clicks.pub"
+      },
+      {
+        name : "CM Clicks",
+        field : "clicks.cm"
+      },
+      {
+        name : "CH Clicks",
+        field : "clicks.ch"
+      },
+      {
+        name : "Joveo Spend",
+        field : "spend.joveo"
+      },
+      {
+        name : "Pub Rec Spend",
+        field : "spend.pub"
+      },
+      {
+        name : "Webscrape Spend",
+        field : "spend.pubPortal"
+      },
+      {
+        name : "CH Spend",
+        field : "spend.ch"
+      },
+      {
+        name : "Joveo Applies",
+        field : "applies.joveo"
+      },
+      {
+        name : "Pub Rec Applies",
+        field : "applies.pub"
+      },
+      {
+        name : "CM Applies",
+        field : "applies.cm"
+      },{
+        name:"Joveo CTA(%)",
+        field : "joveoCTAPerc"
+      }
+    ]
+  }
+
   export() {
-    this.table.exportCSV(',', 'report', false);
+    let url = this.getUrl();
+    let params = this.getParams();
+    params.page = 1;
+    params.limit = 100000;
+
+    this.apiSerivce.get(url,params).subscribe(resp=>{
+      this.totalStatsResp = resp
+      this.loading = false
+      this.utilService.downloadCSVGeneric(this.getHeaders(),resp.data,"reports")
+    })
   }
 
   onTimezoneChange(timezoneId){

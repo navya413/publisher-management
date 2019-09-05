@@ -88,10 +88,8 @@ export class BillingComponent implements OnInit {
     this.getStats()
   } 
 
-  getStats(){
-    this.loading = true;
-    this.totalResp.data = [];
-    let url = this.getUrl()
+
+  getParams(){
     let params = {
       // "since":this.dateRange.startDate.format('YYYY-MM-DD'),
       "since" : "2019-03-01",
@@ -108,6 +106,15 @@ export class BillingComponent implements OnInit {
     if(this.timezoneId){
       params["tz"] = this.timezoneId
     }
+    return params
+  }
+
+  getStats(){
+    this.loading = true;
+    this.totalResp.data = [];
+    let url = this.getUrl()
+    
+    let params = this.getParams()
 
     this.apiSerivce.get(url,params).subscribe(resp=>{
       this.totalResp = resp
@@ -126,8 +133,61 @@ export class BillingComponent implements OnInit {
     this.getStats();
   }
 
+
+  getBillingHeaders(){
+    return [{
+      name:"Name",
+      field: "name"
+    },{
+      name :"Mojo(Spend)",
+      field : "spend.joveo"
+    },{
+      name :"CD(Spend)",
+      field : "spend.cd"
+    },{
+      name :"VP(Spend)",
+      field : "spend.vp"
+    }]
+  }
+
+  getClicksHeaders(){
+    return [{
+      name:"Name",
+      field: "name"
+    },{
+      name:"Clicks",
+      field: "clicks.joveo"
+    },{
+      name:"Latent Clicks",
+      field: "latentClicks.joveo"
+    },{
+      name:"Bot Clicks",
+      field: "botClicks.joveo"
+    },{
+      name:"Duplicate Clicks",
+      field: "duplicateClicks.joveo"
+    }]
+  }
+  getHeaders(){
+    if (this.screen === "billing"){
+      return this.getBillingHeaders()
+    }
+    return this.getClicksHeaders()
+  }
+
   export() {
-    this.table.exportCSV(',', 'report', false);
+    let rows = [];
+    let url = this.getUrl()
+    let params = this.getParams()
+    params.page =1 ;
+    params.limit =1000000;
+
+    this.apiSerivce.get(url,params).subscribe(resp=>{
+      rows = resp.data
+      let headers = this.getHeaders()
+      this.utilService.downloadCSVGeneric(headers,rows,'reports')
+    })
+    
   }
 
   getUrl(){

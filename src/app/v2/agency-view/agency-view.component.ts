@@ -9,6 +9,7 @@ import { PubManagementService } from "../../pub-management/services/pub-manageme
 import { AGENCY_ENABLE_EDIT_OPTIONS, AGENCY_PAUSE_EDIT_OPTIONS } from "../../model/entity"
 import { PublisherSchemaDialog } from "../../pub-management/publisher-details/publisher-details.component";
 import { NotificationsService } from "angular2-notifications";
+import { DailyReportsComponent } from "./daily-reports/daily-reports.component";
 
 @Component({
   selector: "app-agency-view",
@@ -141,7 +142,8 @@ export class AgencyViewComponent implements OnInit {
   editPublisher(option){
     if(option.value === "Pause"){
       this.pausePublisher();
-    } else if (option.value === "editPublisher") {
+    } 
+    if (option.value === "editPublisher") {
       const editData =  {
         publisher: this.selectedPublishers[0],
         selectedAgency: this.activatedRoute.snapshot.params.agencyId
@@ -151,6 +153,23 @@ export class AgencyViewComponent implements OnInit {
     } else if (option.value === "feedMapping") {
         this.openPublisherSchemaDialog();
     }
+
+    if (option.value === "dailyReports") {
+      this.openDailyReportsModal()
+    }
+  }
+
+  openDailyReportsModal(){
+    let dialogRef = this.dialog.open(DailyReportsComponent, {
+      panelClass: 'app-full-bleed-dialog',
+       width: '500px',
+       minWidth : '500',
+       autoFocus: false,
+       data : {
+         agencyId : this.agencyId,
+         publisherId : this.selectedPublishers[0].id
+       }
+    });
   }
 
   pausePublisher(){

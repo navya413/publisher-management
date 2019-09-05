@@ -39,6 +39,12 @@ export const FEED_MAPPING: Item = {
   name: 'Feed Mapping',
   value: 'feedMapping'
 }
+
+export const DAILY_REPORTS: Item = {
+  name: 'Daily Reports',
+  value: 'dailyReports'
+}
+
 export const PAUSE_DETAILS: Item = { name: 'Pause', value: 'Pause' };
 export const ENABLE_DETAILS: Item = { name: 'Enable', value: 'Enable' };
 
@@ -56,10 +62,12 @@ export const PUB_EDIT_OPTIONS: Item[] = [
 export const AGENCY_ENABLE_EDIT_OPTIONS: Item[] = [
   PAUSE_DETAILS,
   EDIT_DETAILS,
-  FEED_MAPPING
+  FEED_MAPPING,
+  DAILY_REPORTS
 ];
 export const AGENCY_PAUSE_EDIT_OPTIONS: Item[] = [
   ENABLE_DETAILS,
   EDIT_DETAILS,
-  FEED_MAPPING
+  FEED_MAPPING,
+  DAILY_REPORTS
 ]

@@ -1,0 +1,107 @@
+
+<div mat-dialog-title class="dialog-header" style="padding: 10px 20px;margin: 0px;">
+  <span>Daily Reports</span>
+  <i class="material-icons float-right my-1 cursor" (click)="close()">
+    close
+  </i>
+</div>
+
+<div mat-dialog-content style="padding: 10px 20px;margin: 0px;">
+
+  <m-table
+    [value]="totalResp.data"
+    (onPage)="onPageChange($event)"
+    [selectable]="false" [selectionMode]="'single'"
+  >
+    <m-header>
+      <ng-template let-header>
+        <div class="card-header">
+          <button mat-icon-button (click)="export()" style="margin-left: auto;">
+            <mat-icon style="color: #797979">file_download</mat-icon>
+          </button>
+        </div>
+      </ng-template>
+    </m-header>
+
+    <m-footer [paginator]="true"
+    [pageSize]="filters.limit"
+    [pageIndex]="filters.page - 1"
+    [pageSizeOptions]="[10,20,50]"
+    [length]="totalResp.totalRecords"></m-footer>
+
+
+    <m-column field="name" header="Date" >
+      <ng-template let-col let-row="row" mTemplate="body">
+        <span class="cursor">{{ row.date }}</span>
+      </ng-template>
+    </m-column>
+
+    <!-- Joveo clicks -->
+    <m-column
+     [field]="'clicks'"
+     [sortable]="false">
+        <ng-template mTemplate="header">
+          <span>Joveo</span>
+          <br>
+          <span class="sub-header">Clicks</span>
+        </ng-template>
+        <ng-template let-col let-row="row" mTemplate="body">
+          {{ row["clicks"]["joveo"]?.toLocaleString() }}
+        </ng-template>
+    </m-column>
+
+    <!-- Total clicks -->
+    <m-column
+     [field]="'clicks.total'"
+     [sortable]="false">
+        <ng-template mTemplate="header">
+          <span>Total</span>
+          <br>
+          <span class="sub-header">Clicks</span>
+        </ng-template>
+        <ng-template let-col let-row="row" mTemplate="body">
+          {{ row["clicks"]["total"]?.toLocaleString() }}
+        </ng-template>
+    </m-column>
+
+    <!-- Joveo clicks -->
+    <m-column
+     [field]="'clicks.total'"
+     [sortable]="false">
+        <ng-template mTemplate="header">
+          <span>Joveo</span>
+          <br>
+          <span class="sub-header">Applies</span>
+        </ng-template>
+        <ng-template let-col let-row="row" mTemplate="body">
+          {{ row["applies"]["joveo"]?.toLocaleString() }}
+        </ng-template>
+    </m-column>
+
+    <!-- Total clicks -->
+    <m-column
+     [field]="'clicks.total'"
+     [sortable]="false">
+        <ng-template mTemplate="header">
+          <span>Total</span>
+          <br>
+          <span class="sub-header">Applies</span>
+        </ng-template>
+        <ng-template let-col let-row="row" mTemplate="body">
+          {{ row["applies"]["total"]?.toLocaleString() }}
+        </ng-template>
+    </m-column>
+
+    <ng-template mTemplate="emptyTable">
+      <div *ngIf="loading" class="table-loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <div>Loading...</div>
+      </div>
+      
+      <div *ngIf="!loading">
+        <div class="alert alert-primary ma-4">No records found.</div>
+      </div>
+    </ng-template>
+  </m-table>
+
+</div>
