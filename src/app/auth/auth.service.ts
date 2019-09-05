@@ -58,6 +58,13 @@ export class AuthService {
     this.user = userData;
   }
 
+  
+
+  getCurrentUser() {
+    const STORAGE_KEY = 'user';
+    return JSON.parse(window[this.storage][STORAGE_KEY]);
+  }
+
   public getToken(): string {
     return window[this.storage].getItem('accessToken') || null;
   }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UtilService {
@@ -15,7 +16,7 @@ export class UtilService {
 
   private ftpPublishers$: BehaviorSubject<string[]> = new BehaviorSubject(null);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private authService : AuthService) {
     http
       .get<string[]>(environment.feedsApi + 'placement/values')
       .subscribe((res: string[]) => {
@@ -211,5 +212,15 @@ export class UtilService {
     link.setAttribute('download', fileName);
     document.body.appendChild(link);
     link.click();
+  }
+
+  // getCurrentUser() {
+  //   return JSON.parse(window[this.authService.storage][STORAGE_KEY]);
+  // }
+
+  getCurrency() {
+    return this.authService.getCurrentUser().currency
+      ? this.authService.getCurrentUser().currency
+      : '$';
   }
 }

@@ -10,7 +10,6 @@
 
   <m-table
     [value]="totalResp.data"
-    (onPage)="onPageChange($event)"
     [selectable]="false" [selectionMode]="'single'"
   >
     <m-header>
@@ -23,12 +22,7 @@
       </ng-template>
     </m-header>
 
-    <m-footer [paginator]="true"
-    [pageSize]="filters.limit"
-    [pageIndex]="filters.page - 1"
-    [pageSizeOptions]="[10,20,50]"
-    [length]="totalResp.totalRecords"></m-footer>
-
+    <m-footer [paginator]="true" [pageSize]="5"></m-footer>
 
     <m-column field="name" header="Date" >
       <ng-template let-col let-row="row" mTemplate="body">
@@ -46,13 +40,13 @@
           <span class="sub-header">Clicks</span>
         </ng-template>
         <ng-template let-col let-row="row" mTemplate="body">
-          {{ row["clicks"]["joveo"]?.toLocaleString() }}
+          {{ row["clicks"].toLocaleString() }}
         </ng-template>
     </m-column>
 
     <!-- Total clicks -->
     <m-column
-     [field]="'clicks.total'"
+     [field]="'allClicks'"
      [sortable]="false">
         <ng-template mTemplate="header">
           <span>Total</span>
@@ -60,13 +54,13 @@
           <span class="sub-header">Clicks</span>
         </ng-template>
         <ng-template let-col let-row="row" mTemplate="body">
-          {{ row["clicks"]["total"]?.toLocaleString() }}
+          {{ row["allClicks"].toLocaleString() }}
         </ng-template>
     </m-column>
 
-    <!-- Joveo clicks -->
+    <!-- Joveo Applies -->
     <m-column
-     [field]="'clicks.total'"
+     [field]="'applies'"
      [sortable]="false">
         <ng-template mTemplate="header">
           <span>Joveo</span>
@@ -74,11 +68,11 @@
           <span class="sub-header">Applies</span>
         </ng-template>
         <ng-template let-col let-row="row" mTemplate="body">
-          {{ row["applies"]["joveo"]?.toLocaleString() }}
+          {{ row["applies"].toLocaleString() }}
         </ng-template>
     </m-column>
 
-    <!-- Total clicks -->
+    <!-- Total Applies -->
     <m-column
      [field]="'clicks.total'"
      [sortable]="false">
@@ -88,9 +82,92 @@
           <span class="sub-header">Applies</span>
         </ng-template>
         <ng-template let-col let-row="row" mTemplate="body">
-          {{ row["applies"]["total"]?.toLocaleString() }}
+          {{ row["allApplies"].toLocaleString() }}
         </ng-template>
     </m-column>
+
+      <!-- Joveo cta% -->
+      <m-column
+      [field]="'cta'"
+      [sortable]="false">
+         <ng-template mTemplate="header">
+           <span>Joveo</span>
+           <br>
+           <span class="sub-header">CTA</span>
+         </ng-template>
+         <ng-template let-col let-row="row" mTemplate="body">
+           {{ row["cta"]?.toLocaleString() }}
+         </ng-template>
+     </m-column>
+
+     <!-- Total cta% -->
+     <m-column
+     [field]="'cta'"
+     [sortable]="false">
+        <ng-template mTemplate="header">
+          <span>Total</span>
+          <br>
+          <span class="sub-header">CTA</span>
+        </ng-template>
+        <ng-template let-col let-row="row" mTemplate="body">
+          {{ row["allCta"]?.toLocaleString() }}
+        </ng-template>
+    </m-column>
+
+    <m-column field="spend" header="Spend" >
+        <ng-template let-col let-row="row" mTemplate="body">
+          <span class="cursor">{{ row.spent | numberFormatter:'currency'}}</span>
+        </ng-template>
+    </m-column>
+
+    <m-column field="cpc" header="CPC" >
+        <ng-template let-col let-row="row" mTemplate="body">
+          <span class="cursor">{{ row.cpc | numberFormatter:'currency' }}</span>
+        </ng-template>
+    </m-column>
+
+
+    <m-column field="cpa" header="CPA" >
+        <ng-template let-col let-row="row" mTemplate="body">
+          <span class="cursor">{{ row.cpa | numberFormatter:'currency' }}</span>
+        </ng-template>
+    </m-column>
+
+    <m-column field="cph" header="CPH" >
+        <ng-template let-col let-row="row" mTemplate="body">
+          <span class="cursor">{{ row.cph | numberFormatter:'currency'}}</span>
+        </ng-template>
+    </m-column>
+
+    <!-- Joveo ath% -->
+    <m-column
+    [field]="'ath'"
+    [sortable]="false">
+       <ng-template mTemplate="header">
+         <span>Joveo</span>
+         <br>
+         <span class="sub-header">ATH%</span>
+       </ng-template>
+       <ng-template let-col let-row="row" mTemplate="body">
+         {{ row["ath"]?.toLocaleString() }}
+       </ng-template>
+   </m-column>
+
+    <!-- Total ath% -->
+    <m-column
+    [field]="'allAth'"
+    [sortable]="false">
+       <ng-template mTemplate="header">
+         <span>Total</span>
+         <br>
+         <span class="sub-header">ATH%</span>
+       </ng-template>
+       <ng-template let-col let-row="row" mTemplate="body">
+         {{ row["allAth"]?.toLocaleString() }}
+       </ng-template>
+   </m-column>
+
+    
 
     <ng-template mTemplate="emptyTable">
       <div *ngIf="loading" class="table-loading">

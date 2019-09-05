@@ -23,7 +23,7 @@ import { BillingComponent } from './billing/billing.component';
 import { PublisherCreateComponent } from './publisher-create/publisher-create.component';
 import { PublisherDetailsResolver, PublisherClientsResolver } from './publisher-create/publisher-details-resolver';
 import { TimerangePickerComponent } from './timerange-picker/timerange-picker.component';
-import { TimerangeFormatterPipe } from '../services/local-search.pipe';
+import { TimerangeFormatterPipe, NumberFormatterPipe } from '../services/local-search.pipe';
 import { NumberDirective } from './utils/util.directives';
 import { DailyReportsComponent } from './agency-view/daily-reports/daily-reports.component'
 
@@ -36,7 +36,7 @@ import { DailyReportsComponent } from './agency-view/daily-reports/daily-reports
     CoreModule
   ],
   entryComponents : [AssignEntityComponent,ViewContactsComponent,AddAgencyComponent, PublisherSchemaDialog,DailyReportsComponent],
-  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent, BillingComponent, PublisherCreateComponent, TimerangePickerComponent, TimerangeFormatterPipe, NumberDirective, DailyReportsComponent],
+  declarations: [HomeComponent,HeaderComponent, AgenciesComponent, PublishersComponent, AgencyViewComponent, PublisherViewComponent, AssignEntityComponent, PublisherStatsComponent, AgencySetupComponent,ViewContactsComponent, AddAgencyComponent, BillingComponent, PublisherCreateComponent, TimerangePickerComponent, TimerangeFormatterPipe, NumberDirective, DailyReportsComponent,NumberFormatterPipe],
   providers : [ApiService, PubManagementService,PublisherDetailsResolver, PublisherClientsResolver,V2Service]
 })
 export class V2Module { }

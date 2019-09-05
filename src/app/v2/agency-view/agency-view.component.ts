@@ -162,8 +162,8 @@ export class AgencyViewComponent implements OnInit {
   openDailyReportsModal(){
     let dialogRef = this.dialog.open(DailyReportsComponent, {
       panelClass: 'app-full-bleed-dialog',
-       width: '500px',
-       minWidth : '500',
+      //  width: '500px',
+      //  minWidth : '500',
        autoFocus: false,
        data : {
          agencyId : this.agencyId,

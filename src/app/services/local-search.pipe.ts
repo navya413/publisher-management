@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import * as moment from 'moment';
+import { UtilService } from "./util.service";
 
 
 @Pipe({
@@ -49,5 +50,31 @@ export class TimerangeFormatterPipe implements PipeTransform {
     return `${hours.toString().length < 2 ? '0' : ''}${hours} : ${
       minutes.toString().length < 2 ? '0' : ''
     }${minutes} : ${seconds.toString().length < 2 ? '0' : ''}${seconds}`;
+  }
+}
+
+
+@Pipe({
+  name: 'numberFormatter',
+  pure: true
+})
+export class NumberFormatterPipe implements PipeTransform {
+  constructor(public utilService: UtilService) {}
+  transform(value: string, type: string): string {
+    if (type) {
+      const number = Number.call(null, value);
+      const string = number.toLocaleString(undefined, {
+        minimumFractionDigits: number.toString().includes('.') ? 2 : 0,
+        maximumFractionDigits: 2
+      });
+
+      switch (type) {
+        case 'currency':
+          return `${this.utilService.getCurrency()}${string}`;
+        case 'percentage':
+          return `${string}%`;
+      }
+    }
+    return Number.call(null, value).toLocaleString();
   }
 }
