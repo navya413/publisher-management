@@ -93,7 +93,7 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
         minBid: [],
         url: [{value:'', disabled: this.agency ? true : false}, Validators.required],
         country: [{value:'', disabled: this.agency ? true : false}],
-        industry: [{value:'', disabled: this.agency ? true : false}],
+        industry: [{value:'', disabled: this.agency ? true : false}, Validators.required],
         deliverFeedByFTP: false,
         perClientPlacements: false,
         isCompressedFeed: false,
@@ -425,7 +425,7 @@ export class PublisherCreateComponent implements OnInit, OnDestroy {
       delete this.creationForm.value.placement['flatBidValue'];
     }
     if (!this.creationForm.value.placement['deliverFeedByFTP']) {
-      delete this.creationForm.value.placement['ftpConfig'];
+      this.creationForm.value.placement['ftpConfig'] = {};
     }
     this.creationForm.value.placement['feedFileType'] = this.creationForm.value.placement.isCompressedFeed ? "zipped" : "newXml";
     if (this.creationForm.value.placement['publisherContactDetailsRevamp']) {
